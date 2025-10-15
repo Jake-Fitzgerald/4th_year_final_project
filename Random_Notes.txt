@@ -1,0 +1,54 @@
+Scenes:
+[USER]  Main Menu -> {Gameplay, },
+	Options -> {Audio, Screen Size, FPS},
+	Saving -> {Save, Load}
+	Gameplay,
+	Tutorial (SCREEN?),
+	Results -> {Distance Travelled (Graph, amount of metre travelled text), Items collected, {Time, Best Time}, {Score, Best Score} },
+	Game Over {Retry, Exit} (WIN/LOSE difference is the PNG shown), 
+	Leaderboard - > {Name, Score, Time}
+
+[TEST]
+	Block falling collision test
+	Player movement test
+
+
+////////////////////////
+
+Player Movement:
+Left, Right = Movement
+Down = Aim down
+Up = Aim up
+X = basic jump
+
+////////////////////////
+Physics:
+	Edge case where the player is in the middle of the side of a falling block - player can jump off the the free side to be safe [automatic] (Mr Driller ref)
+
+////////////////////////
+Concept - The player controls a character that is a DJ miner, digging for vinyl records to collect (restores draining health)
+	- Timer appears beside player that is a countdown (10 -> 0) for how long they have until they run out of health.
+
+
+////////////////////////
+Collectibles:
+	Health (Record)
+	Bomb (Walk into  to activate)
+	1 UP
+	Slow time (Beat Sweeper) ??? (Same as Burst?)
+	
+////////////////////////
+Enemies?:
+	Walk back and forth, makes disssonance music cue when hit by.
+
+
+////////////////////////
+Procedural Levels:
+	MIDI influences what blocks are placed to chain combos?
+	Health Items count,		
+	
+
+////////////////////////
+How do we stop the player from rushing downwards?
+- Forcing them to dig to the beat. This allows the Beat Sweeper (timeline) to destroy blocks before the screen moves down also.
+
