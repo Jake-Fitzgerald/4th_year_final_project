@@ -36,6 +36,7 @@ Collectibles:
 	Bomb (Walk into  to activate)
 	1 UP
 	Slow time (Beat Sweeper) ??? (Same as Burst?)
+	Air Bubble (Stops health drain for a period of time)
 	
 ////////////////////////
 Enemies?:
@@ -45,10 +46,27 @@ Enemies?:
 ////////////////////////
 Procedural Levels:
 	MIDI influences what blocks are placed to chain combos?
-	Health Items count,		
+	Health Items count, Bedrock count, how often colours are clumped together,	
 	
 
 ////////////////////////
 How do we stop the player from rushing downwards?
 - Forcing them to dig to the beat. This allows the Beat Sweeper (timeline) to destroy blocks before the screen moves down also.
 
+Use A* to draw a line path to the nearest Collectible Pickup (Press R2 {Assist Button} to activate it) (Good way to implement and show A*)
+We need to use A* to make sure there is a valid path from start to finish when making the level.
+
+Is it possible to break a falling block from landing on you if you time the beat right?
+(Can only break falling block/block above player if the beat is perfect (NOT fast/late)
+
+How do we store the parsed MIDI data to be used?
+We can store in a file format like .JSON that we can read from.
+
+////////////////////////
+Schedule [TEMP]
+
+Project Structure setup
+- Folder structure
+- ECS (Entities, Components, Structures) 
+ https://medium.com/@golluajay9/building-a-basic-game-engine-with-sfml-and-ecs-a-pingpong-game-example-d20e5325d9cd
+- Input / Event handling (Keyboard keys, Joystick controller)
