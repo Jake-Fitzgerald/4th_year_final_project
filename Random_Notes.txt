@@ -69,4 +69,31 @@ Project Structure setup
 - Folder structure
 - ECS (Entities, Components, Structures) 
  https://medium.com/@golluajay9/building-a-basic-game-engine-with-sfml-and-ecs-a-pingpong-game-example-d20e5325d9cd
-- Input / Event handling (Keyboard keys, Joystick controller)
+
+Input
+- Input / Event handling type (Keyboard keys, Joystick controller)
+- Latency and grace period for detecting if the input was on beat.
+
+Graphics:
+- Window resolution (static/dynamic)
+- Sprite sizes, consistent numbers (64 by 64 pixels, etc)
+- UI, Font
+
+Audio:
+- Audio Buffer
+- Loading, playing, pausing, stopping Music Tracks and SFX
+- Ways to keep the music in sync with the gameplay
+
+Physics:
+- Player controller, gravity, friction, collision
+- Blocks collision, states when falling (can damage player bool, trigger volumes to detect other blocks beneath), etc
+
+Scenes
+- Main Menu
+- Options
+- Gameplay
+- Results
+- Leaderboard
+
+
+
