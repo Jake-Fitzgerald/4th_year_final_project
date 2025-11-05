@@ -50,6 +50,30 @@ Procedural Levels:
 	
 
 ////////////////////////
+Block preset chunks:
+
+1. Health inside cross shaped obstacle blocks (RISK vs REWARD balance)
+|0|0|0|0|0|
+|0|0|x|0|0|
+|0|x|H|x|0|
+|0|0|x|0|0|
+|0|0|0|0|0|
+
+2. Funnel player at end of measure
+|0|0|0|0|0|
+|x|0|0|0|x|
+|x|x|0|x|x|
+|x|x|0|x|x|
+
+3. Funnel player at the start of a measure
+|0|0|0|0|0|
+|0|0|0|0|0|
+|x|x|0|x|x|
+|x|0|0|0|x|
+|0|0|0|0|0|
+
+////////////////////////
+Questions:
 How do we stop the player from rushing downwards?
 - Forcing them to dig to the beat. This allows the Beat Sweeper (timeline) to destroy blocks before the screen moves down also.
 
