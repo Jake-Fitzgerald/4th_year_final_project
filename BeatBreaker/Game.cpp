@@ -3,12 +3,15 @@
 
 
 Game::Game() :
-	m_window{ sf::VideoMode{ sf::Vector2u{800U, 600U}, 32U }, "SFML Game 3.0" },
-	m_DELETEexitGame{false} //when true game will exit
+	m_window{ sf::VideoMode{ sf::Vector2u{1280U, 720U}, 32U }, "Beat Breaker" },
+	m_DELETEexitGame{false},
+	mainMenu{ m_jerseyFont }
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
 	setupAudio(); // load sounds
+
+	
 }
 
 Game::~Game()
@@ -86,8 +89,11 @@ void Game::render()
 {
 	m_window.clear(ULTRAMARINE);
 
-	m_window.draw(m_DELETElogoSprite);
+	//m_window.draw(m_DELETElogoSprite);
 	m_window.draw(m_DELETEwelcomeMessage);
+
+	// Main Menu
+	mainMenu.render(m_window);
 	
 	m_window.display();
 }
@@ -100,9 +106,9 @@ void Game::setupTexts()
 		std::cout << "problem loading arial black font" << std::endl;
 	}
 	m_DELETEwelcomeMessage.setFont(m_jerseyFont);
-	m_DELETEwelcomeMessage.setString("SFML Game");
-	m_DELETEwelcomeMessage.setPosition(sf::Vector2f{ 205.0f, 240.0f });
-	m_DELETEwelcomeMessage.setCharacterSize(96U);
+	m_DELETEwelcomeMessage.setString("Beat Breaker");
+	m_DELETEwelcomeMessage.setPosition(sf::Vector2f{ 600.0f, 50.0f });
+	m_DELETEwelcomeMessage.setCharacterSize(80U);
 	m_DELETEwelcomeMessage.setOutlineColor(sf::Color::Black);
 	m_DELETEwelcomeMessage.setFillColor(sf::Color::Red);
 	m_DELETEwelcomeMessage.setOutlineThickness(2.0f);

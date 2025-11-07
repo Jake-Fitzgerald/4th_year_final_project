@@ -6,8 +6,12 @@
 // C:\SFML - 3.0.0\include\SFML\System\Exception.hpp(41, 47) : 
 // warning C4275 : non dll - interface class 'std::runtime_error' used as base for dll - interface class 'sf::Exception'
 
+// Libraries
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+
+// Components
+#include "MainMenu.h"
 
 
 const sf::Color ULTRAMARINE{ 5, 55,242,255 }; // const colour
@@ -43,6 +47,8 @@ private:
 	sf::Sound m_DELETEsound{ m_DELETEsoundBuffer }; 
 	bool m_DELETEexitGame; 
 
+	// Main Menu
+	MainMenu mainMenu;
 };
 
 #pragma warning( pop ) 
