@@ -13,8 +13,14 @@
 // Components
 #include "MainMenu.h"
 
+const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
-const sf::Color ULTRAMARINE{ 5, 55,242,255 }; // const colour
+enum GameStates 
+{
+	MainMenu,
+	Gameplay,
+	GameOver
+};
 
 class Game
 {
@@ -27,6 +33,7 @@ private:
 
 	void processEvents();
 	void processKeys(const std::optional<sf::Event> t_event);
+	void processMouseRelease(const std::optional<sf::Event> t_event);
 	void checkKeyboardState();
 	void update(sf::Time t_deltaTime);
 	void render();
@@ -34,6 +41,9 @@ private:
 	void setupTexts();
 	void setupSprites();
 	void setupAudio();
+	void setupMainMenu();
+
+	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
 	
 	sf::RenderWindow m_window; 
@@ -48,7 +58,25 @@ private:
 	bool m_DELETEexitGame; 
 
 	// Main Menu
-	MainMenu mainMenu;
+	//MainMenu mainMenu;
+
+	// Main Menu Variables
+	sf::Vector2f m_topLeftStart{ 200,200 };
+	float m_buttonSep = 30;
+
+	// Main Menu Text
+	std::unique_ptr<sf::Text>m_title;
+	// ----------- Buttons ----------- 
+	// Start Gameplay
+	sf::RectangleShape m_startButton;
+	sf::Text m_startText{ m_jerseyFont };
+	// Random Gen
+	sf::RectangleShape m_randGenButton;
+	sf::Text m_randGenText{ m_jerseyFont };
+
+
+	// States
+	GameStates m_currentGameState = GameStates::MainMenu;
 };
 
 #pragma warning( pop ) 
