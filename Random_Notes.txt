@@ -86,6 +86,9 @@ Is it possible to break a falling block from landing on you if you time the beat
 How do we store the parsed MIDI data to be used?
 We can store in a file format like .JSON that we can read from.
 
+Block layout:
+8 blocks horizontal, 12 blocks visible on a scrolling screen vertically.
+
 ////////////////////////
 Schedule [TEMP]
 

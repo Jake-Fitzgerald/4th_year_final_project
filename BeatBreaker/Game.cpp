@@ -11,6 +11,8 @@ Game::Game() :
 	setupAudio(); // load sounds
 	setupMainMenu();
 
+	setupGrid();
+
 	
 }
 
@@ -119,20 +121,37 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::Black);
-
-	//m_window.draw(m_DELETElogoSprite);
-	m_window.draw(m_DELETEwelcomeMessage);
+	
 
 	// Main Menu
 	//mainMenu.render(m_window);
 	if (m_currentGameState == GameStates::MainMenu)
 	{
+		m_window.draw(m_DELETEwelcomeMessage);
 		// Start
 		m_window.draw(m_startButton);
 		m_window.draw(m_startText);
 		// Rand Gen
 		m_window.draw(m_randGenButton);
 		m_window.draw(m_randGenText);
+		// Input Test
+		m_window.draw(m_testInputButton);
+		m_window.draw(m_testInputText);
+		// MIDI Parse
+		m_window.draw(m_MIDIParseButton);
+		m_window.draw(m_MIDIParseText);
+		// Character
+		m_window.draw(m_characterButton);
+		m_window.draw(m_characterText);
+	}
+
+	if (m_currentGameState == GameStates::Gameplay)
+	{
+		for (const auto& cell : m_grid)
+		{
+			m_window.draw(cell);
+		}
+			
 	}
 	
 	m_window.display();
@@ -160,12 +179,30 @@ void Game::setupTexts()
 	m_startText.setPosition(m_startButton.getPosition());
 	m_startText.setCharacterSize(40U);
 	m_startText.setFillColor(sf::Color::Black);
-
+	// Rand Gen Text
 	m_randGenText.setFont(m_jerseyFont);
 	m_randGenText.setString("Random Gen");
 	m_randGenText.setPosition(m_randGenButton.getPosition());
 	m_randGenText.setCharacterSize(40U);
 	m_randGenText.setFillColor(sf::Color::Black);
+	// Input Test Text
+	m_testInputText.setFont(m_jerseyFont);
+	m_testInputText.setString("Input Test");
+	m_testInputText.setPosition(m_testInputButton.getPosition());
+	m_testInputText.setCharacterSize(40U);
+	m_testInputText.setFillColor(sf::Color::Black);
+	// MIDI Parse Text
+	m_MIDIParseText.setFont(m_jerseyFont);
+	m_MIDIParseText.setString("MIDI Parse");
+	m_MIDIParseText.setPosition(m_MIDIParseButton.getPosition());
+	m_MIDIParseText.setCharacterSize(40U);
+	m_MIDIParseText.setFillColor(sf::Color::Black);
+	// MIDI Parse Text
+	m_characterText.setFont(m_jerseyFont);
+	m_characterText.setString("Character");
+	m_characterText.setPosition(m_characterButton.getPosition());
+	m_characterText.setCharacterSize(40U);
+	m_characterText.setFillColor(sf::Color::Black);
 
 }
 
@@ -196,18 +233,38 @@ void Game::setupMainMenu()
 {
 	// Start
 	m_startButton.setPosition(m_topLeftStart);
-	m_startButton.setSize(sf::Vector2f(200, 50));
+	m_startButton.setSize(sf::Vector2f(250, 50));
 	m_startButton.setFillColor(sf::Color::Blue);
 	sf::Vector2f startTextOffset = { m_startButton.getPosition().x + m_startButton.getSize().x / 4.0f, m_startButton.getPosition().y };
 	m_startText.setPosition(startTextOffset);
 
 	// Rand Gen
 	m_randGenButton.setPosition(sf::Vector2f{ m_topLeftStart.x , m_topLeftStart.y + 100.0f});
-	m_randGenButton.setSize(sf::Vector2f(200, 50));
+	m_randGenButton.setSize(sf::Vector2f(250, 50));
 	m_randGenButton.setFillColor(sf::Color::Blue);
 	sf::Vector2f randGenTextOffset = { m_randGenButton.getPosition().x + 20.0f, m_randGenButton.getPosition().y };
 	m_randGenText.setPosition(randGenTextOffset);
 
+	// Input Test
+	m_testInputButton.setPosition(sf::Vector2f{ m_topLeftStart.x , m_topLeftStart.y + 200.0f });
+	m_testInputButton.setSize(sf::Vector2f(250, 50));
+	m_testInputButton.setFillColor(sf::Color::Blue);
+	sf::Vector2f inputTestOffset = { m_testInputButton.getPosition().x + 20.0f, m_testInputButton.getPosition().y };
+	m_testInputText.setPosition(inputTestOffset);
+
+	// MIDI Parse
+	m_MIDIParseButton.setPosition(sf::Vector2f{ m_topLeftStart.x , m_topLeftStart.y + 300.0f });
+	m_MIDIParseButton.setSize(sf::Vector2f(250, 50));
+	m_MIDIParseButton.setFillColor(sf::Color::Blue);
+	sf::Vector2f midiTextOffset = { m_MIDIParseButton.getPosition().x + 20.0f, m_MIDIParseButton.getPosition().y };
+	m_MIDIParseText.setPosition(midiTextOffset);
+
+	// Character Test
+	m_characterButton.setPosition(sf::Vector2f{ m_topLeftStart.x , m_topLeftStart.y + 400.0f });
+	m_characterButton.setSize(sf::Vector2f(250, 50));
+	m_characterButton.setFillColor(sf::Color::Blue);
+	sf::Vector2f characterTextOffset = { m_characterButton.getPosition().x + 20.0f, m_characterButton.getPosition().y };
+	m_characterText.setPosition(characterTextOffset);
 }
 
 bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)
@@ -222,5 +279,30 @@ bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, s
 	else
 	{
 		return false;
+	}
+}
+
+void Game::setupGrid()
+{
+	// Reserve space for each cell
+	m_grid.reserve(COLS * ROWS);
+
+	for (int i = 0; i < ROWS; ++i)
+	{
+		for (int j = 0; j < COLS; ++j)
+		{
+			sf::RectangleShape cell(sf::Vector2f(CELL_WIDTH, CELL_HEIGHT));
+			cell.setOutlineThickness(1.f);
+			cell.setOutlineColor(sf::Color::Black);
+
+			// Pick a random colour from the vectpr
+			int index = std::rand() % colors.size();
+			cell.setFillColor(colors[index]);
+
+			cell.setPosition(sf::Vector2f{ j * CELL_WIDTH, i * CELL_HEIGHT });
+
+			// Add to the end of the vector
+			m_grid.push_back(cell);
+		}
 	}
 }

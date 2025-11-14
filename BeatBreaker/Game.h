@@ -9,6 +9,7 @@
 // Libraries
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <vector>
 
 // Components
 #include "MainMenu.h"
@@ -44,6 +45,7 @@ private:
 	void setupMainMenu();
 
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
+	void setupGrid();
 
 	
 	sf::RenderWindow m_window; 
@@ -73,10 +75,36 @@ private:
 	// Random Gen
 	sf::RectangleShape m_randGenButton;
 	sf::Text m_randGenText{ m_jerseyFont };
-
+	// Input Test
+	sf::RectangleShape m_testInputButton;
+	sf::Text m_testInputText{ m_jerseyFont };
+	// MIDI Parse
+	sf::RectangleShape m_MIDIParseButton;
+	sf::Text m_MIDIParseText{ m_jerseyFont };
+	// Character Test
+	sf::RectangleShape m_characterButton;
+	sf::Text m_characterText{ m_jerseyFont };
 
 	// States
 	GameStates m_currentGameState = GameStates::MainMenu;
+
+	// Test Blocks
+	const int COLS = 8;   
+	const int ROWS = 12;  
+	const float CELL_WIDTH = 50.f;
+	const float CELL_HEIGHT = 50.f;
+	std::vector<sf::RectangleShape> m_grid;
+
+	// Block colours
+	sf::Color BLUE = sf::Color::Blue;
+	sf::Color PINK = sf::Color::Magenta;
+	sf::Color GREEN = sf::Color::Green;
+	sf::Color YELLOW = sf::Color::Yellow;
+	// Colour vector
+	std::vector<sf::Color> colors = { BLUE, PINK, GREEN, YELLOW };
+
+	
+	
 };
 
 #pragma warning( pop ) 
