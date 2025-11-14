@@ -13,6 +13,8 @@
 
 // Components
 #include "MainMenu.h"
+#include "Block.h"
+#include "BlockGenerator.h"
 
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
