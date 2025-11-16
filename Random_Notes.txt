@@ -37,6 +37,8 @@ Collectibles:
 	1 UP
 	Slow time (Beat Sweeper) ??? (Same as Burst?)
 	Air Bubble (Stops health drain for a period of time)
+
+Collectibles should be a type of block. This way they have consistant rules with how blocks are stacked and for gravity when a block beneath a collectible breaks and falls.
 	
 ////////////////////////
 Enemies?:
@@ -48,6 +50,17 @@ Procedural Levels:
 	MIDI influences what blocks are placed to chain combos?
 	Health Items count, Bedrock count, how often colours are clumped together,	
 	
+////////////////////////
+MIDI Parsed Data:
+	int bpm = 160 (example) [BEATS PER MINUTE]
+	int bps = 60 		[BEATS PER SECOND] (nned this since our game runs at 60 FPS to keep it consistant)
+	float hbps = bps * 0.5 	[HALF BEATS PER SECOND] (Could be used to calculate how late or soon a note is hit)
+	int lastHalfBeat = 0 	(stores the index of the last half-beat we passed)
+
+We need to add latency when the track plays becuase it takes time to for the game to play the sound then travel to the speakers. 
+(Very small number)
+
+
 
 ////////////////////////
 Block preset chunks:
@@ -88,6 +101,17 @@ We can store in a file format like .JSON that we can read from.
 
 Block layout:
 8 blocks horizontal, 12 blocks visible on a scrolling screen vertically.
+
+How to tell if when the player has pressed the "Break" button that is in time with the music track?
+That input when the button is released is sent to a function to check how in sync is it with the music 
+by checking the track's BPM (Beats Per Minute), BPS (Beats Per Second). That way we can determine if it was 
+late, early, perfect or missed. We always round the value to be closer to perfect for it to feel better
+and incase inputs are dropped. The player shouldn't have to EXACTLY on time with the music for it to work.
+
+How to tell if the player has missed a beat, or it was specifically late/early?
+Different sound curs associated with the different types hit.
+UI text that is present in the HUD that shows what type was hit/not hit (can be a pop UI element spawned near the player also).
+Print out specific long range values in the cmd window to show the exact numbers [DEBUGGING]
 
 ////////////////////////
 Schedule [TEMP]
