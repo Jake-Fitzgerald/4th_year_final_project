@@ -16,6 +16,9 @@
 #include "Block.h"
 #include "BlockGenerator.h"
 
+// MIDI
+#include "MIDIParse.h"
+
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
 enum GameStates 
@@ -105,7 +108,9 @@ private:
 	// Colour vector
 	std::vector<sf::Color> colors = { BLUE, PINK, GREEN, YELLOW };
 
-	
+	// MIDI
+	MIDIParse midiParser;
+	void setupMidiParser();
 	
 };
 

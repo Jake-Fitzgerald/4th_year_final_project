@@ -60,7 +60,22 @@ MIDI Parsed Data:
 We need to add latency when the track plays becuase it takes time to for the game to play the sound then travel to the speakers. 
 (Very small number)
 
+////////////////////////
+MIDI influence block generation:
+ - Different block colours could be generated based on the different instruments 
+   (Red = Snare, Blue = Bass, Yellow = Kickdrum, Green = Cymbal).
 
+- BPM / how far apart from one another determine difficulty of the Block Section.
+
+- Note velocity
+
+-------
+MIDI data can influence other aspects like the background image 
+- fast BPM = faster moving particles, slow BPM = slower moving particles.
+
+-------
+HUD - Beat Counter:
+- Displays the beat with a UI element on screen (squares becoming visible depending on the beat (4 / 4) ).
 
 ////////////////////////
 Block preset chunks:

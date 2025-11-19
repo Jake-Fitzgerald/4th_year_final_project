@@ -13,6 +13,8 @@ Game::Game() :
 
 	setupGrid();
 
+	// MIDI
+	setupMidiParser();
 	
 }
 
@@ -305,4 +307,9 @@ void Game::setupGrid()
 			m_grid.push_back(cell);
 		}
 	}
+}
+
+void Game::setupMidiParser()
+{
+	midiParser.parseFile("ASSETS\\AUDIO\\MUSIC\\Test_MIDI.mid");
 }
