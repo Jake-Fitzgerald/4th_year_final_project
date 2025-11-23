@@ -1,17 +1,10 @@
 ﻿  Game.cpp
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(78,40): warning C4189: 'newMouseReleased': local variable is initialized but not referenced
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(99,8): warning C4189: 'buttonFound': local variable is initialized but not referenced
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(113,28): warning C4100: 't_deltaTime': unreferenced parameter
-  MIDIParse.cpp
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(32,2): warning C4100: 'n': unreferenced parameter
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(39,23): warning C4244: 'initializing': conversion from 'uint32_t' to 'uint16_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(49,30): warning C4244: 'argument': conversion from 'int' to '_Elem', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(49,30): warning C4244:         with
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(49,30): warning C4244:         [
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(49,30): warning C4244:             _Elem=char
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(49,30): warning C4244:         ]
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(76,19): warning C4244: 'initializing': conversion from 'int' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(79,18): warning C4244: 'initializing': conversion from 'int' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(90,31): warning C4189: 'newKeyPress': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(102,62): warning C4100: 't_event': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(108,40): warning C4189: 'newMouseReleased': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(145,8): warning C4189: 'buttonFound': local variable is initialized but not referenced
+  Player.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Player.cpp(35,33): warning C4100: 't_deltatime': unreferenced parameter
   main.cpp
   Generating Code...
   BeatBreaker.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Debug\BeatBreaker.exe

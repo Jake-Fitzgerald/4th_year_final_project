@@ -43,44 +43,76 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 	// Gets the bytes from the file and construct a string from them
 	auto readString = [&file](uint32_t nbyteLength)
 	{
-		std::string combinedString;
-		for (uint32_t i = 0; i < nbyteLength; i++)
-		{
-			combinedString += file.get();
+			std::string combinedString;
+			combinedString.resize(nbyteLength); 
+
+			if (!file.read(combinedString.data(), nbyteLength))
+			{
+				std::cerr << "Error reading string\n";
+				return std::string{};
+			}
+
+			std::cerr << "Combined string is: " << combinedString << std::endl;
 			return combinedString;
-		}
-		std::cerr << "Combined string is : " << combinedString << std::endl;
 	};
+
+	// String headers
+	//std::string header = readString(4);
+	//if (header != "MThd") 
+	//{
+	//	std::cerr << "Not a MIDI file\n";
+	//}
 
 	return false;
 }
 
+
 // t_file.get() reads a single byte
 uint32_t MIDIParse::read_uint32(std::ifstream& t_file)
 {
-	// Shift the bits left
-	uint32_t b1 = t_file.get();
-	uint32_t b2 = t_file.get();
-	uint32_t b3 = t_file.get();
-	uint32_t b4 = t_file.get(); // stays in the lowest byte position
+	uint8_t bytes[4];
+	if (!t_file.read(reinterpret_cast<char*>(bytes), 4))
+	{
+		std::cerr << "Error: Unexpected EOF while reading uint32\n";
+		return 0; // or throw
+	}
 
-	// Combines the four bytes into a single 32 bit int using | bitwise OR
-	return (b1 << 24) | (b2 << 16) | (b3 << 8) | b4;
+	return (uint32_t(bytes[0]) << 24) |
+		(uint32_t(bytes[1]) << 16) |
+		(uint32_t(bytes[2]) << 8) |
+		(uint32_t(bytes[3]));
+	//// Shift the bits left
+	//uint32_t b1 = t_file.get();
+	//uint32_t b2 = t_file.get();
+	//uint32_t b3 = t_file.get();
+	//uint32_t b4 = t_file.get(); // stays in the lowest byte position
+
+	//// Combines the four bytes into a single 32 bit int using | bitwise OR
+	//return (b1 << 24) | (b2 << 16) | (b3 << 8) | b4;
 }
 
-uint32_t MIDIParse::read_uint16(std::ifstream& t_file)
+uint16_t MIDIParse::read_uint16(std::ifstream& t_file)
 {
-	uint16_t b = 0;
-	// First byte (most significant)
-	// 0x1234 becomes 0x12
-	uint8_t highByte = t_file.get();
-	// Second byte (least significant)
-	// 0x1234 becomes 0x34
-	uint8_t lowByte = t_file.get();   
-	
-	// Combine to make a 16 bit int
-	b = (highByte << 8) | lowByte;
-	return b;
+	uint8_t bytes[2];
+	if (!t_file.read(reinterpret_cast<char*>(bytes), 2))
+	{
+		std::cerr << "Error: Unexpected EOF while reading uint16\n";
+		return 0; // or throw
+	}
+
+	return (uint16_t(bytes[0]) << 8) |
+		(uint16_t(bytes[1]));
+	//uint16_t b = 0;
+	//// First byte (most significant)
+	//// 0x1234 becomes 0x12
+	//uint8_t highByte = t_file.get();
+	//// Second byte (least significant)
+	//// 0x1234 becomes 0x34
+	//uint8_t lowByte = t_file.get();   
+	//
+	//// Combine to make a 16 bit int
+	//b = (highByte << 8) | lowByte;
+	//return b;
 }
 
 //uint16_t MIDIParse::read_uint16(std::ifstream& t_file)

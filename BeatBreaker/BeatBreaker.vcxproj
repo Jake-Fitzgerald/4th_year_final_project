@@ -25,6 +25,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MIDIParse.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +35,8 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MIDIParse.h" />
+    <ClInclude Include="Notes.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>

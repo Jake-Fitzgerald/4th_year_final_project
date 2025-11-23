@@ -25,7 +25,8 @@ enum ColourStates
 	Blue,
 	Red,
 	Green,
-	Yellow
+	Yellow,
+	Health
 };
 
 class Block
@@ -60,8 +61,9 @@ private:
 	sf::Color PINK = sf::Color::Magenta;
 	sf::Color GREEN = sf::Color::Green;
 	sf::Color YELLOW = sf::Color::Yellow;
+	sf::Color HEALTH = sf::Color(100, 50, 200);
 	// Colour vector
-	std::vector<sf::Color> colours = { BLUE, PINK, GREEN, YELLOW };
+	std::vector<sf::Color> colours = { BLUE, PINK, GREEN, YELLOW, HEALTH };
 	
 };
 

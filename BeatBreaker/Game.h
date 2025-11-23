@@ -15,6 +15,7 @@
 #include "MainMenu.h"
 #include "Block.h"
 #include "BlockGenerator.h"
+#include "Player.h"
 
 // MIDI
 #include "MIDIParse.h"
@@ -25,6 +26,7 @@ enum GameStates
 {
 	MainMenu,
 	Gameplay,
+	Character,
 	GameOver
 };
 
@@ -39,8 +41,11 @@ private:
 
 	void processEvents();
 	void processKeys(const std::optional<sf::Event> t_event);
+	void processKeysPressed(const std::optional<sf::Event> t_event);
+	void processKeysRelease(const std::optional<sf::Event> t_event);
 	void processMouseRelease(const std::optional<sf::Event> t_event);
 	void checkKeyboardState();
+	void processKeyboard(float dtSeconds); // By frame
 	void update(sf::Time t_deltaTime);
 	void render();
 	
@@ -51,6 +56,8 @@ private:
 
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 	void setupGrid();
+
+	void setupPlayer();
 
 	
 	sf::RenderWindow m_window; 
@@ -112,6 +119,8 @@ private:
 	MIDIParse midiParser;
 	void setupMidiParser();
 	
+	// Player
+	Player m_player;
 };
 
 #pragma warning( pop ) 

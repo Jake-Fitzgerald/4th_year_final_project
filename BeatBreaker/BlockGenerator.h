@@ -2,6 +2,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <vector>
+// Random lib
+#include <ctime>
+#include <random>
+// Block Compnent
 #include "Block.h"
 
 // Notes:
@@ -23,12 +27,15 @@
 // the MIDI sections (since music is repetetive then a certain amount of the 
 // MIDI block sections will be aswell).
 //
-// 
+// Mersenne Twister ref:
+// https://www.geeksforgeeks.org/cpp/stdmt19937-class-in-cpp/
+
 
 
 class BlockGenerator
 {
 public:
+	void randomNum();
 
 	void genMIDISection(/* JSONFile t_MIDIData*/);
 

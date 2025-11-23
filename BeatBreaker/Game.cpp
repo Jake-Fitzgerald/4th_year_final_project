@@ -16,6 +16,8 @@ Game::Game() :
 	// MIDI
 	setupMidiParser();
 	
+	// Player
+	setupPlayer();
 }
 
 Game::~Game()
@@ -56,6 +58,14 @@ void Game::processEvents()
 		{
 			processKeys(newEvent);
 		}
+		if (newEvent->is<sf::Event::KeyPressed>())
+		{
+			processKeysPressed(newEvent);
+		}
+		if (newEvent->is<sf::Event::KeyPressed>())
+		{
+			processKeysRelease(newEvent);
+		}
 		if (newEvent->is<sf::Event::MouseButtonReleased>())
 		{
 			processMouseRelease(newEvent);
@@ -71,6 +81,26 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 	{
 		m_DELETEexitGame = true; 
 	}
+
+
+}
+
+void Game::processKeysPressed(const std::optional<sf::Event> t_event)
+{
+	const sf::Event::KeyPressed* newKeyPress = t_event->getIf<sf::Event::KeyPressed>();
+
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+	//{
+	//	m_player.moveLeft();
+	//}
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+	//{
+	//	m_player.moveRight();
+	//}
+}
+
+void Game::processKeysRelease(const std::optional<sf::Event> t_event)
+{
 }
 
 void Game::processMouseRelease(const std::optional<sf::Event> t_event)
@@ -80,6 +110,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 
 	if (m_currentGameState == MainMenu)
 	{
+		// Gameplay
 		if (checkIfAreaClicked(mouseWorldPos, m_startButton.getPosition(), m_startButton.getSize()))
 		{
 			m_currentGameState = GameStates::Gameplay;
@@ -94,6 +125,21 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 				m_currentGameState = GameStates::Gameplay;
 				std::cout << "Start button clicked!" << std::endl;
 			}
+		// Character
+		if (checkIfAreaClicked(mouseWorldPos, m_characterButton.getPosition(), m_characterButton.getSize()))
+		{
+			m_currentGameState = GameStates::Gameplay;
+			std::cout << "Start button clicked!" << std::endl;
+		}
+
+		if (mouseWorldPos.x >= m_characterButton.getPosition().x &&
+			mouseWorldPos.x <= m_characterButton.getPosition().x + m_characterButton.getSize().x &&
+			mouseWorldPos.y >= m_characterButton.getPosition().y &&
+			mouseWorldPos.y <= m_characterButton.getPosition().y + m_characterButton.getSize().y)
+		{
+			m_currentGameState = GameStates::Character;
+			std::cout << "Character button clicked!" << std::endl;
+		}
 	}
 		// Check Modes Buttons
 		bool buttonFound = false;
@@ -107,15 +153,36 @@ void Game::checkKeyboardState()
 	{
 		m_DELETEexitGame = true; 
 	}
+
+}
+
+void Game::processKeyboard(float dtSeconds)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+	{
+		m_player.moveLeft(dtSeconds);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+	{
+		m_player.moveRight(dtSeconds);
+	}
 }
 
 
 void Game::update(sf::Time t_deltaTime)
 {
+	float dtConverted = t_deltaTime.asSeconds();
+
 	checkKeyboardState();
 	if (m_DELETEexitGame)
 	{
 		m_window.close();
+	}
+
+	if (m_currentGameState == GameStates::Character)
+	{
+		processKeyboard(dtConverted);
+		m_player.updatePlayer(dtConverted);
 	}
 }
 
@@ -153,7 +220,11 @@ void Game::render()
 		{
 			m_window.draw(cell);
 		}
-			
+	}
+	// Character
+	if (m_currentGameState == GameStates::Character)
+	{
+		m_player.renderPlayer(m_window);
 	}
 	
 	m_window.display();
@@ -307,6 +378,12 @@ void Game::setupGrid()
 			m_grid.push_back(cell);
 		}
 	}
+}
+
+void Game::setupPlayer()
+{
+	m_player.setupPlayer();
+	m_player.setSpawnPos(sf::Vector2f{ 100.0f, 100.0f });
 }
 
 void Game::setupMidiParser()
