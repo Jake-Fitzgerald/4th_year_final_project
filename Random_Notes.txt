@@ -74,6 +74,10 @@ MIDI data can influence other aspects like the background image
 - fast BPM = faster moving particles, slow BPM = slower moving particles.
 
 -------
+Scores saved to a database online server?
+- not too difficult to do.
+
+-------
 HUD - Beat Counter:
 - Displays the beat with a UI element on screen (squares becoming visible depending on the beat (4 / 4) ).
 

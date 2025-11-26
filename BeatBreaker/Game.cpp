@@ -3,8 +3,8 @@
 
 
 Game::Game() :
-	m_window{ sf::VideoMode{ sf::Vector2u{1280U, 720U}, 32U }, "Beat Breaker" },
-	m_DELETEexitGame{false}
+	m_window{ sf::VideoMode{ sf::Vector2u{SCREEN_WIDTH, SCREEN_HEIGHT}, 32U }, "Beat Breaker" },
+	m_DELETEexitGame{false}, m_hud(m_jerseyFont), m_options(m_jerseyFont)
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
@@ -81,8 +81,6 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 	{
 		m_DELETEexitGame = true; 
 	}
-
-
 }
 
 void Game::processKeysPressed(const std::optional<sf::Event> t_event)
@@ -117,28 +115,30 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			std::cout << "Start button clicked!" << std::endl;
 		}
 
-		if (mouseWorldPos.x >= m_startButton.getPosition().x &&
-			mouseWorldPos.x <= m_startButton.getPosition().x + m_startButton.getSize().x &&
-			mouseWorldPos.y >= m_startButton.getPosition().y &&
-			mouseWorldPos.y <= m_startButton.getPosition().y + m_startButton.getSize().y)
-			{
-				m_currentGameState = GameStates::Gameplay;
-				std::cout << "Start button clicked!" << std::endl;
-			}
 		// Character
 		if (checkIfAreaClicked(mouseWorldPos, m_characterButton.getPosition(), m_characterButton.getSize()))
 		{
 			m_currentGameState = GameStates::Gameplay;
 			std::cout << "Start button clicked!" << std::endl;
 		}
-
-		if (mouseWorldPos.x >= m_characterButton.getPosition().x &&
-			mouseWorldPos.x <= m_characterButton.getPosition().x + m_characterButton.getSize().x &&
-			mouseWorldPos.y >= m_characterButton.getPosition().y &&
-			mouseWorldPos.y <= m_characterButton.getPosition().y + m_characterButton.getSize().y)
+		// Options
+		if (checkIfAreaClicked(mouseWorldPos, m_optionsButton.getPosition(), m_optionsButton.getSize()))
 		{
-			m_currentGameState = GameStates::Character;
-			std::cout << "Character button clicked!" << std::endl;
+			m_currentGameState = GameStates::OptionsScene;
+			std::cout << "Options button clicked!" << std::endl;
+		}
+		// Exit
+		if (checkIfAreaClicked(mouseWorldPos, m_exitButton.getPosition(), m_exitButton.getSize()))
+		{
+			m_DELETEexitGame = true;
+		}
+	}
+	else if (m_currentGameState == OptionsScene)
+	{
+		if (m_options.handleMouseClick(mouseWorldPos, m_hud))
+		{
+			// If handleMouseClick returns true, go back to main menu
+			m_currentGameState = MainMenu;
 		}
 	}
 		// Check Modes Buttons
@@ -153,7 +153,6 @@ void Game::checkKeyboardState()
 	{
 		m_DELETEexitGame = true; 
 	}
-
 }
 
 void Game::processKeyboard(float dtSeconds)
@@ -184,19 +183,35 @@ void Game::update(sf::Time t_deltaTime)
 		processKeyboard(dtConverted);
 		m_player.updatePlayer(dtConverted);
 	}
+
+	// FPS
+	m_frameCount++;
+	// Update FPS every 1 second
+	if (m_fpsClock.getElapsedTime().asSeconds() >= 1.0f)
+	{
+		m_fps = m_frameCount / m_fpsClock.getElapsedTime().asSeconds();
+		m_frameCount = 0;
+		m_fpsClock.restart();
+	}
+
+	// UI
+	if (m_hud.getFPSBool() == true)
+	{
+		m_hud.updateFPSText(m_fps);
+	}
+	
 }
 
 
 void Game::render()
 {
-	m_window.clear(sf::Color::Black);
+	m_window.clear(BG_COLOUR);
 	
-
 	// Main Menu
 	//mainMenu.render(m_window);
 	if (m_currentGameState == GameStates::MainMenu)
 	{
-		m_window.draw(m_DELETEwelcomeMessage);
+		m_window.draw(m_beatBreakerText);
 		// Start
 		m_window.draw(m_startButton);
 		m_window.draw(m_startText);
@@ -212,6 +227,12 @@ void Game::render()
 		// Character
 		m_window.draw(m_characterButton);
 		m_window.draw(m_characterText);
+		// Options
+		m_window.draw(m_optionsButton);
+		m_window.draw(m_optionsText);
+		// Exit Button
+		m_window.draw(m_exitButton);
+		m_window.draw(m_exitText);
 	}
 
 	if (m_currentGameState == GameStates::Gameplay)
@@ -221,11 +242,20 @@ void Game::render()
 			m_window.draw(cell);
 		}
 	}
+	// Options
+	if (m_currentGameState == GameStates::OptionsScene)
+	{
+		m_options.renderOptions(m_window);
+	}
 	// Character
 	if (m_currentGameState == GameStates::Character)
 	{
 		m_player.renderPlayer(m_window);
 	}
+
+	// UI
+	m_hud.drawHUD(m_window);
+	
 	
 	m_window.display();
 }
@@ -237,13 +267,13 @@ void Game::setupTexts()
 	{
 		std::cout << "problem loading arial black font" << std::endl;
 	}
-	m_DELETEwelcomeMessage.setFont(m_jerseyFont);
-	m_DELETEwelcomeMessage.setString("Beat Breaker");
-	m_DELETEwelcomeMessage.setPosition(sf::Vector2f{ 200.0f, 50.0f });
-	m_DELETEwelcomeMessage.setCharacterSize(80U);
-	m_DELETEwelcomeMessage.setOutlineColor(sf::Color::Black);
-	m_DELETEwelcomeMessage.setFillColor(sf::Color::Red);
-	m_DELETEwelcomeMessage.setOutlineThickness(2.0f);
+	m_beatBreakerText.setFont(m_jerseyFont);
+	m_beatBreakerText.setString("Beat Breaker");
+	m_beatBreakerText.setPosition(sf::Vector2f{ SCREEN_CENTRE.x - 200.0f, SCREEN_CENTRE.y - 350.0f});
+	m_beatBreakerText.setCharacterSize(80U);
+	m_beatBreakerText.setOutlineColor(sf::Color::Black);
+	m_beatBreakerText.setFillColor(sf::Color::Red);
+	m_beatBreakerText.setOutlineThickness(2.0f);
 
 
 	// Start Text
@@ -270,15 +300,26 @@ void Game::setupTexts()
 	m_MIDIParseText.setPosition(m_MIDIParseButton.getPosition());
 	m_MIDIParseText.setCharacterSize(40U);
 	m_MIDIParseText.setFillColor(sf::Color::Black);
-	// MIDI Parse Text
+	// Character Text
 	m_characterText.setFont(m_jerseyFont);
 	m_characterText.setString("Character");
 	m_characterText.setPosition(m_characterButton.getPosition());
 	m_characterText.setCharacterSize(40U);
 	m_characterText.setFillColor(sf::Color::Black);
+	// Options Menu Text
+	m_optionsText.setFont(m_jerseyFont);
+	m_optionsText.setString("Options");
+	m_optionsText.setPosition(m_optionsButton.getPosition());
+	m_optionsText.setCharacterSize(40U);
+	m_optionsText.setFillColor(sf::Color::Black);
+	// Exit Menu Text
+	m_exitText.setFont(m_jerseyFont);
+	m_exitText.setString("EXIT");
+	m_exitText.setPosition(m_exitButton.getPosition());
+	m_exitText.setCharacterSize(40U);
+	m_exitText.setFillColor(sf::Color::Black);
 
 }
-
 
 void Game::setupSprites()
 {
@@ -292,7 +333,6 @@ void Game::setupSprites()
 	m_DELETElogoSprite.setPosition(sf::Vector2f{ 150.0f, 50.0f });
 }
 
-
 void Game::setupAudio()
 {
 	if (!m_DELETEsoundBuffer.loadFromFile("ASSETS\\AUDIO\\beep.wav"))
@@ -305,39 +345,53 @@ void Game::setupAudio()
 void Game::setupMainMenu()
 {
 	// Start
-	m_startButton.setPosition(m_topLeftStart);
+	m_startButton.setPosition(sf::Vector2f{ SCREEN_CENTRE.x - 400.0f, SCREEN_CENTRE.y - 200.0f });
 	m_startButton.setSize(sf::Vector2f(250, 50));
 	m_startButton.setFillColor(sf::Color::Blue);
 	sf::Vector2f startTextOffset = { m_startButton.getPosition().x + m_startButton.getSize().x / 4.0f, m_startButton.getPosition().y };
 	m_startText.setPosition(startTextOffset);
 
 	// Rand Gen
-	m_randGenButton.setPosition(sf::Vector2f{ m_topLeftStart.x , m_topLeftStart.y + 100.0f});
+	m_randGenButton.setPosition(sf::Vector2f{ SCREEN_CENTRE.x - 400.0f , SCREEN_CENTRE.y - 100.0f});
 	m_randGenButton.setSize(sf::Vector2f(250, 50));
 	m_randGenButton.setFillColor(sf::Color::Blue);
 	sf::Vector2f randGenTextOffset = { m_randGenButton.getPosition().x + 20.0f, m_randGenButton.getPosition().y };
 	m_randGenText.setPosition(randGenTextOffset);
 
 	// Input Test
-	m_testInputButton.setPosition(sf::Vector2f{ m_topLeftStart.x , m_topLeftStart.y + 200.0f });
+	m_testInputButton.setPosition(sf::Vector2f{ SCREEN_CENTRE.x - 400.0f, SCREEN_CENTRE.y });
 	m_testInputButton.setSize(sf::Vector2f(250, 50));
 	m_testInputButton.setFillColor(sf::Color::Blue);
 	sf::Vector2f inputTestOffset = { m_testInputButton.getPosition().x + 20.0f, m_testInputButton.getPosition().y };
 	m_testInputText.setPosition(inputTestOffset);
 
 	// MIDI Parse
-	m_MIDIParseButton.setPosition(sf::Vector2f{ m_topLeftStart.x , m_topLeftStart.y + 300.0f });
+	m_MIDIParseButton.setPosition(sf::Vector2f{ SCREEN_CENTRE.x - 400.0f, SCREEN_CENTRE.y + 100.0f });
 	m_MIDIParseButton.setSize(sf::Vector2f(250, 50));
 	m_MIDIParseButton.setFillColor(sf::Color::Blue);
 	sf::Vector2f midiTextOffset = { m_MIDIParseButton.getPosition().x + 20.0f, m_MIDIParseButton.getPosition().y };
 	m_MIDIParseText.setPosition(midiTextOffset);
 
 	// Character Test
-	m_characterButton.setPosition(sf::Vector2f{ m_topLeftStart.x , m_topLeftStart.y + 400.0f });
+	m_characterButton.setPosition(sf::Vector2f{ SCREEN_CENTRE.x - 400.0f, SCREEN_CENTRE.y + 200.0f });
 	m_characterButton.setSize(sf::Vector2f(250, 50));
 	m_characterButton.setFillColor(sf::Color::Blue);
 	sf::Vector2f characterTextOffset = { m_characterButton.getPosition().x + 20.0f, m_characterButton.getPosition().y };
 	m_characterText.setPosition(characterTextOffset);
+
+	// Options
+	m_optionsButton.setPosition(sf::Vector2f{ SCREEN_CENTRE.x - 400.0f, SCREEN_CENTRE.y + 300.0f });
+	m_optionsButton.setSize(sf::Vector2f(250, 50));
+	m_optionsButton.setFillColor(sf::Color::Blue);
+	sf::Vector2f optionsTextOffset = { m_optionsButton.getPosition().x + 20.0f, m_optionsButton.getPosition().y };
+	m_optionsText.setPosition(optionsTextOffset);
+
+	// Exit 
+	m_exitButton.setPosition(sf::Vector2f{ SCREEN_CENTRE.x, SCREEN_CENTRE.y + 300.0f });
+	m_exitButton.setSize(sf::Vector2f(250, 50));
+	m_exitButton.setFillColor(sf::Color::Magenta);
+	sf::Vector2f exitTextOffset = { m_exitButton.getPosition().x + 20.0f, m_exitButton.getPosition().y };
+	m_exitText.setPosition(exitTextOffset);
 }
 
 bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)

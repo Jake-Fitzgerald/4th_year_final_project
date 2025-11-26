@@ -53,6 +53,8 @@ private:
 
 	sf::Vector2f m_currentPos;
 
+	bool b_isGrounded;
+
 	// Colliders
 	sf::RectangleShape m_hitbox;
 	sf::Vector2f m_hitboxSize{ 80.0f, 80.0f };

@@ -12,13 +12,22 @@
 #include <vector>
 
 // Components
-#include "MainMenu.h"
 #include "Block.h"
 #include "BlockGenerator.h"
 #include "Player.h"
 
+// Scenes
+#include "MainMenu.h"
+#include "Options.h"
+
 // MIDI
 #include "MIDIParse.h"
+
+// UI
+#include "HUD.h"
+
+// Utilities
+#include "Globals.h"
 
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
@@ -26,6 +35,7 @@ enum GameStates
 {
 	MainMenu,
 	Gameplay,
+	OptionsScene,
 	Character,
 	GameOver
 };
@@ -63,7 +73,7 @@ private:
 	sf::RenderWindow m_window; 
 	sf::Font m_jerseyFont;
 	
-	sf::Text m_DELETEwelcomeMessage{ m_jerseyFont }; 
+	sf::Text m_beatBreakerText{ m_jerseyFont }; 
 	sf::Texture m_DELETElogoTexture;
 	sf::Sprite m_DELETElogoSprite{ m_DELETElogoTexture }; 
 	
@@ -79,7 +89,7 @@ private:
 	float m_buttonSep = 30;
 
 	// Main Menu Text
-	std::unique_ptr<sf::Text>m_title;
+	//std::unique_ptr<sf::Text>m_title;
 	// ----------- Buttons ----------- 
 	// Start Gameplay
 	sf::RectangleShape m_startButton;
@@ -96,6 +106,12 @@ private:
 	// Character Test
 	sf::RectangleShape m_characterButton;
 	sf::Text m_characterText{ m_jerseyFont };
+	// Options 
+	sf::RectangleShape m_optionsButton;
+	sf::Text m_optionsText{ m_jerseyFont };
+	// Exit 
+	sf::RectangleShape m_exitButton;
+	sf::Text m_exitText{ m_jerseyFont };
 
 	// States
 	GameStates m_currentGameState = GameStates::MainMenu;
@@ -121,6 +137,20 @@ private:
 	
 	// Player
 	Player m_player;
+
+	// UI
+	HUD m_hud;
+	// FPS
+	sf::Clock m_fpsClock;
+	float m_fps = 0.0f;
+	int m_frameCount = 0;
+	// BG
+	const sf::Color BG_COLOUR{ 60, 30, 80, 50 };
+
+	// Options
+	Options m_options;
+
+
 };
 
 #pragma warning( pop ) 
