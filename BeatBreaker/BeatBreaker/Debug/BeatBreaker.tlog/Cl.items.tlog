@@ -3,6 +3,7 @@ C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BlockG
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\Game.obj
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\GameOver.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\GameOver.obj
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Gameplay.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\Gameplay.obj
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Highscore.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\Highscore.obj
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\HUD.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\HUD.obj
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\main.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\main.obj
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MainMenu.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\MainMenu.obj
@@ -10,4 +11,5 @@ C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIPa
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Options.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\Options.obj
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Player.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\Player.obj
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Results.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\Results.obj
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\SoundManager.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\SoundManager.obj
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Utilities.cpp;C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BeatBreaker\Debug\Utilities.obj

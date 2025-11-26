@@ -24,6 +24,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Gameplay.cpp" />
+    <ClCompile Include="Highscore.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Results.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +42,7 @@
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Highscore.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MIDIParse.h" />
@@ -47,6 +50,7 @@
     <ClInclude Include="Options.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Results.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>

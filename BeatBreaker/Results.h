@@ -20,6 +20,14 @@ class Results
 public:
 
 private:
+	// Current run
+	int m_depthReached;
+	int m_timeReached;
+	int m_scoreReached;
 
+	// Load from saved data
+	int m_pbDepth;
+	int m_pbTime;
+	int m_pbScore;
 };
 

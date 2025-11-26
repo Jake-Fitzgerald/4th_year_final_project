@@ -1,8 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Globals.h"
 #include <iostream>
 #include "HUD.h"
+
 
 class Options
 {
@@ -37,5 +39,7 @@ private:
 	sf::Vector2f m_returnPos = sf::Vector2f{ m_screenCentre.x - 100.0f, m_screenCentre.y + 200.0f };
 
 	sf::Vector2f m_buttonScale = sf::Vector2f{ 200.0f, 50.0f };
+
+	//sf::Sound m_testSound;
 };
 

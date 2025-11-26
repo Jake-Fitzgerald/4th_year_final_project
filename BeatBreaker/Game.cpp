@@ -18,6 +18,10 @@ Game::Game() :
 	
 	// Player
 	setupPlayer();
+
+	m_soundManager.loadBuffer("ui_cancel", "ASSETS\\AUDIO\\SFX\\UI\\ui_cancel.wav");
+	m_soundManager.loadBuffer("ui_confirm", "ASSETS\\AUDIO\\SFX\\UI\\ui_confirm.wav");
+	//m_soundManager.play("ui_cancel", SoundType::SFX);
 }
 
 Game::~Game()
@@ -113,6 +117,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		{
 			m_currentGameState = GameStates::Gameplay;
 			std::cout << "Start button clicked!" << std::endl;
+			m_testSound.play();
 		}
 
 		// Character
@@ -120,12 +125,19 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		{
 			m_currentGameState = GameStates::Gameplay;
 			std::cout << "Start button clicked!" << std::endl;
+			
 		}
 		// Options
 		if (checkIfAreaClicked(mouseWorldPos, m_optionsButton.getPosition(), m_optionsButton.getSize()))
 		{
 			m_currentGameState = GameStates::OptionsScene;
 			std::cout << "Options button clicked!" << std::endl;
+		}
+		// Rand Gen Button
+		if (checkIfAreaClicked(mouseWorldPos, m_randGenButton.getPosition(), m_randGenButton.getSize()))
+		{
+			m_soundManager.play("ui_cancel", SoundType::SFX);
+			m_soundManager.play("ui_confirm", SoundType::SFX);
 		}
 		// Exit
 		if (checkIfAreaClicked(mouseWorldPos, m_exitButton.getPosition(), m_exitButton.getSize()))
@@ -340,6 +352,11 @@ void Game::setupAudio()
 		std::cout << "Error loading beep sound" << std::endl;
 	}
 	//m_DELETEsound.play(); // test sound
+	if (!m_soundBuffer.loadFromFile("ASSETS\\AUDIO\\SFX\\UI\\ui_cancel.wav"))
+	{
+		std::cout << "Error loading test sound" << std::endl;
+	}
+	//m_testSound.play();
 }
 
 void Game::setupMainMenu()

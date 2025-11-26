@@ -30,6 +30,9 @@ public:
 	uint32_t read_uint32(std::ifstream& t_file);
 	uint16_t read_uint16(std::ifstream& t_file);
 
+	// Save to a file
+	//void saveToFile();
+
 private:
 
 };

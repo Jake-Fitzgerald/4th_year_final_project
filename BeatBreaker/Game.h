@@ -15,6 +15,7 @@
 #include "Block.h"
 #include "BlockGenerator.h"
 #include "Player.h"
+#include "SoundManager.h"
 
 // Scenes
 #include "MainMenu.h"
@@ -150,7 +151,12 @@ private:
 	// Options
 	Options m_options;
 
-
+	// Audio
+	sf::SoundBuffer m_soundBuffer;
+	sf::Sound m_testSound{ m_soundBuffer };
+	const int m_soundPoolSize = 10;
+	SoundManager m_soundManager;
+	SoundType m_soundType;
 };
 
 #pragma warning( pop ) 
