@@ -86,17 +86,39 @@ void Options::renderOptions(sf::RenderWindow& t_window)
 
 }
 
-bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud)
+bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager& t_soundManager)
 {
 	// Music
 	if (m_musicButton.getGlobalBounds().contains(t_mousePos))
 	{
-		std::cerr << "Music button clicked" << std::endl;
+		if (m_currentMusicVolume > 0.0f)
+		{
+			m_currentMusicVolume = 0.0f;
+			m_musicButton.setFillColor(sf::Color::Red);
+		}
+		else
+		{
+			m_currentMusicVolume = 100.0f;
+			m_musicButton.setFillColor(sf::Color::Blue);
+		}
+
+		t_soundManager.setTypeVolume(SoundType::MUSIC, m_currentMusicVolume);
 	}
 	// SFX
 	if (m_sfxButton.getGlobalBounds().contains(t_mousePos))
 	{
-		std::cerr << "SFX button clicked" << std::endl;
+		if (m_currentSFXVolume > 0.0f)
+		{
+			m_currentSFXVolume = 0.0f;
+			m_sfxButton.setFillColor(sf::Color::Red);
+		}
+		else
+		{
+			m_currentSFXVolume = 100.0f;
+			m_sfxButton.setFillColor(sf::Color::Blue);
+		}
+		
+		t_soundManager.setTypeVolume(SoundType::SFX, m_currentSFXVolume);
 	}
 	// FPS
 	if (m_fpsButton.getGlobalBounds().contains(t_mousePos))
@@ -112,3 +134,11 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud)
 
 	return false;
 }
+
+void Options::getSoundTypes()
+{
+	// to do
+	// get the sound manager again?
+}
+
+

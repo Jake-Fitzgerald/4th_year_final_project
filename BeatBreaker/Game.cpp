@@ -19,8 +19,8 @@ Game::Game() :
 	// Player
 	setupPlayer();
 
-	m_soundManager.loadBuffer("ui_cancel", "ASSETS\\AUDIO\\SFX\\UI\\ui_cancel.wav");
-	m_soundManager.loadBuffer("ui_confirm", "ASSETS\\AUDIO\\SFX\\UI\\ui_confirm.wav");
+	m_soundManager.loadBuffer("ui_cancel", "ASSETS\\AUDIO\\SFX\\UI\\ui_cancel.wav", SoundType::SFX);
+	m_soundManager.loadBuffer("ui_confirm", "ASSETS\\AUDIO\\SFX\\UI\\ui_confirm.wav", SoundType::MUSIC);
 	//m_soundManager.play("ui_cancel", SoundType::SFX);
 }
 
@@ -147,7 +147,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	}
 	else if (m_currentGameState == OptionsScene)
 	{
-		if (m_options.handleMouseClick(mouseWorldPos, m_hud))
+		if (m_options.handleMouseClick(mouseWorldPos, m_hud, m_soundManager))
 		{
 			// If handleMouseClick returns true, go back to main menu
 			m_currentGameState = MainMenu;

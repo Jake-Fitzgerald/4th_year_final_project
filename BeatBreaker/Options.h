@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include <iostream>
 #include "HUD.h"
+#include "SoundManager.h"
 
 
 class Options
@@ -16,7 +17,9 @@ public:
 
 	void renderOptions(sf::RenderWindow& t_window);
 
-	bool handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud);
+	bool handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager &t_soundManager);
+
+	void getSoundTypes();
 
 private:
 	sf::Text m_OptionsText;
@@ -40,6 +43,8 @@ private:
 
 	sf::Vector2f m_buttonScale = sf::Vector2f{ 200.0f, 50.0f };
 
-	//sf::Sound m_testSound;
+	// Keep track of the sound types (assume they are already at full volume)
+	float m_currentMusicVolume = 100.0f;
+	float m_currentSFXVolume = 100.0f;
 };
 

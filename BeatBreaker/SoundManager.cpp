@@ -3,9 +3,10 @@
 SoundManager::SoundManager(int t_poolSize)
 {
 	m_soundsPool.reserve(t_poolSize);
+    setDefaultVolumes();
 }
 
-void SoundManager::loadBuffer(const std::string& t_name, const std::string& t_filename)
+void SoundManager::loadBuffer(const std::string& t_name, const std::string& t_filename, SoundType t_soundType)
 {
     sf::SoundBuffer buffer;
     if (!buffer.loadFromFile(t_filename)) 
@@ -16,6 +17,8 @@ void SoundManager::loadBuffer(const std::string& t_name, const std::string& t_fi
 
     // Put the buffer into the map
     m_buffersMap[t_name] = std::move(buffer);
+    // Assign type
+    m_soundTypes[t_name] = t_soundType;
 }
 
 sf::Sound* SoundManager::getFreeSound(const sf::SoundBuffer &t_buffer)
@@ -56,6 +59,7 @@ void SoundManager::play(const std::string& t_name, SoundType t_soundType)
     }
 
     // Grab a free sound
+    // Second is the buffer in the map, first is the name
     sf::Sound* currentSound = getFreeSound(it->second);
     // Check is there any sounds free
     if (!currentSound)
@@ -64,12 +68,24 @@ void SoundManager::play(const std::string& t_name, SoundType t_soundType)
         return;
     }
 
-    // Make sure it's not playing incase the check above is buggy
-   // currentSound->stop();
-    // Second is the buffer in the map, first is the name
-   // currentSound->setBuffer(it->second);
-    currentSound->setVolume(100.0f);
+    // Check what type it is
+    SoundType currentType = m_soundTypes[t_name];
+    float volume = m_typeVolumes[static_cast<int>( currentType)];
+    currentSound->setVolume(volume);
+
+    
+
 
     currentSound->play();
-    std::cerr << "SOUND played" << std::endl;
+}
+
+void SoundManager::setTypeVolume(SoundType t_type, float t_volume)
+{
+    m_typeVolumes[static_cast<int>(t_type)] = t_volume;
+}
+
+void SoundManager::setDefaultVolumes()
+{
+    setTypeVolume(SoundType::SFX, 100.0f);
+    setTypeVolume(SoundType::MUSIC, 100.0f);
 }
