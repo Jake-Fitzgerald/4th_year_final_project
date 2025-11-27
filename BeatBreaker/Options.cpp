@@ -5,6 +5,8 @@ Options::Options(const sf::Font& font)
 {
 	setupOptionsTexts();
 	setupOptionsButtons();
+	// Sprites
+	setupOptionsTextures();
 }
 
 void Options::setupOptionsTexts()
@@ -70,7 +72,7 @@ void Options::setupOptionsButtons()
 	// Music Test 
 	m_musicTestButton.setFillColor(sf::Color::White);
 	m_musicTestButton.setSize(m_buttonTestScale);
-	m_musicTestButton.setPosition(sf::Vector2f{m_musicPos.x + 250.0f, m_musicPos.y});
+	m_musicTestButton.setPosition(m_musicTestPos);
 
 	// SFX
 	m_sfxButton.setFillColor(sf::Color::Blue);
@@ -79,7 +81,7 @@ void Options::setupOptionsButtons()
 	// SFX Test 
 	m_sfxTestButton.setFillColor(sf::Color::White);
 	m_sfxTestButton.setSize(m_buttonTestScale);
-	m_sfxTestButton.setPosition(sf::Vector2f{ m_sfxPos.x + 250.0f, m_sfxPos.y });
+	m_sfxTestButton.setPosition(m_sfxTestPos);
 
 	// FPS
 	m_fpsButton.setFillColor(sf::Color::Blue);
@@ -101,6 +103,9 @@ void Options::setupOptionsButtons()
 
 void Options::renderOptions(sf::RenderWindow& t_window)
 {
+	// Background
+	t_window.draw(m_bgSprite);
+
 	// BUTTONS
 	t_window.draw(m_musicButton);
 	t_window.draw(m_musicTestButton);
@@ -122,6 +127,10 @@ void Options::renderOptions(sf::RenderWindow& t_window)
 	t_window.draw(m_returnText);
 	t_window.draw(m_saveText);
 	t_window.draw(m_loadText);
+
+	// Sprites
+	t_window.draw(m_musicNoteSprite);
+	t_window.draw(m_sfxNoteSprite);
 }
 
 bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager& t_soundManager)
@@ -303,6 +312,39 @@ void Options::changeButtonColours()
 	{
 		m_sfxButton.setFillColor(sf::Color::Blue);
 	}
+}
+
+void Options::setupOptionsTextures()
+{
+	// Music Note
+	if (!m_musicNoteTex.loadFromFile("ASSETS\\IMAGES\\UI\\sound_test_MUSIC.png"))
+	{
+		std::cerr << "problem loading options music texture" << std::endl;
+	}
+
+	m_musicNoteSprite.setTexture(m_musicNoteTex, true);
+	m_musicNoteSprite.setPosition(m_musicTestPos);
+	m_musicNoteSprite.setScale(sf::Vector2f{ 0.8f, 0.8f });
+
+	// SFX Note
+	if (!m_sfxNoteTex.loadFromFile("ASSETS\\IMAGES\\UI\\sound_test_SFX.png"))
+	{
+		std::cerr << "problem loading options sfx texture" << std::endl;
+	}
+
+	m_sfxNoteSprite.setTexture(m_sfxNoteTex, true);
+	m_sfxNoteSprite.setPosition(m_sfxTestPos);
+	m_sfxNoteSprite.setScale(sf::Vector2f{ 0.8f, 0.8f });
+
+	// Background
+	if (!m_bgTex.loadFromFile("ASSETS\\IMAGES\\Backgrounds\\test_BG_1.png"))
+	{
+		std::cerr << "problem loading options background texture" << std::endl;
+	}
+
+	m_bgSprite.setTexture(m_bgTex, true);
+	m_bgSprite.setPosition(sf::Vector2f{0.0f, 0.0f});
+	//m_bgSprite.setScale(sf::Vector2f{ 0.8f, 0.8f });
 }
 
 

@@ -131,7 +131,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		if (checkIfAreaClicked(mouseWorldPos, m_optionsButton.getPosition(), m_optionsButton.getSize()))
 		{
 			m_currentGameState = GameStates::OptionsScene;
-			std::cout << "Options button clicked!" << std::endl;
+			m_soundManager.play("ui_confirm", SoundType::MUSIC);
 		}
 		// Rand Gen Button
 		if (checkIfAreaClicked(mouseWorldPos, m_randGenButton.getPosition(), m_randGenButton.getSize()))
