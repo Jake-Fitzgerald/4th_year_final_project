@@ -137,7 +137,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		if (checkIfAreaClicked(mouseWorldPos, m_randGenButton.getPosition(), m_randGenButton.getSize()))
 		{
 			m_soundManager.play("ui_cancel", SoundType::SFX);
-			m_soundManager.play("ui_confirm", SoundType::SFX);
+			m_soundManager.play("ui_confirm", SoundType::MUSIC);
 		}
 		// Exit
 		if (checkIfAreaClicked(mouseWorldPos, m_exitButton.getPosition(), m_exitButton.getSize()))

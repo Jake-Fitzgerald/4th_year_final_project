@@ -5,6 +5,8 @@
 #include <iostream>
 #include "HUD.h"
 #include "SoundManager.h"
+#include <iostream>
+#include <fstream> 
 
 
 class Options
@@ -21,17 +23,28 @@ public:
 
 	void getSoundTypes();
 
+	void savePreferences();
+	void loadPreferences(SoundManager& t_soundManager);
+
+	void changeButtonColours();
+
 private:
 	sf::Text m_OptionsText;
 	sf::Text m_musicText;
 	sf::Text m_sfxText;
 	sf::Text m_fpsText;
 	sf::Text m_returnText;
+	sf::Text m_saveText;
+	sf::Text m_loadText;
 
 	sf::RectangleShape m_musicButton;
+	sf::RectangleShape m_musicTestButton;
 	sf::RectangleShape m_sfxButton;
+	sf::RectangleShape m_sfxTestButton;
 	sf::RectangleShape m_fpsButton;
 	sf::RectangleShape m_returnButton;
+	sf::RectangleShape m_saveButton;
+	sf::RectangleShape m_loadButton;
 
 	// Positions
 	sf::Vector2f m_screenCentre = SCREEN_CENTRE;
@@ -39,9 +52,13 @@ private:
 	sf::Vector2f m_musicPos = sf::Vector2f{ m_screenCentre.x - 100.0f, m_screenCentre.y - 100.0f };
 	sf::Vector2f m_sfxPos = sf::Vector2f{ m_screenCentre.x - 100.0f, m_screenCentre.y };
 	sf::Vector2f m_fpsPos = sf::Vector2f{ m_screenCentre.x - 100.0f, m_screenCentre.y + 100.0f};
-	sf::Vector2f m_returnPos = sf::Vector2f{ m_screenCentre.x - 100.0f, m_screenCentre.y + 200.0f };
+	sf::Vector2f m_returnPos = sf::Vector2f{ m_screenCentre.x - 400.0f, m_screenCentre.y + 200.0f };
+	sf::Vector2f m_savePos = sf::Vector2f{ m_screenCentre.x - 100.0f, m_screenCentre.y + 200.0f };
+	sf::Vector2f m_loadPos = sf::Vector2f{ m_screenCentre.x + 100.0f, m_screenCentre.y + 200.0f };
 
 	sf::Vector2f m_buttonScale = sf::Vector2f{ 200.0f, 50.0f };
+	sf::Vector2f m_buttonSmallScale = sf::Vector2f{ 100.0f, 50.0f };
+	sf::Vector2f m_buttonTestScale = sf::Vector2f{ 50.0f, 50.0f };
 
 	// Keep track of the sound types (assume they are already at full volume)
 	float m_currentMusicVolume = 100.0f;
