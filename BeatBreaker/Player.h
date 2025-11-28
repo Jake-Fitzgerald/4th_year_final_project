@@ -3,7 +3,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "Globals.h"
 #include <iostream>
-#include "CollisionManager.h"
+
 
 enum MovingDir
 {
@@ -50,6 +50,7 @@ public:
 	sf::FloatRect getHitbox() const;
 	sf::FloatRect getHurtbox() const;
 	sf::FloatRect getBreakHitbox() const;
+	sf::FloatRect getGroundHitbox() const;
 	bool checkCollisionWithShapes(const std::vector<sf::RectangleShape>& t_shapes);
 	
 
@@ -100,5 +101,7 @@ private:
 	sf::Vector2f m_groundHitboxSize{ 80.0f, 10.0f };
 
 	sf::Vector2f m_previousPos;
+	
+	
 };
 

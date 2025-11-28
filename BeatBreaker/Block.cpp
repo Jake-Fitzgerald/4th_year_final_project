@@ -1,5 +1,9 @@
 #include "Block.h"
 
+Block::Block()
+{
+}
+
 void Block::renderBlock(sf::RenderWindow& t_window)
 {
 	// Render collision
@@ -30,4 +34,31 @@ void Block::setupBlockRectangle()
 	m_hitboxShape.setOutlineThickness(1.f);
 	m_hitboxShape.setSize(m_colliderSize);
 	m_hitboxShape.setPosition(m_hitboxPos);
+}
+
+void Block::setPosition(sf::Vector2f t_position)
+{
+	m_currentPosition = t_position;
+	m_colliderShape.setPosition(m_currentPosition);
+}
+
+void Block::setColour(ColourStates t_colour)
+{
+	m_currentColourState = t_colour;
+	m_colliderShape.setFillColor(colours[static_cast<int>(t_colour)]);
+}
+
+sf::Vector2f Block::getPosition() const
+{
+	return m_currentPosition;
+}
+
+sf::RectangleShape& Block::getColliderShape()
+{
+	return m_colliderShape;
+}
+
+sf::RectangleShape& Block::getHitboxShape()
+{
+	return m_hitboxShape;
 }

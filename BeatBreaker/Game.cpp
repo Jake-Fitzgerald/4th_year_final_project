@@ -24,22 +24,25 @@ Game::Game() :
 	
 	m_testBlockShape.setSize(sf::Vector2f(100.0f, 100.0f));
 	m_testBlockShape.setPosition(sf::Vector2f{ 400.0f, 50.0f });
-	m_testCollisionShapes.push_back(m_testBlockShape);
+	m_collisionManager.addCollidable(m_testBlockShape, "BLOCK");
 	// Floor
 	m_floorShape.setSize(sf::Vector2f(800.0f, 10.0f));
 	m_floorShape.setPosition(sf::Vector2f{ 100.0f, 200.0f });
 	m_floorShape.setFillColor(sf::Color::Black);
-	m_testCollisionShapes.push_back(m_floorShape);
+	m_collisionManager.addCollidable(m_floorShape, "FLOOR");
 	// Left Wall
 	m_wallLeftShape.setSize(sf::Vector2f(10.0f, 800.0f));
 	m_wallLeftShape.setPosition(sf::Vector2f{ 50.0f, 10.0f });
 	m_wallLeftShape.setFillColor(sf::Color::Black);
-	m_testCollisionShapes.push_back(m_wallLeftShape);
+	m_collisionManager.addCollidable(m_wallLeftShape, "WALL");
 	// Right Wall
 	m_wallRightShape.setSize(sf::Vector2f(10.0f, 800.0f));
 	m_wallRightShape.setPosition(sf::Vector2f{ 500.0f, 10.0f });
 	m_wallRightShape.setFillColor(sf::Color::Black);
-	m_testCollisionShapes.push_back(m_wallRightShape);
+	m_collisionManager.addCollidable(m_wallRightShape, "WALL");
+
+	// Block Gen Test
+	m_blockGen.genRandomPattern(10);
 }
 
 Game::~Game()
@@ -154,6 +157,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		{
 			m_soundManager.play("ui_cancel"/*, SoundType::SFX*/);
 			m_soundManager.play("ui_confirm"/*, SoundType::MUSIC*/);
+			m_currentGameState = GameStates::RandGen;
 		}
 		// Exit
 		if (checkIfAreaClicked(mouseWorldPos, m_exitButton.getPosition(), m_exitButton.getSize()))
@@ -259,13 +263,18 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		//std::cerr << "[BREAKBOX] Player colliding with test block" << std::endl;
 	}
-
-	if (m_player.checkCollisionWithShapes(m_testCollisionShapes))
+	// Wall Collision
+	if (m_collisionManager.checkCollision(m_player.getHitbox(), "WALL"))
 	{
 		m_player.revertPosition();
 		m_player.updatePlayer(dtConverted);
 	}
-
+	// Block Collision
+	if (m_collisionManager.checkCollision(m_player.getHitbox(), "BLOCK"))
+	{
+		m_player.revertPosition();
+		m_player.updatePlayer(dtConverted);
+	}
 }
 
 
@@ -323,6 +332,12 @@ void Game::render()
 		m_window.draw(m_wallLeftShape);
 		m_window.draw(m_wallRightShape);
 	}
+	// Rand Gen
+	if (m_currentGameState == GameStates::RandGen)
+	{
+		m_blockGen.renderBlocks(m_window);
+	}
+
 
 	// UI
 	m_hud.drawHUD(m_window);

@@ -1,6 +1,16 @@
-﻿  Game.cpp
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(110,31): warning C4189: 'newKeyPress': local variable is initialized but not referenced
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(122,62): warning C4100: 't_event': unreferenced parameter
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(128,40): warning C4189: 'newMouseReleased': local variable is initialized but not referenced
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(173,8): warning C4189: 'buttonFound': local variable is initialized but not referenced
+﻿  BlockGenerator.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'BlockGenerator.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BlockGenerator.cpp(78,43): warning C4100: 't_randType': unreferenced parameter
+  Game.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(113,31): warning C4189: 'newKeyPress': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(125,62): warning C4100: 't_event': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(131,40): warning C4189: 'newMouseReleased': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(177,8): warning C4189: 'buttonFound': local variable is initialized but not referenced
+  Generating Code...
   BeatBreaker.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Debug\BeatBreaker.exe

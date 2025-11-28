@@ -30,7 +30,8 @@
 // Mersenne Twister ref:
 // https://www.geeksforgeeks.org/cpp/stdmt19937-class-in-cpp/
 
-
+const int ROWS = 8;
+const int COLS = 10;
 
 class BlockGenerator
 {
@@ -39,7 +40,17 @@ public:
 
 	void genMIDISection(/* JSONFile t_MIDIData*/);
 
+	void genRandomPattern(int t_sectionLength);
+
+	std::vector<std::vector<Block>>& getBlockGrid();
+
+	void renderBlocks(sf::RenderWindow& t_window);
+
+	void updateBlocks(float t_deltaTime);
+	
+	// Randomise Patterns
 	void genRandomSection(int t_randType);
+	ColourStates getRandomColour();
 
 	// Generic Sections
 	void genHealthSection();
@@ -50,6 +61,28 @@ private:
 	// Total number of blocks in a given map (change based on difficulty)
 	const int TOTAL_BLOCK_AMOUNT = 100; // leave it small for the time being
 
+	
+	const int SMALL_SECTION = ROWS * 10;
+	const int MEDIUM_SECTION = ROWS * 20;
+	const int LARGE_SECTION = ROWS * 30;
 
+	// Grid dimensions
+	int m_rows = ROWS;
+	int m_cols = COLS;
+
+	// Block spacing
+	float m_blockSize = 50.0f;
+	float m_startX = 100.0f;
+	float m_startY = 100.0f;
+
+	std::vector<std::vector<Block>> m_blockGrid;
+
+	// Random Seed
+	std::mt19937 m_rng;
+
+	// Test MIDI values
+	int m_bpm = 100;
+	int m_bps = 200;
+	std::string m_currentDifficulty = "EASY";
 };
 

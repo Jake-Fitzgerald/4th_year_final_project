@@ -16,6 +16,7 @@
 #include "BlockGenerator.h"
 #include "Player.h"
 #include "SoundManager.h"
+#include "CollisionManager.h"
 
 // Scenes
 #include "MainMenu.h"
@@ -36,6 +37,7 @@ enum GameStates
 {
 	MainMenu,
 	Gameplay,
+	RandGen,
 	OptionsScene,
 	Character,
 	GameOver
@@ -167,12 +169,16 @@ private:
 	SoundManager m_soundManager;
 	SoundType m_soundType;
 
-	// TEST
+	// TEST Collision
 	sf::RectangleShape m_testBlockShape;
 	sf::RectangleShape m_floorShape;
 	sf::RectangleShape m_wallLeftShape;
 	sf::RectangleShape m_wallRightShape;
-	std::vector<sf::RectangleShape> m_testCollisionShapes;
+
+	CollisionManager m_collisionManager;
+
+	// Block Generation
+	BlockGenerator m_blockGen;
 };
 
 #pragma warning( pop ) 

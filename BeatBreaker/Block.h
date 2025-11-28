@@ -27,7 +27,8 @@ enum ColourStates
 	Green,
 	Yellow,
 	Health,
-	Barrier
+	Barrier,
+	Error
 };
 
 class Block
@@ -41,6 +42,13 @@ public:
 	void updateBlock(float t_deltaTime);
 
 	void setupBlockRectangle();
+
+	void setPosition(sf::Vector2f t_position);
+	void setColour(ColourStates t_colour);
+
+	sf::Vector2f getPosition() const;
+	sf::RectangleShape& getColliderShape();
+	sf::RectangleShape& getHitboxShape();
 
 	BlockStates m_currentBlockState = BlockStates::Placed;
 	ColourStates m_currentColourState = ColourStates::Blue;
@@ -64,8 +72,10 @@ private:
 	sf::Color YELLOW = sf::Color::Yellow;
 	sf::Color HEALTH_COLOUR = sf::Color(100, 50, 200);
 	sf::Color BARRIER_COLOUR = sf::Color(100, 50, 200);
+	sf::Color ERROR_COLOUR = sf::Color::White;
+
 	// Colour vector
-	std::vector<sf::Color> colours = { BLUE, PINK, GREEN, YELLOW, HEALTH_COLOUR, BARRIER_COLOUR };
+	std::vector<sf::Color> colours = { BLUE, PINK, GREEN, YELLOW, HEALTH_COLOUR, BARRIER_COLOUR, ERROR_COLOUR };
 	
 };
 

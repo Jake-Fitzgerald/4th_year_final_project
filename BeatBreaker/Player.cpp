@@ -72,6 +72,11 @@ sf::FloatRect Player::getBreakHitbox() const
 	return m_breakHitbox.getGlobalBounds();
 }
 
+sf::FloatRect Player::getGroundHitbox() const
+{
+	return m_groundHitbox.getGlobalBounds();
+}
+
 bool Player::checkCollisionWithShapes(const std::vector<sf::RectangleShape>& t_shapes)
 {
 	for (const auto& shape : t_shapes)
