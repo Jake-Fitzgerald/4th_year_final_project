@@ -74,7 +74,6 @@ void Game::run()
 
 void Game::processEvents()
 {
-	
 	while (const std::optional newEvent = m_window.pollEvent())
 	{
 		if ( newEvent->is<sf::Event::Closed>()) // close window message 
@@ -108,6 +107,11 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 	{
 		m_DELETEexitGame = true; 
 	}
+	// Return to Main Menu
+	if (sf::Keyboard::Key::Backspace == newKeypress->code)
+	{
+		m_currentGameState = GameStates::MainMenu;
+	}
 }
 
 void Game::processKeysPressed(const std::optional<sf::Event> t_event)
@@ -126,6 +130,11 @@ void Game::processKeysPressed(const std::optional<sf::Event> t_event)
 
 void Game::processKeysRelease(const std::optional<sf::Event> t_event)
 {
+	//const sf::Event::KeyReleased* newKeypress = t_event->getIf<sf::Event::KeyReleased>();
+	//if (sf::Keyboard::Key::H == newKeypress->code)
+	//{
+	//	std::cerr << "Home" << std::endl;
+	//}
 }
 
 void Game::processMouseRelease(const std::optional<sf::Event> t_event)

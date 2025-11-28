@@ -62,6 +62,7 @@ public:
 	void genHealthSection();
 	void genFunnelTopSection();
 	void genFunnelBottomSection();
+	void genPhaseTransitionSection();
 
 private:
 	// Total number of blocks in a given map (change based on difficulty)

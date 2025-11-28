@@ -99,6 +99,8 @@ PHASE TWO
 ### UI
 - [x] Buttons created for Menus (Main Menu, Option Menu).
 - [x] HUD object created that persists through different scenes (FPS display currently implemented).
+- [x] Setup shapes/vectors for Beat Marker HUD elements :
+  (Beat Markers Quarters Left, Beat Markers Quarters Right, Beat Marker Whole Note)
 
 /////////////////////////////////////
 ### Structure

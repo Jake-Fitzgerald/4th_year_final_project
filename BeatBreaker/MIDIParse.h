@@ -15,6 +15,8 @@
 	Links:
 	http://www.petesqbsite.com/sections/express/issue18/midifilespart1.html
 
+	First parse the header to find the BPM, Time signature
+
 */
 
 class MIDIParse
@@ -26,14 +28,26 @@ public:
 
 	bool parseFile(const std::string& t_fileName);
 
+
 	// Shift bits
+	// Reads 4 bytes then converts them into 32
 	uint32_t read_uint32(std::ifstream& t_file);
+	// Reads 2 bytes then converts them into 16
 	uint16_t read_uint16(std::ifstream& t_file);
 
-	// Save to a file
-	//void saveToFile();
+	// Save the parsed data
+	void saveToFile();
+	// Load the parsed data
+	void LoadFromFile();
 
 private:
+	// Header Data
+	double m_BPM;
+	int m_timeSigBeat; // 3 from 3/4
+	int m_timeSigMeasure; // 4 from 3/4
+
+	// std::vector<> m_tracks; // Unsure how to store these when reading them
+	std::string m_trackName;
 
 };
 
