@@ -70,8 +70,8 @@ private:
 	sf::Color PINK = sf::Color::Magenta;
 	sf::Color GREEN = sf::Color::Green;
 	sf::Color YELLOW = sf::Color::Yellow;
-	sf::Color HEALTH_COLOUR = sf::Color(100, 50, 200);
-	sf::Color BARRIER_COLOUR = sf::Color(100, 50, 200);
+	sf::Color HEALTH_COLOUR = sf::Color(200, 20, 200, 100);
+	sf::Color BARRIER_COLOUR = sf::Color(30, 30, 50);
 	sf::Color ERROR_COLOUR = sf::Color::White;
 
 	// Colour vector

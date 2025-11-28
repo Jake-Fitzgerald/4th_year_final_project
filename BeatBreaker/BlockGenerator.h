@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <vector>
+#include <iostream>
 // Random lib
 #include <ctime>
 #include <random>
@@ -51,6 +52,11 @@ public:
 	// Randomise Patterns
 	void genRandomSection(int t_randType);
 	ColourStates getRandomColour();
+
+	// Generation Settings
+	void setDifficulty(const std::string& t_difficulty);
+	int barrierCalculate();
+	int healthCalculate();
 
 	// Generic Sections
 	void genHealthSection();

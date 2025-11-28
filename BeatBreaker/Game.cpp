@@ -42,6 +42,8 @@ Game::Game() :
 	m_collisionManager.addCollidable(m_wallRightShape, "WALL");
 
 	// Block Gen Test
+	m_blockGen.setDifficulty("EASY");
+	//m_blockGen.setDifficulty("HARD");
 	m_blockGen.genRandomPattern(10);
 }
 

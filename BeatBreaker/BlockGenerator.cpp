@@ -89,8 +89,32 @@ ColourStates BlockGenerator::getRandomColour()
         seeded = true;
     }
 
+    //////////////////////
+    int barrierChance = barrierCalculate();
+
+    // Generate random numb 0-99
+    int randBarrierPercent = std::rand() % 100;
+    
+    // Check if we should spawn a barrier
+    if (randBarrierPercent < barrierChance)
+    {
+        return ColourStates::Barrier;
+    }
+    //////////////////////
+    int healthChance = healthCalculate();
+
+    // Generate random numb 0-99
+    int randHealthPercent = std::rand() % 100;
+
+    // Check if we should spawn a barrier
+    if (randHealthPercent < healthChance)
+    {
+        return ColourStates::Health;
+    }
+    //////////////////////
+
     // Generate a random number between 0 and 5
-    int randomNum = std::rand() % 7;  // rand() % 6 gives a number between 0 and 5
+    int randomNum = std::rand() % 7;  
 
     // Return the corresponding ColourState
     switch (randomNum)
@@ -99,10 +123,58 @@ ColourStates BlockGenerator::getRandomColour()
     case 1: return ColourStates::Red;
     case 2: return ColourStates::Green;
     case 3: return ColourStates::Yellow;
-    case 4: return ColourStates::Health;
-    case 5: return ColourStates::Barrier;
+    //case 4: return ColourStates::Health;
+    //case 5: return ColourStates::Barrier;
     default: return ColourStates::Blue;  
     }
+}
+
+void BlockGenerator::setDifficulty(const std::string& t_difficulty)
+{
+    m_currentDifficulty = t_difficulty;
+}
+
+int BlockGenerator::barrierCalculate()
+{
+    // Adjust barrier chance
+    int barrierChance = 0;
+
+    if (m_currentDifficulty == "EASY")
+    {
+        barrierChance = 5;
+        //std::cerr << "[GEN] Barrier chance is EASY" << std::endl;
+    }
+    else if (m_currentDifficulty == "MEDIUM")
+    {
+        barrierChance = 10;
+    }
+    else if (m_currentDifficulty == "HARD")
+    {
+        barrierChance = 15;
+    }
+
+    return barrierChance;
+}
+
+int BlockGenerator::healthCalculate()
+{
+    // Adjust barrier chance
+    int healthChance = 0;
+
+    if (m_currentDifficulty == "EASY")
+    {
+        healthChance = 3;
+    }
+    else if (m_currentDifficulty == "MEDIUM")
+    {
+        healthChance = 2;
+    }
+    else if (m_currentDifficulty == "HARD")
+    {
+        healthChance = 1;
+    }
+
+    return healthChance;
 }
 
 void BlockGenerator::genHealthSection()
