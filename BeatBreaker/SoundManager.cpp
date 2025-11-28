@@ -23,6 +23,12 @@ void SoundManager::loadBuffer(const std::string& t_name, const std::string& t_fi
 
 sf::Sound* SoundManager::getFreeSound(const sf::SoundBuffer &t_buffer)
 {
+    // Check if our pool is too big
+    if (m_soundsPool.size() >= MAX_POOL_AMOUNT)
+    {
+        return nullptr; 
+    }
+
     // Loop through all of the sounds
     for (std::size_t i = 0; i < m_soundsPool.size(); ++i) 
     {
@@ -47,7 +53,7 @@ sf::Sound* SoundManager::getFreeSound(const sf::SoundBuffer &t_buffer)
     return pointer;
 }
 
-void SoundManager::play(const std::string& t_name, SoundType t_soundType)
+void SoundManager::play(const std::string& t_name)
 {
     // Look through and find the sound buffer's name in the map
     auto it = m_buffersMap.find(t_name);
@@ -73,9 +79,6 @@ void SoundManager::play(const std::string& t_name, SoundType t_soundType)
     float volume = m_typeVolumes[static_cast<int>( currentType)];
     currentSound->setVolume(volume);
 
-    
-
-
     currentSound->play();
 }
 
@@ -88,4 +91,9 @@ void SoundManager::setDefaultVolumes()
 {
     setTypeVolume(SoundType::SFX, 100.0f);
     setTypeVolume(SoundType::MUSIC, 100.0f);
+}
+
+void SoundManager::randomisePitch()
+{
+    // to do for Block breaking sound
 }

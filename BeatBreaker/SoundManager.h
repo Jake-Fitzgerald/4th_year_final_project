@@ -5,8 +5,6 @@
 
 /*
 Notes:
-
-
 	Block Breaking pitch randomise
 	Can set a randomised pitch and use currentSound->setPitch(random float) to change it
 
@@ -29,10 +27,12 @@ public:
 	// We dynamically create sound with this
 	sf::Sound* getFreeSound(const sf::SoundBuffer &t_buffer);
 
-	void play(const std::string& t_name, SoundType t_soundType);
+	void play(const std::string& t_name);
 
 	void setTypeVolume(SoundType t_type, float t_volume);
 	void setDefaultVolumes();
+
+	void randomisePitch();
 
 private:
 	// Put all of our sounds in this vector and reuse them
@@ -45,5 +45,7 @@ private:
 	// Sound Type
 	std::unordered_map<std::string, SoundType> m_soundTypes;
 	float m_typeVolumes[2];
+
+	const int MAX_POOL_AMOUNT = 20;
 };
 

@@ -41,6 +41,13 @@ enum GameStates
 	GameOver
 };
 
+enum Difficulties
+{
+	Easy,
+	Medium,
+	Hard
+};
+
 class Game
 {
 public:
@@ -69,6 +76,8 @@ private:
 	void setupGrid();
 
 	void setupPlayer();
+
+	void setupSounds();
 
 	
 	sf::RenderWindow m_window; 
@@ -124,7 +133,7 @@ private:
 	const float CELL_HEIGHT = 50.f;
 	std::vector<sf::RectangleShape> m_grid;
 
-	// Block colours
+	// Block colours				[DEBUG]
 	sf::Color BLUE = sf::Color::Blue;
 	sf::Color PINK = sf::Color::Magenta;
 	sf::Color GREEN = sf::Color::Green;
@@ -157,6 +166,13 @@ private:
 	const int m_soundPoolSize = 10;
 	SoundManager m_soundManager;
 	SoundType m_soundType;
+
+	// TEST
+	sf::RectangleShape m_testBlockShape;
+	sf::RectangleShape m_floorShape;
+	sf::RectangleShape m_wallLeftShape;
+	sf::RectangleShape m_wallRightShape;
+	std::vector<sf::RectangleShape> m_testCollisionShapes;
 };
 
 #pragma warning( pop ) 

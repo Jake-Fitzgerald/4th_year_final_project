@@ -19,9 +19,27 @@ Game::Game() :
 	// Player
 	setupPlayer();
 
-	m_soundManager.loadBuffer("ui_cancel", "ASSETS\\AUDIO\\SFX\\UI\\ui_cancel.wav", SoundType::SFX);
-	m_soundManager.loadBuffer("ui_confirm", "ASSETS\\AUDIO\\SFX\\UI\\ui_confirm.wav", SoundType::MUSIC);
-	//m_soundManager.play("ui_cancel", SoundType::SFX);
+	// Sound Manager
+	setupSounds();
+	
+	m_testBlockShape.setSize(sf::Vector2f(100.0f, 100.0f));
+	m_testBlockShape.setPosition(sf::Vector2f{ 400.0f, 50.0f });
+	m_testCollisionShapes.push_back(m_testBlockShape);
+	// Floor
+	m_floorShape.setSize(sf::Vector2f(800.0f, 10.0f));
+	m_floorShape.setPosition(sf::Vector2f{ 100.0f, 200.0f });
+	m_floorShape.setFillColor(sf::Color::Black);
+	m_testCollisionShapes.push_back(m_floorShape);
+	// Left Wall
+	m_wallLeftShape.setSize(sf::Vector2f(10.0f, 800.0f));
+	m_wallLeftShape.setPosition(sf::Vector2f{ 50.0f, 10.0f });
+	m_wallLeftShape.setFillColor(sf::Color::Black);
+	m_testCollisionShapes.push_back(m_wallLeftShape);
+	// Right Wall
+	m_wallRightShape.setSize(sf::Vector2f(10.0f, 800.0f));
+	m_wallRightShape.setPosition(sf::Vector2f{ 500.0f, 10.0f });
+	m_wallRightShape.setFillColor(sf::Color::Black);
+	m_testCollisionShapes.push_back(m_wallRightShape);
 }
 
 Game::~Game()
@@ -123,21 +141,19 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		// Character
 		if (checkIfAreaClicked(mouseWorldPos, m_characterButton.getPosition(), m_characterButton.getSize()))
 		{
-			m_currentGameState = GameStates::Gameplay;
-			std::cout << "Start button clicked!" << std::endl;
-			
+			m_currentGameState = GameStates::Character;
 		}
 		// Options
 		if (checkIfAreaClicked(mouseWorldPos, m_optionsButton.getPosition(), m_optionsButton.getSize()))
 		{
 			m_currentGameState = GameStates::OptionsScene;
-			m_soundManager.play("ui_confirm", SoundType::MUSIC);
+			m_soundManager.play("ui_confirm"/*, SoundType::MUSIC*/);
 		}
 		// Rand Gen Button
 		if (checkIfAreaClicked(mouseWorldPos, m_randGenButton.getPosition(), m_randGenButton.getSize()))
 		{
-			m_soundManager.play("ui_cancel", SoundType::SFX);
-			m_soundManager.play("ui_confirm", SoundType::MUSIC);
+			m_soundManager.play("ui_cancel"/*, SoundType::SFX*/);
+			m_soundManager.play("ui_confirm"/*, SoundType::MUSIC*/);
 		}
 		// Exit
 		if (checkIfAreaClicked(mouseWorldPos, m_exitButton.getPosition(), m_exitButton.getSize()))
@@ -177,6 +193,23 @@ void Game::processKeyboard(float dtSeconds)
 	{
 		m_player.moveRight(dtSeconds);
 	}
+	// Pointing
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+	{
+		m_player.pointUp();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+	{
+		m_player.pointDown();
+	}
+	// Break
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+	{
+		if (m_player.breaking(m_testBlockShape))
+		{
+			m_testBlockShape.setFillColor(sf::Color::Red);
+		}
+	}
 }
 
 
@@ -212,6 +245,27 @@ void Game::update(sf::Time t_deltaTime)
 		m_hud.updateFPSText(m_fps);
 	}
 	
+	// Player
+	// Player collision
+	if (m_player.getHitbox().findIntersection(m_testBlockShape.getGlobalBounds()))
+	{
+		//std::cerr << "[HITBOX] Player colliding with test block" << std::endl;
+	}
+	if (m_player.getHurtbox().findIntersection(m_testBlockShape.getGlobalBounds()))
+	{
+		//std::cerr << "[HURTBOX] Player colliding with test block" << std::endl;
+	}
+	if (m_player.getBreakHitbox().findIntersection(m_testBlockShape.getGlobalBounds()))
+	{
+		//std::cerr << "[BREAKBOX] Player colliding with test block" << std::endl;
+	}
+
+	if (m_player.checkCollisionWithShapes(m_testCollisionShapes))
+	{
+		m_player.revertPosition();
+		m_player.updatePlayer(dtConverted);
+	}
+
 }
 
 
@@ -263,6 +317,11 @@ void Game::render()
 	if (m_currentGameState == GameStates::Character)
 	{
 		m_player.renderPlayer(m_window);
+		m_window.draw(m_testBlockShape);
+		// Stage
+		m_window.draw(m_floorShape);
+		m_window.draw(m_wallLeftShape);
+		m_window.draw(m_wallRightShape);
 	}
 
 	// UI
@@ -455,6 +514,31 @@ void Game::setupPlayer()
 {
 	m_player.setupPlayer();
 	m_player.setSpawnPos(sf::Vector2f{ 100.0f, 100.0f });
+}
+
+void Game::setupSounds()
+{
+	// UI
+	m_soundManager.loadBuffer("ui_cancel", "ASSETS\\AUDIO\\SFX\\UI\\ui_cancel.wav", SoundType::SFX);
+	m_soundManager.loadBuffer("ui_confirm", "ASSETS\\AUDIO\\SFX\\UI\\ui_confirm.wav", SoundType::MUSIC); // Test sound types [temp]
+	m_soundManager.loadBuffer("difficulty_select", "ASSETS\\AUDIO\\SFX\\UI\\difficulty_select.wav", SoundType::SFX);
+	m_soundManager.loadBuffer("results_scene_load", "ASSETS\\AUDIO\\SFX\\UI\\results_scene_load.wav", SoundType::SFX);
+	m_soundManager.loadBuffer("start_game", "ASSETS\\AUDIO\\SFX\\UI\\start_game.wav", SoundType::SFX);
+
+
+	// Music
+	m_soundManager.loadBuffer("Test_MIDI_MUSIC", "ASSETS\\AUDIO\\MUSIC\\WAV\\Test_MIDI.wav", SoundType::MUSIC);
+
+	// Player
+	m_soundManager.loadBuffer("health_drain", "ASSETS\\AUDIO\\SFX\\PLAYER\\health_drain.wav", SoundType::SFX);
+	m_soundManager.loadBuffer("player_crushed", "ASSETS\\AUDIO\\SFX\\PLAYER\\player_crushed.wav", SoundType::SFX);
+	m_soundManager.loadBuffer("player_respawn", "ASSETS\\AUDIO\\SFX\\PLAYER\\player_respawn.wav", SoundType::SFX);
+
+	// Gameplay
+	m_soundManager.loadBuffer("block_break", "ASSETS\\AUDIO\\SFX\\GAMEPLAY\\block_break.wav", SoundType::SFX);
+	m_soundManager.loadBuffer("item_health", "ASSETS\\AUDIO\\SFX\\GAMEPLAY\\item_health.wav", SoundType::SFX);
+	m_soundManager.loadBuffer("item_life", "ASSETS\\AUDIO\\SFX\\GAMEPLAY\\item_life.wav", SoundType::SFX);
+	m_soundManager.loadBuffer("next_track_phase", "ASSETS\\AUDIO\\SFX\\GAMEPLAY\\next_track_phase.wav", SoundType::SFX);
 }
 
 void Game::setupMidiParser()

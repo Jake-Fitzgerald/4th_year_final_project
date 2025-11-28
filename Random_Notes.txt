@@ -105,6 +105,22 @@ Block preset chunks:
 |0|0|0|0|0|
 
 ////////////////////////
+Game Modes:
+- Gameplay
+- Time Attack?
+- Endless ?
+
+////////////////////////
+Mr.Driller rules:
+When Blocks fall they stick to blocks of the same colour.
+Whenever 4 or more blocks of the same colour stick together they are cleared.
+
+We will do the same for when we break a block, we pass through it, also the blocks above start to fall.
+Blocks will cluster together with the same colour, HOWEVER they don't get cleared until the Beat Sweeper passes over them.
+-> No random clears happening all of the time, only when the timeline passes over them.
+-> Allows for more planning to stack colours together
+
+////////////////////////
 Questions:
 How do we stop the player from rushing downwards?
 - Forcing them to dig to the beat. This allows the Beat Sweeper (timeline) to destroy blocks before the screen moves down also.

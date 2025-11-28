@@ -154,7 +154,7 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	// Music Test
 	if (m_musicTestButton.getGlobalBounds().contains(t_mousePos))
 	{
-		t_soundManager.play("ui_confirm", SoundType::MUSIC);
+		t_soundManager.play("ui_confirm"/*, SoundType::MUSIC*/);
 	}
 	// SFX
 	if (m_sfxButton.getGlobalBounds().contains(t_mousePos))
@@ -175,7 +175,7 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	// SFX Test
 	if (m_sfxTestButton.getGlobalBounds().contains(t_mousePos))
 	{
-		t_soundManager.play("ui_cancel", SoundType::SFX);
+		t_soundManager.play("ui_cancel"/*, SoundType::SFX*/);
 	}
 	// FPS
 	if (m_fpsButton.getGlobalBounds().contains(t_mousePos))
