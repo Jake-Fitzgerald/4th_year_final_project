@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "Globals.h"
 #include <iostream>
+#include "CollisionManager.h"
 
 enum MovingDir
 {
