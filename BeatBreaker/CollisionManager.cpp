@@ -31,7 +31,6 @@ void CollisionManager::removeCollidables(const sf::RectangleShape& t_shape)
 void CollisionManager::clearCollidables()
 {
 	// Remove every collider in the vector
-    //m_collidablesVec.clear();
     m_layeredCollidables.clear();
 }
 

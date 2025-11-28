@@ -1,2 +1,2 @@
-Music_volume=0
+Music_volume=100
 SFX_volume=0

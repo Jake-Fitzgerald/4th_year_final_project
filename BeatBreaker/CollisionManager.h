@@ -30,8 +30,6 @@ public:
 	std::vector<sf::RectangleShape>& getCollidables(const std::string& t_layer);
 	void setCollidables();
 
-
-
 private:
 	std::vector<sf::RectangleShape> m_collidablesVec;
 	std::unordered_map<std::string, std::vector<sf::RectangleShape>> m_layeredCollidables;

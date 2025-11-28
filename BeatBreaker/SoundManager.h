@@ -36,7 +36,6 @@ public:
 
 private:
 	// Put all of our sounds in this vector and reuse them
-	//std::vector<sf::Sound> m_soundsPool;
 	std::vector<std::unique_ptr<sf::Sound>> m_soundsPool;
 
 	// Unordered is faster than ordered

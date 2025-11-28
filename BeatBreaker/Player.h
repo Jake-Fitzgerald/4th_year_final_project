@@ -84,7 +84,7 @@ private:
 
 	// Directions
 	MovingDir m_currentDirection = MovingDir::LEFT_MOVE;
-	BreakDir m_currentBreakDirection = BreakDir::LEFT;
+	BreakDir m_currentBreakDirection = BreakDir::DOWN; // Face down on game start
 
 	sf::Vector2f m_currentPos;
 
