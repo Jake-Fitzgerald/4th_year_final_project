@@ -349,6 +349,12 @@ void Game::render()
 		m_blockGen.renderBlocks(m_window);
 	}
 
+	// Visualiser
+	if (m_currentGameState == GameStates::Visualiser)
+	{
+		// visualiser shapes
+	}
+
 
 	// UI
 	m_hud.drawHUD(m_window);

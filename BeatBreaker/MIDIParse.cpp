@@ -115,6 +115,43 @@ uint16_t MIDIParse::read_uint16(std::ifstream& t_file)
 	//return b;
 }
 
+uint8_t MIDIParse::readByte(std::ifstream& t_file)
+{
+	char byte = 0;
+
+	// std::ifstream::read only accepts char, and uint8_t is a typedef of char
+	t_file.read(&byte, sizeof(byte));
+
+	// Convert to unsigned 8-bit value (0–255)
+	return static_cast<uint8_t>(byte);
+}
+
+uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
+{
+	uint32_t value = 0;
+	// Hold each byte read from file
+	uint8_t byte = 0;
+
+	do
+	{
+		
+		uint8_t byte = readByte(t_file);
+
+		// Mask out the most significant bit (MSB) to get the 7 data bits
+		// MSB is used as a continuation flag
+		const uint8_t dataBits = byte & 0x7F;
+
+
+		// Shift existing value 7 bits to the left to make room for new bits
+		// Then OR in the new 7-bit value
+		value = (value << 7) | dataBits;
+	} while (byte & 0x80);
+	// Loop continues while MSB is set (byte & 0x80 != 0)
+	// MSB == 1 means there is another byte in the VLQ
+
+	return value;
+}
+
 //uint16_t MIDIParse::read_uint16(std::ifstream& t_file)
 //{
 

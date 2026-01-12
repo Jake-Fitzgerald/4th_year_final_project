@@ -35,6 +35,9 @@ public:
 	// Reads 2 bytes then converts them into 16
 	uint16_t read_uint16(std::ifstream& t_file);
 
+	uint8_t readByte(std::ifstream& t_file);
+	uint32_t readVLQ(std::ifstream& t_file);
+
 	// Save the parsed data
 	void saveToFile();
 	// Load the parsed data

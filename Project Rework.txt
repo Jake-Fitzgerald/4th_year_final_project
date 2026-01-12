@@ -1,0 +1,19 @@
+Meeting (28/11/2025)
+Idea is too simple and can't be used as the capstone project.
+Instead try to focus on making something "complex"
+-> Fully dive into MIDI
+-> Complete MIDI parser
+-> Music Visualiser?
+
+-------------------------
+Focus on music visualisation using MIDI. We can separate the individual instruments by their channels to correspond with the different visuals.
+Kick Drum: Circle that pulses.
+Hit Hat: Random coloured square that displays in a random position on screen (within a certain range).
+Keyboard keys: Display along the screen horizontally.
+
+
+[DEBUG]
+BPM: Number string
+BPS: Number string
+
+

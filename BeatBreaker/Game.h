@@ -40,7 +40,8 @@ enum GameStates
 	RandGen,
 	OptionsScene,
 	Character,
-	GameOver
+	GameOver,
+	Visualiser
 };
 
 enum Difficulties
@@ -126,7 +127,7 @@ private:
 	sf::Text m_exitText{ m_jerseyFont };
 
 	// States
-	GameStates m_currentGameState = GameStates::MainMenu;
+	GameStates m_currentGameState = GameStates::Visualiser;
 
 	// Test Blocks
 	const int COLS = 8;   
