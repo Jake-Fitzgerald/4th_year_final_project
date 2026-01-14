@@ -134,13 +134,11 @@ uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
 
 	do
 	{
-		
 		uint8_t byte = readByte(t_file);
 
 		// Mask out the most significant bit (MSB) to get the 7 data bits
 		// MSB is used as a continuation flag
 		const uint8_t dataBits = byte & 0x7F;
-
 
 		// Shift existing value 7 bits to the left to make room for new bits
 		// Then OR in the new 7-bit value

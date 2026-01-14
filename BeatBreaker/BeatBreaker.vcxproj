@@ -34,6 +34,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Results.cpp" />
     <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="TrackVisualiser.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +54,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Results.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="TrackVisualiser.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>

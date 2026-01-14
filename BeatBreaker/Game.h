@@ -41,7 +41,7 @@ enum GameStates
 	OptionsScene,
 	Character,
 	GameOver,
-	Visualiser
+	TrackVis
 };
 
 enum Difficulties
@@ -127,7 +127,7 @@ private:
 	sf::Text m_exitText{ m_jerseyFont };
 
 	// States
-	GameStates m_currentGameState = GameStates::Visualiser;
+	GameStates m_currentGameState = GameStates::TrackVis;
 
 	// Test Blocks
 	const int COLS = 8;   

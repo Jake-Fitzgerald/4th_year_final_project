@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{1eccb4b2-e40a-4978-9d43-1e36c5685d54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Visualisers">
+      <UniqueIdentifier>{8f93dd2d-4c76-48db-bcf2-dc8e59766ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visualisers">
+      <UniqueIdentifier>{26bfe033-f0de-4159-892d-efa0ccad1d5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="TrackVisualiser.cpp">
+      <Filter>Source Files\Visualisers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TrackVisualiser.h">
+      <Filter>Header Files\Visualisers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

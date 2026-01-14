@@ -350,7 +350,7 @@ void Game::render()
 	}
 
 	// Visualiser
-	if (m_currentGameState == GameStates::Visualiser)
+	if (m_currentGameState == GameStates::TrackVis)
 	{
 		// visualiser shapes
 	}
