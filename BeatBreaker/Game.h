@@ -31,6 +31,9 @@
 // Utilities
 #include "Globals.h"
 
+// Visualisers
+#include "TrackVisualiser.h"
+
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
 enum GameStates 
@@ -180,6 +183,10 @@ private:
 
 	// Block Generation
 	BlockGenerator m_blockGen;
+
+	// ----- Visualisers -----
+	// Track Visualiser
+	TrackVisualiser trackVisualiser;
 };
 
 #pragma warning( pop ) 

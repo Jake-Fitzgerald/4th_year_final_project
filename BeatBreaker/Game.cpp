@@ -45,6 +45,9 @@ Game::Game() :
 	m_blockGen.setDifficulty("EASY");
 	//m_blockGen.setDifficulty("HARD");
 	m_blockGen.genRandomPattern(10);
+
+	// Track Visualiser
+	trackVisualiser.setupShapes();
 }
 
 Game::~Game()
@@ -353,6 +356,7 @@ void Game::render()
 	if (m_currentGameState == GameStates::TrackVis)
 	{
 		// visualiser shapes
+		trackVisualiser.renderTrackVis(m_window);
 	}
 
 
