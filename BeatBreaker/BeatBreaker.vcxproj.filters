@@ -120,6 +120,9 @@
     <ClCompile Include="TrackVisualiser.cpp">
       <Filter>Source Files\Visualisers</Filter>
     </ClCompile>
+    <ClCompile Include="GridDisplay.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="TrackVisualiser.h">
       <Filter>Header Files\Visualisers</Filter>
+    </ClInclude>
+    <ClInclude Include="GridDisplay.h">
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

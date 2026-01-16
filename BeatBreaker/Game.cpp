@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <iostream>
+#include "GridDisplay.h"
 
 
 Game::Game() :
@@ -48,6 +49,9 @@ Game::Game() :
 
 	// Track Visualiser
 	trackVisualiser.setupShapes();
+
+	// UI 
+	gridDisplay.setupGrid();
 }
 
 Game::~Game()
@@ -362,6 +366,7 @@ void Game::render()
 
 	// UI
 	m_hud.drawHUD(m_window);
+	gridDisplay.renderGrid(m_window);
 	
 	
 	m_window.display();
@@ -545,6 +550,7 @@ void Game::setupGrid()
 		}
 	}
 }
+
 
 void Game::setupPlayer()
 {

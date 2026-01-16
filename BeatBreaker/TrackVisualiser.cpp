@@ -8,7 +8,7 @@ void TrackVisualiser::setupShapes()
         sf::RectangleShape line;
         line.setSize(sf::Vector2f(lineWidth, lineHeight));
         line.setFillColor(sf::Color::White);
-        line.setPosition(sf::Vector2f{ startX + i * spacing, yPos });
+        line.setPosition(sf::Vector2f{ visualiserOrigin.x + i * spacing, visualiserOrigin.y });
 
         trackLinesVertical.push_back(line);
     }
@@ -17,23 +17,20 @@ void TrackVisualiser::setupShapes()
     for (int i = 0; i < horizontalLineCount; i++)
     {
         sf::RectangleShape line;
-        line.setSize({ horizontalLineWidth, horizontalLineHeight });
-        line.setFillColor(sf::Color(50, 50, 50));
-        line.setPosition(sf::Vector2f{ horizontalXPos, horizontalStartY + i * horizontalSpacing });
+        line.setSize({ visualiserWidth, horizontalLineHeight });
+        line.setFillColor(sf::Color(50, 50, 150));
+        line.setPosition(sf::Vector2f{ visualiserOrigin.x, visualiserOrigin.y + i * 110.0f });
 
         trackLinesHorizontal.push_back(line);
     }
 
     // Bottom UI
-   // bottomBorder.setFillColor(sf::Color::White);
-    //bottomBorder.setSize(sf::Vector2f(SCREEN_WIDTH, bottomBorderHeight));
-    //bottomBorder.setPosition(sf::Vector2f{0.0f, lineHeight });
     for (int i = 0; i < 3; i++)
     {
         sf::RectangleShape borderLines;
         borderLines.setSize(sf::Vector2f(visualiserWidth, bottomBorderHeight));
         borderLines.setFillColor(sf::Color::White);
-        borderLines.setPosition(sf::Vector2f{ visualiserPaddingX, visualiserYStart + i * 50.0f });
+        borderLines.setPosition(sf::Vector2f{ visualiserOrigin.x, (visualiserOrigin.y + bottomBorderStartY) + i * 50.0f });
 
         bottomBorders.push_back(borderLines);
     }
@@ -48,9 +45,9 @@ void TrackVisualiser::setupShapes()
         box.setOutlineThickness(1.0f);
         box.setOutlineColor(sf::Color::White);
 
-        float boxX = startX + i * spacing + lineWidth * 0.5f;
+        float boxX = visualiserOrigin.x + i * spacing + lineWidth * 0.5f;
 
-        float boxY = visualiserYStart + 10.0f;
+        float boxY = visualiserOrigin.y + visualiserYStart + boxYOffset;
 
         box.setPosition(sf::Vector2f{ boxX , boxY });
 

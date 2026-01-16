@@ -27,6 +27,7 @@
 
 // UI
 #include "HUD.h"
+#include "GridDisplay.h"
 
 // Utilities
 #include "Globals.h"
@@ -187,6 +188,10 @@ private:
 	// ----- Visualisers -----
 	// Track Visualiser
 	TrackVisualiser trackVisualiser;
+
+	// UI
+	// Overlays
+	GridDisplay gridDisplay;
 };
 
 #pragma warning( pop ) 

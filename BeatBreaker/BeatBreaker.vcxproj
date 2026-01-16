@@ -25,6 +25,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Gameplay.cpp" />
+    <ClCompile Include="GridDisplay.cpp" />
     <ClCompile Include="Highscore.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
@@ -45,6 +46,7 @@
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="GridDisplay.h" />
     <ClInclude Include="Highscore.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="MainMenu.h" />
