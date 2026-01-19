@@ -2,10 +2,20 @@
 #include <iostream>
 #include "GridDisplay.h"
 
+std::shared_ptr<const sf::Font> Game::loadFont()
+{
+	auto font = std::make_shared<const sf::Font>("ASSETS\\FONTS\\Jersey20-Regular.ttf");
+	return font;
+}
 
 Game::Game() :
 	m_window{ sf::VideoMode{ sf::Vector2u{SCREEN_WIDTH, SCREEN_HEIGHT}, 32U }, "Beat Breaker" },
-	m_DELETEexitGame{false}, m_hud(m_jerseyFont), m_options(m_jerseyFont)
+	m_DELETEexitGame{false},
+		//m_jerseyFont(std::make_shared<sf::Font>()),
+		m_jerseyFont(loadFont()),
+		m_hud(*m_jerseyFont),
+		m_options(*m_jerseyFont),
+		trackVisualiser(m_jerseyFont)
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
@@ -78,6 +88,8 @@ void Game::run()
 		render(); // as many as possible
 	}
 }
+
+
 
 void Game::processEvents()
 {
@@ -375,11 +387,15 @@ void Game::render()
 
 void Game::setupTexts()
 {
-	if (!m_jerseyFont.openFromFile("ASSETS\\FONTS\\Jersey20-Regular.ttf"))
-	{
-		std::cout << "problem loading arial black font" << std::endl;
-	}
-	m_beatBreakerText.setFont(m_jerseyFont);
+	//auto font = std::make_shared<sf::Font>();
+	//if (!font->openFromFile("ASSETS\\FONTS\\Jersey20-Regular.ttf"))
+	//{
+	//	std::cout << "problem loading arial black font" << std::endl;
+	//}
+	//m_jerseyFont = std::static_pointer_cast<const sf::Font>(font);
+
+
+	m_beatBreakerText.setFont(*m_jerseyFont);
 	m_beatBreakerText.setString("Beat Breaker");
 	m_beatBreakerText.setPosition(sf::Vector2f{ SCREEN_CENTRE.x - 200.0f, SCREEN_CENTRE.y - 350.0f});
 	m_beatBreakerText.setCharacterSize(80U);
@@ -389,43 +405,43 @@ void Game::setupTexts()
 
 
 	// Start Text
-	m_startText.setFont(m_jerseyFont);
+	m_startText.setFont(*m_jerseyFont);
 	m_startText.setString("Start");
 	m_startText.setPosition(m_startButton.getPosition());
 	m_startText.setCharacterSize(40U);
 	m_startText.setFillColor(sf::Color::Black);
 	// Rand Gen Text
-	m_randGenText.setFont(m_jerseyFont);
+	m_randGenText.setFont(*m_jerseyFont);
 	m_randGenText.setString("Random Gen");
 	m_randGenText.setPosition(m_randGenButton.getPosition());
 	m_randGenText.setCharacterSize(40U);
 	m_randGenText.setFillColor(sf::Color::Black);
 	// Input Test Text
-	m_testInputText.setFont(m_jerseyFont);
+	m_testInputText.setFont(*m_jerseyFont);
 	m_testInputText.setString("Input Test");
 	m_testInputText.setPosition(m_testInputButton.getPosition());
 	m_testInputText.setCharacterSize(40U);
 	m_testInputText.setFillColor(sf::Color::Black);
 	// MIDI Parse Text
-	m_MIDIParseText.setFont(m_jerseyFont);
+	m_MIDIParseText.setFont(*m_jerseyFont);
 	m_MIDIParseText.setString("MIDI Parse");
 	m_MIDIParseText.setPosition(m_MIDIParseButton.getPosition());
 	m_MIDIParseText.setCharacterSize(40U);
 	m_MIDIParseText.setFillColor(sf::Color::Black);
 	// Character Text
-	m_characterText.setFont(m_jerseyFont);
+	m_characterText.setFont(*m_jerseyFont);
 	m_characterText.setString("Character");
 	m_characterText.setPosition(m_characterButton.getPosition());
 	m_characterText.setCharacterSize(40U);
 	m_characterText.setFillColor(sf::Color::Black);
 	// Options Menu Text
-	m_optionsText.setFont(m_jerseyFont);
+	m_optionsText.setFont(*m_jerseyFont);
 	m_optionsText.setString("Options");
 	m_optionsText.setPosition(m_optionsButton.getPosition());
 	m_optionsText.setCharacterSize(40U);
 	m_optionsText.setFillColor(sf::Color::Black);
 	// Exit Menu Text
-	m_exitText.setFont(m_jerseyFont);
+	m_exitText.setFont(*m_jerseyFont);
 	m_exitText.setString("EXIT");
 	m_exitText.setPosition(m_exitButton.getPosition());
 	m_exitText.setCharacterSize(40U);

@@ -7,6 +7,7 @@
 class TrackVisualiser
 {
 public:
+	TrackVisualiser(std::shared_ptr<const sf::Font> font);
 
 	void setupShapes();
 
@@ -30,9 +31,9 @@ public:
 
 	// Horizontal lines
 	int horizontalLineCount = 4;
-	float horizontalLineHeight = 2.f;
-	float horizontalStartY = 100.f;
-	float horizontalSpacing = 100.f;
+	float horizontalLineHeight = 2.0f;
+	float horizontalStartY = 100.0f;
+	float horizontalSpacing = 100.0f;
 	float horizontalXPos = paddingX;
 
 	// Bottom UI
@@ -40,9 +41,10 @@ public:
 	float bottomBorderStartY = 400.0f;
 
 	// Track Name and Track Number boxes
-	float boxWidth = 80.f;
-	float boxHeight = 40.f;
-	float boxYOffset = 20.f;
+	float boxWidth = 80.0f;
+	float boxHeight = 30.0f;
+	float boxYOffset = -85.0f;
+	float boxRowSpace = 20.0f;
 
 
 private:
@@ -58,5 +60,9 @@ private:
 	std::vector<sf::RectangleShape> trackNameBox;
 	std::vector<sf::RectangleShape> trackNumberBox;
 
-};
+	// Text
+	std::shared_ptr<const sf::Font> m_font;
+	std::vector<sf::Text> m_trackNameTexts;
+	//std::vector<sf::Text> m_trackNumberTexts;
 
+};

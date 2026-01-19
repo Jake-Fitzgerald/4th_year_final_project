@@ -1,5 +1,10 @@
 #include "TrackVisualiser.h"
 
+TrackVisualiser::TrackVisualiser(std::shared_ptr<const sf::Font> font) : m_font(font)
+{
+
+}
+
 void TrackVisualiser::setupShapes()
 {
     // Track Dividers
@@ -36,23 +41,53 @@ void TrackVisualiser::setupShapes()
     }
 
     // Track Name Boxes
-    for (int i = 0; i < 11; i++)
+    for (int row = 0; row < 2; row++)  // 2 rows
     {
-        sf::RectangleShape box;
-        box.setOrigin(sf::Vector2f{ boxWidth * 0.5f, 0.f });
-        box.setSize(sf::Vector2f{ boxWidth, boxHeight });
-        box.setFillColor(sf::Color(50, 50, 50, 100));
-        box.setOutlineThickness(1.0f);
-        box.setOutlineColor(sf::Color::White);
 
-        float boxX = visualiserOrigin.x + i * spacing + lineWidth * 0.5f;
+        for (int i = 0; i < lineCount; i++)
+        {
+            sf::RectangleShape box;
+            box.setOrigin(sf::Vector2f{ boxWidth * 0.5f, 0.0f });
+            box.setSize(sf::Vector2f{ boxWidth, boxHeight });
+            box.setFillColor(sf::Color(50, 50, 50, 100));
+            box.setOutlineThickness(1.0f);
+            box.setOutlineColor(sf::Color::White);
 
-        float boxY = visualiserOrigin.y + visualiserYStart + boxYOffset;
+            float boxX = visualiserOrigin.x + (i * spacing) + (spacing * 0.5f);
 
-        box.setPosition(sf::Vector2f{ boxX , boxY });
+            float boxY = visualiserOrigin.y + visualiserYStart + boxYOffset + (row * (boxHeight + 20.f));
 
-        trackNameBox.push_back(box);
+            box.setPosition(sf::Vector2f{ boxX , boxY });
+
+            trackNameBox.push_back(box);
+
+
+            // Text
+            if (row == 0)
+            {
+                sf::Text text(*m_font);
+                text.setString("Track " + std::to_string(i + 1));
+                text.setCharacterSize(20U);
+                text.setFillColor(sf::Color::White);
+                text.setOutlineColor(sf::Color::Black);
+                text.setOutlineThickness(2.0f);
+
+                text.setPosition(sf::Vector2f{ 100.0f , 100.0f });
+
+                m_trackNameTexts.push_back(text);
+            }
+        }
     }
+
+    // Text
+    //m_trackNameTexts.setPosition(sf::Vector2f{ SCREEN_CENTRE.x + 600.0f, SCREEN_CENTRE.y - 350.0f });
+    //m_trackNameTexts.setFillColor(sf::Color::White);
+    //m_trackNameTexts.setOutlineColor(sf::Color::Black);
+    //m_trackNameTexts.setOutlineThickness(2.0f);
+    //m_trackNameTexts.setCharacterSize(20U);
+    //m_trackNameTexts.setString("???");
+
+
 }
 
 void TrackVisualiser::renderTrackVis(sf::RenderWindow& t_window)
@@ -76,10 +111,16 @@ void TrackVisualiser::renderTrackVis(sf::RenderWindow& t_window)
         t_window.draw(bottomBorders[i]);
     }
 
-    // Track Names
+    // Track Boxes
     for (int i = 0; i < trackNameBox.size(); i++)
     {
         t_window.draw(trackNameBox[i]);
+    }
+
+    // Track Name Texts
+    for (int i = 0; i < m_trackNameTexts.size(); i++)
+    {
+        t_window.draw(m_trackNameTexts[i]);
     }
 
     // TrackNumbers

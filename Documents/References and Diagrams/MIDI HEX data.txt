@@ -1,0 +1,34 @@
+First is the MThd header string.
+
+Then the length of the chunk (6)
+
+
+When exporting from FL studio the MIDI type is 1 (0, 1, 2).
+1 = contains one or more simultaneous tracks of a sequence.
+
+Then we have the amount of tracks.
+
+Then we have "ticks per quarter" (delta time ticks within a quarter note) -> delta time is the number of ticks since the last event, in this case the note.
+
+After the MThd header the tracks MTrk come after. The first track is the Time Signature. The second track is the Set Tempo. Then every track after are the instruments we used.
+
+
+
+=============
+00 FF = Meta Event
+
+Time Signature = 
+numerator = 4, denominator = 2 (negative power of 2, so it's 4, not sure why it's done like this but it is)
+third byte is the number of midi clocks per metronome clicks (can be ignored aswell as the fourth byte)
+
+
+=============
+Set Tempo Mtrk = 
+(BPM calculateion)
+micro seconds per click/beat = 500000
+
+60 seconds per minute divided by 'micro seconds per click'. First we convert the 60 seconds into micro seconds -> 60, 000, 000
+
+60,000,000 divided by 500,00 is 120.
+
+BPM is 120.

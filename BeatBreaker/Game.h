@@ -63,6 +63,8 @@ public:
 	void run();
 
 private:
+	static std::shared_ptr<const sf::Font> loadFont();
+
 
 	void processEvents();
 	void processKeys(const std::optional<sf::Event> t_event);
@@ -88,9 +90,10 @@ private:
 
 	
 	sf::RenderWindow m_window; 
-	sf::Font m_jerseyFont;
+	//sf::Font m_jerseyFont;
+	std::shared_ptr<const sf::Font> m_jerseyFont;
 	
-	sf::Text m_beatBreakerText{ m_jerseyFont }; 
+	sf::Text m_beatBreakerText/*{ m_jerseyFont }*/; 
 	sf::Texture m_DELETElogoTexture;
 	sf::Sprite m_DELETElogoSprite{ m_DELETElogoTexture }; 
 	
@@ -110,25 +113,25 @@ private:
 	// ----------- Buttons ----------- 
 	// Start Gameplay
 	sf::RectangleShape m_startButton;
-	sf::Text m_startText{ m_jerseyFont };
+	sf::Text m_startText/*{ m_jerseyFont }*/;
 	// Random Gen
 	sf::RectangleShape m_randGenButton;
-	sf::Text m_randGenText{ m_jerseyFont };
+	sf::Text m_randGenText/*{ m_jerseyFont }*/;
 	// Input Test
 	sf::RectangleShape m_testInputButton;
-	sf::Text m_testInputText{ m_jerseyFont };
+	sf::Text m_testInputText/*{ m_jerseyFont }*/;
 	// MIDI Parse
 	sf::RectangleShape m_MIDIParseButton;
-	sf::Text m_MIDIParseText{ m_jerseyFont };
+	sf::Text m_MIDIParseText/*{ m_jerseyFont }*/;
 	// Character Test
 	sf::RectangleShape m_characterButton;
-	sf::Text m_characterText{ m_jerseyFont };
+	sf::Text m_characterText/*{ m_jerseyFont }*/;
 	// Options 
 	sf::RectangleShape m_optionsButton;
-	sf::Text m_optionsText{ m_jerseyFont };
+	sf::Text m_optionsText/*{ m_jerseyFont }*/;
 	// Exit 
 	sf::RectangleShape m_exitButton;
-	sf::Text m_exitText{ m_jerseyFont };
+	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
 	GameStates m_currentGameState = GameStates::TrackVis;

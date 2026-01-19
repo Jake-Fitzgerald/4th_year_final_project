@@ -9,8 +9,8 @@ void GridDisplay::setupGrid()
     float gridHeight = rows * m_gridSpaceSize;
 
     // Padding
-    float startX = (SCREEN_WIDTH - gridWidth) / 2.f;  //40
-    float startY = (SCREEN_HEIGHT - gridHeight) / 2.f; //10
+    float startX = (SCREEN_WIDTH - gridWidth) / 2.0f;  //40
+    float startY = (SCREEN_HEIGHT - gridHeight) / 2.0f; //10
 
 
 

@@ -126,6 +126,8 @@ uint8_t MIDIParse::readByte(std::ifstream& t_file)
 	return static_cast<uint8_t>(byte);
 }
 
+// VLQ will be used as our delta time to keep track 
+// of how long it takes for events to come after one another
 uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
 {
 	uint32_t value = 0;
@@ -137,7 +139,9 @@ uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
 		uint8_t byte = readByte(t_file);
 
 		// Mask out the most significant bit (MSB) to get the 7 data bits
-		// MSB is used as a continuation flag
+		// MSB is used as a continuation flag to know if there are more bytes
+		// to follow if it's a large number.
+		// 0x7F = 0111 1111 (the first number is the continuation bit)
 		const uint8_t dataBits = byte & 0x7F;
 
 		// Shift existing value 7 bits to the left to make room for new bits
