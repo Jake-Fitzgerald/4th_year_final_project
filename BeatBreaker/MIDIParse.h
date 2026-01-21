@@ -28,6 +28,7 @@ public:
 
 	bool parseFile(const std::string& t_fileName);
 
+	void parseHeader();
 
 	// Shift bits
 	// Reads 4 bytes then converts them into 32
@@ -38,6 +39,7 @@ public:
 	uint8_t readByte(std::ifstream& t_file);
 	uint32_t readVLQ(std::ifstream& t_file);
 
+
 	// Save the parsed data
 	void saveToFile();
 	// Load the parsed data
@@ -45,9 +47,17 @@ public:
 
 private:
 	// Header Data
+	uint32_t m_headerLength = -1; // should be 6
+	uint16_t m_midiFormat = -1; // Can be 0, 1, 2
+	uint16_t m_numTracks = -1;
+	uint16_t m_division = -1;
+
+
+
 	double m_BPM;
-	int m_timeSigBeat; // 3 from 3/4
-	int m_timeSigMeasure; // 4 from 3/4
+	int m_nominator; // 3 from 3/4
+	int m_denominator; // 4 from 3/4
+	std::string m_timeSignature = " ";
 
 	// std::vector<> m_tracks; // Unsure how to store these when reading them
 	std::string m_trackName;

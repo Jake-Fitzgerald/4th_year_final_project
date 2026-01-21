@@ -3,6 +3,12 @@ C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.c
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(158,62): warning C4100: 't_event': unreferenced parameter
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(169,40): warning C4189: 'newMouseReleased': local variable is initialized but not referenced
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(215,8): warning C4189: 'buttonFound': local variable is initialized but not referenced
+  MIDIParse.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(32,2): warning C4100: 'n': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(164,11): warning C4456: declaration of 'byte' hides previous local declaration
+      C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(160,10):
+      see declaration of 'byte'
+  
   main.cpp
   Generating Code...
   BeatBreaker.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Debug\BeatBreaker.exe

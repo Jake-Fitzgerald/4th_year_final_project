@@ -21,7 +21,6 @@ Time Signature =
 numerator = 4, denominator = 2 (negative power of 2, so it's 4, not sure why it's done like this but it is)
 third byte is the number of midi clocks per metronome clicks (can be ignored aswell as the fourth byte)
 
-
 =============
 Set Tempo Mtrk = 
 (BPM calculateion)

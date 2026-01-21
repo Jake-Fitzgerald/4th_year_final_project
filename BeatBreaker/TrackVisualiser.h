@@ -63,6 +63,6 @@ private:
 	// Text
 	std::shared_ptr<const sf::Font> m_font;
 	std::vector<sf::Text> m_trackNameTexts;
-	//std::vector<sf::Text> m_trackNumberTexts;
+	std::vector<sf::Text> m_trackNumberTexts;
 
 };

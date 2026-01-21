@@ -33,11 +33,11 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 
 	// Convert from old big endian (MIDI) to the modern one
 	// Shift 32 bit int
-	uint32_t test_uint32 = read_uint32(file);
-	std::cerr << "32 uint is: " << test_uint32 << std::endl;
+	//uint32_t test_uint32 = read_uint32(file);
+	//std::cerr << "32 uint is: " << test_uint32 << std::endl;
 	// Shift 16 bit int
-	uint16_t test_uint16 = read_uint16(file);
-	std::cerr << "16 uint is: " << test_uint16 << std::endl;
+	//uint16_t test_uint16 = read_uint16(file);
+	//std::cerr << "16 uint is: " << test_uint16 << std::endl;
 
 	// Read strings
 	// Gets the bytes from the file and construct a string from them
@@ -55,15 +55,46 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 			std::cerr << "Combined string is: " << combinedString << std::endl;
 			return combinedString;
 	};
+	
+	// Parse Header Chunk
+	std::string header = readString(4);
+	// Check if it is a MIDI file if it contains MThd at the start
+	if (header != "MThd")
+	{
+		std::cerr << "Not a MIDI file" << std::endl;
+		return false;
+	}
+	else
+	{
+		std::cerr << "It is a valid MIDI file" << std::endl;
+		//parseHeader(file);
+	}
 
-	// String headers
-	//std::string header = readString(4);
-	//if (header != "MThd") 
-	//{
-	//	std::cerr << "Not a MIDI file\n";
-	//}
+
+	// Header Chunk Data
+	std::cerr << "=== Header ===" << std::endl;
+	m_headerLength = read_uint32(file); // should be 6
+	std::cerr << "Header Length: " << m_headerLength << std::endl;
+
+	m_midiFormat = read_uint16(file);
+	std::cerr << "Format: " << m_midiFormat << std::endl;
+
+	m_numTracks = read_uint16(file);
+	std::cerr << "Number of tracks: " << m_numTracks << std::endl;
+
+	// Ticks per quarter (delta time ticks within a quarter note)
+	// delta time is the number of ticks since the last event, in this case the note.
+	m_ticksPerQuarter = read_uint16(file);
+	std::cerr << "Division: " << m_ticksPerQuarter << std::endl;
 
 	return false;
+}
+
+void MIDIParse::parseHeader()
+{
+	std::cerr << "=== Header ===" << std::endl;
+
+
 }
 
 

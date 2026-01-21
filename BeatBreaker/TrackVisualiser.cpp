@@ -62,30 +62,36 @@ void TrackVisualiser::setupShapes()
             trackNameBox.push_back(box);
 
 
-            // Text
+            // Instrument Channel Texts
             if (row == 0)
             {
-                sf::Text text(*m_font);
-                text.setString("Track " + std::to_string(i + 1));
-                text.setCharacterSize(20U);
-                text.setFillColor(sf::Color::White);
-                text.setOutlineColor(sf::Color::Black);
-                text.setOutlineThickness(2.0f);
+                sf::Text trackChannelText(*m_font);
+                trackChannelText.setString("Channel " + std::to_string(i + 1)); // Change this to the current instrument from that track
+                trackChannelText.setCharacterSize(20U);
+                trackChannelText.setFillColor(sf::Color::White);
+                trackChannelText.setOutlineColor(sf::Color::Black);
+                trackChannelText.setOutlineThickness(2.0f);
 
-                text.setPosition(sf::Vector2f{ 100.0f , 100.0f });
+                trackChannelText.setPosition(sf::Vector2f{ boxX - 35.0f , boxY });
 
-                m_trackNameTexts.push_back(text);
+                m_trackNameTexts.push_back(trackChannelText);
+            }
+            // Track Number Texts
+            if (row == 1)
+            {
+                sf::Text trackNumText(*m_font);
+                trackNumText.setString("Track " + std::to_string(i + 1)); 
+                trackNumText.setCharacterSize(20U);
+                trackNumText.setFillColor(sf::Color::White);
+                trackNumText.setOutlineColor(sf::Color::Black);
+                trackNumText.setOutlineThickness(2.0f);
+
+                trackNumText.setPosition(sf::Vector2f{ boxX - 35.0f , boxY});
+
+                m_trackNumberTexts.push_back(trackNumText);
             }
         }
     }
-
-    // Text
-    //m_trackNameTexts.setPosition(sf::Vector2f{ SCREEN_CENTRE.x + 600.0f, SCREEN_CENTRE.y - 350.0f });
-    //m_trackNameTexts.setFillColor(sf::Color::White);
-    //m_trackNameTexts.setOutlineColor(sf::Color::Black);
-    //m_trackNameTexts.setOutlineThickness(2.0f);
-    //m_trackNameTexts.setCharacterSize(20U);
-    //m_trackNameTexts.setString("???");
 
 
 }
@@ -124,6 +130,10 @@ void TrackVisualiser::renderTrackVis(sf::RenderWindow& t_window)
     }
 
     // TrackNumbers
+    for (int i = 0; i < m_trackNumberTexts.size(); i++)
+    {
+        t_window.draw(m_trackNumberTexts[i]);
+    }
 }
 
 void TrackVisualiser::update(float t_deltaTime)
