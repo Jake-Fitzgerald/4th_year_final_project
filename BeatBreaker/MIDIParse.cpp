@@ -72,7 +72,9 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 
 
 	// Header Chunk Data
-	std::cerr << "=== Header ===" << std::endl;
+	std::cerr << "==================" << std::endl;
+	std::cerr << "===== Header =====" << std::endl;
+	std::cerr << "==================" << std::endl;
 	m_headerLength = read_uint32(file); // should be 6
 	std::cerr << "Header Length: " << m_headerLength << std::endl;
 
@@ -85,7 +87,80 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 	// Ticks per quarter (delta time ticks within a quarter note)
 	// delta time is the number of ticks since the last event, in this case the note.
 	m_ticksPerQuarter = read_uint16(file);
-	std::cerr << "Division: " << m_ticksPerQuarter << std::endl;
+	std::cerr << "Ticks per Quarter Note: " << m_ticksPerQuarter << std::endl;
+
+	// Track Chunk Data (Time Signature)
+	std::string trackHeader = readString(4);
+	if (trackHeader != "MTrk")
+	{
+		std::cerr << "Invalid track header" << std::endl;
+		return false;
+	}
+	else
+	{
+		std::cerr << "It is a valid Track" << std::endl;
+	}
+
+	std::cerr << "===================" << std::endl;
+	//std::cerr << "===== Track 1 =====" << std::endl;
+	std::cerr << "[ Time Signature ]" << std::endl;
+	std::cerr << "===================" << std::endl;
+
+	uint32_t trackLength = read_uint32(file); // number of bytes in this track
+	std::cerr << "Time Signature Byte Length: " << trackLength << std::endl;
+
+	// tellg() is like a bookmark for where in the file we are reading from
+	// https://www.geeksforgeeks.org/cpp/tellg-function-c-example/
+	int trackStart = file.tellg();  // current file position
+	std::cerr << "Track Start: " << trackStart << std::endl;
+
+	int trackEnd = trackStart + trackLength; 
+	std::cerr << "Track End: " << trackEnd << std::endl;
+
+	// Meta Events
+	// https://ccrma.stanford.edu/~craig/14q/midifile/MidiFileFormat.html#track_event
+
+	// Look at everything within this Track Chunk
+	while (file.tellg() < trackEnd)
+	{
+		// Read status byte
+		uint8_t status = file.peek();
+
+		// Meta event (start of where the Track's meta event is)
+		if (status == EventType::metaEvent)
+		{
+			// The meta type is which byte we are looking at
+			uint8_t metaType = readByte(file);
+
+			uint32_t length = readVLQ(file);
+
+			if (metaType == EventType::timeSignature && length == 4) // Time Signature
+			{
+				uint8_t nom = readByte(file);
+				uint8_t denom = readByte(file);
+				uint8_t clocksPerMetronomeClick = readByte(file); // useless data for DAWs
+
+				m_nominator = nom;
+				m_denominator = 1 << denom;
+
+				std::cerr << "Time Signature: " << m_nominator << "/" << m_denominator << std::endl;
+
+				// Combine them to make a string we can display more easily in other scenes
+				m_timeSignature = std::to_string(m_nominator) + "/" + std::to_string(m_denominator);
+			}
+			else
+			{
+				file.ignore(length); // skip other meta events
+			}
+		}
+
+		// Put into our vector of Midi Tracks
+		midiTracks.push_back(MidiTrack());
+	}
+
+
+	// Track Chunk Data (Tempo)
+	// to do...
 
 	return false;
 }
