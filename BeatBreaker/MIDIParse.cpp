@@ -111,10 +111,12 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 
 	// tellg() is like a bookmark for where in the file we are reading from
 	// https://www.geeksforgeeks.org/cpp/tellg-function-c-example/
-	int trackStart = file.tellg();  // current file position
+	std::streampos trackStart = file.tellg();  // current file position
 	std::cerr << "Track Start: " << trackStart << std::endl;
 
-	int trackEnd = trackStart + trackLength; 
+	// Streamposition is where we are, streamoffset is where we move to
+
+	std::streampos trackEnd = trackStart + static_cast<std::streamoff>(trackLength);
 	std::cerr << "Track End: " << trackEnd << std::endl;
 
 	// Meta Events
@@ -123,22 +125,28 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 	// Look at everything within this Track Chunk
 	while (file.tellg() < trackEnd)
 	{
+		// Read the deltatime (time between each event)
+		uint32_t deltaTime = readVLQ(file);
+
 		// Read status byte
-		uint8_t status = file.peek();
+		uint8_t status = readByte(file);
 
 		// Meta event (start of where the Track's meta event is)
 		if (status == EventType::metaEvent)
 		{
 			// The meta type is which byte we are looking at
 			uint8_t metaType = readByte(file);
-
+			
+			// Tells us how many byte to read for the event
 			uint32_t length = readVLQ(file);
 
 			if (metaType == EventType::timeSignature && length == 4) // Time Signature
 			{
 				uint8_t nom = readByte(file);
 				uint8_t denom = readByte(file);
-				uint8_t clocksPerMetronomeClick = readByte(file); // useless data for DAWs
+				// Useless data for DAWs
+				uint8_t clocksPerMetronomeClick = readByte(file); 
+				uint8_t thirtyTwoSecsPerQuarter = readByte(file); // 32 seconds per crotchet (quarter note) 
 
 				m_nominator = nom;
 				m_denominator = 1 << denom;
@@ -147,17 +155,22 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 
 				// Combine them to make a string we can display more easily in other scenes
 				m_timeSignature = std::to_string(m_nominator) + "/" + std::to_string(m_denominator);
+
+				break;
 			}
 			else
 			{
 				file.ignore(length); // skip other meta events
 			}
 		}
+		else
+		{
+			// running status checks?
+		}
 
-		// Put into our vector of Midi Tracks
-		midiTracks.push_back(MidiTrack());
 	}
-
+	// Put into our vector of Midi Tracks
+	midiTracks.push_back(MidiTrack());
 
 	// Track Chunk Data (Tempo)
 	// to do...
@@ -206,8 +219,7 @@ uint16_t MIDIParse::read_uint16(std::ifstream& t_file)
 		return 0; // or throw
 	}
 
-	return (uint16_t(bytes[0]) << 8) |
-		(uint16_t(bytes[1]));
+	return (uint16_t(bytes[0]) << 8) | (uint16_t(bytes[1]));
 	//uint16_t b = 0;
 	//// First byte (most significant)
 	//// 0x1234 becomes 0x12
@@ -242,7 +254,7 @@ uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
 
 	do
 	{
-		uint8_t byte = readByte(t_file);
+		byte = readByte(t_file);
 
 		// Mask out the most significant bit (MSB) to get the 7 data bits
 		// MSB is used as a continuation flag to know if there are more bytes
