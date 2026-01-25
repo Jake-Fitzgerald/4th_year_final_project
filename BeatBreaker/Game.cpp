@@ -65,8 +65,15 @@ Game::Game() :
 	//m_blockGen.setDifficulty("HARD");
 	m_blockGen.genRandomPattern(10);
 
+	// ----- VIUALISERS -----
 	// Track Visualiser
 	trackVisualiser.setupShapes();
+
+	// Piano Visualiser
+	pianoVisualiser.setupPianoShapes();
+
+	// Drum Visualiser
+	drumVisualiser.setupDrums();
 
 	// UI 
 	gridDisplay.setupGrid();
@@ -376,13 +383,28 @@ void Game::render()
 		m_blockGen.renderBlocks(m_window);
 	}
 
-	// Visualiser
+	// Visualisers
+
+	// Track Visualiser
 	if (m_currentGameState == GameStates::TrackVis)
 	{
 		// visualiser shapes
 		trackVisualiser.renderTrackVis(m_window);
 	}
 
+	// Piano Visualiser
+	if (m_currentGameState == GameStates::PianoVis)
+	{
+		// visualiser shapes
+		pianoVisualiser.renderKeys(m_window);
+	}
+
+	// Drum Visualiser
+	if (m_currentGameState == GameStates::DrumVis)
+	{
+		// visualiser shapes
+		drumVisualiser.renderDrums(m_window);
+	}
 
 	// UI
 	m_hud.drawHUD(m_window);

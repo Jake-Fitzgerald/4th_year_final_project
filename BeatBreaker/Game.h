@@ -34,6 +34,8 @@
 
 // Visualisers
 #include "TrackVisualiser.h"
+#include "PianoVisualiser.h"
+#include "DrumVisualiser.h"
 
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
@@ -45,7 +47,10 @@ enum GameStates
 	OptionsScene,
 	Character,
 	GameOver,
-	TrackVis
+	// Visualisers
+	TrackVis,
+	PianoVis,
+	DrumVis
 };
 
 enum Difficulties
@@ -134,7 +139,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::TrackVis;
+	GameStates m_currentGameState = GameStates::PianoVis;
 
 	// Test Blocks
 	const int COLS = 8;   
@@ -191,6 +196,8 @@ private:
 	// ----- Visualisers -----
 	// Track Visualiser
 	TrackVisualiser trackVisualiser;
+	PianoVisualiser pianoVisualiser;
+	DrumVisualiser drumVisualiser;
 
 	// UI
 	// Overlays

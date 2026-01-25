@@ -15,7 +15,7 @@ After the MThd header the tracks MTrk come after. The first track is the Time Si
 
 
 =============
-00 FF = Meta Event
+00 FF = Meta Event (00 = delta time, FF = event that happened)
 
 Time Signature = 
 numerator = 4, denominator = 2 (negative power of 2, so it's 4, not sure why it's done like this but it is)

@@ -22,6 +22,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockGenerator.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="DrumVisualiser.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Gameplay.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MIDIParse.cpp" />
     <ClCompile Include="Options.cpp" />
+    <ClCompile Include="PianoVisualiser.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Results.cpp" />
     <ClCompile Include="SoundManager.cpp" />
@@ -42,6 +44,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockGenerator.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="DrumVisualiser.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="Gameplay.h" />
@@ -53,6 +56,7 @@
     <ClInclude Include="MIDIParse.h" />
     <ClInclude Include="Notes.h" />
     <ClInclude Include="Options.h" />
+    <ClInclude Include="PianoVisualiser.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Results.h" />
     <ClInclude Include="SoundManager.h" />
