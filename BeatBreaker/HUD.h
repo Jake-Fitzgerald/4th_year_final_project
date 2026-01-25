@@ -22,6 +22,7 @@ public:
 
 	// Beat Markers
 	void setupBeatMarkers();
+	void setupButtonSprites();
 
 	void updateFPSText(float &t_fpsNumber);
 	void setFPSBool();
@@ -56,6 +57,26 @@ private:
 	sf::Color c_beatMarkerClear = sf::Color(255, 255, 255, 50);
 	sf::Color c_beatMarkerSet = sf::Color(255, 0, 0, 150);
 	sf::Color c_beatMarkerSetWholeNote = sf::Color(0, 255, 0, 200);
+
+	// Buttons 
+	sf::Texture m_playButtonTexture;
+	sf::Sprite m_playButtonSprite;
+	sf::Texture m_pauseButtonTexture;
+	sf::Sprite m_pauseButtonSprite;
+	sf::Texture m_skipEndButtonTexture;
+	sf::Sprite m_skipEndButtonSprite;
+	sf::Texture m_skipStartButtonTexture;
+	sf::Sprite m_skipStartButtonSprite;
+	sf::Texture m_stopButtonTexture;
+	sf::Sprite m_stopButtonSprite;
+	sf::Texture m_muteButtonTexture;
+	sf::Sprite m_muteButtonSprite;
+	sf::Texture m_unmuteButtonTexture;
+	sf::Sprite m_unmuteButtonSprite;
+
+	sf::Vector2f buttonsLeftPos{ paddingX, paddingY + 600.0f };
+	float buttonSpacing = 50.0f;
+
 	
 };
 

@@ -149,7 +149,7 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 				uint8_t thirtyTwoSecsPerQuarter = readByte(file); // 32 seconds per crotchet (quarter note) 
 
 				m_nominator = nom;
-				m_denominator = 1 << denom;
+				m_denominator = /*1 <<*/ denom;
 
 				std::cerr << "Time Signature: " << m_nominator << "/" << m_denominator << std::endl;
 

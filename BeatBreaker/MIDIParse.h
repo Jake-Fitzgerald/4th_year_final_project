@@ -21,6 +21,23 @@
 	We have to read everything in the stream sequentially or else it will get corrupted.
 	So even if we get loads of useless data, we won't be using we still need to parse it.
 
+	Running status is a byte that is included in multiple chunks in a track, however becuase of the way midi is optimised it only says
+	it for that first part of the chunk and then we assume it is the same for the chunks following it. 
+	We need to look at the left most bit to see if it is a 'status byte' (0) or a 'data byte' (1)
+
+	Status bytes are things like Note On, Note Off,
+	Status bytes = 80 -> EF
+	System messages = F0 -> FF
+	
+	Real Time System Events are only used for Live Midi so we can ignore them in the parser.
+
+	General Midi for which instruments are assigned a certain number:
+	https://en.wikipedia.org/wiki/General_MIDI
+
+	Tempo are how many microseconds are in a quarter note. We dived the tempo by 1 million to convert it to seconds.
+	To get it as a'tick' we divide that new number in seconds by a large number (we can just use 24 for now and see what happens).
+	The tick allows us to get an accurate delta time.
+
 */
 
 struct MidiNote
@@ -47,6 +64,11 @@ enum EventType : uint8_t
 
 	// Meta types:
 	timeSignature = 0x58
+
+	// Status bytes (higher than 80)
+	// noteOff = 83;
+	// noteOn = 90;
+	
 };
 
 class MIDIParse
