@@ -68,6 +68,12 @@ enum EventType : uint8_t
 	keySignature = 0x59,
 
 	// Status bytes (higher than 80)
+	statusByte = 0x80,
+
+	// Message type mask 
+	// Keep only the upper 4 bits (message type) and ignore lower 4 bits (channel)
+	messageTypeMask = 0xF0,
+
 	noteOff = 0x80,
 	noteOn = 0x90,
 	afterTouch = 0xA0,

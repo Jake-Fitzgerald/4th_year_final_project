@@ -138,7 +138,7 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 		uint8_t firstDataByte = 0;  
 
 		// Check if it is a status byte (>= 0x80) or a data byte (< 0x80)
-		if (status >= 0x80)
+		if (status >= EventType::statusByte)
 		{
 			// This is a new status byte
 			runningStatus = status;
@@ -182,36 +182,79 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 				file.ignore(length); // skip other meta events
 			}
 		}
+
+		// 
+		uint8_t messageType = status &EventType::messageTypeMask;
+
 		// Note Off 
-		else if (status == EventType::noteOff)
+		if (messageType == EventType::noteOff)
 		{
 			std::cerr << "Note Off" << std::endl;
+
+			// Read the 2 data bytes
+			// Note key (0 - 127), Velocity (0 - 127)
+			uint8_t note;
+
+			// Check if we already read the first data byte earlier
+			// This happens when the running status is active
+			if (firstDataByte != 0)
+			{
+				note = firstDataByte; 
+			}
+			else
+			{
+				note = readByte(file);  
+			}
+
+			uint8_t velocity = readByte(file);
+
+			std::cerr << "Note Off: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
 		}
-		else if (status == EventType::noteOn)
+		else if (messageType == EventType::noteOn)
 		{
 			std::cerr << "Note On" << std::endl;
+
+
+			// Read the 2 data bytes
+			// Note key (0 - 127), Velocity (0 - 127)
+			uint8_t note;
+
+			// Check if we already read the first data byte earlier
+			// This happens when the running status is active
+			if (firstDataByte != 0)
+			{
+				note = firstDataByte;
+			}
+			else
+			{
+				note = readByte(file);
+			}
+
+			uint8_t velocity = readByte(file);
+
+			std::cerr << "Note On: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
 		}
-		else if (status == EventType::afterTouch)
+		else if (messageType == EventType::afterTouch)
 		{
 			std::cerr << "After touch" << std::endl;
 		}
-		else if (status == EventType::controlChange)
+		else if (messageType == EventType::controlChange)
 		{
 			std::cerr << "Control change" << std::endl;
 		}
-		else if (status == EventType::programChange)
+		else if (messageType == EventType::programChange)
 		{
 			std::cerr << "Program change" << std::endl;
 		}
-		else if (status == EventType::channelAftertouch)
+		else if (messageType == EventType::channelAftertouch)
 		{
 			std::cerr << "Channel After touch" << std::endl;
 		}
-		else if (status == EventType::pitchBend)
+		else if (messageType == EventType::pitchBend)
 		{
 			std::cerr << "Pitch bend" << std::endl;
 		}
-		else if (status == EventType::systemExclusive)
+		else if (messageType == EventType::systemExclusive)
 		{
 			std::cerr << "System exclusive" << std::endl;
 		}
