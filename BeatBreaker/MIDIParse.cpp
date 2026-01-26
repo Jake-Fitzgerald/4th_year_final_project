@@ -122,6 +122,9 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 	// Meta Events
 	// https://ccrma.stanford.edu/~craig/14q/midifile/MidiFileFormat.html#track_event
 
+	//uint32_t ticks = 0; // current tick position
+	uint8_t runningStatus = 0; // for running status bytes
+
 	// Look at everything within this Track Chunk
 	while (file.tellg() < trackEnd)
 	{
@@ -130,6 +133,22 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 
 		// Read status byte
 		uint8_t status = readByte(file);
+
+		// Holds the first data byte if using running status
+		uint8_t firstDataByte = 0;  
+
+		// Check if it is a status byte (>= 0x80) or a data byte (< 0x80)
+		if (status >= 0x80)
+		{
+			// This is a new status byte
+			runningStatus = status;
+		}
+		else
+		{
+			// This is a data byte so we'll use running status
+			firstDataByte = status;
+			status = runningStatus;
+		}
 
 		// Meta event (start of where the Track's meta event is)
 		if (status == EventType::metaEvent)
@@ -163,11 +182,43 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 				file.ignore(length); // skip other meta events
 			}
 		}
+		// Note Off 
+		else if (status == EventType::noteOff)
+		{
+			std::cerr << "Note Off" << std::endl;
+		}
+		else if (status == EventType::noteOn)
+		{
+			std::cerr << "Note On" << std::endl;
+		}
+		else if (status == EventType::afterTouch)
+		{
+			std::cerr << "After touch" << std::endl;
+		}
+		else if (status == EventType::controlChange)
+		{
+			std::cerr << "Control change" << std::endl;
+		}
+		else if (status == EventType::programChange)
+		{
+			std::cerr << "Program change" << std::endl;
+		}
+		else if (status == EventType::channelAftertouch)
+		{
+			std::cerr << "Channel After touch" << std::endl;
+		}
+		else if (status == EventType::pitchBend)
+		{
+			std::cerr << "Pitch bend" << std::endl;
+		}
+		else if (status == EventType::systemExclusive)
+		{
+			std::cerr << "System exclusive" << std::endl;
+		}
 		else
 		{
-			// running status checks?
+			std::cerr << "Not useful data (out of range?)" << std::endl;
 		}
-
 	}
 	// Put into our vector of Midi Tracks
 	midiTracks.push_back(MidiTrack());

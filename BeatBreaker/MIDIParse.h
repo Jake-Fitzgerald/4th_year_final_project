@@ -58,16 +58,24 @@ struct MidiTrack
 
 };
 
+// Taken from the Expanded Messages Documentation in the references folder
 enum EventType : uint8_t
 {
 	metaEvent = 0xFF,
 
 	// Meta types:
-	timeSignature = 0x58
+	timeSignature = 0x58,
+	keySignature = 0x59,
 
 	// Status bytes (higher than 80)
-	// noteOff = 83;
-	// noteOn = 90;
+	noteOff = 0x80,
+	noteOn = 0x90,
+	afterTouch = 0xA0,
+	controlChange = 0xB0,
+	programChange = 0xC0,
+	channelAftertouch = 0xD0,
+	pitchBend = 0xE0,
+	systemExclusive = 0xF0
 	
 };
 

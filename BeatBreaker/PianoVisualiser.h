@@ -5,6 +5,10 @@
 #include "Globals.h"
 
 /*
+* 
+    This can be used both for displaying parsed midi data,
+	but also for live midi through a keyboard syncing with the piano keys turning red in the visual when pressed.
+
 	We wil make one octave (C note to C note) then repeat that four more times
 	52 white keys, 36 black keys, 88 keys in total -> 5 octaves of C to C, 12 keys per octave, 5 extra keys?
 
@@ -42,8 +46,8 @@ private:
 	int keysPerOctave = 12;
 	int octavesAmount = 7;
 
-
-
 	const int TOTAL_KEYS_AMOUNT = 88;
+
+	bool b_midiLiveMode = false;
 };
 
