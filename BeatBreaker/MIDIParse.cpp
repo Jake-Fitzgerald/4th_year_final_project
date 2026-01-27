@@ -241,8 +241,6 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 				}
 				else if (messageType == EventType::noteOn)
 				{
-					//std::cerr << "Note On" << std::endl;
-
 					// Read the 2 data bytes
 					// Note key (0 - 127), Velocity (0 - 127)
 					uint8_t note;
@@ -261,6 +259,43 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 					uint8_t velocity = readByte(file);
 
 					//std::cerr << "Note On: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
+
+					bool b_noteExists = false;
+					// Velocity at 0 tells us the note is off not on
+					if (velocity == 0)
+					{
+						// Check if the note even exists
+						if (activeNotes.find(note) != activeNotes.end())
+						{
+							b_noteExists = true;
+						}
+
+						if (b_noteExists == true)
+						{
+							// Complete the note by setting end tick so the note actually ends
+							activeNotes[note].endTick = currentTick;
+
+							// Add note
+							currentTrack.midiNotes.push_back(activeNotes[note]);
+
+							// Remove from active notes
+							activeNotes.erase(note);
+						}
+					}
+					else
+					{
+						// Start a new note
+						MidiNote newNote;
+						newNote.pitch = note;
+						newNote.velocity = velocity;
+						newNote.startTick = currentTick;
+						// Will be set when Note Off comes
+						newNote.endTick = 0;  
+						newNote.b_hasPlayed = false;
+
+						// Add to our active notes or replace if same note is already active
+						activeNotes[note] = newNote;
+					}
 				}
 				else if (messageType == EventType::afterTouch)
 				{
@@ -292,11 +327,9 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 				}
 			}
 		}
-		// Put into our vector of Midi Tracks
-		midiTracks.push_back(MidiTrack());
+		// Put this track into our vector of Midi Tracks
+		midiTracks.push_back(currentTrack);
 	}
-	// Track Chunk Data (Tempo)
-	// to do...
 
 	return false;
 }

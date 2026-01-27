@@ -140,3 +140,8 @@ void TrackVisualiser::update(float t_deltaTime)
 {
 
 }
+
+void TrackVisualiser::loadMidiTracks(const std::vector<MidiTrack>& t_tracks, int t_ticksPerQuarter, float t_bpm)
+{
+    m_midiTracks = t_tracks;
+}

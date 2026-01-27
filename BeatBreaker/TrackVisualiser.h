@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
+#include "MIDIParse.h"
 
 class TrackVisualiser
 {
@@ -14,7 +15,7 @@ public:
 	void renderTrackVis(sf::RenderWindow& t_window);
 	void update(float t_deltaTime);
 
-
+	void loadMidiTracks(const std::vector<MidiTrack>& t_tracks, int t_ticksPerQuarter, float t_bpm);
 
 
 private:
@@ -66,4 +67,7 @@ private:
 	float boxHeight = 30.0f;
 	float boxYOffset = -85.0f;
 	float boxRowSpace = 20.0f;
+
+	// Midi Data
+	std::vector<MidiTrack> m_midiTracks;
 };
