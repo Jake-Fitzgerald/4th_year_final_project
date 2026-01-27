@@ -1,37 +1,32 @@
 ﻿  Game.cpp
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(123,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(121,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
   (compiling source file 'Game.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(124,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(122,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
   (compiling source file 'Game.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(125,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(123,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
   (compiling source file 'Game.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(126,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(124,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
   (compiling source file 'Game.cpp')
   
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(153,31): warning C4189: 'newKeyPress': local variable is initialized but not referenced
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(165,62): warning C4100: 't_event': unreferenced parameter
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(176,40): warning C4189: 'newMouseReleased': local variable is initialized but not referenced
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(222,8): warning C4189: 'buttonFound': local variable is initialized but not referenced
-  MIDIParse.cpp
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(123,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
-  (compiling source file 'MIDIParse.cpp')
+  main.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(121,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(124,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
-  (compiling source file 'MIDIParse.cpp')
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(122,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(125,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
-  (compiling source file 'MIDIParse.cpp')
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(123,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(126,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
-  (compiling source file 'MIDIParse.cpp')
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(124,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(32,2): warning C4100: 'n': unreferenced parameter
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(144,13): warning C4189: 'deltaTime': local variable is initialized but not referenced
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(180,14): warning C4189: 'thirtyTwoSecsPerQuarter': local variable is initialized but not referenced
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(179,14): warning C4189: 'clocksPerMetronomeClick': local variable is initialized but not referenced
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(238,14): warning C4189: 'velocity': local variable is initialized but not referenced
   Generating Code...
   BeatBreaker.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Debug\BeatBreaker.exe

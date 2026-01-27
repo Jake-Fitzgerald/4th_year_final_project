@@ -51,7 +51,6 @@ struct MidiNote
 	// Seconds
 	double startTime = 0.0f; 
 	double endTime = 0.0f;  
-
 	bool b_hasPlayed = false;
 
 };
@@ -89,7 +88,6 @@ enum EventType : uint8_t
 	channelAftertouch = 0xD0,
 	pitchBend = 0xE0,
 	systemExclusive = 0xF0
-	
 };
 
 class MIDIParse
