@@ -4,6 +4,7 @@
 #include <fstream> // Loading file
 #include <cstdint> // fixed int types we need (uint32)
 #include <string>
+#include <map>
 
 // Notes:
 /*
@@ -44,8 +45,13 @@ struct MidiNote
 {
 	int pitch = 0;        // 0 - 127
 	int velocity = 0;     // 0 - 127
-	double startTime = 0.0f; // in seconds
-	double endTime = 0.0f;   // in seconds
+	// Microseconds
+	uint32_t startTick = 0;  
+	uint32_t endTick = 0;    
+	// Seconds
+	double startTime = 0.0f; 
+	double endTime = 0.0f;  
+
 	bool b_hasPlayed = false;
 
 };
@@ -64,6 +70,7 @@ enum EventType : uint8_t
 	metaEvent = 0xFF,
 
 	// Meta types:
+	tempo = 0x51,
 	timeSignature = 0x58,
 	keySignature = 0x59,
 

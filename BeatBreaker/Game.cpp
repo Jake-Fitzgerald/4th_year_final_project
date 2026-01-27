@@ -638,5 +638,5 @@ void Game::setupSounds()
 
 void Game::setupMidiParser()
 {
-	midiParser.parseFile("ASSETS\\AUDIO\\MUSIC\\Test_MIDI.mid");
+	midiParser.parseFile("ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid");
 }

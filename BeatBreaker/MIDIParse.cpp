@@ -89,183 +89,212 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 	m_ticksPerQuarter = read_uint16(file);
 	std::cerr << "Ticks per Quarter Note: " << m_ticksPerQuarter << std::endl;
 
-	// Track Chunk Data (Time Signature)
-	std::string trackHeader = readString(4);
-	if (trackHeader != "MTrk")
+
+	for (int trackNum = 0; trackNum < m_numTracks; trackNum++)
 	{
-		std::cerr << "Invalid track header" << std::endl;
-		return false;
-	}
-	else
-	{
-		std::cerr << "It is a valid Track" << std::endl;
-	}
-
-	std::cerr << "===================" << std::endl;
-	//std::cerr << "===== Track 1 =====" << std::endl;
-	std::cerr << "[ Time Signature ]" << std::endl;
-	std::cerr << "===================" << std::endl;
-
-	uint32_t trackLength = read_uint32(file); // number of bytes in this track
-	std::cerr << "Time Signature Byte Length: " << trackLength << std::endl;
-
-	// tellg() is like a bookmark for where in the file we are reading from
-	// https://www.geeksforgeeks.org/cpp/tellg-function-c-example/
-	std::streampos trackStart = file.tellg();  // current file position
-	std::cerr << "Track Start: " << trackStart << std::endl;
-
-	// Streamposition is where we are, streamoffset is where we move to
-
-	std::streampos trackEnd = trackStart + static_cast<std::streamoff>(trackLength);
-	std::cerr << "Track End: " << trackEnd << std::endl;
-
-	// Meta Events
-	// https://ccrma.stanford.edu/~craig/14q/midifile/MidiFileFormat.html#track_event
-
-	//uint32_t ticks = 0; // current tick position
-	uint8_t runningStatus = 0; // for running status bytes
-
-	// Look at everything within this Track Chunk
-	while (file.tellg() < trackEnd)
-	{
-		// Read the deltatime (time between each event)
-		uint32_t deltaTime = readVLQ(file);
-
-		// Read status byte
-		uint8_t status = readByte(file);
-
-		// Holds the first data byte if using running status
-		uint8_t firstDataByte = 0;  
-
-		// Check if it is a status byte (>= 0x80) or a data byte (< 0x80)
-		if (status >= EventType::statusByte)
+		std::cerr << "==================" << std::endl;
+		std::cerr << "===== Tracks =====" << std::endl;
+		std::cerr << "==================" << std::endl;
+		// Track Chunk Data (Time Signature)
+		std::string trackHeader = readString(4);
+		if (trackHeader != "MTrk")
 		{
-			// This is a new status byte
-			runningStatus = status;
+			std::cerr << "Invalid track header" << std::endl;
+			return false;
 		}
 		else
 		{
-			// This is a data byte so we'll use running status
-			firstDataByte = status;
-			status = runningStatus;
+			std::cerr << "It is a valid Track" << std::endl;
 		}
 
-		// Meta event (start of where the Track's meta event is)
-		if (status == EventType::metaEvent)
+		std::cerr << "===================" << std::endl;
+		//std::cerr << "===== Track 1 =====" << std::endl;
+		std::cerr << "[ Time Signature ]" << std::endl;
+		std::cerr << "===================" << std::endl;
+
+		uint32_t trackLength = read_uint32(file); // number of bytes in this track
+		std::cerr << "Time Signature Byte Length: " << trackLength << std::endl;
+
+		// tellg() is like a bookmark for where in the file we are reading from
+		// https://www.geeksforgeeks.org/cpp/tellg-function-c-example/
+		std::streampos trackStart = file.tellg();  // current file position
+		std::cerr << "Track Start: " << trackStart << std::endl;
+
+		// Streamposition is where we are, streamoffset is where we move to
+
+		std::streampos trackEnd = trackStart + static_cast<std::streamoff>(trackLength);
+		std::cerr << "Track End: " << trackEnd << std::endl;
+
+		// Meta Events
+		// https://ccrma.stanford.edu/~craig/14q/midifile/MidiFileFormat.html#track_event
+
+		uint32_t currentTick = 0; // current tick position
+		uint8_t runningStatus = 0; // for running status bytes
+
+		// Tracks that are stored from parsing
+		MidiTrack currentTrack;
+
+		// Dictionary (note, velocity)
+		std::map<int, MidiNote> activeNotes;
+
+		// Look at everything within this Track Chunk
+		while (file.tellg() < trackEnd)
 		{
-			// The meta type is which byte we are looking at
-			uint8_t metaType = readByte(file);
-			
-			// Tells us how many byte to read for the event
-			uint32_t length = readVLQ(file);
+			// Read the deltatime (time between each event)
+			uint32_t deltaTime = readVLQ(file);
 
-			if (metaType == EventType::timeSignature && length == 4) // Time Signature
+			// Read status byte
+			uint8_t status = readByte(file);
+
+			// Holds the first data byte if using running status
+			uint8_t firstDataByte = 0;
+
+			// Check if it is a status byte (>= 0x80) or a data byte (< 0x80)
+			if (status >= EventType::statusByte)
 			{
-				uint8_t nom = readByte(file);
-				uint8_t denom = readByte(file);
-				// Useless data for DAWs
-				uint8_t clocksPerMetronomeClick = readByte(file); 
-				uint8_t thirtyTwoSecsPerQuarter = readByte(file); // 32 seconds per crotchet (quarter note) 
-
-				m_nominator = nom;
-				m_denominator = /*1 <<*/ denom;
-
-				std::cerr << "Time Signature: " << m_nominator << "/" << m_denominator << std::endl;
-
-				// Combine them to make a string we can display more easily in other scenes
-				m_timeSignature = std::to_string(m_nominator) + "/" + std::to_string(m_denominator);
-
-				break;
+				// This is a new status byte
+				runningStatus = status;
 			}
 			else
 			{
-				file.ignore(length); // skip other meta events
+				// This is a data byte so we'll use running status
+				firstDataByte = status;
+				status = runningStatus;
 			}
-		}
 
-		// 
-		uint8_t messageType = status &EventType::messageTypeMask;
-
-		// Note Off 
-		if (messageType == EventType::noteOff)
-		{
-			std::cerr << "Note Off" << std::endl;
-
-			// Read the 2 data bytes
-			// Note key (0 - 127), Velocity (0 - 127)
-			uint8_t note;
-
-			// Check if we already read the first data byte earlier
-			// This happens when the running status is active
-			if (firstDataByte != 0)
+			// Meta event (start of where the Track's meta event is)
+			if (status == EventType::metaEvent)
 			{
-				note = firstDataByte; 
+				// The meta type is which byte we are looking at
+				uint8_t metaType = readByte(file);
+
+				// Tells us how many byte to read for the event
+				uint32_t length = readVLQ(file);
+
+				if (metaType == EventType::timeSignature && length == 4) // Time Signature
+				{
+					uint8_t nom = readByte(file);
+					uint8_t denom = readByte(file);
+					// Useless data for DAWs
+					uint8_t clocksPerMetronomeClick = readByte(file);
+					uint8_t thirtyTwoSecsPerQuarter = readByte(file); // 32 seconds per crotchet (quarter note) 
+
+					m_nominator = nom;
+					m_denominator = 1 << denom;
+
+					std::cerr << "Time Signature: " << m_nominator << "/" << m_denominator << std::endl;
+
+					// Combine them to make a string we can display more easily in other scenes
+					m_timeSignature = std::to_string(m_nominator) + "/" + std::to_string(m_denominator);
+				}
+				else if (metaType == tempo && length == 3)
+				{
+					// Read 3 bytes for microseconds per quarter note
+					uint8_t byte1 = readByte(file);
+					uint8_t byte2 = readByte(file);
+					uint8_t byte3 = readByte(file);
+
+					uint32_t microsecondsPerQuarter = (byte1 << 16) | (byte2 << 8) | byte3;
+
+					// Convert to BPM: BPM = 60,000,000 / microsecondsPerQuarter
+					m_BPM = 60000000.0 / microsecondsPerQuarter;
+
+					std::cerr << "===================" << std::endl;
+					std::cerr << "[ Tempo ]" << std::endl;
+					std::cerr << "===================" << std::endl;
+					std::cerr << "Tempo: " << m_BPM << ", BPM :" << microsecondsPerQuarter << " (microseconds)" << std::endl;
+				}
+				else
+				{
+					// Skip the other meta events
+					file.ignore(length); 
+				}
 			}
 			else
 			{
-				note = readByte(file);  
+				// Keep only the upper 4 bits (message type) and ignore lower 4 bits (channel)
+				uint8_t messageType = status & EventType::messageTypeMask;
+
+				// Note Off 
+				if (messageType == EventType::noteOff)
+				{
+					//std::cerr << "Note Off" << std::endl;
+
+					// Read the 2 data bytes
+					// Note key (0 - 127), Velocity (0 - 127)
+					uint8_t note;
+
+					// Check if we already read the first data byte earlier
+					// This happens when the running status is active
+					if (firstDataByte != 0)
+					{
+						note = firstDataByte;
+					}
+					else
+					{
+						note = readByte(file);
+					}
+
+					uint8_t velocity = readByte(file);
+
+					//std::cerr << "Note Off: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
+				}
+				else if (messageType == EventType::noteOn)
+				{
+					//std::cerr << "Note On" << std::endl;
+
+					// Read the 2 data bytes
+					// Note key (0 - 127), Velocity (0 - 127)
+					uint8_t note;
+
+					// Check if we already read the first data byte earlier
+					// This happens when the running status is active
+					if (firstDataByte != 0)
+					{
+						note = firstDataByte;
+					}
+					else
+					{
+						note = readByte(file);
+					}
+
+					uint8_t velocity = readByte(file);
+
+					//std::cerr << "Note On: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
+				}
+				else if (messageType == EventType::afterTouch)
+				{
+					std::cerr << "After touch" << std::endl;
+				}
+				else if (messageType == EventType::controlChange)
+				{
+					std::cerr << "Control change" << std::endl;
+				}
+				else if (messageType == EventType::programChange)
+				{
+					std::cerr << "Program change" << std::endl;
+				}
+				else if (messageType == EventType::channelAftertouch)
+				{
+					std::cerr << "Channel After touch" << std::endl;
+				}
+				else if (messageType == EventType::pitchBend)
+				{
+					std::cerr << "Pitch bend" << std::endl;
+				}
+				else if (messageType == EventType::systemExclusive)
+				{
+					std::cerr << "System exclusive" << std::endl;
+				}
+				else
+				{
+					std::cerr << "Not useful data (out of range?)" << std::endl;
+				}
 			}
-
-			uint8_t velocity = readByte(file);
-
-			std::cerr << "Note Off: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
 		}
-		else if (messageType == EventType::noteOn)
-		{
-			std::cerr << "Note On" << std::endl;
-
-
-			// Read the 2 data bytes
-			// Note key (0 - 127), Velocity (0 - 127)
-			uint8_t note;
-
-			// Check if we already read the first data byte earlier
-			// This happens when the running status is active
-			if (firstDataByte != 0)
-			{
-				note = firstDataByte;
-			}
-			else
-			{
-				note = readByte(file);
-			}
-
-			uint8_t velocity = readByte(file);
-
-			std::cerr << "Note On: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
-		}
-		else if (messageType == EventType::afterTouch)
-		{
-			std::cerr << "After touch" << std::endl;
-		}
-		else if (messageType == EventType::controlChange)
-		{
-			std::cerr << "Control change" << std::endl;
-		}
-		else if (messageType == EventType::programChange)
-		{
-			std::cerr << "Program change" << std::endl;
-		}
-		else if (messageType == EventType::channelAftertouch)
-		{
-			std::cerr << "Channel After touch" << std::endl;
-		}
-		else if (messageType == EventType::pitchBend)
-		{
-			std::cerr << "Pitch bend" << std::endl;
-		}
-		else if (messageType == EventType::systemExclusive)
-		{
-			std::cerr << "System exclusive" << std::endl;
-		}
-		else
-		{
-			std::cerr << "Not useful data (out of range?)" << std::endl;
-		}
+		// Put into our vector of Midi Tracks
+		midiTracks.push_back(MidiTrack());
 	}
-	// Put into our vector of Midi Tracks
-	midiTracks.push_back(MidiTrack());
-
 	// Track Chunk Data (Tempo)
 	// to do...
 
