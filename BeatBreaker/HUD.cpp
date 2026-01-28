@@ -1,6 +1,9 @@
 #include "HUD.h"
 
 HUD::HUD(const sf::Font& font) : m_fpsText(font),
+								 m_midiFileNameText(font),
+								 m_midiTimeSigText(font),
+								 m_midiBPMText(font),
 								 m_playButtonSprite(m_playButtonTexture),
 								 m_pauseButtonSprite(m_pauseButtonTexture),
 								 m_skipEndButtonSprite(m_skipEndButtonTexture),
@@ -9,14 +12,44 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 								 m_muteButtonSprite(m_muteButtonTexture),
 								 m_unmuteButtonSprite(m_unmuteButtonTexture)
 {
+	// FPS
 	m_fpsText.setPosition(sf::Vector2f{ SCREEN_CENTRE.x + 600.0f, SCREEN_CENTRE.y - 350.0f });
 	m_fpsText.setFillColor(sf::Color::White);
 	m_fpsText.setOutlineColor(sf::Color::Black);
 	m_fpsText.setOutlineThickness(2.0f);
 	m_fpsText.setCharacterSize(20U);
 	m_fpsText.setString("???");
-
 	b_isFPSVisible = true;
+
+	// Midi Info
+	b_isFPSVisible = true;
+	m_midiFileNameText.setPosition(m_midiTextPos);
+	m_midiFileNameText.setFillColor(sf::Color::White);
+	m_midiFileNameText.setOutlineColor(sf::Color::Black);
+	m_midiFileNameText.setOutlineThickness(2.0f);
+	m_midiFileNameText.setCharacterSize(20U);
+	m_midiFileNameText.setString("Midi File: ");
+	// Time Signature
+	m_midiTimeSigText.setPosition(sf::Vector2f{ m_midiTextPos.x + 200.0f, m_midiTextPos.y });
+	m_midiTimeSigText.setFillColor(sf::Color::White);
+	m_midiTimeSigText.setOutlineColor(sf::Color::Black);
+	m_midiTimeSigText.setOutlineThickness(2.0f);
+	m_midiTimeSigText.setCharacterSize(20U);
+	m_midiTimeSigText.setString("Time Signature: X / X");
+	// BPM
+	m_midiBPMText.setPosition(sf::Vector2f{ m_midiTextPos.x + 400.0f, m_midiTextPos.y });
+	m_midiBPMText.setFillColor(sf::Color::White);
+	m_midiBPMText.setOutlineColor(sf::Color::Black);
+	m_midiBPMText.setOutlineThickness(2.0f);
+	m_midiBPMText.setCharacterSize(20U);
+	m_midiBPMText.setString("BPM: ");
+	
+	// UI Polish
+	m_bottomBorderBar.setPosition(m_midiTextPos);
+	m_bottomBorderBar.setFillColor(sf::Color(50, 50, 50, 150));
+	m_bottomBorderBar.setOutlineColor(sf::Color::Black);
+	m_bottomBorderBar.setOutlineThickness(2.0f);
+	m_bottomBorderBar.setSize(sf::Vector2f{ 600.0f, 25.0f });
 
 	// Beat Markers
 	setupBeatMarkers();
@@ -173,6 +206,8 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 		t_window.draw(m_fpsText);
 	}
 
+
+
 	// Buttons
 	t_window.draw(m_playButtonSprite);
 	t_window.draw(m_pauseButtonSprite);
@@ -193,5 +228,11 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 	}
 	t_window.draw(m_beatMarkerWholeNote);
 
+	// Midi Info
+	t_window.draw(m_midiFileNameText);
+	t_window.draw(m_midiTimeSigText);
+	t_window.draw(m_midiBPMText);
 
+	// UI Polish
+	t_window.draw(m_bottomBorderBar);
 }

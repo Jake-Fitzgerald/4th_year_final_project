@@ -5,6 +5,12 @@
 #include "Globals.h"
 #include "MIDIParse.h"
 
+/*
+*   To do:
+	Get each midi track's name by string.
+	Display track sf::rectangle shape when the note is played and dissapears when note if off.
+*/
+
 class TrackVisualiser
 {
 public:

@@ -67,6 +67,9 @@
     <Filter Include="Source Files\Visualisers">
       <UniqueIdentifier>{26bfe033-f0de-4159-892d-efa0ccad1d5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Utilities">
+      <UniqueIdentifier>{c2497572-bcc8-44ac-af18-e5a69afa5eef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -209,5 +212,10 @@
     <Media Include="ASSETS\AUDIO\beep.wav">
       <Filter>Resource Files\AUDIO</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Utilities\winml.lib">
+      <Filter>Resource Files\Utilities</Filter>
+    </Library>
   </ItemGroup>
 </Project>

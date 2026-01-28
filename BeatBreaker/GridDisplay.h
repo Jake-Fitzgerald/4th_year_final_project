@@ -11,6 +11,8 @@ public:
 
 	void renderGrid(sf::RenderWindow& t_window);
 
+	void toggleGridVisible();
+
 
 private:
 	std::vector<sf::RectangleShape> m_lineShapesVertical;
@@ -20,6 +22,7 @@ private:
 	float m_lineThickness = 2.0f;
 	sf::Color gridColour = sf::Color(200, 10, 10, 100);
 
+	bool b_isGridVisible;
 
 };
 
