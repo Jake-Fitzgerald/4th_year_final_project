@@ -18,6 +18,9 @@ DrumVisualiser::DrumVisualiser(std::shared_ptr<const sf::Font> font) :
 void DrumVisualiser::setupDrums()
 {
 	setupDrumSprites();
+	int num = 5; //temp
+	changeDrumColourOn(num);
+	changeDrumColourOff(num);
 }
 
 void DrumVisualiser::setupDrumSprites()
@@ -102,18 +105,65 @@ void DrumVisualiser::setupDrumSprites()
 	m_clapSprite.setTexture(m_clapTexture, true);
 	m_clapSprite.setScale(sf::Vector2f(1.0f, 1.0f));
 	m_clapSprite.setPosition(sf::Vector2f{ m_drumPositions.x, m_drumPositions.y });
+
+	// Add to vector (back to front like in photoshop)
+	m_drumSprites.push_back(&m_TomTom1Sprite);
+	m_drumSprites.push_back(&m_TomTom2Sprite);
+	m_drumSprites.push_back(&m_snareSprite);
+	m_drumSprites.push_back(&m_floorTomSprite);
+	m_drumSprites.push_back(&m_crash2Sprite);
+	m_drumSprites.push_back(&m_crash1Sprite);
+	m_drumSprites.push_back(&m_hitHatSprite);
+	m_drumSprites.push_back(&m_kickSprite);
+	m_drumSprites.push_back(&m_clapSprite);
+
+	// Centre origins
+	for (int i = 0; i < m_drumSprites.size(); i++)
+	{
+		sf::FloatRect spriteSize = m_drumSprites.at(i)->getLocalBounds();
+		m_drumSprites.at(i)->setOrigin(sf::Vector2f{ spriteSize.size.x / 2.0f, spriteSize.size.y / 2.0f });
+	}
 }
 
 void DrumVisualiser::renderDrums(sf::RenderWindow& t_window)
 {
 	// Render pieces from back to front so they overlap like in the photoshop file
-	t_window.draw(m_TomTom1Sprite);
-	t_window.draw(m_TomTom2Sprite);
-	t_window.draw(m_snareSprite);
-	t_window.draw(m_floorTomSprite);
-	t_window.draw(m_hitHatSprite);
-	t_window.draw(m_crash1Sprite);
-	t_window.draw(m_crash2Sprite);
-	t_window.draw(m_kickSprite);
-	t_window.draw(m_clapSprite);
+	//t_window.draw(m_TomTom1Sprite);
+	//t_window.draw(m_TomTom2Sprite);
+	//t_window.draw(m_snareSprite);
+	//t_window.draw(m_floorTomSprite);
+	//t_window.draw(m_hitHatSprite);
+	//t_window.draw(m_crash1Sprite);
+	//t_window.draw(m_crash2Sprite);
+	//t_window.draw(m_kickSprite);
+	//t_window.draw(m_clapSprite);
+
+	for (int i = 0; i < m_drumSprites.size(); i++)
+	{
+		t_window.draw(*m_drumSprites[i]);
+	}
+}
+
+
+
+void DrumVisualiser::changeDrumColourOn(int t_trackNumber)
+{
+	//for (int i = 0; i < m_drumSprites.size(); i++)
+	//{
+	//	m_drumSprites.at(t_trackNumber)->setColor(m_noteOnColour);
+	//	m_drumSprites.at(t_trackNumber)->setScale(sf::Vector2f{ 5.0f, 2.0f });
+	//}
+
+	sf::Sprite* sprite = m_drumSprites.at(t_trackNumber);
+
+	sprite->setColor(m_noteOnColour);
+	sprite->setScale(sf::Vector2f{ 50.0f, 2.0f });
+}
+
+void DrumVisualiser::changeDrumColourOff(int t_trackNumber)
+{
+	sf::Sprite* sprite = m_drumSprites.at(t_trackNumber);
+
+	sprite->setColor(m_noteOffColour);
+	//sprite->setScale(sf::Vector2f{ 5.0f, 2.0f });
 }

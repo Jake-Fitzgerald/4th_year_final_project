@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
 #include "MIDIParse.h"
+#include <vector>
 
 
 /*
@@ -20,6 +21,8 @@ public:
 	void setupDrumSprites();
 
 	void renderDrums(sf::RenderWindow& t_window);
+	void changeDrumColourOn(int t_trackNumber);
+	void changeDrumColourOff(int t_trackNumber);
 
 private:
 	// Drum Sprites
@@ -42,7 +45,12 @@ private:
 	sf::Texture m_clapTexture;
 	sf::Sprite m_clapSprite;
 
-	sf::Vector2f m_drumPositions{ 0.0f,0.0f };
+	std::vector<sf::Sprite*> m_drumSprites;
+
+	// Images are 1080 by 720 and the sprite's origins are halfed
+	sf::Vector2f m_drumPositions{ 1080.0f / 2.0f, 720.0f / 2.0f}; 
+	sf::Color m_noteOnColour = sf::Color::Green;
+	sf::Color m_noteOffColour = sf::Color::White;
 
 	// Text
 	std::shared_ptr<const sf::Font> m_font;

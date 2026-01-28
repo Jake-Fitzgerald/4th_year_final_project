@@ -75,6 +75,9 @@
   <ItemGroup>
     <Media Include="ASSETS\AUDIO\beep.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="Utilities\winml.lib" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{1ca11239-9416-4031-8cba-cfbb15f469ce}</ProjectGuid>
