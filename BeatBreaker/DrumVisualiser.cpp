@@ -18,9 +18,7 @@ DrumVisualiser::DrumVisualiser(std::shared_ptr<const sf::Font> font) :
 void DrumVisualiser::setupDrums()
 {
 	setupDrumSprites();
-	int num = 5; //temp
-	changeDrumColourOn(num);
-	changeDrumColourOff(num);
+
 }
 
 void DrumVisualiser::setupDrumSprites()
@@ -166,4 +164,44 @@ void DrumVisualiser::changeDrumColourOff(int t_trackNumber)
 
 	sprite->setColor(m_noteOffColour);
 	//sprite->setScale(sf::Vector2f{ 5.0f, 2.0f });
+}
+
+void DrumVisualiser::updateIntroAnim(float t_deltaTime)
+{
+	// Check if intro has played already
+	if (b_isIntroFinished == true)
+	{
+		return;
+	}
+
+	if (m_introTimer < m_introDelayAmount)
+	{
+		m_introTimer += t_deltaTime;
+		return;
+	}
+
+
+	// Current piece increment
+	m_drumPieceTimerIntro += t_deltaTime;
+
+	if (m_drumPieceIndexIntro < m_drumSprites.size())
+	{
+		m_drumSprites[m_drumPieceIndexIntro]->setColor(m_noteOnColour);
+	}
+	//m_drumSprites[m_drumPieceIndexIntro]->setColor(m_noteOnColour);
+
+	if (m_drumPieceTimerIntro >= m_drumPieceDelayIntro)
+	{
+		m_drumSprites[m_drumPieceIndexIntro]->setColor(m_noteOffColour);
+
+		// Reset timer
+		m_drumPieceTimerIntro = 0.0f;   
+		m_drumPieceIndexIntro++;       
+	}
+
+	// Check if every piece has played once
+	if (m_drumPieceIndexIntro >= m_drumSprites.size())
+	{
+		b_isIntroFinished = true;
+	}
 }

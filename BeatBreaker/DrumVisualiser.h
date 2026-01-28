@@ -13,6 +13,13 @@
 	Colour a sprite when the sound of that piece is being played, then back to default when it's not.
 
 */
+
+enum DrumStatus
+{
+	On,
+	Off
+};
+
 class DrumVisualiser
 {
 public:
@@ -23,6 +30,8 @@ public:
 	void renderDrums(sf::RenderWindow& t_window);
 	void changeDrumColourOn(int t_trackNumber);
 	void changeDrumColourOff(int t_trackNumber);
+
+	void updateIntroAnim(float t_deltaTime);
 
 private:
 	// Drum Sprites
@@ -55,5 +64,17 @@ private:
 	// Text
 	std::shared_ptr<const sf::Font> m_font;
 	std::vector<sf::Text> m_trackNameTexts;
+
+	// Drum intro animation
+	float m_introDelayAmount = 0.2f;
+	float m_introTimer = 0.0f;
+
+	int m_drumPieceIndexIntro = 0;
+	float m_drumPieceDelayIntro = 0.04f;
+	float m_drumPieceTimerIntro = 0.0f;
+
+	bool b_isIntroFinished = false;
+
+	DrumStatus drumStatus = DrumStatus::Off;
 };
 

@@ -324,6 +324,8 @@ void Game::update(sf::Time t_deltaTime)
 		m_player.revertPosition();
 		m_player.updatePlayer(dtConverted);
 	}
+
+	drumVisualiser.updateIntroAnim(dtConverted);
 }
 
 
