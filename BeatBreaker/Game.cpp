@@ -23,7 +23,8 @@ Game::Game() :
 		m_exitText(*m_jerseyFont),
 		m_hud(*m_jerseyFont),
 		m_options(*m_jerseyFont),
-		trackVisualiser(m_jerseyFont)
+		trackVisualiser(m_jerseyFont),
+	    drumVisualiser(m_jerseyFont)
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
@@ -73,7 +74,7 @@ Game::Game() :
 	pianoVisualiser.setupPianoShapes();
 
 	// Drum Visualiser
-	drumVisualiser.setupDrums();
+	drumVisualiser.setupDrumSprites();
 
 	// UI 
 	gridDisplay.setupGrid();
@@ -82,7 +83,6 @@ Game::Game() :
 Game::~Game()
 {
 }
-
 
 void Game::run()
 {	
@@ -103,8 +103,6 @@ void Game::run()
 		render(); // as many as possible
 	}
 }
-
-
 
 void Game::processEvents()
 {
@@ -146,6 +144,12 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 	{
 		m_currentGameState = GameStates::MainMenu;
 	}
+	// Toggle Grid Display
+	if (sf::Keyboard::Key::G == newKeypress->code)
+	{
+		gridDisplay.toggleGridVisible();
+	}
+
 }
 
 void Game::processKeysPressed(const std::optional<sf::Event> t_event)

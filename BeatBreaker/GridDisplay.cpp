@@ -33,19 +33,34 @@ void GridDisplay::setupGrid()
         line.setPosition(sf::Vector2f{ startX, startY + i * m_gridSpaceSize });
         m_lineShapesHorizontal.push_back(line);
     }
+
+    b_isGridVisible = true;
 }
 
 void GridDisplay::renderGrid(sf::RenderWindow& t_window)
 {
-    for (auto& line : m_lineShapesVertical)
+    if (b_isGridVisible == true)
     {
-        t_window.draw(line);
-    }
-       
+        for (auto& line : m_lineShapesVertical)
+        {
+            t_window.draw(line);
+        }
 
-    for (auto& line : m_lineShapesHorizontal)
+        for (auto& line : m_lineShapesHorizontal)
+        {
+            t_window.draw(line);
+        }
+    } 
+}
+
+void GridDisplay::toggleGridVisible()
+{
+    if (b_isGridVisible == true)
     {
-        t_window.draw(line);
+        b_isGridVisible = false;
     }
-        
+    else
+    {
+        b_isGridVisible = true;
+    }
 }

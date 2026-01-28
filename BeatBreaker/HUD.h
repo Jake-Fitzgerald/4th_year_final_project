@@ -51,8 +51,8 @@ private:
 	sf::RectangleShape m_beatMarkerWholeNote;
 
 	sf::Vector2f m_beatMarkerSize = sf::Vector2f{ 10.0f, 30.0f };
-	sf::Vector2f m_beatMarkerLeftPos = sf::Vector2f{ 100.0f, 600.0f };
-	sf::Vector2f m_beatMarkerRightPos = sf::Vector2f{ 400.0f, 600.0f };
+	sf::Vector2f m_beatMarkerLeftPos = sf::Vector2f{ 800.0f, 650.0f };
+	sf::Vector2f m_beatMarkerRightPos = sf::Vector2f{ 1000.0f, 650.0f };
 
 	sf::Color c_beatMarkerClear = sf::Color(255, 255, 255, 50);
 	sf::Color c_beatMarkerSet = sf::Color(255, 0, 0, 150);
@@ -77,6 +77,21 @@ private:
 	sf::Vector2f buttonsLeftPos{ paddingX, paddingY + 600.0f };
 	float buttonSpacing = 50.0f;
 
+	// Midi Information
+	sf::Vector2f m_midiTextPos{ paddingX, paddingY + 660.0f };
+	std::string m_midiFileName;
+	sf::Text m_midiFileNameText;
+
+	std::string m_midiTimeSig;
+	sf::Text m_midiTimeSigText;
+
+	std::string m_midiBPM;
+	sf::Text m_midiBPMText;
+
+	bool b_isMidiInfoVisible;
+
+	// UI Polish
+	sf::RectangleShape m_bottomBorderBar;
 	
 };
 

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
+#include "MIDIParse.h"
 
 /*
 * 
