@@ -24,71 +24,20 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 		std::cerr << "Failed to open MIDI file" << std::endl;
 		return false;
 	}
-
-	// Swaps byte order of 32 bit int
-	auto Swap32 = [](uint32_t n)
-	{
-
-	};
-
-	// Convert from old big endian (MIDI) to the modern one
-	// Shift 32 bit int
-	//uint32_t test_uint32 = read_uint32(file);
-	//std::cerr << "32 uint is: " << test_uint32 << std::endl;
-	// Shift 16 bit int
-	//uint16_t test_uint16 = read_uint16(file);
-	//std::cerr << "16 uint is: " << test_uint16 << std::endl;
-
-	// Read strings
-	// Gets the bytes from the file and construct a string from them
-	auto readString = [&file](uint32_t nbyteLength)
-	{
-			std::string combinedString;
-			combinedString.resize(nbyteLength); 
-
-			if (!file.read(combinedString.data(), nbyteLength))
-			{
-				std::cerr << "Error reading string\n";
-				return std::string{};
-			}
-
-			std::cerr << "Combined string is: " << combinedString << std::endl;
-			return combinedString;
-	};
 	
 	// Parse Header Chunk
-	std::string header = readString(4);
+	std::string header = readString(file, 4);
 	// Check if it is a MIDI file if it contains MThd at the start
 	if (header != "MThd")
 	{
 		std::cerr << "Not a MIDI file" << std::endl;
-		return false;
+		//return false;
 	}
 	else
 	{
 		std::cerr << "It is a valid MIDI file" << std::endl;
-		//parseHeader(file);
+		parseHeader(file);
 	}
-
-
-	// Header Chunk Data
-	std::cerr << "==================" << std::endl;
-	std::cerr << "===== Header =====" << std::endl;
-	std::cerr << "==================" << std::endl;
-	m_headerLength = read_uint32(file); // should be 6
-	std::cerr << "Header Length: " << m_headerLength << std::endl;
-
-	m_midiFormat = read_uint16(file);
-	std::cerr << "Format: " << m_midiFormat << std::endl;
-
-	m_numTracks = read_uint16(file);
-	std::cerr << "Number of tracks: " << m_numTracks << std::endl;
-
-	// Ticks per quarter (delta time ticks within a quarter note)
-	// delta time is the number of ticks since the last event, in this case the note.
-	m_ticksPerQuarter = read_uint16(file);
-	std::cerr << "Ticks per Quarter Note: " << m_ticksPerQuarter << std::endl;
-
 
 	for (int trackNum = 0; trackNum < m_numTracks; trackNum++)
 	{
@@ -96,7 +45,7 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 		std::cerr << "===== Tracks =====" << std::endl;
 		std::cerr << "==================" << std::endl;
 		// Track Chunk Data (Time Signature)
-		std::string trackHeader = readString(4);
+		std::string trackHeader = readString(file, 4);
 		if (trackHeader != "MTrk")
 		{
 			std::cerr << "Invalid track header" << std::endl;
@@ -142,10 +91,8 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 		{
 			// Read the deltatime (time between each event)
 			uint32_t deltaTime = readVLQ(file);
-
 			// Read status byte
 			uint8_t status = readByte(file);
-
 			// Holds the first data byte if using running status
 			uint8_t firstDataByte = 0;
 
@@ -334,10 +281,40 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 	return false;
 }
 
-void MIDIParse::parseHeader()
+std::string MIDIParse::readString(std::ifstream& t_file, uint32_t t_nbyteLength)
 {
-	std::cerr << "=== Header ===" << std::endl;
+	std::string combinedString;
+	combinedString.resize(t_nbyteLength);
 
+	if (!t_file.read(combinedString.data(), t_nbyteLength))
+	{
+		std::cerr << "Error reading string\n";
+		return std::string{};
+	}
+
+	std::cerr << "Combined string is: " << combinedString << std::endl;
+	return combinedString;
+}
+
+void MIDIParse::parseHeader(std::ifstream& t_file)
+{
+	// Header Chunk Data
+	std::cerr << "==================" << std::endl;
+	std::cerr << "===== Header =====" << std::endl;
+	std::cerr << "==================" << std::endl;
+	m_headerLength = read_uint32(t_file); // should be 6
+	std::cerr << "Header Length: " << m_headerLength << std::endl;
+
+	m_midiFormat = read_uint16(t_file);
+	std::cerr << "Format: " << m_midiFormat << std::endl;
+
+	m_numTracks = read_uint16(t_file);
+	std::cerr << "Number of tracks: " << m_numTracks << std::endl;
+
+	// Ticks per quarter (delta time ticks within a quarter note)
+	// delta time is the number of ticks since the last event, in this case the note.
+	m_ticksPerQuarter = read_uint16(t_file);
+	std::cerr << "Ticks per Quarter Note: " << m_ticksPerQuarter << std::endl;
 
 }
 

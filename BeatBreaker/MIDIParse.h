@@ -99,7 +99,9 @@ public:
 
 	bool parseFile(const std::string& t_fileName);
 
-	void parseHeader();
+	std::string readString(std::ifstream &t_file, uint32_t nbyteLength);
+
+	void parseHeader(std::ifstream& t_file);
 
 	// Shift bits
 	// Reads 4 bytes then converts them into 32
