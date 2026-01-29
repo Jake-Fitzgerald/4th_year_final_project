@@ -31,11 +31,14 @@
 
 // Utilities
 #include "Globals.h"
+// window's midi player Vimm ?
+
 
 // Visualisers
 #include "TrackVisualiser.h"
 #include "PianoVisualiser.h"
 #include "DrumVisualiser.h"
+#include "SheetVisualiser.h"
 
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
@@ -47,10 +50,16 @@ enum GameStates
 	OptionsScene,
 	Character,
 	GameOver,
+
+	// Selection scenes
+	MidiFileSelect,
+	VisualiserSelect,
+
 	// Visualisers
 	TrackVis,
 	PianoVis,
-	DrumVis
+	DrumVis,
+	SheetVis
 };
 
 enum Difficulties
@@ -92,6 +101,8 @@ private:
 	void setupPlayer();
 
 	void setupSounds();
+
+	void setupCustomIcon();
 
 	
 	sf::RenderWindow m_window; 
@@ -139,7 +150,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::MainMenu;
+	GameStates m_currentGameState = GameStates::TrackVis;
 
 	// Test Blocks
 	const int COLS = 8;   
@@ -198,10 +209,15 @@ private:
 	TrackVisualiser trackVisualiser;
 	PianoVisualiser pianoVisualiser;
 	DrumVisualiser drumVisualiser;
+	SheetVisualiser sheetVisualiser;
 
 	// UI
 	// Overlays
 	GridDisplay gridDisplay;
+
+	// Custom Icon
+	sf::Image m_customIcon;
+
 };
 
 #pragma warning( pop ) 

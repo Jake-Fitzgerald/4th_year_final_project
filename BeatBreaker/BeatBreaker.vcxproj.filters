@@ -70,6 +70,12 @@
     <Filter Include="Resource Files\Utilities">
       <UniqueIdentifier>{c2497572-bcc8-44ac-af18-e5a69afa5eef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scenes\SelectionMenus">
+      <UniqueIdentifier>{042d4c7e-64b1-439b-bc74-1e5aace81788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\SelectionMenus">
+      <UniqueIdentifier>{cc3be89e-5190-4b8c-98db-85e292d81759}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -129,8 +135,17 @@
     <ClCompile Include="PianoVisualiser.cpp">
       <Filter>Source Files\Visualisers</Filter>
     </ClCompile>
+    <ClCompile Include="SheetVisualiser.cpp">
+      <Filter>Source Files\Visualisers</Filter>
+    </ClCompile>
     <ClCompile Include="DrumVisualiser.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Visualisers</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiFileSelect.cpp">
+      <Filter>Source Files\UI\SelectionMenus</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualiserSelect.cpp">
+      <Filter>Source Files\UI\SelectionMenus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +211,15 @@
     </ClInclude>
     <ClInclude Include="DrumVisualiser.h">
       <Filter>Header Files\Visualisers</Filter>
+    </ClInclude>
+    <ClInclude Include="SheetVisualiser.h">
+      <Filter>Header Files\Visualisers</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiFileSelect.h">
+      <Filter>Header Files\Scenes\SelectionMenus</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualiserSelect.h">
+      <Filter>Header Files\Scenes\SelectionMenus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

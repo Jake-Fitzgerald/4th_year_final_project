@@ -31,14 +31,17 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="MidiFileSelect.cpp" />
     <ClCompile Include="MIDIParse.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="PianoVisualiser.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Results.cpp" />
+    <ClCompile Include="SheetVisualiser.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TrackVisualiser.cpp" />
     <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="VisualiserSelect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
@@ -53,15 +56,18 @@
     <ClInclude Include="Highscore.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MidiFileSelect.h" />
     <ClInclude Include="MIDIParse.h" />
     <ClInclude Include="Notes.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="PianoVisualiser.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Results.h" />
+    <ClInclude Include="SheetVisualiser.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TrackVisualiser.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="VisualiserSelect.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\IMAGES\SFML-LOGO.png">

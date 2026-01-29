@@ -78,6 +78,9 @@ Game::Game() :
 
 	// UI 
 	gridDisplay.setupGrid();
+
+	// Custom Icon
+	setupCustomIcon();
 }
 
 Game::~Game()
@@ -389,6 +392,18 @@ void Game::render()
 		m_blockGen.renderBlocks(m_window);
 	}
 
+	// Selection Scenes
+	// Midi File Select
+	if (m_currentGameState == GameStates::MidiFileSelect)
+	{
+
+	}
+	// Visualiser Select
+	if (m_currentGameState == GameStates::VisualiserSelect)
+	{
+
+	}
+
 	// Visualisers
 
 	// Track Visualiser
@@ -410,6 +425,12 @@ void Game::render()
 	{
 		// visualiser shapes
 		drumVisualiser.renderDrums(m_window);
+	}
+
+	// Sheet Music Visualiser
+	if (m_currentGameState == GameStates::SheetVis)
+	{
+
 	}
 
 	// UI
@@ -562,12 +583,27 @@ void Game::setupMainMenu()
 	sf::Vector2f optionsTextOffset = { m_optionsButton.getPosition().x + 20.0f, m_optionsButton.getPosition().y };
 	m_optionsText.setPosition(optionsTextOffset);
 
+	// Visualisers
+	// Visualiser Selection Button (leads to that scene) 
+	
+	// Track Vis
+
+	// Piano Vis
+
+	// Drum Vis
+
+	// Sheet Music Vis
+
 	// Exit 
 	m_exitButton.setPosition(sf::Vector2f{ SCREEN_CENTRE.x, SCREEN_CENTRE.y + 300.0f });
 	m_exitButton.setSize(sf::Vector2f(250, 50));
 	m_exitButton.setFillColor(sf::Color::Magenta);
 	sf::Vector2f exitTextOffset = { m_exitButton.getPosition().x + 20.0f, m_exitButton.getPosition().y };
 	m_exitText.setPosition(exitTextOffset);
+
+	// Midi Selection Button
+	// 3/4, 4/4. 5/6, 6/7, etc
+
 }
 
 bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)
@@ -642,7 +678,23 @@ void Game::setupSounds()
 	m_soundManager.loadBuffer("next_track_phase", "ASSETS\\AUDIO\\SFX\\GAMEPLAY\\next_track_phase.wav", SoundType::SFX);
 }
 
+void Game::setupCustomIcon()
+{
+	// Custom Icon
+	if (!m_customIcon.loadFromFile("ASSETS\\IMAGES\\UI\\Icons\\CustomIcon.png"))
+	{
+		// simple error message if previous call fails
+		std::cout << "problem loading Custom Image Icon" << std::endl;
+	}
+
+	m_window.setIcon(m_customIcon);
+}
+
 void Game::setupMidiParser()
 {
 	midiParser.parseFile("ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid");
+
+	// Create a midi selection screen
+	// Be able to select which midi from a list of midi buttons
+	// -> these are just different paths and you swap the string
 }

@@ -8,6 +8,9 @@ Notes:
 	Block Breaking pitch randomise
 	Can set a randomised pitch and use currentSound->setPitch(random float) to change it
 
+	We may need to use a soundfont library for midi playback rather than this since now we can be playing 
+	up to a 50 sounds at once instead of just several. I don't know how it will handy polyphonic sounds
+	like chords and we will need to convert the velocity of a midi note (0 - 127) to float aswell.
 */
 
 // Sound
@@ -33,6 +36,8 @@ public:
 	void setDefaultVolumes();
 
 	void randomisePitch();
+	void lowerPitch(int t_semitones);
+	void raisePitch(int t_semitones);
 
 private:
 	// Put all of our sounds in this vector and reuse them

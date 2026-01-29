@@ -35,7 +35,6 @@ sf::Sound* SoundManager::getFreeSound(const sf::SoundBuffer &t_buffer)
         // Find if there's one there and if that one after stopping
         if (m_soundsPool[i] && m_soundsPool[i]->getStatus() == sf::Sound::Status::Stopped)
         {
-            // Stop playing
             m_soundsPool[i]->stop();
             // Assign it to the new buffer
             m_soundsPool[i]->setBuffer(t_buffer);
@@ -60,7 +59,7 @@ void SoundManager::play(const std::string& t_name)
     // If it's not found (.end after the end of the map)
     if (it == m_buffersMap.end())
     {
-        std::cerr << "[SoundManager] don't know the name of this sound: " << t_name << "\n";
+        std::cerr << "[SoundManager] don't know the name of this sound: " << t_name << std::endl;
         return;
     }
 
@@ -96,4 +95,14 @@ void SoundManager::setDefaultVolumes()
 void SoundManager::randomisePitch()
 {
     // to do for Block breaking sound
+}
+
+void SoundManager::lowerPitch(int t_semitones)
+{
+
+}
+
+void SoundManager::raisePitch(int t_semitones)
+{
+
 }

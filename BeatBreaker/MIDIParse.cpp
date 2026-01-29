@@ -142,8 +142,6 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 					uint8_t byte3 = readByte(file);
 
 					uint32_t microsecondsPerQuarter = (byte1 << 16) | (byte2 << 8) | byte3;
-
-					// Convert to BPM: BPM = 60,000,000 / microsecondsPerQuarter
 					m_BPM = 60000000.0 / microsecondsPerQuarter;
 
 					std::cerr << "===================" << std::endl;
