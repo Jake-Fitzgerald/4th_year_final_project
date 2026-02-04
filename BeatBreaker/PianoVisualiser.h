@@ -49,6 +49,9 @@ private:
 
 	const int TOTAL_KEYS_AMOUNT = 88;
 
+	// UI
+	sf::RectangleShape m_keyboardBase;
+
 	bool b_midiLiveMode = false;
 };
 

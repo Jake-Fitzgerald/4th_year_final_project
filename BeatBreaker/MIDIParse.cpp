@@ -41,6 +41,12 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 
 	for (int trackNum = 0; trackNum < m_numTracks; trackNum++)
 	{
+		// Reset
+		currentTick = 0;
+		activeNotes.clear();
+		currentTrack = MidiTrack();
+
+
 		std::cerr << "==================" << std::endl;
 		std::cerr << "===== Tracks =====" << std::endl;
 		std::cerr << "==================" << std::endl;
@@ -77,20 +83,23 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 		// Meta Events
 		// https://ccrma.stanford.edu/~craig/14q/midifile/MidiFileFormat.html#track_event
 
-		uint32_t currentTick = 0; // current tick position
+		//uint32_t currentTick = 0; // current tick position
 		uint8_t runningStatus = 0; // for running status bytes
 
 		// Tracks that are stored from parsing
-		MidiTrack currentTrack;
+		//MidiTrack currentTrack;
 
 		// Dictionary (note, velocity)
-		std::map<int, MidiNote> activeNotes;
+		//std::map<int, MidiNote> activeNotes;
 
 		// Look at everything within this Track Chunk
 		while (file.tellg() < trackEnd)
 		{
 			// Read the deltatime (time between each event)
 			uint32_t deltaTime = readVLQ(file);
+			// Add to the song's current time
+			currentTick += deltaTime;
+
 			// Read status byte
 			uint8_t status = readByte(file);
 			// Holds the first data byte if using running status
@@ -120,34 +129,11 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 
 				if (metaType == EventType::timeSignature && length == 4) // Time Signature
 				{
-					uint8_t nom = readByte(file);
-					uint8_t denom = readByte(file);
-					// Useless data for DAWs
-					uint8_t clocksPerMetronomeClick = readByte(file);
-					uint8_t thirtyTwoSecsPerQuarter = readByte(file); // 32 seconds per crotchet (quarter note) 
-
-					m_nominator = nom;
-					m_denominator = 1 << denom;
-
-					std::cerr << "Time Signature: " << m_nominator << "/" << m_denominator << std::endl;
-
-					// Combine them to make a string we can display more easily in other scenes
-					m_timeSignature = std::to_string(m_nominator) + "/" + std::to_string(m_denominator);
+					parseTimeSig(file);
 				}
 				else if (metaType == tempo && length == 3)
 				{
-					// Read 3 bytes for microseconds per quarter note
-					uint8_t byte1 = readByte(file);
-					uint8_t byte2 = readByte(file);
-					uint8_t byte3 = readByte(file);
-
-					uint32_t microsecondsPerQuarter = (byte1 << 16) | (byte2 << 8) | byte3;
-					m_BPM = 60000000.0 / microsecondsPerQuarter;
-
-					std::cerr << "===================" << std::endl;
-					std::cerr << "[ Tempo ]" << std::endl;
-					std::cerr << "===================" << std::endl;
-					std::cerr << "Tempo: " << m_BPM << ", BPM :" << microsecondsPerQuarter << " (microseconds)" << std::endl;
+					parseTempo(file);
 				}
 				else
 				{
@@ -163,84 +149,11 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 				// Note Off 
 				if (messageType == EventType::noteOff)
 				{
-					//std::cerr << "Note Off" << std::endl;
-
-					// Read the 2 data bytes
-					// Note key (0 - 127), Velocity (0 - 127)
-					uint8_t note;
-
-					// Check if we already read the first data byte earlier
-					// This happens when the running status is active
-					if (firstDataByte != 0)
-					{
-						note = firstDataByte;
-					}
-					else
-					{
-						note = readByte(file);
-					}
-
-					uint8_t velocity = readByte(file);
-
-					//std::cerr << "Note Off: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
+					noteOff(file, firstDataByte);
 				}
 				else if (messageType == EventType::noteOn)
 				{
-					// Read the 2 data bytes
-					// Note key (0 - 127), Velocity (0 - 127)
-					uint8_t note;
-
-					// Check if we already read the first data byte earlier
-					// This happens when the running status is active
-					if (firstDataByte != 0)
-					{
-						note = firstDataByte;
-					}
-					else
-					{
-						note = readByte(file);
-					}
-
-					uint8_t velocity = readByte(file);
-
-					//std::cerr << "Note On: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
-
-					bool b_noteExists = false;
-					// Velocity at 0 tells us the note is off not on
-					if (velocity == 0)
-					{
-						// Check if the note even exists
-						if (activeNotes.find(note) != activeNotes.end())
-						{
-							b_noteExists = true;
-						}
-
-						if (b_noteExists == true)
-						{
-							// Complete the note by setting end tick so the note actually ends
-							activeNotes[note].endTick = currentTick;
-
-							// Add note
-							currentTrack.midiNotes.push_back(activeNotes[note]);
-
-							// Remove from active notes
-							activeNotes.erase(note);
-						}
-					}
-					else
-					{
-						// Start a new note
-						MidiNote newNote;
-						newNote.pitch = note;
-						newNote.velocity = velocity;
-						newNote.startTick = currentTick;
-						// Will be set when Note Off comes
-						newNote.endTick = 0;  
-						newNote.b_hasPlayed = false;
-
-						// Add to our active notes or replace if same note is already active
-						activeNotes[note] = newNote;
-					}
+					noteOn(file, firstDataByte);
 				}
 				else if (messageType == EventType::afterTouch)
 				{
@@ -314,6 +227,129 @@ void MIDIParse::parseHeader(std::ifstream& t_file)
 	m_ticksPerQuarter = read_uint16(t_file);
 	std::cerr << "Ticks per Quarter Note: " << m_ticksPerQuarter << std::endl;
 
+}
+
+void MIDIParse::parseTimeSig(std::ifstream& t_file)
+{
+	uint8_t nom = readByte(t_file);
+	uint8_t denom = readByte(t_file);
+	// Useless data for DAWs
+	uint8_t clocksPerMetronomeClick = readByte(t_file);
+	uint8_t thirtyTwoSecsPerQuarter = readByte(t_file); // 32 seconds per crotchet (quarter note) 
+
+	m_nominator = nom;
+	m_denominator = 1 << denom;
+
+	std::cerr << "Time Signature: " << m_nominator << "/" << m_denominator << std::endl;
+
+	// Combine them to make a string we can display more easily in other scenes
+	m_timeSignature = std::to_string(m_nominator) + "/" + std::to_string(m_denominator);
+}
+
+void MIDIParse::parseTempo(std::ifstream& t_file)
+{
+	// Read 3 bytes for microseconds per quarter note
+	uint8_t byte1 = readByte(t_file);
+	uint8_t byte2 = readByte(t_file);
+	uint8_t byte3 = readByte(t_file);
+
+	uint32_t microsecondsPerQuarter = (byte1 << 16) | (byte2 << 8) | byte3;
+	m_BPM = 60000000.0 / microsecondsPerQuarter;
+
+	std::cerr << "===================" << std::endl;
+	std::cerr << "[ Tempo ]" << std::endl;
+	std::cerr << "===================" << std::endl;
+	std::cerr << "Tempo: " << m_BPM << ", BPM :" << microsecondsPerQuarter << " (microseconds)" << std::endl;
+}
+
+void MIDIParse::noteOff(std::ifstream& t_file, uint8_t firstDataByte)
+{
+	//std::cerr << "Note Off" << std::endl;
+
+	// Read the 2 data bytes
+	// Note key (0 - 127), Velocity (0 - 127)
+	uint8_t note;
+
+	// Check if we already read the first data byte earlier
+	// This happens when the running status is active
+	if (firstDataByte != 0)
+	{
+		note = firstDataByte;
+	}
+	else
+	{
+		note = readByte(t_file);
+	}
+
+	uint8_t velocity = readByte(t_file);
+
+	//std::cerr << "Note Off: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
+}
+
+void MIDIParse::noteOn(std::ifstream& t_file, uint8_t firstDataByte)
+{
+	// Read the 2 data bytes
+// Note key (0 - 127), Velocity (0 - 127)
+	uint8_t note;
+
+	// Check if we already read the first data byte earlier
+	// This happens when the running status is active
+	if (firstDataByte != 0)
+	{
+		note = firstDataByte;
+	}
+	else
+	{
+		note = readByte(t_file);
+	}
+
+	uint8_t velocity = readByte(t_file);
+
+	//std::cerr << "Note On: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
+
+	bool b_noteExists = false;
+	// Velocity at 0 tells us the note is off not on
+	if (velocity == 0)
+	{
+		// Check if the note even exists
+		if (activeNotes.find(note) != activeNotes.end())
+		{
+			b_noteExists = true;
+		}
+
+		if (b_noteExists == true)
+		{
+			// Complete the note by setting end tick so the note actually ends
+			activeNotes[note].endTick = currentTick;
+
+			// Add note
+			currentTrack.midiNotes.push_back(activeNotes[note]);
+
+			// Remove from active notes
+			activeNotes.erase(note);
+		}
+	}
+	else
+	{
+		// Start a new note
+		MidiNote newNote;
+		newNote.pitch = note;
+		newNote.velocity = velocity;
+		newNote.startTick = currentTick;
+		// Will be set when Note Off comes
+		newNote.endTick = 0;
+		newNote.b_hasPlayed = false;
+
+		// Add to our active notes or replace if same note is already active
+		activeNotes[note] = newNote;
+	}
+}
+
+void MIDIParse::resetTrack()
+{
+	currentTrack.trackName = " ";
+	currentTrack.intrumentName = " ";
+	currentTrack.midiNotes.clear();
 }
 
 
@@ -402,8 +438,3 @@ uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
 
 	return value;
 }
-
-//uint16_t MIDIParse::read_uint16(std::ifstream& t_file)
-//{
-
-//}

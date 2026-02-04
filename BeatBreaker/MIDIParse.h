@@ -60,7 +60,6 @@ struct MidiTrack
 	std::string trackName = " ";
 	std::string intrumentName = " ";
 	std::vector<MidiNote> midiNotes; // Holds all the notes for this track
-
 };
 
 // Taken from the Expanded Messages Documentation in the references folder
@@ -102,6 +101,14 @@ public:
 	std::string readString(std::ifstream &t_file, uint32_t nbyteLength);
 
 	void parseHeader(std::ifstream& t_file);
+	void parseTimeSig(std::ifstream& t_file);
+	void parseTempo(std::ifstream& t_file);
+
+	// Channel Parsing
+	void noteOff(std::ifstream& t_file, uint8_t firstDataByte);
+	void noteOn(std::ifstream& t_file, uint8_t firstDataByte);
+
+	void resetTrack();
 
 	// Shift bits
 	// Reads 4 bytes then converts them into 32
@@ -126,17 +133,22 @@ private:
 	uint16_t m_ticksPerQuarter = -1;
 
 
-
-	double m_BPM;
+	// Time Signature
 	int m_nominator; // 3 from 3/4
 	int m_denominator; // 4 from 3/4
 	std::string m_timeSignature = " ";
+	// Tempo
+	double m_BPM;
 
-	// std::vector<> m_tracks; // Unsure how to store these when reading them
-	//std::string m_trackName;
+	// Timing
+	uint32_t currentTick;
+	// Dictionary (note, velocity)
+	std::map<int, MidiNote> activeNotes;
 
 	// Stores every track
 	std::vector<MidiTrack> midiTracks;
+	// Temp track when parsing NoteOn
+	MidiTrack currentTrack;
 
 };
 

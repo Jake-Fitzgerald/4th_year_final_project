@@ -19,6 +19,24 @@ void PianoVisualiser::setupPianoShapes()
         setupBlackKey(keyIndex - 1); // A#
         setupWhiteKey(keyIndex++); // B
     }
+
+    // UI
+    m_keyboardBase.setFillColor(sf::Color::Black);
+
+    float firstKeyPosX = keyShapes.at(0).getPosition().x;
+    float firstKeyPosY = keyShapes.at(0).getPosition().y;
+    int keyVecSize = static_cast<int>(keyShapes.size() - 1);
+    std::cerr << "keyvec size: " << keyVecSize << std::endl;
+    float lastKeyPosX = keyShapes.at(keyVecSize).getPosition().x;
+    float lastKeyPosY = keyShapes.at(keyVecSize).getPosition().y;
+
+
+    m_keyboardBase.setPosition(sf::Vector2f{ firstKeyPosX, firstKeyPosY });
+
+    sf::Vector2f firstKey = sf::Vector2f{ firstKeyPosX, firstKeyPosY };
+    sf::Vector2f lastKey = sf::Vector2f{ lastKeyPosX, lastKeyPosY };
+
+    m_keyboardBase.setSize(sf::Vector2f{ firstKey.x, lastKey.y });
 }
 
 void PianoVisualiser::setupWhiteKey(int t_index)
@@ -59,6 +77,9 @@ void PianoVisualiser::keysTurnOff()
 
 void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
 {
+    // UI
+    t_window.draw(m_keyboardBase);
+
     // White keys first
     for (int i = 0; i < keyShapes.size(); i++)
     {
