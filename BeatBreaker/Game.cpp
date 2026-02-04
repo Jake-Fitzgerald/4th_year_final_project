@@ -69,6 +69,7 @@ Game::Game() :
 	// ----- VIUALISERS -----
 	// Track Visualiser
 	trackVisualiser.setupShapes();
+	trackVisualiser.loadMidiTracks(midiParser.getMidiTracks(), midiParser.getTicksPerQuarter(), midiParser.getBPM());
 
 	// Piano Visualiser
 	pianoVisualiser.setupPianoShapes();

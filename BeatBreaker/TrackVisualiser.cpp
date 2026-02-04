@@ -144,4 +144,11 @@ void TrackVisualiser::update(float t_deltaTime)
 void TrackVisualiser::loadMidiTracks(const std::vector<MidiTrack>& t_tracks, int t_ticksPerQuarter, float t_bpm)
 {
     m_midiTracks = t_tracks;
+
+    // Track 0 is Time Signature, Track 1 is the Tempo data
+    for (int i = 0; i < m_midiTracks.size(); i++)
+    {
+        m_trackNameTexts[i].setString(m_midiTracks[i].trackName);
+        std::cerr << "Track " << i << " - " << m_midiTracks[i].trackName << std::endl;
+    }
 }

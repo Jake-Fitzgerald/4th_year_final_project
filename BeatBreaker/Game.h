@@ -150,7 +150,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::PianoVis;
+	GameStates m_currentGameState = GameStates::TrackVis;
 
 	// Test Blocks
 	const int COLS = 8;   

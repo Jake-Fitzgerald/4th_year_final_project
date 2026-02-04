@@ -119,6 +119,10 @@ public:
 	uint8_t readByte(std::ifstream& t_file);
 	uint32_t readVLQ(std::ifstream& t_file);
 
+	// Getter functions
+	std::vector<MidiTrack>& getMidiTracks();
+	uint16_t getTicksPerQuarter();
+	double getBPM();
 
 	// Save the parsed data
 	void saveToFile();

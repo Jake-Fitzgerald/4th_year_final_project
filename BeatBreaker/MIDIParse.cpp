@@ -438,3 +438,18 @@ uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
 
 	return value;
 }
+
+std::vector<MidiTrack>& MIDIParse::getMidiTracks()
+{
+	return midiTracks;
+}
+
+uint16_t MIDIParse::getTicksPerQuarter()
+{
+	return m_ticksPerQuarter;
+}
+
+double MIDIParse::getBPM()
+{
+	return m_BPM;
+}
