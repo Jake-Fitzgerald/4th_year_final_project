@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
 #include <iostream>
+#include "MIDIParse.h"
 
 /*
 Notes:
@@ -29,6 +30,10 @@ public:
 	bool getFPSBool();
 
 	void drawHUD(sf::RenderWindow &t_window);
+
+	void loadMidiData(const std::vector<MidiTrack>& t_tracks, std::string t_timeSig, double t_bpm, std::string t_midiFileName);
+	void updateMidiInfo();
+	std::string removePathData(std::string t_midiPathName);
 
 private:
 	// FPS

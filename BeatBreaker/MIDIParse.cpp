@@ -36,6 +36,9 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 	else
 	{
 		std::cerr << "It is a valid MIDI file" << std::endl;
+
+		m_midifileName = t_fileName;
+
 		parseHeader(file);
 	}
 
@@ -466,4 +469,14 @@ uint16_t MIDIParse::getTicksPerQuarter()
 double MIDIParse::getBPM()
 {
 	return m_BPM;
+}
+
+std::string MIDIParse::getTimeSignature()
+{
+	return m_timeSignature;
+}
+
+std::string MIDIParse::getMidiFileName()
+{
+	return m_midifileName;
 }

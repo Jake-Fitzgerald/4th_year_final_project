@@ -77,6 +77,9 @@ Game::Game() :
 	// Drum Visualiser
 	drumVisualiser.setupDrumSprites();
 
+	// HUD
+	m_hud.loadMidiData(midiParser.getMidiTracks(), midiParser.getTimeSignature(), midiParser.getBPM(), midiParser.getMidiFileName());
+
 	// UI 
 	gridDisplay.setupGrid();
 

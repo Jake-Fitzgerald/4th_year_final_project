@@ -30,14 +30,14 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 	m_midiFileNameText.setCharacterSize(20U);
 	m_midiFileNameText.setString("Midi File: ");
 	// Time Signature
-	m_midiTimeSigText.setPosition(sf::Vector2f{ m_midiTextPos.x + 200.0f, m_midiTextPos.y });
+	m_midiTimeSigText.setPosition(sf::Vector2f{ m_midiTextPos.x + 400.0f, m_midiTextPos.y });
 	m_midiTimeSigText.setFillColor(sf::Color::White);
 	m_midiTimeSigText.setOutlineColor(sf::Color::Black);
 	m_midiTimeSigText.setOutlineThickness(2.0f);
 	m_midiTimeSigText.setCharacterSize(20U);
 	m_midiTimeSigText.setString("Time Signature: X / X");
 	// BPM
-	m_midiBPMText.setPosition(sf::Vector2f{ m_midiTextPos.x + 400.0f, m_midiTextPos.y });
+	m_midiBPMText.setPosition(sf::Vector2f{ m_midiTextPos.x + 600.0f, m_midiTextPos.y });
 	m_midiBPMText.setFillColor(sf::Color::White);
 	m_midiBPMText.setOutlineColor(sf::Color::Black);
 	m_midiBPMText.setOutlineThickness(2.0f);
@@ -49,7 +49,7 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 	m_bottomBorderBar.setFillColor(sf::Color(50, 50, 50, 150));
 	m_bottomBorderBar.setOutlineColor(sf::Color::Black);
 	m_bottomBorderBar.setOutlineThickness(2.0f);
-	m_bottomBorderBar.setSize(sf::Vector2f{ 600.0f, 25.0f });
+	m_bottomBorderBar.setSize(sf::Vector2f{ 800.0f, 25.0f });
 
 	// Beat Markers
 	setupBeatMarkers();
@@ -206,8 +206,6 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 		t_window.draw(m_fpsText);
 	}
 
-
-
 	// Buttons
 	t_window.draw(m_playButtonSprite);
 	t_window.draw(m_pauseButtonSprite);
@@ -235,4 +233,72 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 
 	// UI Polish
 	t_window.draw(m_bottomBorderBar);
+}
+
+void HUD::loadMidiData(const std::vector<MidiTrack>& t_tracks, std::string t_timeSig, double t_bpm, std::string t_midiFileName)
+{
+	std::string midiNameOnly = removePathData(t_midiFileName);
+	m_midiFileName = midiNameOnly;
+
+	m_midiTimeSig = t_timeSig;
+
+	// Truncate the tempo becuase we don't need to show it's decimals
+	int bpmInt = t_bpm;
+	m_midiBPM = std::to_string(bpmInt);
+
+	updateMidiInfo();
+}
+
+void HUD::updateMidiInfo()
+{
+	m_midiFileNameText.setString("Midi File: " + m_midiFileName);
+	m_midiTimeSigText.setString("Time Signature: " + m_midiTimeSig);
+	m_midiBPMText.setString("BPM: " + m_midiBPM);
+}
+
+std::string HUD::removePathData(std::string t_midiPathName)
+{
+	//int pathIndex = std::stoi(t_midiPathName);
+	int pathIndex = (int)t_midiPathName.length();
+	
+
+
+	// Find last slash
+	int lastSlash = -1;
+	for (int i = 0; i < pathIndex; i++)
+	{
+		if (t_midiPathName[i] == '\\')
+		{
+			lastSlash = i;
+		}
+			
+	}
+
+	// Copy everything after the last slash
+	std::string filename = "";
+	for (int i = lastSlash + 1; i < pathIndex; i++)
+	{
+		filename += t_midiPathName[i];
+	}
+
+	int extensionDot = -1;
+	int fileNameLength = (int)filename.length();
+	for (int i = 0; i < fileNameLength; i++)
+	{
+		if (filename[i] == '.')
+		{
+			extensionDot = i;
+		}
+			
+	}
+
+	// Keep only up to the dot
+	std::string baseName = "";
+	for (int i = 0; i < extensionDot; i++)
+	{
+		baseName += filename[i];
+	}
+
+
+	return filename;
 }

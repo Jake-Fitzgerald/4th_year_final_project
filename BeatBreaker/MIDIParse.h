@@ -125,6 +125,8 @@ public:
 	std::vector<MidiTrack>& getMidiTracks();
 	uint16_t getTicksPerQuarter();
 	double getBPM();
+	std::string getTimeSignature();
+	std::string getMidiFileName();
 
 	// Save the parsed data
 	void saveToFile();
@@ -138,6 +140,7 @@ private:
 	uint16_t m_numTracks = -1;
 	uint16_t m_ticksPerQuarter = -1;
 
+	std::string m_midifileName = " ";
 
 	// Time Signature
 	int m_nominator; // 3 from 3/4

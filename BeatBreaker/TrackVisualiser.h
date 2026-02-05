@@ -10,6 +10,9 @@
 	Get each midi track's name by string.
 	Display track sf::rectangle shape when the note is played and dissapears when note if off.
 	Have the colour of each track be unique to make it obvious which one is which.
+
+	Move the song playback into the game.cpp and reference it's current time and other variables there,
+	otherwise we would have to repeat the same code in every visualiser. Also it's easier for the HUD to display the data that way also.
 */
 
 class TrackVisualiser
