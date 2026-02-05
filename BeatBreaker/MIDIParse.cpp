@@ -127,6 +127,14 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 				// Tells us how many byte to read for the event
 				uint32_t length = readVLQ(file);
 
+				if (metaType == EventType::trackName) 
+				{
+					std::string trackName = readString(file, length);
+					std::cerr << "Track Name: " << trackName << std::endl;
+
+					currentTrack.trackName = trackName;
+				}
+
 				if (metaType == EventType::timeSignature && length == 4) // Time Signature
 				{
 					parseTimeSig(file);

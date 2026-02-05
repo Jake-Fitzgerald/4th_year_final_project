@@ -71,6 +71,7 @@ enum EventType : uint8_t
 	tempo = 0x51,
 	timeSignature = 0x58,
 	keySignature = 0x59,
+	trackName = 0x03,
 
 	// Status bytes (higher than 80)
 	statusByte = 0x80,
