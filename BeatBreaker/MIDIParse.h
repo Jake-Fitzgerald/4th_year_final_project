@@ -72,6 +72,7 @@ enum EventType : uint8_t
 	timeSignature = 0x58,
 	keySignature = 0x59,
 	trackName = 0x03,
+	instrumentName = 0x04, // TO DO - MIGHT BE BROKEN SINCE IT CAN'T FIND ONE FROM OUR CURRENT MIDI?
 
 	// Status bytes (higher than 80)
 	statusByte = 0x80,

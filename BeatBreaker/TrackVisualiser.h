@@ -9,6 +9,7 @@
 *   To do:
 	Get each midi track's name by string.
 	Display track sf::rectangle shape when the note is played and dissapears when note if off.
+	Have the colour of each track be unique to make it obvious which one is which.
 */
 
 class TrackVisualiser
@@ -17,12 +18,17 @@ public:
 	TrackVisualiser(std::shared_ptr<const sf::Font> font);
 
 	void setupShapes();
+	void setupColours();
 
 	void renderTrackVis(sf::RenderWindow& t_window);
 	void update(float t_deltaTime);
 
-	void loadMidiTracks(const std::vector<MidiTrack>& t_tracks, int t_ticksPerQuarter, float t_bpm);
+	void loadMidiTracks(const std::vector<MidiTrack>& t_tracks, int t_ticksPerQuarter, double t_bpm);
 
+	// Playback
+	void playSong();
+	void pauseSong();
+	void stopSong();
 
 private:
 	std::vector<sf::RectangleShape> trackShapes;
@@ -74,6 +80,23 @@ private:
 	float boxYOffset = -85.0f;
 	float boxRowSpace = 20.0f;
 
+	// Track colours
+	sf::Color trackCol1 = sf::Color::Blue;
+	sf::Color trackCol2 = sf::Color::Green;
+	sf::Color trackCol3 = sf::Color::Red;
+	sf::Color trackCol4 = sf::Color::Magenta;
+	sf::Color trackCol5 = sf::Color::Yellow;
+	sf::Color trackCol6 = sf::Color::Cyan;
+	sf::Color trackCol7 = sf::Color::White;
+	sf::Color trackCol8 = sf::Color(10.0f, 150.0f, 50.0f);
+	std::vector<sf::Color> trackColours;
+
 	// Midi Data
 	std::vector<MidiTrack> m_midiTracks;
+	int m_ticksPerQuarter = 0;
+	double m_bpm = 0.0f;
+
+	// Song stuff
+	bool b_isSongPlaying = true;
+	double m_songCurrentTime = 0.0f;
 };

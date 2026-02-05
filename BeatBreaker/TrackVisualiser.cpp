@@ -93,7 +93,19 @@ void TrackVisualiser::setupShapes()
         }
     }
 
+    setupColours();
+}
 
+void TrackVisualiser::setupColours()
+{
+    trackColours.push_back(trackCol1);
+    trackColours.push_back(trackCol2);
+    trackColours.push_back(trackCol3);
+    trackColours.push_back(trackCol4);
+    trackColours.push_back(trackCol5);
+    trackColours.push_back(trackCol6);
+    trackColours.push_back(trackCol7);
+    trackColours.push_back(trackCol8);
 }
 
 void TrackVisualiser::renderTrackVis(sf::RenderWindow& t_window)
@@ -138,17 +150,45 @@ void TrackVisualiser::renderTrackVis(sf::RenderWindow& t_window)
 
 void TrackVisualiser::update(float t_deltaTime)
 {
+    if (b_isSongPlaying == true)
+    {
 
+    }
 }
 
-void TrackVisualiser::loadMidiTracks(const std::vector<MidiTrack>& t_tracks, int t_ticksPerQuarter, float t_bpm)
+void TrackVisualiser::loadMidiTracks(const std::vector<MidiTrack>& t_tracks, int t_ticksPerQuarter, double t_bpm)
 {
     m_midiTracks = t_tracks;
+    m_ticksPerQuarter = t_ticksPerQuarter;
+    m_bpm = t_bpm;
 
     // Track 0 is Time Signature, Track 1 is the Tempo data
     for (int i = 0; i < m_midiTracks.size(); i++)
     {
         m_trackNameTexts[i].setString(m_midiTracks[i].trackName);
         std::cerr << "Track " << i << " - " << m_midiTracks[i].trackName << std::endl;
+    }
+}
+
+void TrackVisualiser::playSong()
+{
+    b_isSongPlaying = true;
+}
+
+void TrackVisualiser::pauseSong()
+{
+    b_isSongPlaying = false;
+}
+
+void TrackVisualiser::stopSong()
+{
+    b_isSongPlaying = false;
+    // Rest song time
+    m_songCurrentTime = 0.0f;
+
+    // Reset Midi Track stuff
+    for (int i = 0; i < m_midiTracks.size(); i++)
+    {
+       // m_midiTracks[i].
     }
 }

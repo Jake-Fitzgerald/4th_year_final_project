@@ -134,8 +134,14 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 
 					currentTrack.trackName = trackName;
 				}
+				else if (metaType == EventType::instrumentName) // broken...
+				{
+					std::string instrumentName = readString(file, length);
+					std::cerr << "Instruement Name: " << instrumentName << std::endl;
 
-				if (metaType == EventType::timeSignature && length == 4) // Time Signature
+					currentTrack.intrumentName = instrumentName;
+				}
+				else if (metaType == EventType::timeSignature && length == 4) // Time Signature
 				{
 					parseTimeSig(file);
 				}
