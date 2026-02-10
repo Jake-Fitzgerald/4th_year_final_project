@@ -24,7 +24,9 @@ Game::Game() :
 		m_hud(*m_jerseyFont),
 		m_options(*m_jerseyFont),
 		trackVisualiser(m_jerseyFont),
-	    drumVisualiser(m_jerseyFont)
+	    drumVisualiser(m_jerseyFont),
+		m_midiFileSelectScene(m_jerseyFont),
+		m_visSelect(m_jerseyFont)
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
@@ -396,19 +398,21 @@ void Game::render()
 		m_blockGen.renderBlocks(m_window);
 	}
 
-	// Selection Scenes
+	//		Selection Scenes
 	// Midi File Select
-	if (m_currentGameState == GameStates::MidiFileSelect)
+	if (m_currentGameState == GameStates::MidiFileSelectScene)
 	{
-
+		m_midiFileSelectScene.render(m_window);
 	}
 	// Visualiser Select
-	if (m_currentGameState == GameStates::VisualiserSelect)
+	if (m_currentGameState == GameStates::VisualiserSelectScene)
 	{
-
+		m_visSelect.renderVisSelect(m_window);
 	}
 
-	// Visualisers
+
+
+	//		Visualisers
 
 	// Track Visualiser
 	if (m_currentGameState == GameStates::TrackVis)

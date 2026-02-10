@@ -21,6 +21,8 @@
 // Scenes
 #include "MainMenu.h"
 #include "Options.h"
+#include "MidiFileSelect.h"
+#include "VisualiserSelect.h"
 
 // MIDI
 #include "MIDIParse.h"
@@ -32,7 +34,6 @@
 // Utilities
 #include "Globals.h"
 // window's midi player Vimm ?
-
 
 // Visualisers
 #include "TrackVisualiser.h"
@@ -52,8 +53,8 @@ enum GameStates
 	GameOver,
 
 	// Selection scenes
-	MidiFileSelect,
-	VisualiserSelect,
+	MidiFileSelectScene,
+	VisualiserSelectScene,
 
 	// Visualisers
 	TrackVis,
@@ -150,7 +151,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::TrackVis;
+	GameStates m_currentGameState = GameStates::MidiFileSelectScene;
 
 	// Test Blocks
 	const int COLS = 8;   
@@ -214,6 +215,11 @@ private:
 	// UI
 	// Overlays
 	GridDisplay gridDisplay;
+
+	// Selection Scenes
+	MidiFileSelect m_midiFileSelectScene;
+	VisualiserSelect m_visSelect;
+
 
 	// Custom Icon
 	sf::Image m_customIcon;
