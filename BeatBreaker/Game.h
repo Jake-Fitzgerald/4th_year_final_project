@@ -105,6 +105,8 @@ private:
 
 	void setupCustomIcon();
 
+	void changeMidiPath(std::string t_pathName);
+
 	
 	sf::RenderWindow m_window; 
 	//sf::Font m_jerseyFont;
@@ -171,6 +173,7 @@ private:
 	// MIDI
 	MIDIParse midiParser;
 	void setupMidiParser();
+	std::string m_midiPath = "ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid";
 	
 	// Player
 	Player m_player;

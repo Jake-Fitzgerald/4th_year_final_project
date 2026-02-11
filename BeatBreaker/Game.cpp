@@ -82,6 +82,12 @@ Game::Game() :
 	// HUD
 	m_hud.loadMidiData(midiParser.getMidiTracks(), midiParser.getTimeSignature(), midiParser.getBPM(), midiParser.getMidiFileName());
 
+	// Selection Scenes
+	m_midiFileSelectScene.setupPathStrings();
+	m_midiFileSelectScene.setupButtons();
+	//m_visSelect.setupButtonsVisSelect();
+
+
 	// UI 
 	gridDisplay.setupGrid();
 
@@ -696,6 +702,11 @@ void Game::setupCustomIcon()
 	}
 
 	m_window.setIcon(m_customIcon);
+}
+
+void Game::changeMidiPath(std::string t_pathName)
+{
+	m_midiPath = t_pathName;
 }
 
 void Game::setupMidiParser()
