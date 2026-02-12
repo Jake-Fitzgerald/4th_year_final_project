@@ -279,6 +279,13 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	// HUD
 	//bool b_return = m_hud
 
+	// Mute
+	if (m_hud.muteClick(mouseWorldPos) == true)
+	{
+		std::cerr << "Mute button clicked" << std::endl; 
+		m_options.muteSound(m_soundManager);
+	}
+
 	if (m_hud.returnClick(mouseWorldPos) == true)
 	{
 		m_currentGameState = GameStates::MainMenu;

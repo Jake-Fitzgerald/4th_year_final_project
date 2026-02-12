@@ -20,6 +20,7 @@ public:
 	void renderOptions(sf::RenderWindow& t_window);
 
 	bool handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager &t_soundManager);
+	void muteSound(SoundManager& t_soundManager);
 
 	void getSoundTypes();
 

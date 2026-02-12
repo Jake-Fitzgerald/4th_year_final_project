@@ -37,6 +37,7 @@ public:
 
 	void mouseClick(sf::Vector2f t_mousePos);
 	bool returnClick(sf::Vector2f t_mousePos);
+	bool muteClick(sf::Vector2f t_mousePos);
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
 private:

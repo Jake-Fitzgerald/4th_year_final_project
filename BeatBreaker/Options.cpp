@@ -202,6 +202,22 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	return false;
 }
 
+void Options::muteSound(SoundManager& t_soundManager)
+{
+	if (m_currentMusicVolume > 0.0f)
+	{
+		m_currentMusicVolume = 0.0f;
+		m_musicButton.setFillColor(sf::Color::Red);
+	}
+	else
+	{
+		m_currentMusicVolume = 100.0f;
+		m_musicButton.setFillColor(sf::Color::Blue);
+	}
+
+	t_soundManager.setTypeVolume(SoundType::MUSIC, m_currentMusicVolume);
+}
+
 void Options::getSoundTypes()
 {
 	// to do

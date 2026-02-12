@@ -349,6 +349,22 @@ bool HUD::returnClick(sf::Vector2f t_mousePos)
 	}
 }
 
+bool HUD::muteClick(sf::Vector2f t_mousePos)
+{
+	// Mute Button
+	sf::Vector2f spriteTopLeft = m_muteButtonSprite.getPosition();
+	sf::Vector2f spriteSize = sf::Vector2f{ m_muteButtonSprite.getGlobalBounds().size.x, m_muteButtonSprite.getGlobalBounds().size.y };
+
+	if (checkIfAreaClicked(t_mousePos, spriteTopLeft, spriteSize) == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 bool HUD::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)
 {
 	if (t_mousePos.x >= t_topLeft.x &&
