@@ -84,6 +84,7 @@ Game::Game() :
 
 	// Selection Scenes
 	m_midiFileSelectScene.setupPathStrings();
+	m_midiFileSelectScene.setupSprites();
 	m_midiFileSelectScene.setupButtons();
 	//m_visSelect.setupButtonsVisSelect();
 
@@ -237,6 +238,16 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_currentGameState = MainMenu;
 		}
 	}
+	else if (m_currentGameState == GameStates::MidiFileSelectScene) // File Section
+	{
+		m_midiFileSelectScene.mouseClick(mouseWorldPos);
+
+		if (m_midiFileSelectScene.returnClick(mouseWorldPos) == true)
+		{
+			m_currentGameState = GameStates::MainMenu;
+		}
+	}
+		
 		// Check Modes Buttons
 		bool buttonFound = false;
 
@@ -711,7 +722,9 @@ void Game::changeMidiPath(std::string t_pathName)
 
 void Game::setupMidiParser()
 {
-	midiParser.parseFile("ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid");
+	m_midiPath = m_midiFileSelectScene.getMidiPathString();
+	midiParser.parseFile(m_midiPath);
+	//midiParser.parseFile("ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid");
 
 	// Create a midi selection screen
 	// Be able to select which midi from a list of midi buttons

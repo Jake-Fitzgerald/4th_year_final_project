@@ -9,7 +9,7 @@ DrumVisualiser::DrumVisualiser(std::shared_ptr<const sf::Font> font) :
 	m_TomTom2Sprite(m_TomTom2Texture),
 	m_crash1Sprite(m_crash1Texture),
 	m_crash2Sprite(m_crash2Texture),
-	m_hitHatSprite(m_hitHatTexture),
+	m_hiHatSprite(m_hiHatTexture),
 	m_clapSprite(m_clapTexture)
 {
 	setupDrums();
@@ -69,13 +69,13 @@ void DrumVisualiser::setupDrumSprites()
 	m_crash2Sprite.setPosition(sf::Vector2f{ m_drumPositions.x, m_drumPositions.y });
 
 	// Hi Hat
-	if (!m_hitHatTexture.loadFromFile("ASSETS\\IMAGES\\Drum_Pieces\\Hi Hat.png"))
+	if (!m_hiHatTexture.loadFromFile("ASSETS\\IMAGES\\Drum_Pieces\\Hi Hat.png"))
 	{
 		std::cout << "problem loading Hi Hat image" << std::endl;
 	}
-	m_hitHatSprite.setTexture(m_hitHatTexture, true);
-	m_hitHatSprite.setScale(sf::Vector2f(1.0f, 1.0f));
-	m_hitHatSprite.setPosition(sf::Vector2f{ m_drumPositions.x, m_drumPositions.y });
+	m_hiHatSprite.setTexture(m_hiHatTexture, true);
+	m_hiHatSprite.setScale(sf::Vector2f(1.0f, 1.0f));
+	m_hiHatSprite.setPosition(sf::Vector2f{ m_drumPositions.x, m_drumPositions.y });
 
 	// Tom Tom 1
 	if (!m_TomTom1Texture.loadFromFile("ASSETS\\IMAGES\\Drum_Pieces\\TomTom 1.png"))
@@ -111,7 +111,7 @@ void DrumVisualiser::setupDrumSprites()
 	m_drumSprites.push_back(&m_floorTomSprite);
 	m_drumSprites.push_back(&m_crash2Sprite);
 	m_drumSprites.push_back(&m_crash1Sprite);
-	m_drumSprites.push_back(&m_hitHatSprite);
+	m_drumSprites.push_back(&m_hiHatSprite);
 	m_drumSprites.push_back(&m_kickSprite);
 	m_drumSprites.push_back(&m_clapSprite);
 

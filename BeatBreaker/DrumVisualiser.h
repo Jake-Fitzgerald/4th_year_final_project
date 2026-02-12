@@ -49,8 +49,8 @@ private:
 	sf::Sprite m_crash1Sprite;
 	sf::Texture m_crash2Texture;
 	sf::Sprite m_crash2Sprite;
-	sf::Texture m_hitHatTexture;
-	sf::Sprite m_hitHatSprite;
+	sf::Texture m_hiHatTexture;
+	sf::Sprite m_hiHatSprite;
 	sf::Texture m_clapTexture;
 	sf::Sprite m_clapSprite;
 

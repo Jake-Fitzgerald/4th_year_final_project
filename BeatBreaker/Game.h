@@ -106,6 +106,7 @@ private:
 	void setupCustomIcon();
 
 	void changeMidiPath(std::string t_pathName);
+	void changeGameState();
 
 	
 	sf::RenderWindow m_window; 
