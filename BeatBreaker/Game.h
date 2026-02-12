@@ -59,8 +59,8 @@ enum GameStates
 	// Visualisers
 	TrackVis,
 	PianoVis,
-	DrumVis,
-	SheetVis
+	DrumVis
+	//SheetVis
 };
 
 enum Difficulties
@@ -154,7 +154,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::MidiFileSelectScene;
+	GameStates m_currentGameState = GameStates::VisualiserSelectScene;
 
 	// Test Blocks
 	const int COLS = 8;   

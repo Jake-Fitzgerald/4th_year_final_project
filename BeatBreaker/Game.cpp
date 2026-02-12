@@ -86,7 +86,8 @@ Game::Game() :
 	m_midiFileSelectScene.setupPathStrings();
 	m_midiFileSelectScene.setupSprites();
 	m_midiFileSelectScene.setupButtons();
-	//m_visSelect.setupButtonsVisSelect();
+	m_visSelect.setupButtonsVisSelect();
+	m_visSelect.setupSprites();
 
 
 	// UI 
@@ -238,11 +239,38 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_currentGameState = MainMenu;
 		}
 	}
-	else if (m_currentGameState == GameStates::MidiFileSelectScene) // File Section
+	else if (m_currentGameState == GameStates::MidiFileSelectScene) // File Selection
 	{
 		m_midiFileSelectScene.mouseClick(mouseWorldPos);
 
 		if (m_midiFileSelectScene.returnClick(mouseWorldPos) == true)
+		{
+			m_currentGameState = GameStates::MainMenu;
+		}
+	}
+	else if (m_currentGameState == GameStates::VisualiserSelectScene) // Visualiser Selection
+	{
+		int buttonSelected = m_visSelect.mouseClick(mouseWorldPos);
+
+		if (buttonSelected >= 0)  
+		{
+			switch (buttonSelected)
+			{
+			case 0:
+				m_currentGameState = GameStates::TrackVis;
+				break;
+			case 1:
+				m_currentGameState = GameStates::PianoVis;
+				break;
+			case 2:
+				m_currentGameState = GameStates::DrumVis;
+				break;
+			default:
+				break;
+			}
+		}
+
+		if (m_visSelect.returnClick(mouseWorldPos) == true)
 		{
 			m_currentGameState = GameStates::MainMenu;
 		}
@@ -453,10 +481,10 @@ void Game::render()
 	}
 
 	// Sheet Music Visualiser
-	if (m_currentGameState == GameStates::SheetVis)
-	{
+	//if (m_currentGameState == GameStates::SheetVis)
+	//{
 
-	}
+	//}
 
 	// UI
 	m_hud.drawHUD(m_window);
@@ -610,14 +638,7 @@ void Game::setupMainMenu()
 
 	// Visualisers
 	// Visualiser Selection Button (leads to that scene) 
-	
-	// Track Vis
 
-	// Piano Vis
-
-	// Drum Vis
-
-	// Sheet Music Vis
 
 	// Exit 
 	m_exitButton.setPosition(sf::Vector2f{ SCREEN_CENTRE.x, SCREEN_CENTRE.y + 300.0f });

@@ -45,7 +45,7 @@ void MidiFileSelect::setupButtons()
 
 		button.midiPath = m_pathVector[i].path;
 		m_buttons.push_back(button);
-		std::cerr << "Pushed back a selection button" << std::endl;
+		//std::cerr << "Pushed back a selection button" << std::endl;
 	}
 
 	//setupSprites();
@@ -89,10 +89,6 @@ void MidiFileSelect::mouseClick(sf::Vector2f t_mousePos)
 			button.m_buttonShape.setFillColor(sf::Color::Red);
 		}
 	}
-
-
-
-
 }
 
 bool MidiFileSelect::returnClick(sf::Vector2f t_mousePos)
