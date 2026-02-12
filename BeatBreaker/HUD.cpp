@@ -349,6 +349,86 @@ bool HUD::returnClick(sf::Vector2f t_mousePos)
 	}
 }
 
+bool HUD::playClick(sf::Vector2f t_mousePos)
+{
+	// Play Button
+	sf::Vector2f spriteTopLeft = m_playButtonSprite.getPosition();
+	sf::Vector2f spriteSize = sf::Vector2f{ m_playButtonSprite.getGlobalBounds().size.x, m_playButtonSprite.getGlobalBounds().size.y };
+
+	if (checkIfAreaClicked(t_mousePos, spriteTopLeft, spriteSize) == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool HUD::pauseClick(sf::Vector2f t_mousePos)
+{
+	// Pause Button
+	sf::Vector2f spriteTopLeft = m_pauseButtonSprite.getPosition();
+	sf::Vector2f spriteSize = sf::Vector2f{ m_pauseButtonSprite.getGlobalBounds().size.x, m_pauseButtonSprite.getGlobalBounds().size.y };
+
+	if (checkIfAreaClicked(t_mousePos, spriteTopLeft, spriteSize) == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool HUD::stopClick(sf::Vector2f t_mousePos)
+{
+	// Stop Button
+	sf::Vector2f spriteTopLeft = m_stopButtonSprite.getPosition();
+	sf::Vector2f spriteSize = sf::Vector2f{ m_stopButtonSprite.getGlobalBounds().size.x, m_stopButtonSprite.getGlobalBounds().size.y };
+
+	if (checkIfAreaClicked(t_mousePos, spriteTopLeft, spriteSize) == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool HUD::skipToStart(sf::Vector2f t_mousePos)
+{
+	// Skip to Start Button
+	sf::Vector2f spriteTopLeft = m_skipStartButtonSprite.getPosition();
+	sf::Vector2f spriteSize = sf::Vector2f{ m_skipStartButtonSprite.getGlobalBounds().size.x, m_skipStartButtonSprite.getGlobalBounds().size.y };
+
+	if (checkIfAreaClicked(t_mousePos, spriteTopLeft, spriteSize) == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool HUD::skipToEnd(sf::Vector2f t_mousePos)
+{
+	// Skip to End Button
+	sf::Vector2f spriteTopLeft = m_skipEndButtonSprite.getPosition();
+	sf::Vector2f spriteSize = sf::Vector2f{ m_skipEndButtonSprite.getGlobalBounds().size.x, m_skipEndButtonSprite.getGlobalBounds().size.y };
+
+	if (checkIfAreaClicked(t_mousePos, spriteTopLeft, spriteSize) == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 bool HUD::muteClick(sf::Vector2f t_mousePos)
 {
 	// Mute Button

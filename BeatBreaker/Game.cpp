@@ -207,7 +207,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_testSound.play();
 		}
 
-		// Character
+		// Visual Select Button
 		if (checkIfAreaClicked(mouseWorldPos, m_visSelectButton.getPosition(), m_visSelectButton.getSize()))
 		{
 			m_currentGameState = GameStates::VisualiserSelectScene;
@@ -224,6 +224,15 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_soundManager.play("ui_cancel"/*, SoundType::SFX*/);
 			m_soundManager.play("ui_confirm"/*, SoundType::MUSIC*/);
 			m_currentGameState = GameStates::MidiFileSelectScene;
+		}
+		// Midi Parse Button
+		if (checkIfAreaClicked(mouseWorldPos, m_MIDIParseButton.getPosition(), m_MIDIParseButton.getSize()))
+		{
+			m_soundManager.play("ui_cancel"/*, SoundType::SFX*/);
+			m_soundManager.play("ui_confirm"/*, SoundType::MUSIC*/);
+			// Reset Midi Tracks
+			midiParser.resetTrack();
+			setupMidiParser();
 		}
 		// Exit
 		if (checkIfAreaClicked(mouseWorldPos, m_exitButton.getPosition(), m_exitButton.getSize()))
@@ -277,7 +286,41 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	}
 	
 	// HUD
-	//bool b_return = m_hud
+
+	// Play
+	if (m_hud.playClick(mouseWorldPos) == true)
+	{
+		std::cerr << "Play button clicked" << std::endl;
+		
+	}
+
+	// Pause
+	if (m_hud.pauseClick(mouseWorldPos) == true)
+	{
+		std::cerr << "Pause button clicked" << std::endl;
+
+	}
+
+	// Stop
+	if (m_hud.stopClick(mouseWorldPos) == true)
+	{
+		std::cerr << "Stop button clicked" << std::endl;
+
+	}
+
+	// Skip to Start
+	if (m_hud.skipToStart(mouseWorldPos) == true)
+	{
+		std::cerr << "Skip to start button clicked" << std::endl;
+
+	}
+
+	// Skip to End
+	if (m_hud.skipToEnd(mouseWorldPos) == true)
+	{
+		std::cerr << "Skip to end button clicked" << std::endl;
+
+	}
 
 	// Mute
 	if (m_hud.muteClick(mouseWorldPos) == true)
@@ -761,8 +804,6 @@ void Game::setupMidiParser()
 	m_midiPath = m_midiFileSelectScene.getMidiPathString();
 	midiParser.parseFile(m_midiPath);
 	//midiParser.parseFile("ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid");
-
-	// Create a midi selection screen
-	// Be able to select which midi from a list of midi buttons
-	// -> these are just different paths and you swap the string
+	
+	m_hud.loadMidiData(midiParser.getMidiTracks(), midiParser.getTimeSignature(), midiParser.getBPM(), midiParser.getMidiFileName());
 }

@@ -174,31 +174,31 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 				}
 				else if (messageType == EventType::afterTouch)
 				{
-					std::cerr << "After touch" << std::endl;
+					//std::cerr << "After touch" << std::endl;
 				}
 				else if (messageType == EventType::controlChange)
 				{
-					std::cerr << "Control change" << std::endl;
+					//std::cerr << "Control change" << std::endl;
 				}
 				else if (messageType == EventType::programChange)
 				{
-					std::cerr << "Program change" << std::endl;
+					//std::cerr << "Program change" << std::endl;
 				}
 				else if (messageType == EventType::channelAftertouch)
 				{
-					std::cerr << "Channel After touch" << std::endl;
+					//std::cerr << "Channel After touch" << std::endl;
 				}
 				else if (messageType == EventType::pitchBend)
 				{
-					std::cerr << "Pitch bend" << std::endl;
+					//std::cerr << "Pitch bend" << std::endl;
 				}
 				else if (messageType == EventType::systemExclusive)
 				{
-					std::cerr << "System exclusive" << std::endl;
+					//std::cerr << "System exclusive" << std::endl;
 				}
 				else
 				{
-					std::cerr << "Not useful data (out of range?)" << std::endl;
+					//std::cerr << "Not useful data (out of range?)" << std::endl;
 				}
 			}
 		}
@@ -220,7 +220,7 @@ std::string MIDIParse::readString(std::ifstream& t_file, uint32_t t_nbyteLength)
 		return std::string{};
 	}
 
-	std::cerr << "Combined string is: " << combinedString << std::endl;
+	//std::cerr << "Combined string is: " << combinedString << std::endl;
 	return combinedString;
 }
 
@@ -306,7 +306,7 @@ void MIDIParse::noteOff(std::ifstream& t_file, uint8_t firstDataByte)
 void MIDIParse::noteOn(std::ifstream& t_file, uint8_t firstDataByte)
 {
 	// Read the 2 data bytes
-// Note key (0 - 127), Velocity (0 - 127)
+	// Note key (0 - 127), Velocity (0 - 127)
 	uint8_t note;
 
 	// Check if we already read the first data byte earlier
@@ -376,14 +376,14 @@ uint32_t MIDIParse::read_uint32(std::ifstream& t_file)
 	uint8_t bytes[4];
 	if (!t_file.read(reinterpret_cast<char*>(bytes), 4))
 	{
-		std::cerr << "Error: Unexpected EOF while reading uint32\n";
+		std::cerr << "Error: Unexpected EOF while reading uint32" << std::endl;
 		return 0; // or throw
 	}
 
 	return (uint32_t(bytes[0]) << 24) |
-		(uint32_t(bytes[1]) << 16) |
-		(uint32_t(bytes[2]) << 8) |
-		(uint32_t(bytes[3]));
+		   (uint32_t(bytes[1]) << 16) |
+		   (uint32_t(bytes[2]) << 8) |
+		   (uint32_t(bytes[3]));
 	//// Shift the bits left
 	//uint32_t b1 = t_file.get();
 	//uint32_t b2 = t_file.get();
@@ -399,7 +399,7 @@ uint16_t MIDIParse::read_uint16(std::ifstream& t_file)
 	uint8_t bytes[2];
 	if (!t_file.read(reinterpret_cast<char*>(bytes), 2))
 	{
-		std::cerr << "Error: Unexpected EOF while reading uint16\n";
+		std::cerr << "Error: Unexpected EOF while reading uint16" << std::endl;
 		return 0; // or throw
 	}
 

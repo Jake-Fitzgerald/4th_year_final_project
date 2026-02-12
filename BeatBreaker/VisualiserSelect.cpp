@@ -37,7 +37,7 @@ void VisualiserSelect::setupButtonsVisSelect()
 		button.m_buttonText.setPosition(sf::Vector2f{ button.m_buttonShape.getPosition().x + 10.f, button.m_buttonShape.getPosition().y + 10.f });
 
 		m_buttons.push_back(button);
-		std::cerr << "Pushed back a Visual Selection button" << std::endl;
+		//std::cerr << "Pushed back a Visual Selection button" << std::endl;
 	}
 }
 
