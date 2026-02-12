@@ -196,7 +196,7 @@ private:
 	// Audio
 	sf::SoundBuffer m_soundBuffer;
 	sf::Sound m_testSound{ m_soundBuffer };
-	const int m_soundPoolSize = 10;
+	const int m_soundPoolSize = 50;
 	SoundManager m_soundManager;
 	SoundType m_soundType;
 

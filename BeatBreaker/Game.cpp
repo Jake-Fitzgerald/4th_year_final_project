@@ -26,7 +26,8 @@ Game::Game() :
 		trackVisualiser(m_jerseyFont),
 	    drumVisualiser(m_jerseyFont),
 		m_midiFileSelectScene(m_jerseyFont),
-		m_visSelect(m_jerseyFont)
+		m_visSelect(m_jerseyFont),
+		pianoVisualiser(m_soundManager)
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture

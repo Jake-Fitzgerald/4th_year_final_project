@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
 #include "MIDIParse.h"
+#include "SoundManager.h"
 
 /*
 * 
@@ -16,9 +17,19 @@
 	Pattern w,b,w,b,w,w,b,w,b,w,b,w
 */
 
+struct PianoKey
+{
+	sf::RectangleShape shape; 
+	std::string noteName;                         
+	bool b_isSharpKey;               
+	bool b_isPressed;             
+	sf::Color originalColor;      
+};
+
 class PianoVisualiser
 {
 public:
+	PianoVisualiser(SoundManager& t_soundManager);
 	void setupPianoShapes();
 	void setupWhiteKey(int t_index);
 	void setupBlackKey(int t_whiteKeyIndex);

@@ -1,5 +1,9 @@
 #include "PianoVisualiser.h"
 
+PianoVisualiser::PianoVisualiser(SoundManager& t_soundManager)
+{
+}
+
 void PianoVisualiser::setupPianoShapes()
 {
     int keyIndex = 0;
@@ -62,6 +66,11 @@ void PianoVisualiser::setupBlackKey(int t_whiteKeyIndex)
     keyShape.setPosition(sf::Vector2f{pianoPosX + blackKeyOffsetX, pianoPosY});
 
     keyShapes.push_back(keyShape);
+}
+
+void PianoVisualiser::setupPianoSounds()
+{
+    // Load each wav
 }
 
 void PianoVisualiser::keysTurnOn()
