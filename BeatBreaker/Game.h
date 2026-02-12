@@ -125,8 +125,10 @@ private:
 	//MainMenu mainMenu;
 
 	// Main Menu Variables
-	sf::Vector2f m_topLeftStart{ 200,200 };
-	float m_buttonSep = 30;
+	sf::Vector2f m_topLeftStart{ paddingX, paddingY + 100.0f };
+	float m_buttonSpacing = 100.0f;
+	sf::Vector2f m_buttonSize = { 300.0f, 50.0f };
+
 
 	// Main Menu Text
 	//std::unique_ptr<sf::Text>m_title;
@@ -134,18 +136,18 @@ private:
 	// Start Gameplay
 	sf::RectangleShape m_startButton;
 	sf::Text m_startText/*{ m_jerseyFont }*/;
-	// Random Gen
-	sf::RectangleShape m_randGenButton;
-	sf::Text m_randGenText/*{ m_jerseyFont }*/;
+	// Midi Select 
+	sf::RectangleShape m_midiSelectButton;
+	sf::Text m_midiSelectText/*{ m_jerseyFont }*/;
 	// Input Test
 	sf::RectangleShape m_testInputButton;
 	sf::Text m_testInputText/*{ m_jerseyFont }*/;
 	// MIDI Parse
 	sf::RectangleShape m_MIDIParseButton;
 	sf::Text m_MIDIParseText/*{ m_jerseyFont }*/;
-	// Character Test
-	sf::RectangleShape m_characterButton;
-	sf::Text m_characterText/*{ m_jerseyFont }*/;
+	// Visualiser Select
+	sf::RectangleShape m_visSelectButton;
+	sf::Text m_visSelectText/*{ m_jerseyFont }*/;
 	// Options 
 	sf::RectangleShape m_optionsButton;
 	sf::Text m_optionsText/*{ m_jerseyFont }*/;
@@ -154,7 +156,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::VisualiserSelectScene;
+	GameStates m_currentGameState = GameStates::MainMenu;
 
 	// Test Blocks
 	const int COLS = 8;   

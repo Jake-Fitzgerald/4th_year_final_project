@@ -35,6 +35,10 @@ public:
 	void updateMidiInfo();
 	std::string removePathData(std::string t_midiPathName);
 
+	void mouseClick(sf::Vector2f t_mousePos);
+	bool returnClick(sf::Vector2f t_mousePos);
+	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
+
 private:
 	// FPS
 	float m_fpsNumber;
@@ -81,6 +85,9 @@ private:
 
 	sf::Vector2f buttonsLeftPos{ paddingX, paddingY + 600.0f };
 	float buttonSpacing = 50.0f;
+
+	sf::Texture m_returnTexture;
+	sf::Sprite m_returnSprite{ m_returnTexture };
 
 	// Midi Information
 	sf::Vector2f m_midiTextPos{ paddingX, paddingY + 660.0f };

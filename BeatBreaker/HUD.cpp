@@ -172,9 +172,18 @@ void HUD::setupButtonSprites()
 	m_unmuteButtonSprite.setTexture(m_unmuteButtonTexture, true);
 	m_unmuteButtonSprite.setScale(sf::Vector2f(1.0f, 1.0f));
 	m_unmuteButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 300.0f, buttonsLeftPos.y });
+
+	// Return Button
+	if (!m_returnTexture.loadFromFile("ASSETS\\IMAGES\\UI\\Return_Button.png"))
+	{
+		// simple error message if previous call fails
+		std::cout << "problem loading Return button in HUD" << std::endl;
+	}
+
+	m_returnSprite.setTexture(m_returnTexture, true);
+	m_returnSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 400.0f, buttonsLeftPos.y });
+	m_returnSprite.setScale(sf::Vector2f{ 0.5, 0.5 });
 }
-
-
 
 void HUD::updateFPSText(float & t_fpsNumber)
 {
@@ -214,6 +223,7 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 	t_window.draw(m_stopButtonSprite);
 	t_window.draw(m_muteButtonSprite);
 	t_window.draw(m_unmuteButtonSprite);
+	t_window.draw(m_returnSprite);
 	
 	// Beat Markers
 	for (int i = 0; i < m_beatMarkersLeft.size(); i++)
@@ -261,8 +271,6 @@ std::string HUD::removePathData(std::string t_midiPathName)
 	//int pathIndex = std::stoi(t_midiPathName);
 	int pathIndex = (int)t_midiPathName.length();
 	
-
-
 	// Find last slash
 	int lastSlash = -1;
 	for (int i = 0; i < pathIndex; i++)
@@ -301,4 +309,57 @@ std::string HUD::removePathData(std::string t_midiPathName)
 
 
 	return filename;
+}
+
+void HUD::mouseClick(sf::Vector2f t_mousePos)
+{
+	//for (auto& button : m_buttons)
+	//{
+	//	// Reset colours if you click again
+	//	button.m_buttonShape.setFillColor(sf::Color::Blue);
+
+
+	//	sf::Vector2f topLeft = button.m_buttonShape.getPosition();
+	//	sf::Vector2f size = button.m_buttonShape.getSize();
+
+	//	if (checkIfAreaClicked(t_mousePos, topLeft, size) == true)
+	//	{
+	//		m_selectedPath = button.midiPath;
+	//		std::cerr << "Selected Path is: " << m_selectedPath << std::endl;
+
+	//		// Turn it red to show it has been clicked
+	//		button.m_buttonShape.setFillColor(sf::Color::Red);
+	//	}
+	//}
+}
+
+bool HUD::returnClick(sf::Vector2f t_mousePos)
+{
+	// Return Button
+	sf::Vector2f spriteTopLeft = m_returnSprite.getPosition();
+	sf::Vector2f spriteSize = sf::Vector2f{ m_returnSprite.getGlobalBounds().size.x, m_returnSprite.getGlobalBounds().size.y };
+
+	if (checkIfAreaClicked(t_mousePos, spriteTopLeft, spriteSize) == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool HUD::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)
+{
+	if (t_mousePos.x >= t_topLeft.x &&
+		t_mousePos.x <= t_topLeft.x + t_size.x &&
+		t_mousePos.y >= t_topLeft.y &&
+		t_mousePos.y <= t_topLeft.y + t_size.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
