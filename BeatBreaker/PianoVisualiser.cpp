@@ -9,21 +9,24 @@ void PianoVisualiser::setupPianoShapes()
 {
     int keyIndex = 0;
 
-    for (int i = 0; i < octavesAmount; i++)
+    for (int octave = 2; octave <= 5; octave++)
     {
-        setupWhiteKey(keyIndex++); // C
-        setupBlackKey(keyIndex - 1); // C#
-        setupWhiteKey(keyIndex++); // D
-        setupBlackKey(keyIndex - 1); // D#
-        setupWhiteKey(keyIndex++); // E
-        setupWhiteKey(keyIndex++); // F
-        setupBlackKey(keyIndex - 1); // F#
-        setupWhiteKey(keyIndex++); // G
-        setupBlackKey(keyIndex - 1); // G#
-        setupWhiteKey(keyIndex++); // A
-        setupBlackKey(keyIndex - 1); // A#
-        setupWhiteKey(keyIndex++); // B
+        setupWhiteKey(keyIndex++, "C", octave);   // C
+        setupBlackKey(keyIndex - 1, "C#", octave); // C#
+        setupWhiteKey(keyIndex++, "D", octave);   // D
+        setupBlackKey(keyIndex - 1, "D#", octave); // D#
+        setupWhiteKey(keyIndex++, "E", octave);   // E
+        setupWhiteKey(keyIndex++, "F", octave);   // F
+        setupBlackKey(keyIndex - 1, "F#", octave); // F#
+        setupWhiteKey(keyIndex++, "G", octave);   // G
+        setupBlackKey(keyIndex - 1, "G#", octave); // G#
+        setupWhiteKey(keyIndex++, "A", octave);   // A
+        setupBlackKey(keyIndex - 1, "A#", octave); // A#
+        setupWhiteKey(keyIndex++, "B", octave);   // B
     }
+
+    // Final C6
+    setupWhiteKey(keyIndex++, "C", 6);
 
     // UI
     m_keyboardBase.setFillColor(sf::Color::Black);
@@ -44,7 +47,7 @@ void PianoVisualiser::setupPianoShapes()
     m_keyboardBase.setSize(sf::Vector2f{ firstKey.x, lastKey.y });
 }
 
-void PianoVisualiser::setupWhiteKey(int t_index)
+void PianoVisualiser::setupWhiteKey(int t_index, std::string t_noteLetter, int t_octave)
 {
     //sf::RectangleShape keyShape;
     //keyShape.setSize(whiteKeySize);
@@ -69,7 +72,7 @@ void PianoVisualiser::setupWhiteKey(int t_index)
     m_keys.push_back(key);
 }
 
-void PianoVisualiser::setupBlackKey(int t_whiteKeyIndex)
+void PianoVisualiser::setupBlackKey(int t_whiteKeyIndex, std::string t_noteLetter, int t_octave)
 {
     //sf::RectangleShape keyShape;
     //keyShape.setSize(blackKeySize);
@@ -100,8 +103,26 @@ void PianoVisualiser::setupBlackKey(int t_whiteKeyIndex)
 void PianoVisualiser::setupPianoSounds()
 {
     std::string noteNames[] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+    int keysLoaded = 0;
 
 
+    // The piano sound pack is sorted as A to G which is awkward when the piano is always from C to B.
+    // We have to load the last three notes in an octave (A, A#, B)
+    
+    // Load full octaves 2 through 5
+    for (int octave = 2; octave <= 5; octave++)
+    {
+        for (int note = 0; note < 12; note++)
+        {
+            std::string soundName = noteNames[note] + std::to_string(octave);
+            std::string filename = "ASSETS\\AUDIO\\Piano\\" + soundName + ".WAV";
+            std::cerr << "WAV loading: " << filename << std::endl;
+            m_soundManager->loadBuffer(soundName, filename, SoundType::MUSIC);
+        }
+    }
+
+    // Load the final C6
+    m_soundManager->loadBuffer("C6", "ASSETS\\AUDIO\\Piano\\C6.WAV", SoundType::MUSIC);
 }
 
 void PianoVisualiser::keysTurnOn(int t_KeyPos)
@@ -169,7 +190,7 @@ void PianoVisualiser::handleClick(sf::Vector2f t_mousePos)
 
             // Play the sound
             std::string soundName = m_keys[i].noteName;
-            //m_soundManager->play(soundName);
+            m_soundManager->play(soundName);
 
             std::cerr << "Clicked black key: " << soundName << std::endl;
             // Don't check white keys if we clicked a black key

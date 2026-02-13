@@ -31,8 +31,8 @@ class PianoVisualiser
 public:
 	PianoVisualiser(SoundManager& t_soundManager);
 	void setupPianoShapes();
-	void setupWhiteKey(int t_index);
-	void setupBlackKey(int t_whiteKeyIndex);
+	void setupWhiteKey(int t_index, std::string t_noteLetter, int t_octave);
+	void setupBlackKey(int t_whiteKeyIndex, std::string t_noteLetter, int t_octave);
 
 	void setupPianoSounds();
 
