@@ -1,7 +1,8 @@
 #include "PianoVisualiser.h"
 
-PianoVisualiser::PianoVisualiser(SoundManager& t_soundManager)
+PianoVisualiser::PianoVisualiser(SoundManager& t_soundManager) : m_soundManager(&t_soundManager)
 {
+    
 }
 
 void PianoVisualiser::setupPianoShapes()
@@ -98,18 +99,29 @@ void PianoVisualiser::setupBlackKey(int t_whiteKeyIndex)
 
 void PianoVisualiser::setupPianoSounds()
 {
-    // Load each wav
+    std::string noteNames[] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+
+
 }
 
 void PianoVisualiser::keysTurnOn(int t_KeyPos)
 {
     // Get the midi data's key position and change the colour to red
+    if (t_KeyPos >= 0 && t_KeyPos < m_keys.size())
+    {
+        m_keys[t_KeyPos].b_isPressed = true;
+        m_keys[t_KeyPos].shape.setFillColor(sf::Color::Red);
+    }
 }
 
 void PianoVisualiser::keysTurnOff(int t_KeyPos)
 {
     // Reset the key back to it's original colour (white or black)
-    // How do we know which key is which colour? We could count them manually...
+    if (t_KeyPos >= 0 && t_KeyPos < m_keys.size())
+    {
+        m_keys[t_KeyPos].b_isPressed = false;
+        m_keys[t_KeyPos].shape.setFillColor(m_keys[t_KeyPos].originalColor);
+    }
 }
 
 void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
@@ -146,6 +158,43 @@ void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
 
 void PianoVisualiser::handleClick(sf::Vector2f t_mousePos)
 {
+
+    // Black keys (they are ontop so check first)
+    for (int i = 0; i < m_keys.size(); i++)
+    {
+        if (m_keys[i].b_isSharpKey && checkIfKeyClicked(t_mousePos, m_keys[i]))
+        {
+            // Turn on the key visually
+            keysTurnOn(i);
+
+            // Play the sound
+            std::string soundName = m_keys[i].noteName;
+            //m_soundManager->play(soundName);
+
+            std::cerr << "Clicked black key: " << soundName << std::endl;
+            // Don't check white keys if we clicked a black key
+            return;
+        }
+    }
+
+    // White keys
+    for (int i = 0; i < m_keys.size(); i++)
+    {
+        if (!m_keys[i].b_isSharpKey && checkIfKeyClicked(t_mousePos, m_keys[i]))
+        {
+            // Turn on the key visually
+            keysTurnOn(i);
+
+            // Play the sound
+            std::string soundName = m_keys[i].noteName;
+            //m_soundManager->play(soundName);
+
+            std::cerr << "Clicked white key: " << soundName << std::endl;
+            return;
+        }
+
+    }
+
 }
 
 bool PianoVisualiser::checkIfKeyClicked(sf::Vector2f t_mousePos, const PianoKey& t_key)

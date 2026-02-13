@@ -76,6 +76,7 @@ Game::Game() :
 
 	// Piano Visualiser
 	pianoVisualiser.setupPianoShapes();
+	pianoVisualiser.setupPianoSounds();
 
 	// Drum Visualiser
 	drumVisualiser.setupDrumSprites();
@@ -284,6 +285,10 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		{
 			m_currentGameState = GameStates::MainMenu;
 		}
+	}
+	else if (m_currentGameState == GameStates::PianoVis) // Piano Vis
+	{
+		pianoVisualiser.handleClick(mouseWorldPos);
 	}
 	
 	// HUD

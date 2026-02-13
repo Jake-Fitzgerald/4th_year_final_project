@@ -18,13 +18,13 @@ C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIPa
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(141,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
   (compiling source file 'PianoVisualiser.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(3,48): warning C4100: 't_soundManager': unreferenced parameter
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(86,53): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(86,47): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(86,41): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(104,38): warning C4100: 't_KeyPos': unreferenced parameter
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(109,39): warning C4100: 't_KeyPos': unreferenced parameter
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(121,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(134,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(147,48): warning C4100: 't_mousePos': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(87,53): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(87,47): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(87,41): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(132,35): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(142,35): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(155,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(168,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(185,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(203,23): warning C4018: '<': signed/unsigned mismatch
   BeatBreaker.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Debug\BeatBreaker.exe

@@ -45,6 +45,8 @@ public:
 	bool checkIfKeyClicked(sf::Vector2f t_mousePos, const PianoKey& t_key);
 
 private:
+	SoundManager* m_soundManager;
+
 	//std::vector<sf::RectangleShape> keyShapes;
 	std::vector<PianoKey> m_keys;
 
@@ -63,6 +65,8 @@ private:
 	// Octave stuff
 	int keysPerOctave = 12;
 	int octavesAmount = 7;
+
+	//std::string noteLetters[12];
 
 	const int TOTAL_KEYS_AMOUNT = 88;
 
