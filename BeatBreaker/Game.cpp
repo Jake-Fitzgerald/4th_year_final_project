@@ -171,6 +171,15 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 		gridDisplay.toggleGridVisible();
 	}
 
+	// Drum Visualiser
+	if (m_currentGameState == GameStates::DrumVis)
+	{
+		// Hitbox visible
+		if (sf::Keyboard::Key::V == newKeypress->code)
+		{
+			drumVisualiser.toggleHitboxVis();
+		}
+	}
 }
 
 void Game::processKeysPressed(const std::optional<sf::Event> t_event)
@@ -291,6 +300,10 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	else if (m_currentGameState == GameStates::PianoVis) // Piano Vis
 	{
 		pianoVisualiser.handleClick(mouseWorldPos);
+	}
+	else if (m_currentGameState == GameStates::DrumVis) // Piano Vis
+	{
+		drumVisualiser.handleClick(mouseWorldPos);
 	}
 	
 	// HUD

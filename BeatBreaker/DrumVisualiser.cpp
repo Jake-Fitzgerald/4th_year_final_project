@@ -20,9 +20,10 @@ DrumVisualiser::DrumVisualiser(std::shared_ptr<const sf::Font> font, SoundManage
 void DrumVisualiser::setupDrums()
 {
 	setupDrumSprites();
+	setupDrumSounds();
 
 	setupDrumHitbox();
-	std::cerr << "Drum setup" << std::endl;
+	
 	// Kick
 	m_kickPiece.shape.setFillColor(m_drumHitboxColour);
 	m_kickPiece.shape.setPosition(m_kickHitboxPos);
@@ -30,7 +31,6 @@ void DrumVisualiser::setupDrums()
 	m_kickPiece.b_isPressed = false;
 	m_kickPiece.pieceName = "Kick";
 	//m_kickPiece.originalColour = sf::Color::White;
-	m_drums.push_back(m_kickPiece);
 
 	// Snare
 	m_snarePiece.shape.setFillColor(m_drumHitboxColour);
@@ -38,7 +38,6 @@ void DrumVisualiser::setupDrums()
 	m_snarePiece.shape.setSize(m_drumHitboxSize);
 	m_snarePiece.b_isPressed = false;
 	m_snarePiece.pieceName = "Snare";
-	m_drums.push_back(m_snarePiece);
 	
 	// Crash 1
 	m_Crash1Piece.shape.setFillColor(m_drumHitboxColour);
@@ -46,7 +45,6 @@ void DrumVisualiser::setupDrums()
 	m_Crash1Piece.shape.setSize(m_drumHitboxSize);
 	m_Crash1Piece.b_isPressed = false;
 	m_Crash1Piece.pieceName = "Crash1";
-	m_drums.push_back(m_Crash1Piece);
 
 	// Crash 2
 	m_Crash2Piece.shape.setFillColor(m_drumHitboxColour);
@@ -54,7 +52,6 @@ void DrumVisualiser::setupDrums()
 	m_Crash2Piece.shape.setSize(m_drumHitboxSize);
 	m_Crash2Piece.b_isPressed = false;
 	m_Crash2Piece.pieceName = "Crash2";
-	m_drums.push_back(m_Crash2Piece);
 
 	// Floor Tom
 	m_FloorTomPiece.shape.setFillColor(m_drumHitboxColour);
@@ -62,7 +59,6 @@ void DrumVisualiser::setupDrums()
 	m_FloorTomPiece.shape.setSize(m_drumHitboxSize);
 	m_FloorTomPiece.b_isPressed = false;
 	m_FloorTomPiece.pieceName = "FloorTom";
-	m_drums.push_back(m_FloorTomPiece);
 
 	// Tom 1
 	m_Tom1Piece.shape.setFillColor(m_drumHitboxColour);
@@ -70,7 +66,6 @@ void DrumVisualiser::setupDrums()
 	m_Tom1Piece.shape.setSize(m_drumHitboxSize);
 	m_Tom1Piece.b_isPressed = false;
 	m_Tom1Piece.pieceName = "Tom1";
-	m_drums.push_back(m_Tom1Piece);
 
 	// Tom 2
 	m_Tom2Piece.shape.setFillColor(m_drumHitboxColour);
@@ -78,7 +73,6 @@ void DrumVisualiser::setupDrums()
 	m_Tom2Piece.shape.setSize(m_drumHitboxSize);
 	m_Tom2Piece.b_isPressed = false;
 	m_Tom2Piece.pieceName = "Tom2";
-	m_drums.push_back(m_Tom2Piece);
 
 	// Hi Hat
 	m_HiHatPiece.shape.setFillColor(m_drumHitboxColour);
@@ -86,7 +80,6 @@ void DrumVisualiser::setupDrums()
 	m_HiHatPiece.shape.setSize(m_drumHitboxSize);
 	m_HiHatPiece.b_isPressed = false;
 	m_HiHatPiece.pieceName = "HiHat";
-	m_drums.push_back(m_HiHatPiece);
 
 	// Clap
 	m_clapPiece.shape.setFillColor(m_drumHitboxColour);
@@ -94,6 +87,16 @@ void DrumVisualiser::setupDrums()
 	m_clapPiece.shape.setSize(m_drumHitboxSize);
 	m_clapPiece.b_isPressed = false;
 	m_clapPiece.pieceName = "Clap";
+
+	// Pushed back in order of how it's drawn
+	m_drums.push_back(m_Tom1Piece);
+	m_drums.push_back(m_Tom2Piece);
+	m_drums.push_back(m_snarePiece);
+	m_drums.push_back(m_FloorTomPiece);
+	m_drums.push_back(m_HiHatPiece);
+	m_drums.push_back(m_Crash1Piece);
+	m_drums.push_back(m_Crash2Piece);
+	m_drums.push_back(m_kickPiece);
 	m_drums.push_back(m_clapPiece);
 }
 
@@ -205,6 +208,61 @@ void DrumVisualiser::setupDrumHitbox()
 	
 }
 
+void DrumVisualiser::setupDrumSounds()
+{
+	std::cerr << "///////////////// " << std::endl;
+	std::cerr << "Drum Sound Load" << std::endl;
+	std::cerr << "///////////////// " << std::endl;
+
+	// Kick
+	std::string kickPath = "ASSETS\\AUDIO\\Drums\\Kick.WAV";
+	std::cerr << "[DRUM] WAV loading: " << kickPath << std::endl;
+	m_soundManager->loadBuffer("Kick", kickPath, SoundType::MUSIC);
+
+	// Snare
+	std::string snarePath = "ASSETS\\AUDIO\\Drums\\Snare.WAV";
+	std::cerr << "[DRUM] WAV loading: " << snarePath << std::endl;
+	m_soundManager->loadBuffer("Snare", snarePath, SoundType::MUSIC);
+
+	// Crash 1
+	std::string crash1Path = "ASSETS\\AUDIO\\Drums\\Crash1.WAV";
+	std::cerr << "[DRUM] WAV loading: " << crash1Path << std::endl;
+	m_soundManager->loadBuffer("Crash1", crash1Path, SoundType::MUSIC);
+
+	// Crash 2
+	std::string crash2Path = "ASSETS\\AUDIO\\Drums\\Crash2.WAV";
+	std::cerr << "[DRUM] WAV loading: " << crash2Path << std::endl;
+	m_soundManager->loadBuffer("Crash2", crash2Path, SoundType::MUSIC);
+
+	// Floor Tom
+	std::string floorTomPath = "ASSETS\\AUDIO\\Drums\\FloorTom.WAV";
+	std::cerr << "[DRUM] WAV loading: " << floorTomPath << std::endl;
+	m_soundManager->loadBuffer("FloorTom", floorTomPath, SoundType::MUSIC);
+
+	// Tom 1
+	std::string tom1Path = "ASSETS\\AUDIO\\Drums\\Tom1.WAV";
+	std::cerr << "[DRUM] WAV loading: " << tom1Path << std::endl;
+	m_soundManager->loadBuffer("Tom1", tom1Path, SoundType::MUSIC);
+
+	// Tom 2
+	std::string tom2Path = "ASSETS\\AUDIO\\Drums\\Tom2.WAV";
+	std::cerr << "[DRUM] WAV loading: " << tom2Path << std::endl;
+	m_soundManager->loadBuffer("Tom2", tom2Path, SoundType::MUSIC);
+
+	// Hi Hat
+	std::string hiHatPath = "ASSETS\\AUDIO\\Drums\\HiHat.WAV";
+	std::cerr << "[DRUM] WAV loading: " << hiHatPath << std::endl;
+	m_soundManager->loadBuffer("HiHat", hiHatPath, SoundType::MUSIC);
+
+	// Clap
+	std::string clapPath = "ASSETS\\AUDIO\\Drums\\Clap.WAV";
+	std::cerr << "[DRUM] WAV loading: " << clapPath << std::endl;
+	m_soundManager->loadBuffer("Clap", clapPath, SoundType::MUSIC);
+
+	std::cerr << " " << std::endl;
+	std::cerr << " " << std::endl;
+}
+
 void DrumVisualiser::renderDrums(sf::RenderWindow& t_window)
 {
 	// Render pieces from back to front so they overlap like in the photoshop file
@@ -248,7 +306,7 @@ void DrumVisualiser::changeDrumColourOn(int t_trackNumber)
 	sf::Sprite* sprite = m_drumSprites.at(t_trackNumber);
 
 	sprite->setColor(m_noteOnColour);
-	sprite->setScale(sf::Vector2f{ 50.0f, 2.0f });
+	//sprite->setScale(sf::Vector2f{ 50.0f, 2.0f });
 }
 
 void DrumVisualiser::changeDrumColourOff(int t_trackNumber)
@@ -296,5 +354,52 @@ void DrumVisualiser::updateIntroAnim(float t_deltaTime)
 	if (m_drumPieceIndexIntro >= m_drumSprites.size())
 	{
 		b_isIntroFinished = true;
+	}
+}
+
+void DrumVisualiser::handleClick(sf::Vector2f t_mousePos)
+{
+	for (int i = 0; i < m_drums.size(); i++)
+	{
+		if (checkIfPieceClicked(t_mousePos, m_drums[i]))
+		{
+			// Turn on the key visually
+			changeDrumColourOn(i);
+
+			// Play the sound
+			std::string soundName = m_drums[i].pieceName;
+			m_soundManager->play(soundName);
+
+			std::cerr << "Clicked drum piece: " << soundName << std::endl;
+			return;
+		}
+
+	}
+}
+
+bool DrumVisualiser::checkIfPieceClicked(sf::Vector2f t_mousePos, const DrumPiece& t_piece)
+{
+	sf::Vector2f topLeft = t_piece.shape.getPosition();
+	sf::Vector2f size = t_piece.shape.getSize();
+
+	if (t_mousePos.x >= topLeft.x &&
+		t_mousePos.x <= topLeft.x + size.x &&
+		t_mousePos.y >= topLeft.y &&
+		t_mousePos.y <= topLeft.y + size.y)
+	{
+		return true;
+	}
+	return false;
+}
+
+void DrumVisualiser::toggleHitboxVis()
+{
+	if (b_isHitboxVis == true)
+	{
+		b_isHitboxVis = false;
+	}
+	else
+	{
+		b_isHitboxVis = true;
 	}
 }

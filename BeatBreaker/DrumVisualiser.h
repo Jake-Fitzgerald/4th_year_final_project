@@ -38,12 +38,18 @@ public:
 	void setupDrums();
 	void setupDrumSprites();
 	void setupDrumHitbox();
+	void setupDrumSounds();
 
 	void renderDrums(sf::RenderWindow& t_window);
 	void changeDrumColourOn(int t_trackNumber);
 	void changeDrumColourOff(int t_trackNumber);
 
 	void updateIntroAnim(float t_deltaTime);
+
+	void handleClick(sf::Vector2f t_mousePos);
+	bool checkIfPieceClicked(sf::Vector2f t_mousePos, const DrumPiece& t_piece);
+
+	void toggleHitboxVis();
 
 private:
 	SoundManager* m_soundManager;
