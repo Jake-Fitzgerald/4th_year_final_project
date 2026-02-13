@@ -34,13 +34,19 @@ public:
 	void setupWhiteKey(int t_index);
 	void setupBlackKey(int t_whiteKeyIndex);
 
-	void keysTurnOn();
-	void keysTurnOff();
+	void setupPianoSounds();
+
+	void keysTurnOn(int t_KeyPos);
+	void keysTurnOff(int t_KeyPos);
 
 	void renderKeys(sf::RenderWindow& t_window);
 
+	void handleClick(sf::Vector2f t_mousePos);
+	bool checkIfKeyClicked(sf::Vector2f t_mousePos, const PianoKey& t_key);
+
 private:
-	std::vector<sf::RectangleShape> keyShapes;
+	//std::vector<sf::RectangleShape> keyShapes;
+	std::vector<PianoKey> m_keys;
 
 	// Piano Position
 	float pianoPosX = paddingX;
