@@ -64,7 +64,7 @@ void PianoVisualiser::setupWhiteKey(int t_index, std::string t_noteLetter, int t
     key.shape.setOutlineColor(sf::Color::Black);
     key.shape.setPosition(sf::Vector2f{ pianoPosX + t_index * (whiteKeySize.x + whiteSpacing), pianoPosY });
 
-    // key.noteName = ;
+    key.noteName = t_noteLetter + std::to_string(t_octave);
     key.b_isSharpKey = false;
     key.b_isPressed = false;
     key.originalColor = sf::Color::White;
@@ -91,7 +91,7 @@ void PianoVisualiser::setupBlackKey(int t_whiteKeyIndex, std::string t_noteLette
     float blackKeyOffsetX = (whiteKeySize.x + whiteSpacing) * t_whiteKeyIndex + whiteKeySize.x * 0.7f;
     key.shape.setPosition(sf::Vector2f{ pianoPosX + blackKeyOffsetX, pianoPosY });
 
-    // key.noteName = ;
+    key.noteName = t_noteLetter + std::to_string(t_octave);
     key.b_isSharpKey = true;
     key.b_isPressed = false;
     key.originalColor = sf::Color::Black;
@@ -208,7 +208,7 @@ void PianoVisualiser::handleClick(sf::Vector2f t_mousePos)
 
             // Play the sound
             std::string soundName = m_keys[i].noteName;
-            //m_soundManager->play(soundName);
+            m_soundManager->play(soundName);
 
             std::cerr << "Clicked white key: " << soundName << std::endl;
             return;

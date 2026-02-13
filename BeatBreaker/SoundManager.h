@@ -23,7 +23,7 @@ enum class SoundType
 class SoundManager
 {
 public:
-	SoundManager(int t_poolSize = 10);
+	SoundManager(int t_poolSize = 100);
 
 	void loadBuffer(const std::string& t_name, const std::string& t_filename, SoundType t_soundType);
 
@@ -50,6 +50,6 @@ private:
 	std::unordered_map<std::string, SoundType> m_soundTypes;
 	float m_typeVolumes[2];
 
-	const int MAX_POOL_AMOUNT = 20;
+	const int MAX_POOL_AMOUNT = 200;
 };
 

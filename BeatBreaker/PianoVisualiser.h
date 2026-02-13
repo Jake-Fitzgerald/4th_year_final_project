@@ -56,8 +56,8 @@ private:
 
 
 	// Key sizes
-	sf::Vector2f blackKeySize{ 15.0f, 60.0f };
-	sf::Vector2f whiteKeySize{ 22.0f, 100.0f };
+	sf::Vector2f blackKeySize{ 22.0f, 70.0f };
+	sf::Vector2f whiteKeySize{ 38.0f, 120.0f };
 	
 	float whiteSpacing = 2.0f;
 	float blackSpacing = 3.0f;
