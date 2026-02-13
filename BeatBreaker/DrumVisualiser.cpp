@@ -21,6 +21,80 @@ void DrumVisualiser::setupDrums()
 {
 	setupDrumSprites();
 
+	setupDrumHitbox();
+	std::cerr << "Drum setup" << std::endl;
+	// Kick
+	m_kickPiece.shape.setFillColor(m_drumHitboxColour);
+	m_kickPiece.shape.setPosition(m_kickHitboxPos);
+	m_kickPiece.shape.setSize(m_kickHitboxSize);
+	m_kickPiece.b_isPressed = false;
+	m_kickPiece.pieceName = "Kick";
+	//m_kickPiece.originalColour = sf::Color::White;
+	m_drums.push_back(m_kickPiece);
+
+	// Snare
+	m_snarePiece.shape.setFillColor(m_drumHitboxColour);
+	m_snarePiece.shape.setPosition(m_snareHitboxPos);
+	m_snarePiece.shape.setSize(m_drumHitboxSize);
+	m_snarePiece.b_isPressed = false;
+	m_snarePiece.pieceName = "Snare";
+	m_drums.push_back(m_snarePiece);
+	
+	// Crash 1
+	m_Crash1Piece.shape.setFillColor(m_drumHitboxColour);
+	m_Crash1Piece.shape.setPosition(m_crash1HitboxPos);
+	m_Crash1Piece.shape.setSize(m_drumHitboxSize);
+	m_Crash1Piece.b_isPressed = false;
+	m_Crash1Piece.pieceName = "Crash1";
+	m_drums.push_back(m_Crash1Piece);
+
+	// Crash 2
+	m_Crash2Piece.shape.setFillColor(m_drumHitboxColour);
+	m_Crash2Piece.shape.setPosition(m_crash2HitboxPos);
+	m_Crash2Piece.shape.setSize(m_drumHitboxSize);
+	m_Crash2Piece.b_isPressed = false;
+	m_Crash2Piece.pieceName = "Crash2";
+	m_drums.push_back(m_Crash2Piece);
+
+	// Floor Tom
+	m_FloorTomPiece.shape.setFillColor(m_drumHitboxColour);
+	m_FloorTomPiece.shape.setPosition(m_floorTomHitboxPos);
+	m_FloorTomPiece.shape.setSize(m_drumHitboxSize);
+	m_FloorTomPiece.b_isPressed = false;
+	m_FloorTomPiece.pieceName = "FloorTom";
+	m_drums.push_back(m_FloorTomPiece);
+
+	// Tom 1
+	m_Tom1Piece.shape.setFillColor(m_drumHitboxColour);
+	m_Tom1Piece.shape.setPosition(m_tom1HitboxPos);
+	m_Tom1Piece.shape.setSize(m_drumHitboxSize);
+	m_Tom1Piece.b_isPressed = false;
+	m_Tom1Piece.pieceName = "Tom1";
+	m_drums.push_back(m_Tom1Piece);
+
+	// Tom 2
+	m_Tom2Piece.shape.setFillColor(m_drumHitboxColour);
+	m_Tom2Piece.shape.setPosition(m_tom2HitboxPos);
+	m_Tom2Piece.shape.setSize(m_drumHitboxSize);
+	m_Tom2Piece.b_isPressed = false;
+	m_Tom2Piece.pieceName = "Tom2";
+	m_drums.push_back(m_Tom2Piece);
+
+	// Hi Hat
+	m_HiHatPiece.shape.setFillColor(m_drumHitboxColour);
+	m_HiHatPiece.shape.setPosition(m_hiHatHitboxPos);
+	m_HiHatPiece.shape.setSize(m_drumHitboxSize);
+	m_HiHatPiece.b_isPressed = false;
+	m_HiHatPiece.pieceName = "HiHat";
+	m_drums.push_back(m_HiHatPiece);
+
+	// Clap
+	m_clapPiece.shape.setFillColor(m_drumHitboxColour);
+	m_clapPiece.shape.setPosition(m_clapHitboxPos);
+	m_clapPiece.shape.setSize(m_drumHitboxSize);
+	m_clapPiece.b_isPressed = false;
+	m_clapPiece.pieceName = "Clap";
+	m_drums.push_back(m_clapPiece);
 }
 
 void DrumVisualiser::setupDrumSprites()
@@ -125,6 +199,12 @@ void DrumVisualiser::setupDrumSprites()
 	}
 }
 
+void DrumVisualiser::setupDrumHitbox()
+{
+
+	
+}
+
 void DrumVisualiser::renderDrums(sf::RenderWindow& t_window)
 {
 	// Render pieces from back to front so they overlap like in the photoshop file
@@ -142,6 +222,17 @@ void DrumVisualiser::renderDrums(sf::RenderWindow& t_window)
 	{
 		t_window.draw(*m_drumSprites[i]);
 	}
+
+	// Hitbox
+	if (b_isHitboxVis == true)
+	{
+		for (int i = 0; i < m_drums.size(); i++)
+		{
+			t_window.draw(m_drums[i].shape);
+			//std::cerr << "Piece: " << m_drums[i].pieceName << std::endl;
+		}
+	}
+
 }
 
 

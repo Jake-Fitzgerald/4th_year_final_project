@@ -13,6 +13,8 @@
 	Match the instruments labelled in the Midi with the corresponding sprite names.
 	Colour a sprite when the sound of that piece is being played, then back to default when it's not.
 
+	#When we click on a drum hitbox we print off the string that is associated with it -> "pieceName".
+	Easy way of checking which hitbox is which when we are setting up the positions.
 */
 
 struct DrumPiece
@@ -35,6 +37,7 @@ public:
 	DrumVisualiser(std::shared_ptr<const sf::Font> font, SoundManager& t_soundManager);
 	void setupDrums();
 	void setupDrumSprites();
+	void setupDrumHitbox();
 
 	void renderDrums(sf::RenderWindow& t_window);
 	void changeDrumColourOn(int t_trackNumber);
@@ -46,6 +49,17 @@ private:
 	SoundManager* m_soundManager;
 
 	std::vector<DrumPiece> m_drums;
+
+	DrumPiece m_kickPiece;
+	DrumPiece m_snarePiece;
+	DrumPiece m_Crash1Piece;
+	DrumPiece m_Crash2Piece;
+	DrumPiece m_FloorTomPiece;
+	DrumPiece m_Tom1Piece;
+	DrumPiece m_Tom2Piece;
+	DrumPiece m_HiHatPiece;
+	DrumPiece m_clapPiece;
+
 
 	// Drum Sprites
 	sf::Texture m_kickTexture;
@@ -67,6 +81,22 @@ private:
 	sf::Texture m_clapTexture;
 	sf::Sprite m_clapSprite;
 
+	// Drum hitbox
+	sf::Vector2f m_drumHitboxSize = { 100.0f, 100.0f };
+	sf::Vector2f m_kickHitboxSize = { 200.0f, 200.0f };
+	sf::Color m_drumHitboxColour = sf::Color(255, 50, 50, 100);
+	bool b_isHitboxVis = true;
+
+	sf::Vector2f m_kickHitboxPos = { 440.0f, 430.0f };
+	sf::Vector2f m_snareHitboxPos = { 650.0f, 310.0f };
+	sf::Vector2f m_floorTomHitboxPos = { 330.0f, 300.0f };
+	sf::Vector2f m_tom1HitboxPos = { 420.0f, 220.0f };
+	sf::Vector2f m_tom2HitboxPos = { 580.0f, 220.0f };
+	sf::Vector2f m_crash1HitboxPos = { 250.0f, 125.0f };
+	sf::Vector2f m_crash2HitboxPos = { 700.0f, 80.0f };
+	sf::Vector2f m_hiHatHitboxPos = { 700.0f, 200.0f };
+	sf::Vector2f m_clapHitboxPos = { 80.0f, 300.0f };
+
 	std::vector<sf::Sprite*> m_drumSprites;
 
 	// Images are 1080 by 720 and the sprite's origins are halfed
@@ -77,6 +107,7 @@ private:
 	// Text
 	std::shared_ptr<const sf::Font> m_font;
 	std::vector<sf::Text> m_trackNameTexts;
+
 
 	// Drum intro animation
 	float m_introDelayAmount = 0.2f;
