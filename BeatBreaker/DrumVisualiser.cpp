@@ -1,7 +1,8 @@
 #include "DrumVisualiser.h"
 
-DrumVisualiser::DrumVisualiser(std::shared_ptr<const sf::Font> font) :
+DrumVisualiser::DrumVisualiser(std::shared_ptr<const sf::Font> font, SoundManager& t_soundManager) :
 	m_font(font),
+	m_soundManager(&t_soundManager),
 	m_kickSprite(m_kickTexture),
 	m_snareSprite(m_snareTexture),
 	m_floorTomSprite(m_floorTomTexture),
@@ -11,6 +12,7 @@ DrumVisualiser::DrumVisualiser(std::shared_ptr<const sf::Font> font) :
 	m_crash2Sprite(m_crash2Texture),
 	m_hiHatSprite(m_hiHatTexture),
 	m_clapSprite(m_clapTexture)
+	
 {
 	setupDrums();
 }

@@ -67,7 +67,7 @@ void PianoVisualiser::setupWhiteKey(int t_index, std::string t_noteLetter, int t
     key.noteName = t_noteLetter + std::to_string(t_octave);
     key.b_isSharpKey = false;
     key.b_isPressed = false;
-    key.originalColor = sf::Color::White;
+    key.originalColour = sf::Color::White;
 
     m_keys.push_back(key);
 }
@@ -94,7 +94,7 @@ void PianoVisualiser::setupBlackKey(int t_whiteKeyIndex, std::string t_noteLette
     key.noteName = t_noteLetter + std::to_string(t_octave);
     key.b_isSharpKey = true;
     key.b_isPressed = false;
-    key.originalColor = sf::Color::Black;
+    key.originalColour = sf::Color::Black;
 
     m_keys.push_back(key);
 
@@ -141,7 +141,7 @@ void PianoVisualiser::keysTurnOff(int t_KeyPos)
     if (t_KeyPos >= 0 && t_KeyPos < m_keys.size())
     {
         m_keys[t_KeyPos].b_isPressed = false;
-        m_keys[t_KeyPos].shape.setFillColor(m_keys[t_KeyPos].originalColor);
+        m_keys[t_KeyPos].shape.setFillColor(m_keys[t_KeyPos].originalColour);
     }
 }
 

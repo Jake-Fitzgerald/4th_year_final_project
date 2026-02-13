@@ -23,7 +23,7 @@ struct PianoKey
 	std::string noteName;                         
 	bool b_isSharpKey;               
 	bool b_isPressed;             
-	sf::Color originalColor;      
+	sf::Color originalColour;      
 };
 
 class PianoVisualiser

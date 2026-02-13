@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "MIDIParse.h"
 #include <vector>
+#include "SoundManager.h"
 
 
 /*
@@ -13,6 +14,14 @@
 	Colour a sprite when the sound of that piece is being played, then back to default when it's not.
 
 */
+
+struct DrumPiece
+{
+	sf::RectangleShape shape;
+	std::string pieceName;
+	bool b_isPressed;
+	sf::Color originalColour;
+};
 
 enum DrumStatus
 {
@@ -23,7 +32,7 @@ enum DrumStatus
 class DrumVisualiser
 {
 public:
-	DrumVisualiser(std::shared_ptr<const sf::Font> font);
+	DrumVisualiser(std::shared_ptr<const sf::Font> font, SoundManager& t_soundManager);
 	void setupDrums();
 	void setupDrumSprites();
 
@@ -34,6 +43,10 @@ public:
 	void updateIntroAnim(float t_deltaTime);
 
 private:
+	SoundManager* m_soundManager;
+
+	std::vector<DrumPiece> m_drums;
+
 	// Drum Sprites
 	sf::Texture m_kickTexture;
 	sf::Sprite m_kickSprite;
