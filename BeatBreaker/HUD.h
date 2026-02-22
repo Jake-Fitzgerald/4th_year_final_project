@@ -14,6 +14,8 @@ Notes:
 		- Full Note	    (..., ..., ..., 4)
 		The quarter note amounts should change depending on the time signature from the MIDI data
 		(test with 4/4 for now)
+	- This is changed dynamically whenever a Midi file is parsed to it will adjust if the time signature is different than 4/4.
+		- Create new rectangles based on the time signature and store them in a vector of sf::rectangles
 */
 
 class HUD
@@ -31,7 +33,7 @@ public:
 
 	void drawHUD(sf::RenderWindow &t_window);
 
-	void loadMidiData(const std::vector<MidiTrack>& t_tracks, std::string t_timeSig, double t_bpm, std::string t_midiFileName);
+	void loadMidiData(const std::vector<MidiTrack>& t_tracks, std::string t_timeSig, double t_bpm, std::string t_midiFileName, int t_nom, int t_denom);
 	void updateMidiInfo();
 	std::string removePathData(std::string t_midiPathName);
 
@@ -45,6 +47,8 @@ public:
 	bool muteClick(sf::Vector2f t_mousePos);
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
+	void updateMidiKeyboardConnnection(bool t_connectStatus);
+
 private:
 	// FPS
 	float m_fpsNumber;
@@ -53,17 +57,19 @@ private:
 
 	// Beat Visualiser
 	// Left Quart Notes
-	sf::RectangleShape m_beatMarkerLeftQuarter_1;
-	sf::RectangleShape m_beatMarkerLeftQuarter_2;
-	sf::RectangleShape m_beatMarkerLeftQuarter_3;
-	std::vector<sf::RectangleShape> m_beatMarkersLeft;
-	// Right Quarter Notes
-	sf::RectangleShape m_beatMarkerRightQuarter_1;
-	sf::RectangleShape m_beatMarkerRightQuarter_2;
-	sf::RectangleShape m_beatMarkerRightQuarter_3;
-	std::vector<sf::RectangleShape> m_beatMarkersRight;
-	// Whole Note (Dead Centre)
-	sf::RectangleShape m_beatMarkerWholeNote;
+	//sf::RectangleShape m_beatMarkerLeftQuarter_1;
+	//sf::RectangleShape m_beatMarkerLeftQuarter_2;
+	//sf::RectangleShape m_beatMarkerLeftQuarter_3;
+	//std::vector<sf::RectangleShape> m_beatMarkersLeft;
+	//// Right Quarter Notes
+	//sf::RectangleShape m_beatMarkerRightQuarter_1;
+	//sf::RectangleShape m_beatMarkerRightQuarter_2;
+	//sf::RectangleShape m_beatMarkerRightQuarter_3;
+	//std::vector<sf::RectangleShape> m_beatMarkersRight;
+	//// Whole Note (Dead Centre)
+	//sf::RectangleShape m_beatMarkerWholeNote;
+
+	std::vector<sf::RectangleShape> m_beatMarkers;
 
 	sf::Vector2f m_beatMarkerSize = sf::Vector2f{ 10.0f, 30.0f };
 	sf::Vector2f m_beatMarkerLeftPos = sf::Vector2f{ 800.0f, 650.0f };
@@ -102,6 +108,8 @@ private:
 
 	std::string m_midiTimeSig;
 	sf::Text m_midiTimeSigText;
+	int m_nominator = 0;
+	int m_denomator = 0;
 
 	std::string m_midiBPM;
 	sf::Text m_midiBPMText;
@@ -110,6 +118,10 @@ private:
 
 	// UI Polish
 	sf::RectangleShape m_bottomBorderBar;
+
+	// Midi Keyboard
+	sf::Text m_midiKeyboardText;
+	bool b_isMidiKeyboardConnected = false;
 	
 };
 

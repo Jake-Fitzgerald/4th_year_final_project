@@ -476,6 +476,16 @@ std::string MIDIParse::getTimeSignature()
 	return m_timeSignature;
 }
 
+int MIDIParse::getNominator()
+{
+	return m_nominator;
+}
+
+int MIDIParse::getDenominator()
+{
+	return m_denominator;
+}
+
 std::string MIDIParse::getMidiFileName()
 {
 	return m_midifileName;

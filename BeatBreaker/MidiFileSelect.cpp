@@ -17,7 +17,8 @@ void MidiFileSelect::setupPathStrings()
 		{"Kick and Clap", "ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid"},
 		{"Drum Visualiser", "ASSETS\\AUDIO\\MUSIC\\DrumVis.mid"},
 		{"Piano Visualiser", "ASSETS\\AUDIO\\MUSIC\\PianoVis.mid"},
-		{"Chord", "ASSETS\\AUDIO\\MUSIC\\Chord.mid"}
+		{"Chord", "ASSETS\\AUDIO\\MUSIC\\Chord.mid"},
+		{"Full MIDI Range", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid"}
 
 	};
 	

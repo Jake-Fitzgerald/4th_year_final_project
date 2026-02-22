@@ -84,7 +84,12 @@ Game::Game() :
 	//drumVisualiser.setupDrums();
 
 	// HUD
-	m_hud.loadMidiData(midiParser.getMidiTracks(), midiParser.getTimeSignature(), midiParser.getBPM(), midiParser.getMidiFileName());
+	m_hud.loadMidiData( midiParser.getMidiTracks(),
+						midiParser.getTimeSignature(),
+						midiParser.getBPM(),
+						midiParser.getMidiFileName(),
+						midiParser.getNominator(),
+						midiParser.getDenominator() );
 
 	// Selection Scenes
 	m_midiFileSelectScene.setupPathStrings();
@@ -99,6 +104,10 @@ Game::Game() :
 
 	// Custom Icon
 	setupCustomIcon();
+
+
+	// Midi Input
+	setupMidiInput();
 }
 
 Game::~Game()
@@ -178,6 +187,20 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 		if (sf::Keyboard::Key::V == newKeypress->code)
 		{
 			drumVisualiser.toggleHitboxVis();
+		}
+	}
+
+	// MCI Midi playback
+	if (m_currentGameState == GameStates::MainMenu)
+	{
+		if (sf::Keyboard::Key::P == newKeypress->code)
+		{
+			playMidiMCI();
+		}
+
+		if (sf::Keyboard::Key::S == newKeypress->code)
+		{
+			stopMidiMCI();
 		}
 	}
 }
@@ -264,6 +287,8 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	else if (m_currentGameState == GameStates::MidiFileSelectScene) // File Selection
 	{
 		m_midiFileSelectScene.mouseClick(mouseWorldPos);
+
+		m_midiPath = m_midiFileSelectScene.getMidiPathString();
 
 		if (m_midiFileSelectScene.returnClick(mouseWorldPos) == true)
 		{
@@ -820,11 +845,119 @@ void Game::changeMidiPath(std::string t_pathName)
 	m_midiPath = t_pathName;
 }
 
+void Game::setupMidiInput()
+{
+	midiKeyboardAmount = midiInGetNumDevs();
+	std::cerr << "Midi keyboard amount connected: " << midiKeyboardAmount << std::endl;
+
+	bool b_connectionStatus = false;
+
+	if (midiKeyboardAmount == 0)
+	{
+		std::cerr << "No MIDI keyboads connected" << std::endl;
+
+		// Update HUD's text
+		b_connectionStatus = false;
+		m_hud.updateMidiKeyboardConnnection(b_connectionStatus);
+	}
+	else
+	{
+		//HMIDIIN hMidiIn;
+		//LPUINT puDeviceID;
+		//std::cerr << hMidiIn << std::endl;
+
+		std::cerr << " " << std::endl;
+		std::cerr << "Midi keyboard names: " << std::endl;
+		std::cerr << " " << std::endl;
+
+	    // https://learn.microsoft.com/en-us/windows/win32/api/mmeapi/ns-mmeapi-midiincaps // reference 
+		for (int i = 0; i < midiKeyboardAmount; i++)
+		{
+			MIDIINCAPS deviceInfo;
+	
+		    // https://learn.microsoft.com/en-us/windows/win32/api/mmeapi/nf-mmeapi-midiingetdevcaps // reference 
+			// Error check if the device can actually be used
+			// device ID, pointer to MIDIINCAPS, size of MIDIINCAPS for error checking
+			bool b_result = midiInGetDevCaps(i, &deviceInfo, sizeof(MIDIINCAPS));
+
+			if (b_result == MMSYSERR_NOERROR)
+			{
+				std::cerr << "[KEYBOARD " << i << "]" << std::endl;
+				std::cerr << deviceInfo.szPname << std::endl;
+				//std::cerr << deviceInfo.vDriverVersion << std::endl;
+				//std::cerr << HIWORD(deviceInfo.vDriverVersion) << " || " << LOWORD(deviceInfo.vDriverVersion) << std::endl; 
+				//std::cerr << deviceInfo.wMid << std::endl; // Manufacturer ID (useless)
+				//std::cerr << deviceInfo.wPid << std::endl; // Product ID (useless)
+				//std::cerr << deviceInfo.dwSupport << std::endl; // "Reserved; must be zero" (unsure but not needed)
+				std::cerr << " " << std::endl;
+			}
+			
+		}
+
+		// Open a specific midi device for receiving messages
+		//midiInOpen();
+
+		// Specific Midi connection
+		//int midiID = midiInGetID(hMidiIn, puDeviceID);
+
+		//mciGetDeviceID();
+		//LPHMIDIIN
+		//midiInOpen();
+
+
+
+		// Update HUD's text
+		b_connectionStatus = true;
+		m_hud.updateMidiKeyboardConnnection(b_connectionStatus);
+	}
+}
+
+// Uses window's built in midi player
+void Game::playMidiMCI()
+{
+	std::cerr << "Playing MIDI File: " << m_midiPath << std::endl;
+	MCIERROR err;
+	// We need to convert the patha and the command to a c style string
+	std::string pathAndCommand = "open \"" + m_midiPath + "\" type sequencer alias mciMIDI";
+	
+
+	// Open the MIDI file
+	err = mciSendString(
+		pathAndCommand.c_str(),
+		//"open \"ASSETS\\AUDIO\\MUSIC\\test.mid\" type sequencer alias mymidi",
+		NULL,
+		0,
+		NULL
+	);
+
+	if (err != 0)
+	{
+		std::cerr << "Can't open the Midi File" << std::endl;
+	}
+	else
+	{
+		mciSendString("play mciMIDI", NULL, 0, NULL);
+	}
+
+}
+
+void Game::stopMidiMCI()
+{
+	std::cerr << "Stopping MIDI File: " << m_midiPath << std::endl;
+	mciSendString("stop mciMIDI", NULL, 0, NULL);
+	mciSendString("close mciMIDI", NULL, 0, NULL);
+}
+
 void Game::setupMidiParser()
 {
 	m_midiPath = m_midiFileSelectScene.getMidiPathString();
 	midiParser.parseFile(m_midiPath);
 	//midiParser.parseFile("ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid");
 	
-	m_hud.loadMidiData(midiParser.getMidiTracks(), midiParser.getTimeSignature(), midiParser.getBPM(), midiParser.getMidiFileName());
+	m_hud.loadMidiData( midiParser.getMidiTracks(),
+						midiParser.getTimeSignature(),
+						midiParser.getBPM(),
+						midiParser.getMidiFileName(),
+						midiParser.getNominator(),
+						midiParser.getDenominator() );
 }

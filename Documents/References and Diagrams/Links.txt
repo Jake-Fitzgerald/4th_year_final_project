@@ -1,2 +1,18 @@
 VLQ:
 https://paulherz.com/blog/variable-length-quantities
+
+Windows Multimedia: (winmm.lb):
+https://learn.microsoft.com/en-us/windows/win32/api/mmeapi/
+
+Microsoft's multimedia library functions:
+https://learn.microsoft.com/en-us/windows/win32/multimedia/midi-functions
+
+https://learn.microsoft.com/en-us/windows/win32/multimedia/musical-instrument-digital-interface--midi
+
+Media Control Interface (MCI)
+https://learn.microsoft.com/en-us/windows/win32/multimedia/media-control-interface--mci
+https://learn.microsoft.com/en-us/windows/win32/multimedia/using-the-mci-midi-sequencer
+https://learn.microsoft.com/en-us/windows/win32/multimedia/sending-a-command
+
+Winmm other:
+https://learn.microsoft.com/en-us/windows-hardware/drivers/audio/audio-device-messages-for-midi

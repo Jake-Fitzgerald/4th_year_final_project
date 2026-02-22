@@ -33,7 +33,8 @@
 
 // Utilities
 #include "Globals.h"
-// window's midi player Vimm ?
+// winmm.lib
+#include <windows.h>
 
 // Visualisers
 #include "TrackVisualiser.h"
@@ -108,6 +109,13 @@ private:
 	void changeMidiPath(std::string t_pathName);
 	void changeGameState();
 
+	void setupMidiInput();
+
+	// MCI Midi Playback
+	void playMidiMCI();
+	void stopMidiMCI();
+
+
 	
 	sf::RenderWindow m_window; 
 	//sf::Font m_jerseyFont;
@@ -156,7 +164,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::DrumVis;
+	GameStates m_currentGameState = GameStates::MainMenu;
 
 	// Test Blocks
 	const int COLS = 8;   
@@ -226,9 +234,12 @@ private:
 	MidiFileSelect m_midiFileSelectScene;
 	VisualiserSelect m_visSelect;
 
-
 	// Custom Icon
 	sf::Image m_customIcon;
+
+	// MIDI Input
+	int midiKeyboardAmount = 0;
+	HMIDIIN handleMidiIn = nullptr;
 
 };
 

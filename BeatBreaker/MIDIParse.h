@@ -126,6 +126,8 @@ public:
 	uint16_t getTicksPerQuarter();
 	double getBPM();
 	std::string getTimeSignature();
+	int getNominator();
+	int getDenominator();
 	std::string getMidiFileName();
 
 	// Save the parsed data

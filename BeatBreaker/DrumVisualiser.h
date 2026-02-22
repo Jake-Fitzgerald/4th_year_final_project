@@ -15,6 +15,8 @@
 
 	#When we click on a drum hitbox we print off the string that is associated with it -> "pieceName".
 	Easy way of checking which hitbox is which when we are setting up the positions.
+
+	Play the different pieces based on the Midi Keyboard's drumpad buttons.
 */
 
 struct DrumPiece

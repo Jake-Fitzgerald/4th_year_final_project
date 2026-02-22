@@ -10,7 +10,8 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 								 m_skipStartButtonSprite(m_skipStartButtonTexture),
 								 m_stopButtonSprite(m_stopButtonTexture),
 								 m_muteButtonSprite(m_muteButtonTexture),
-								 m_unmuteButtonSprite(m_unmuteButtonTexture)
+								 m_unmuteButtonSprite(m_unmuteButtonTexture),
+	                             m_midiKeyboardText(font)
 {
 	// FPS
 	m_fpsText.setPosition(sf::Vector2f{ SCREEN_CENTRE.x + 600.0f, SCREEN_CENTRE.y - 350.0f });
@@ -55,10 +56,19 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 	setupBeatMarkers();
 
 	setupButtonSprites();
+
+	// Midi Keyboard Text
+	m_midiKeyboardText.setPosition(sf::Vector2f{ m_midiTextPos.x + 900.0f, m_midiTextPos.y });
+	m_midiKeyboardText.setFillColor(sf::Color::White);
+	m_midiKeyboardText.setOutlineColor(sf::Color::Black);
+	m_midiKeyboardText.setOutlineThickness(2.0f);
+	m_midiKeyboardText.setCharacterSize(20U);
+	m_midiKeyboardText.setString("Midi Keyboard: OFF");
 }
 
 void HUD::setupBeatMarkers()
 {
+	/*
 	// Fill Left Vectors
 	m_beatMarkersLeft.push_back(m_beatMarkerLeftQuarter_1);
 	m_beatMarkersLeft.push_back(m_beatMarkerLeftQuarter_2);
@@ -98,6 +108,35 @@ void HUD::setupBeatMarkers()
 	midpoint.y = (m_beatMarkerLeftPos.y + m_beatMarkerRightPos.y) / 2.0f;
 
 	m_beatMarkerWholeNote.setPosition(midpoint);
+	*/
+
+	// Clear the original rectangle colours if a new time signature is parsed
+	for (int i = 0; i < m_beatMarkers.size(); i++)
+	{
+		m_beatMarkers[i].setFillColor(c_beatMarkerClear);
+	}
+
+	for (int i = 0; i < m_nominator; i++)
+	{
+		sf::RectangleShape beatRectangle;
+
+		beatRectangle.setOutlineColor(sf::Color::Black);
+		beatRectangle.setOutlineThickness(2.0f);
+		beatRectangle.setSize(m_beatMarkerSize);
+		beatRectangle.setPosition(sf::Vector2f{ m_beatMarkerLeftPos.x + (50.0f * i), m_beatMarkerLeftPos.y });
+
+
+		if (i == m_nominator - 1)
+		{
+			beatRectangle.setFillColor(c_beatMarkerSetWholeNote);
+		}
+		else
+		{
+			beatRectangle.setFillColor(c_beatMarkerClear);
+		}
+
+		m_beatMarkers.push_back(beatRectangle);  
+	}
 }
 
 void HUD::setupButtonSprites()
@@ -226,6 +265,7 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 	t_window.draw(m_returnSprite);
 	
 	// Beat Markers
+	/*
 	for (int i = 0; i < m_beatMarkersLeft.size(); i++)
 	{
 		t_window.draw(m_beatMarkersLeft[i]);
@@ -235,6 +275,11 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 		t_window.draw(m_beatMarkersRight[i]);
 	}
 	t_window.draw(m_beatMarkerWholeNote);
+	*/
+	for (int i = 0; i < m_beatMarkers.size(); i++)
+	{
+		t_window.draw(m_beatMarkers[i]);
+	}
 
 	// Midi Info
 	t_window.draw(m_midiFileNameText);
@@ -243,14 +288,19 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 
 	// UI Polish
 	t_window.draw(m_bottomBorderBar);
+
+	// Midi Keyboard
+	t_window.draw(m_midiKeyboardText);
 }
 
-void HUD::loadMidiData(const std::vector<MidiTrack>& t_tracks, std::string t_timeSig, double t_bpm, std::string t_midiFileName)
+void HUD::loadMidiData(const std::vector<MidiTrack>& t_tracks, std::string t_timeSig, double t_bpm, std::string t_midiFileName, int t_nom, int t_denom)
 {
 	std::string midiNameOnly = removePathData(t_midiFileName);
 	m_midiFileName = midiNameOnly;
 
 	m_midiTimeSig = t_timeSig;
+	m_nominator = t_nom;
+	m_denomator = t_denom;
 
 	// Truncate the tempo becuase we don't need to show it's decimals
 	int bpmInt = t_bpm;
@@ -264,6 +314,7 @@ void HUD::updateMidiInfo()
 	m_midiFileNameText.setString("Midi File: " + m_midiFileName);
 	m_midiTimeSigText.setString("Time Signature: " + m_midiTimeSig);
 	m_midiBPMText.setString("BPM: " + m_midiBPM);
+	setupBeatMarkers();
 }
 
 std::string HUD::removePathData(std::string t_midiPathName)
@@ -457,5 +508,19 @@ bool HUD::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf
 	else
 	{
 		return false;
+	}
+}
+
+void HUD::updateMidiKeyboardConnnection(bool t_connectStatus)
+{
+	b_isMidiKeyboardConnected = t_connectStatus;
+
+	if (b_isMidiKeyboardConnected == true)
+	{
+		m_midiKeyboardText.setString("Midi Keyboard: ON");
+	}
+	else
+	{
+		m_midiKeyboardText.setString("Midi Keyboard: OFF");
 	}
 }
