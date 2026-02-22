@@ -109,11 +109,14 @@ private:
 	void changeMidiPath(std::string t_pathName);
 	void changeGameState();
 
+	// Midi Input
 	void setupMidiInput();
+	void freeMidiHandler();
 
 	// MCI Midi Playback
 	void playMidiMCI();
 	void stopMidiMCI();
+
 
 
 	

@@ -3,6 +3,7 @@ https://paulherz.com/blog/variable-length-quantities
 
 Windows Multimedia: (winmm.lb):
 https://learn.microsoft.com/en-us/windows/win32/api/mmeapi/
+https://learn.microsoft.com/en-us/windows/win32/multimedia/about-midi
 
 Microsoft's multimedia library functions:
 https://learn.microsoft.com/en-us/windows/win32/multimedia/midi-functions

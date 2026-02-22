@@ -2,6 +2,16 @@
 #include <iostream>
 #include "GridDisplay.h"
 
+// Defined before midiInput() function so it can be called later
+void CALLBACK MidiInProc(
+	HMIDIIN hMidiIn,
+	UINT wMsg, // event type
+	DWORD_PTR dwInstance, // custom user data 
+	DWORD_PTR dwParam1, // more message data
+	DWORD_PTR dwParam2 // timestamp for when it was received 
+);
+
+
 std::shared_ptr<const sf::Font> Game::loadFont()
 {
 	auto font = std::make_shared<const sf::Font>("ASSETS\\FONTS\\Jersey20-Regular.ttf");
@@ -431,6 +441,8 @@ void Game::update(sf::Time t_deltaTime)
 	checkKeyboardState();
 	if (m_DELETEexitGame)
 	{
+		freeMidiHandler();
+
 		m_window.close();
 	}
 
@@ -862,9 +874,7 @@ void Game::setupMidiInput()
 	}
 	else
 	{
-		//HMIDIIN hMidiIn;
-		//LPUINT puDeviceID;
-		//std::cerr << hMidiIn << std::endl;
+		int validMidiID = -1;
 
 		std::cerr << " " << std::endl;
 		std::cerr << "Midi keyboard names: " << std::endl;
@@ -890,12 +900,52 @@ void Game::setupMidiInput()
 				//std::cerr << deviceInfo.wPid << std::endl; // Product ID (useless)
 				//std::cerr << deviceInfo.dwSupport << std::endl; // "Reserved; must be zero" (unsure but not needed)
 				std::cerr << " " << std::endl;
+
+				validMidiID = i;
+				break;
 			}
 			
 		}
 
+		// Check if the device is valid if it got stopped by the error check
+		if (validMidiID == -1)
+		{
+			std::cerr << "No MIDI keyboads connected" << std::endl;
+
+			// Update HUD's text
+			b_connectionStatus = false;
+			m_hud.updateMidiKeyboardConnnection(b_connectionStatus);
+			return;
+		}
+
+		// --------------------------------------------------------------------------------------------
 		// Open a specific midi device for receiving messages
-		//midiInOpen();
+		// https://learn.microsoft.com/en-us/windows/win32/api/mmeapi/nf-mmeapi-midiinopen
+		// handle is 'LPHMIDIIN', which is a pointer to 'HMIDIIN', 
+		MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)MidiInProc, 0, CALLBACK_FUNCTION);
+
+		if (m_resultMidiOpen != MMSYSERR_NOERROR)
+		{
+			std::cerr << "Couldn't open midi keyboard: " << validMidiID << std::endl;
+
+			// Update HUD's text
+			b_connectionStatus = false;
+			m_hud.updateMidiKeyboardConnnection(b_connectionStatus);
+			return;
+		}
+
+		// --------------------------------------------------------------------------------------------
+		midiInStart(handleMidiIn);
+
+		std::cerr << "Midi keyboard: " << validMidiID << " opened" << std::endl;
+		// Update HUD's text
+		b_connectionStatus = true;
+		m_hud.updateMidiKeyboardConnnection(b_connectionStatus);
+
+
+		// --------------------------------------------------------------------------------------------
+
+		
 
 		// Specific Midi connection
 		//int midiID = midiInGetID(hMidiIn, puDeviceID);
@@ -906,9 +956,46 @@ void Game::setupMidiInput()
 
 
 
-		// Update HUD's text
-		b_connectionStatus = true;
-		m_hud.updateMidiKeyboardConnnection(b_connectionStatus);
+
+	}
+}
+
+// Midi Callback
+// https://learn.microsoft.com/en-us/previous-versions//dd798460(v=vs.85)
+// Handle to the MIDI input device, MIDI input message, Instance data supplied with the midiInOpen function, Message parameter, Message parameter 
+void CALLBACK MidiInProc(
+	HMIDIIN hMidiIn,
+	UINT wMsg, // event type
+	DWORD_PTR dwInstance, // custom user data 
+	DWORD_PTR dwParam1, // more message data
+	DWORD_PTR dwParam2 // timestamp for when it was received 
+)
+{
+	// https://learn.microsoft.com/en-gb/windows/win32/multimedia/mim-data?redirectedfrom=MSDN
+	UINT16 metaEvent = 0xFF;
+
+	if (wMsg == MIM_DATA)
+	{
+		// Use unsigned char since it's 8 bits we need to read
+		unsigned char msgType = dwParam1 & metaEvent; // low
+		unsigned char msgData1 = (dwParam1 >> 8) & metaEvent; // middle
+		unsigned char msgData2 = (dwParam1 >> 16) & metaEvent; // high
+
+		std::cerr << "Message type: " << static_cast<int>(msgType) << std::endl;
+		std::cerr << "Message data 1 : " << static_cast<int>(msgData1) << std::endl;
+		//std::cerr << "Message data 2 : " << static_cast<int>(msgData2) << std::endl;
+	}
+
+}
+
+void Game::freeMidiHandler()
+{
+	// Check if a handler exists then reset it
+	if (handleMidiIn != nullptr)
+	{
+		midiInStop(handleMidiIn);
+		midiInClose(handleMidiIn);
+		handleMidiIn = nullptr;
 	}
 }
 
