@@ -967,7 +967,8 @@ void CALLBACK MidiInProc(
 {
 	// https://learn.microsoft.com/en-gb/windows/win32/multimedia/mim-data?redirectedfrom=MSDN
 	UINT16 metaEvent = 0xFF;
-	UINT16 messageTypeMask = 0xF0;
+	UINT16 messageTypeMask = 0xF0; 
+	UINT16 channelTypeMask = 0x0F; // 0 - 15
 	UINT16 noteOn = 0x90;
 	UINT16 noteOff = 0x80;
 
@@ -978,6 +979,8 @@ void CALLBACK MidiInProc(
 		unsigned char msgData1 = (dwParam1 >> 8) & metaEvent; // middle
 		unsigned char msgData2 = (dwParam1 >> 16) & metaEvent; // high
 
+		unsigned char channel = msgFlag & channelTypeMask;
+
 		//std::cerr << "Message type: " << static_cast<int>(msgFlag) << std::endl;
 		//std::cerr << "Message data 1 : " << static_cast<int>(msgData1) << std::endl;
 		//std::cerr << "Message data 2 : " << static_cast<int>(msgData2) << std::endl;
@@ -986,20 +989,30 @@ void CALLBACK MidiInProc(
 		int msgNote = static_cast<int>(msgData1);
 		int msgVel = static_cast<int>(msgData2);
 
-		// 0 - 127 nad the middle C is at 60 (C4)
-		// The note value for the lowest C on our keyboard is 48, so 48 / 12 = 4, 4 - 1 = 3, so we are in the third octave
-		int octave = (msgNote / 12) - 1;
-		std::string noteNames[12] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
 
-		if ((msgType & messageTypeMask) == noteOn && msgVel > 0)
+		// Channel 10 is always drums
+		if (channel == 9)
 		{
-			std::cout << "Note ON: " << noteNames[msgNote % 12] << octave << " Velocity: " << msgVel << std::endl;
+			std::cerr << "Drum Pad: " << "Note: " << msgNote << " Velocity: " << msgVel << std::endl;
+		}
+		else
+		{
+			// 0 - 127 nad the middle C is at 60 (C4)
+			// The note value for the lowest C on our keyboard is 48, so 48 / 12 = 4, 4 - 1 = 3, so we are in the third octave
+			int octave = (msgNote / 12) - 1;
+			std::string noteNames[12] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+
+			if ((msgType & messageTypeMask) == noteOn && msgVel > 0)
+			{
+				std::cout << "Note ON: " << noteNames[msgNote % 12] << octave << " Velocity: " << msgVel << std::endl;
+			}
+
+			if ((msgType & messageTypeMask) == noteOff || (msgType & messageTypeMask) == noteOn && msgVel == 0)
+			{
+				std::cout << "Note OFF:" << noteNames[msgNote % 12] << octave << " Velocity: " << msgVel << std::endl;
+			}
 		}
 
-		if ((msgType & messageTypeMask) == noteOff || (msgType & messageTypeMask) == noteOn && msgVel == 0)
-		{
-			std::cout << "Note OFF:" << noteNames[msgNote % 12] << octave << " Velocity: " << msgVel << std::endl;
-		}
 	}
 
 }
