@@ -244,6 +244,7 @@ private:
 	int midiKeyboardAmount = 0;
 	HMIDIIN handleMidiIn = nullptr;
 
+
 };
 
 #pragma warning( pop ) 

@@ -17,6 +17,10 @@ const float TRACK_SIZE_X = 1200.0f;
 const float paddingX = 40.0f;
 const float paddingY = 10.0f;
 
+// --------------------------------------------------------------------------------------------
+
+//std::string noteNames[12] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+
 //// Midi Event flags
 //enum EventType : uint8_t
 //{

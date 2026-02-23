@@ -922,7 +922,7 @@ void Game::setupMidiInput()
 		// Open a specific midi device for receiving messages
 		// https://learn.microsoft.com/en-us/windows/win32/api/mmeapi/nf-mmeapi-midiinopen
 		// handle is 'LPHMIDIIN', which is a pointer to 'HMIDIIN', 
-		MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)MidiInProc, 0, CALLBACK_FUNCTION);
+		MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, 0, CALLBACK_FUNCTION);
 
 		if (m_resultMidiOpen != MMSYSERR_NOERROR)
 		{
@@ -944,18 +944,12 @@ void Game::setupMidiInput()
 
 
 		// --------------------------------------------------------------------------------------------
-
-		
-
 		// Specific Midi connection
 		//int midiID = midiInGetID(hMidiIn, puDeviceID);
 
 		//mciGetDeviceID();
 		//LPHMIDIIN
 		//midiInOpen();
-
-
-
 
 	}
 }
@@ -967,23 +961,45 @@ void CALLBACK MidiInProc(
 	HMIDIIN hMidiIn,
 	UINT wMsg, // event type
 	DWORD_PTR dwInstance, // custom user data 
-	DWORD_PTR dwParam1, // more message data
+	DWORD_PTR dwParam1, // Note value, note velocity
 	DWORD_PTR dwParam2 // timestamp for when it was received 
 )
 {
 	// https://learn.microsoft.com/en-gb/windows/win32/multimedia/mim-data?redirectedfrom=MSDN
 	UINT16 metaEvent = 0xFF;
+	UINT16 messageTypeMask = 0xF0;
+	UINT16 noteOn = 0x90;
+	UINT16 noteOff = 0x80;
 
 	if (wMsg == MIM_DATA)
 	{
 		// Use unsigned char since it's 8 bits we need to read
-		unsigned char msgType = dwParam1 & metaEvent; // low
+		unsigned char msgFlag = dwParam1 & metaEvent; // low
 		unsigned char msgData1 = (dwParam1 >> 8) & metaEvent; // middle
 		unsigned char msgData2 = (dwParam1 >> 16) & metaEvent; // high
 
-		std::cerr << "Message type: " << static_cast<int>(msgType) << std::endl;
-		std::cerr << "Message data 1 : " << static_cast<int>(msgData1) << std::endl;
+		//std::cerr << "Message type: " << static_cast<int>(msgFlag) << std::endl;
+		//std::cerr << "Message data 1 : " << static_cast<int>(msgData1) << std::endl;
 		//std::cerr << "Message data 2 : " << static_cast<int>(msgData2) << std::endl;
+
+		int msgType = static_cast<int>(msgFlag);
+		int msgNote = static_cast<int>(msgData1);
+		int msgVel = static_cast<int>(msgData2);
+
+		// 0 - 127 nad the middle C is at 60 (C4)
+		// The note value for the lowest C on our keyboard is 48, so 48 / 12 = 4, 4 - 1 = 3, so we are in the third octave
+		int octave = (msgNote / 12) - 1;
+		std::string noteNames[12] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+
+		if ((msgType & messageTypeMask) == noteOn && msgVel > 0)
+		{
+			std::cout << "Note ON: " << noteNames[msgNote % 12] << octave << " Velocity: " << msgVel << std::endl;
+		}
+
+		if ((msgType & messageTypeMask) == noteOff || (msgType & messageTypeMask) == noteOn && msgVel == 0)
+		{
+			std::cout << "Note OFF:" << noteNames[msgNote % 12] << octave << " Velocity: " << msgVel << std::endl;
+		}
 	}
 
 }
