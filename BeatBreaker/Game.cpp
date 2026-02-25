@@ -972,6 +972,17 @@ void CALLBACK MidiInProc(
 	UINT16 noteOn = 0x90;
 	UINT16 noteOff = 0x80;
 
+	// Control Change flags 
+	// Found in "Control Change Messages (Data Bytes).pdf" in documents
+	UINT16 cc_flag = 0xB0;
+	//UINT16 cc_volume = 0xB7;
+	const int CC_BANKSELECT = 0;
+	const int CC_MODWHEEL = 1;
+	const int CC_CHANNELVOLUME = 7;
+	const int CC_PAN = 10;
+	const int CC_LSB_VOLUME = 27; 
+
+
 	if (wMsg == MIM_DATA)
 	{
 		// Use unsigned char since it's 8 bits we need to read
@@ -979,7 +990,12 @@ void CALLBACK MidiInProc(
 		unsigned char msgData1 = (dwParam1 >> 8) & metaEvent; // middle
 		unsigned char msgData2 = (dwParam1 >> 16) & metaEvent; // high
 
+		// Channel
 		unsigned char channel = msgFlag & channelTypeMask;
+
+		// CC
+		unsigned char cc_number = (dwParam1 >> 8) & 0xFF;
+		unsigned char cc_type = (dwParam1 >> 16) & 0xFF;
 
 		//std::cerr << "Message type: " << static_cast<int>(msgFlag) << std::endl;
 		//std::cerr << "Message data 1 : " << static_cast<int>(msgData1) << std::endl;
@@ -989,6 +1005,24 @@ void CALLBACK MidiInProc(
 		int msgNote = static_cast<int>(msgData1);
 		int msgVel = static_cast<int>(msgData2);
 
+		if (msgType == cc_flag)
+		{
+			//if (cc_number == cc_modWheel)
+			//{
+			//	std::cerr << "CC - Modulator Wheel: " << static_cast<int>(cc_type) << std::endl;
+			//}
+
+			switch (cc_number)
+			{
+				case CC_BANKSELECT:
+					std::cerr << "CC - Bank Select: " << static_cast<int>(cc_type) << std::endl;
+					break;
+				case CC_MODWHEEL:
+					std::cerr << "CC - Modulator Wheel: " << static_cast<int>(cc_type) << std::endl;
+					break;
+
+			}
+		}
 
 		// Channel 10 is always drums
 		if (channel == 9)
