@@ -147,6 +147,9 @@
     <ClCompile Include="VisualiserSelect.cpp">
       <Filter>Source Files\UI\SelectionMenus</Filter>
     </ClCompile>
+    <ClCompile Include="SongSelect.cpp">
+      <Filter>Source Files\UI\SelectionMenus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -219,6 +222,9 @@
       <Filter>Header Files\Scenes\SelectionMenus</Filter>
     </ClInclude>
     <ClInclude Include="VisualiserSelect.h">
+      <Filter>Header Files\Scenes\SelectionMenus</Filter>
+    </ClInclude>
+    <ClInclude Include="SongSelect.h">
       <Filter>Header Files\Scenes\SelectionMenus</Filter>
     </ClInclude>
   </ItemGroup>

@@ -39,11 +39,7 @@ public:
 
 	std::string getMidiPathString();
 
-	// Button 
-	float m_posX = paddingX;
-	float m_poY = paddingY;
-	float m_spacing = 60.0f;
-	sf::Vector2f m_buttonSize = { 200.0f, 40.0f };
+
 private:
 	std::vector<Button> m_buttons;
 	std::shared_ptr<const sf::Font> m_font;
@@ -53,6 +49,11 @@ private:
 	sf::Texture m_returnTexture;
 	sf::Sprite m_returnSprite{ m_returnTexture };
 	
+	// Button 
+	float m_posX = paddingX;
+	float m_poY = paddingY;
+	float m_spacing = 60.0f;
+	sf::Vector2f m_buttonSize = { 200.0f, 40.0f };
 
 	int m_pathsCount = 10; // Change this in setup paths function to be consistent
 

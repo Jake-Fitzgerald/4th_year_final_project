@@ -1,0 +1,183 @@
+#include "SongSelect.h"
+
+SongSelect::SongSelect(std::shared_ptr<const sf::Font> font) : m_font(font)
+{
+}
+
+
+void SongSelect::setupPathStrings()
+{
+	m_pathVector =
+	{
+		{"C Scale", "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid"},
+		{"Major / Minor Chords", "ASSETS\\AUDIO\\MUSIC\\Major_and_Minor_Chords.mid"},
+		{"Hard Song", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid"},
+	};
+
+	m_pathsCount = m_pathVector.size();
+}
+
+void SongSelect::setupButtons()
+{
+	m_buttons.reserve(m_pathsCount);
+
+
+	// Shapes
+	for (int i = 0; i < m_pathsCount; i++)
+	{
+		SongButton button(m_font);
+
+		button.m_buttonShape.setSize(m_buttonSize);
+		button.m_buttonShape.setPosition(sf::Vector2f{ paddingX , paddingY + i * m_spacing });
+		button.m_buttonShape.setFillColor(sf::Color::Blue);
+		button.m_buttonShape.setOutlineThickness(2.0f);
+		button.m_buttonShape.setOutlineColor(sf::Color::Black);
+
+		// Song name
+		button.m_songNameText.setFont(*m_font);
+		button.m_songNameText.setString(m_pathVector[i].name);
+		button.m_songNameText.setCharacterSize(20);
+		button.m_songNameText.setFillColor(sf::Color::White);
+		button.m_songNameText.setPosition(sf::Vector2f{
+														button.m_buttonShape.getPosition().x + 10.f,
+														button.m_buttonShape.getPosition().y + 10.f });
+
+		// Diffulty
+		button.m_difficultyText.setFont(*m_font);
+		button.m_difficultyText.setString("Difficulty: ");
+		button.m_difficultyText.setCharacterSize(20);
+		button.m_difficultyText.setFillColor(sf::Color::White);
+		button.m_difficultyText.setPosition(sf::Vector2f{
+															button.m_buttonShape.getPosition().x + m_difficultyTextSpacing,
+															button.m_buttonShape.getPosition().y + 10.f });
+
+		// Song Difficulty (temp)
+		button.m_songDifficultyText.setFont(*m_font);
+		button.m_songDifficultyText.setString("UNKOWN");
+		button.m_songDifficultyText.setCharacterSize(20);
+		button.m_songDifficultyText.setFillColor(sf::Color::White);
+		button.m_songDifficultyText.setPosition(sf::Vector2f{
+																button.m_buttonShape.getPosition().x + m_difficultyTextSpacing + 100.0f,
+																button.m_buttonShape.getPosition().y + 10.f });
+
+		// Personal Best Score Text (temp)
+		button.m_pbScoreText.setFont(*m_font);
+		button.m_pbScoreText.setString("PB Score: ");
+		button.m_pbScoreText.setCharacterSize(20);
+		button.m_pbScoreText.setFillColor(sf::Color::White);
+		button.m_pbScoreText.setPosition(sf::Vector2f{
+																button.m_buttonShape.getPosition().x + m_difficultyTextSpacing + 200.0f,
+																button.m_buttonShape.getPosition().y + 10.f });
+
+		// Personal Best Score (temp)
+		button.m_pbScore.setFont(*m_font);
+		button.m_pbScore.setString("12345");
+		button.m_pbScore.setCharacterSize(20);
+		button.m_pbScore.setFillColor(sf::Color::White);
+		button.m_pbScore.setPosition(sf::Vector2f{
+																button.m_buttonShape.getPosition().x + m_difficultyTextSpacing + 300.0f,
+																button.m_buttonShape.getPosition().y + 10.f });
+
+
+		// Music Note
+		if (!button.m_musicNoteTex->loadFromFile("ASSETS\\IMAGES\\UI\\button_play.png"))
+		{
+			std::cerr << "problem loading options music texture [Song Selection]" << std::endl;
+		}
+
+		button.m_musicNoteSprite.setTexture(*button.m_musicNoteTex, true);
+		button.m_musicNoteSprite.setPosition(sf::Vector2f{
+																button.m_buttonShape.getPosition().x + m_difficultyTextSpacing + 400.0f,
+																button.m_buttonShape.getPosition().y + 10.f });
+		button.m_musicNoteSprite.setScale(sf::Vector2f{ 0.6f, 0.6f });
+
+		button.midiPath = m_pathVector[i].path;
+		m_buttons.push_back(button);
+	}
+}
+
+void SongSelect::render(sf::RenderWindow& t_window)
+{
+	for (auto& button : m_buttons)
+	{
+		t_window.draw(button.m_buttonShape);
+		t_window.draw(button.m_songNameText);
+		t_window.draw(button.m_difficultyText);
+		t_window.draw(button.m_songDifficultyText);
+		t_window.draw(button.m_pbScoreText);
+		t_window.draw(button.m_pbScore);
+		t_window.draw(button.m_musicNoteSprite);
+	}
+}
+
+
+bool SongSelect::mouseClick(sf::Vector2f t_mousePos)
+{
+	for (auto& button : m_buttons)
+	{
+		// Reset colours if you click again
+		button.m_buttonShape.setFillColor(sf::Color::Blue);
+
+
+		sf::Vector2f topLeft = button.m_buttonShape.getPosition();
+		sf::Vector2f size = button.m_buttonShape.getSize();
+
+		if (checkIfAreaClicked(t_mousePos, topLeft, size) == true)
+		{
+			m_selectedPath = button.midiPath;
+			std::cerr << "Selected [SONG] Path is: " << m_selectedPath << std::endl;
+
+			// Turn it red to show it has been clicked
+			button.m_buttonShape.setFillColor(sf::Color::Red);
+
+			return true;
+
+			// Preview the song (temp)
+			//stopMidiMCIPreview();
+			//playMidiMCIPreview(button.midiPath);
+		}
+	}
+	return false;
+}
+
+bool SongSelect::returnClick(sf::Vector2f t_mousePos)
+{
+	// Stop any alias if it's currently playing
+	//stopMidiMCIPreview();
+	
+
+	// Return Button
+	sf::Vector2f spriteTopLeft = m_returnSprite.getPosition();
+	sf::Vector2f spriteSize = sf::Vector2f{ m_returnSprite.getGlobalBounds().size.x, m_returnSprite.getGlobalBounds().size.y };
+
+	if (checkIfAreaClicked(t_mousePos, spriteTopLeft, spriteSize) == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool SongSelect::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)
+{
+	if (t_mousePos.x >= t_topLeft.x &&
+		t_mousePos.x <= t_topLeft.x + t_size.x &&
+		t_mousePos.y >= t_topLeft.y &&
+		t_mousePos.y <= t_topLeft.y + t_size.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+std::string SongSelect::getMidiPathString()
+{
+	return m_selectedPath;
+}
+
+

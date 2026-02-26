@@ -37,7 +37,8 @@ Game::Game() :
 	    drumVisualiser(m_jerseyFont, m_soundManager),
 		m_midiFileSelectScene(m_jerseyFont),
 		m_visSelect(m_jerseyFont),
-		pianoVisualiser(m_soundManager)
+		pianoVisualiser(m_soundManager),
+	    m_songSelect(m_jerseyFont)
 
 {
 	setupTexts(); // load font 
@@ -102,11 +103,16 @@ Game::Game() :
 						midiParser.getDenominator() );
 
 	// Selection Scenes
+	// Midi File Select
 	m_midiFileSelectScene.setupPathStrings();
 	m_midiFileSelectScene.setupSprites();
 	m_midiFileSelectScene.setupButtons();
+	// Visualiser Select
 	m_visSelect.setupButtonsVisSelect();
 	m_visSelect.setupSprites();
+	// Song Select
+	m_songSelect.setupPathStrings();
+	m_songSelect.setupButtons();
 
 
 	// UI 
@@ -248,7 +254,9 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		// Gameplay
 		if (checkIfAreaClicked(mouseWorldPos, m_startButton.getPosition(), m_startButton.getSize()))
 		{
-			m_currentGameState = GameStates::Gameplay;
+			stopMidiMCI();
+			//m_currentGameState = GameStates::Gameplay;
+			m_currentGameState = GameStates::SongSelectionScene;
 			std::cout << "Start button clicked!" << std::endl;
 			m_testSound.play();
 		}
@@ -339,6 +347,24 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	else if (m_currentGameState == GameStates::DrumVis) // Piano Vis
 	{
 		drumVisualiser.handleClick(mouseWorldPos);
+	}
+	else if (m_currentGameState == GameStates::SongSelectionScene) // Song Selection
+	{
+		m_songSelect.mouseClick(mouseWorldPos);
+
+		// MCI playback
+		if (m_songSelect.mouseClick(mouseWorldPos) == true)
+		{
+			stopMidiMCI();
+			m_midiPath = m_songSelect.getMidiPathString();
+			playMidiMCI();
+		}
+
+		if (m_songSelect.returnClick(mouseWorldPos) == true)
+		{
+			stopMidiMCI();
+			m_currentGameState = GameStates::MainMenu;
+		}
 	}
 	
 	// HUD
@@ -570,7 +596,11 @@ void Game::render()
 	{
 		m_visSelect.renderVisSelect(m_window);
 	}
-
+	// Song Select
+	if (m_currentGameState == GameStates::SongSelectionScene)
+	{
+		m_songSelect.render(m_window);
+	}
 
 
 	//		Visualisers

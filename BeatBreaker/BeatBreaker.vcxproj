@@ -38,6 +38,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Results.cpp" />
     <ClCompile Include="SheetVisualiser.cpp" />
+    <ClCompile Include="SongSelect.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TrackVisualiser.cpp" />
     <ClCompile Include="Utilities.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Results.h" />
     <ClInclude Include="SheetVisualiser.h" />
+    <ClInclude Include="SongSelect.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TrackVisualiser.h" />
     <ClInclude Include="Utilities.h" />

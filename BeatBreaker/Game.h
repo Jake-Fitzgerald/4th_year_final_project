@@ -21,8 +21,11 @@
 // Scenes
 #include "MainMenu.h"
 #include "Options.h"
+
+// Selection Scenes
 #include "MidiFileSelect.h"
 #include "VisualiserSelect.h"
+#include "SongSelect.h"
 
 // MIDI
 #include "MIDIParse.h"
@@ -56,6 +59,7 @@ enum GameStates
 	// Selection scenes
 	MidiFileSelectScene,
 	VisualiserSelectScene,
+	SongSelectionScene,
 
 	// Visualisers
 	TrackVis,
@@ -167,7 +171,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::MainMenu;
+	GameStates m_currentGameState = GameStates::SongSelectionScene;
 
 	// Test Blocks
 	const int COLS = 8;   
@@ -236,6 +240,7 @@ private:
 	// Selection Scenes
 	MidiFileSelect m_midiFileSelectScene;
 	VisualiserSelect m_visSelect;
+	SongSelect m_songSelect;
 
 	// Custom Icon
 	sf::Image m_customIcon;
