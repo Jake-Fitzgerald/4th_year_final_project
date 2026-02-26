@@ -65,11 +65,10 @@ enum GameStates
 	//SheetVis
 };
 
-enum Difficulties
+struct MidiCallbackData
 {
-	Easy,
-	Medium,
-	Hard
+	PianoVisualiser* piano;
+	DrumVisualiser* drums;
 };
 
 class Game
@@ -239,6 +238,9 @@ private:
 	// MIDI Input
 	int midiKeyboardAmount = 0;
 	HMIDIIN handleMidiIn = nullptr;
+
+	// Midi Input Custom Data
+	MidiCallbackData m_midiCallbackData;
 
 
 };

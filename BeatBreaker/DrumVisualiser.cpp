@@ -403,3 +403,114 @@ void DrumVisualiser::toggleHitboxVis()
 		b_isHitboxVis = true;
 	}
 }
+
+void DrumVisualiser::drumNoteOn(int t_midiNote)
+{
+	int index = -1;
+
+	switch (t_midiNote)
+	{
+		case 48: // Tom1
+		{
+			index = 0;
+			break; 
+		}
+		case 50: // Tom2
+		{
+			index = 1;
+			break; 
+		}
+		case 52: // Snare
+		{
+			index = 2;
+			break;
+		}
+		case 53: // FloorTom
+		{
+			index = 3;
+			break; 
+		}
+		case 55: // HiHat
+		{
+			index = 4;
+			break; 
+		}
+		case 57: // Crash1
+		{
+			index = 5;
+			break;
+		}
+		case 59: // Clap
+		{
+			index = 8;
+			break; 
+		}
+		case 60: // Kick
+		{
+			index = 7;
+			break; 
+		}
+		default:
+		{
+			return;
+		}
+	}
+
+	changeDrumColourOn(index);
+	m_soundManager->play(m_drums[index].pieceName);
+}
+
+void DrumVisualiser::drumNoteOff(int t_midiNote)
+{
+	int index = -1;
+
+	switch (t_midiNote)
+	{
+		case 48:  // Tom1
+		{
+			index = 0;
+			break;
+		}
+		case 50: // Tom2
+		{
+			index = 1;
+			break;
+		}
+		case 52: // Snare
+		{
+			index = 2;
+			break;
+		}
+		case 53: // FloorTom
+		{
+			index = 3;
+			break;
+		}
+		case 55: // HiHat
+		{
+			index = 4;
+			break;
+		}
+		case 57: // Crash1
+		{
+			index = 5;
+			break;
+		}
+		case 59: // Clap
+		{
+			index = 8;
+			break;
+		}
+		case 60: // Kick
+		{
+			index = 7;
+			break;
+		}
+		default:
+		{
+			return;
+		}
+	}
+
+	changeDrumColourOff(index);
+}

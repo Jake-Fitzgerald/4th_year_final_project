@@ -126,9 +126,6 @@
     <ClCompile Include="PianoVisualiser.cpp">
       <Filter>Source Files\Visualisers</Filter>
     </ClCompile>
-    <ClCompile Include="SheetVisualiser.cpp">
-      <Filter>Source Files\Visualisers</Filter>
-    </ClCompile>
     <ClCompile Include="DrumVisualiser.cpp">
       <Filter>Source Files\Visualisers</Filter>
     </ClCompile>
@@ -201,9 +198,6 @@
       <Filter>Header Files\Visualisers</Filter>
     </ClInclude>
     <ClInclude Include="DrumVisualiser.h">
-      <Filter>Header Files\Visualisers</Filter>
-    </ClInclude>
-    <ClInclude Include="SheetVisualiser.h">
       <Filter>Header Files\Visualisers</Filter>
     </ClInclude>
     <ClInclude Include="MidiFileSelect.h">

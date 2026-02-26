@@ -53,6 +53,10 @@ public:
 
 	void toggleHitboxVis();
 
+	// Midi Input
+	void drumNoteOn(int t_midiNote);
+	void drumNoteOff(int t_midiNote);
+
 private:
 	SoundManager* m_soundManager;
 
