@@ -60,18 +60,19 @@ public:
 	// Note Test (temp)
 	void spawnTestNote();
 	void updateNotes(float t_deltaTime);
+	bool checkInputCollision();
 
 private:
 	SoundManager* m_soundManager;
 	CollisionManager* m_collisionManager;
 
-	//std::vector<sf::RectangleShape> keyShapes;
 	std::vector<PianoKey> m_keys;
+
+	sf::RectangleShape m_inputCollider;
 
 	// Piano Position
 	float pianoPosX = paddingX;
 	float pianoPosY = paddingY + 400.0f;
-
 
 	// Key sizes
 	sf::Vector2f blackKeySize{ 22.0f, 70.0f };
@@ -96,7 +97,7 @@ private:
 	// Note Test (temp)
 	FallingNote m_testNote;
 	float m_noteTestSpawnY = -100.0f;
-	float m_noteSpeed = 300.0f;
+	float m_noteSpeed = 100.0f;
 
 	bool b_testNoteActive = false;
 };

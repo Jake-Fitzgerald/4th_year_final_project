@@ -52,6 +52,11 @@ void PianoVisualiser::setupPianoShapes()
     {
         m_collisionManager->addCollidable(m_keys[i].shape, "Keys");
     }
+
+    // Sits just above the keys, same width as the full keyboard
+    m_inputCollider.setSize(sf::Vector2f{ m_keys.back().shape.getPosition().x - m_keys.front().shape.getPosition().x + whiteKeySize.x, 40.0f });
+    m_inputCollider.setPosition(sf::Vector2f{ m_keys.front().shape.getPosition().x, pianoPosY - 40.0f });
+    m_inputCollider.setFillColor(sf::Color(0, 255, 0, 100));
 }
 
 void PianoVisualiser::setupWhiteKey(int t_index, std::string t_noteLetter, int t_octave)
@@ -159,6 +164,8 @@ void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
         }
     }
 
+    t_window.draw(m_inputCollider);
+
     if (b_testNoteActive == true)
     {
         t_window.draw(m_testNote.noteShape);;
@@ -229,7 +236,25 @@ void PianoVisualiser::noteOn(const std::string& t_noteName)
         {
             keysTurnOn(i);
             m_soundManager->play(t_noteName);
-            return;
+            //return;
+
+            // Collision Test
+            if (checkInputCollision() == true)
+            {
+                if (m_testNote.targetNoteName == t_noteName)
+                {
+                    std::cerr << "HIT! : " << t_noteName << std::endl;
+                    b_testNoteActive = false; 
+                }
+                else
+                {
+                    std::cerr << "WRONG KEY!" << std::endl;
+                }
+            }
+            else
+            {
+                std::cerr << "MISS! No note in hit zone" << std::endl;
+            }
         }
     }
 }
@@ -286,5 +311,16 @@ void PianoVisualiser::updateNotes(float t_deltaTime)
     }
 
     // Delete the note when it goes offscreen
+}
+
+bool PianoVisualiser::checkInputCollision()
+{
+    if (b_testNoteActive == false)
+    {
+        return false;
+    }
+
+    // Check if the falling note overlaps the hit zone
+    return m_testNote.noteShape.getGlobalBounds().findIntersection(m_inputCollider.getGlobalBounds()).has_value();
 }
 
