@@ -14,7 +14,6 @@
 // Components
 #include "Block.h"
 #include "BlockGenerator.h"
-#include "Player.h"
 #include "SoundManager.h"
 #include "CollisionManager.h"
 
@@ -43,7 +42,6 @@
 #include "TrackVisualiser.h"
 #include "PianoVisualiser.h"
 #include "DrumVisualiser.h"
-#include "SheetVisualiser.h"
 
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
@@ -53,7 +51,6 @@ enum GameStates
 	Gameplay,
 	RandGen,
 	OptionsScene,
-	Character,
 	GameOver,
 
 	// Selection scenes
@@ -103,8 +100,6 @@ private:
 
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 	void setupGrid();
-
-	void setupPlayer();
 
 	void setupSounds();
 
@@ -192,9 +187,6 @@ private:
 	MIDIParse midiParser;
 	void setupMidiParser();
 	std::string m_midiPath = "ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid";
-	
-	// Player
-	Player m_player;
 
 	// UI
 	HUD m_hud;
@@ -231,7 +223,6 @@ private:
 	TrackVisualiser trackVisualiser;
 	PianoVisualiser pianoVisualiser;
 	DrumVisualiser drumVisualiser;
-	SheetVisualiser sheetVisualiser;
 
 	// UI
 	// Overlays

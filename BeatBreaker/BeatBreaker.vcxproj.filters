@@ -25,12 +25,6 @@
     <Filter Include="Utilites">
       <UniqueIdentifier>{076c8a6b-4f62-4dff-ac49-55e15dd64021}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Player">
-      <UniqueIdentifier>{821e5430-52eb-4f52-b6b0-25df3535275b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Player">
-      <UniqueIdentifier>{60f9eda3-39d5-4178-818e-45eccdf23e9a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Scenes">
       <UniqueIdentifier>{a9b1ddce-73e0-45e5-96ec-20c748e36756}</UniqueIdentifier>
     </Filter>
@@ -89,9 +83,6 @@
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Player</Filter>
     </ClCompile>
     <ClCompile Include="MIDIParse.cpp">
       <Filter>Source Files\MIDI</Filter>
@@ -163,9 +154,6 @@
     </ClInclude>
     <ClInclude Include="Notes.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\Player</Filter>
     </ClInclude>
     <ClInclude Include="MainMenu.h">
       <Filter>Header Files\Scenes</Filter>

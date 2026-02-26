@@ -6,7 +6,7 @@
 void CALLBACK MidiInProc(
 	HMIDIIN hMidiIn,
 	UINT wMsg, // event type
-	DWORD_PTR dwInstance, // custom user data 
+	DWORD_PTR dwInstance, // custom user data (Piano Visualiser, Drum Visualiser)
 	DWORD_PTR dwParam1, // more message data
 	DWORD_PTR dwParam2 // timestamp for when it was received 
 );
@@ -50,9 +50,6 @@ Game::Game() :
 
 	// MIDI
 	setupMidiParser();
-	
-	// Player
-	setupPlayer();
 
 	// Sound Manager
 	setupSounds();
@@ -177,7 +174,6 @@ void Game::processEvents()
 	}
 }
 
-
 void Game::processKeys(const std::optional<sf::Event> t_event)
 {
 	const sf::Event::KeyPressed *newKeypress = t_event->getIf<sf::Event::KeyPressed>();
@@ -224,24 +220,10 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 void Game::processKeysPressed(const std::optional<sf::Event> t_event)
 {
 	const sf::Event::KeyPressed* newKeyPress = t_event->getIf<sf::Event::KeyPressed>();
-
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-	//{
-	//	m_player.moveLeft();
-	//}
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-	//{
-	//	m_player.moveRight();
-	//}
 }
 
 void Game::processKeysRelease(const std::optional<sf::Event> t_event)
 {
-	//const sf::Event::KeyReleased* newKeypress = t_event->getIf<sf::Event::KeyReleased>();
-	//if (sf::Keyboard::Key::H == newKeypress->code)
-	//{
-	//	std::cerr << "Home" << std::endl;
-	//}
 }
 
 void Game::processMouseRelease(const std::optional<sf::Event> t_event)
@@ -436,31 +418,7 @@ void Game::checkKeyboardState()
 
 void Game::processKeyboard(float dtSeconds)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-	{
-		m_player.moveLeft(dtSeconds);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-	{
-		m_player.moveRight(dtSeconds);
-	}
-	// Pointing
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-	{
-		m_player.pointUp();
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-	{
-		m_player.pointDown();
-	}
-	// Break
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-	{
-		if (m_player.breaking(m_testBlockShape))
-		{
-			m_testBlockShape.setFillColor(sf::Color::Red);
-		}
-	}
+
 }
 
 
@@ -474,12 +432,6 @@ void Game::update(sf::Time t_deltaTime)
 		freeMidiHandler();
 
 		m_window.close();
-	}
-
-	if (m_currentGameState == GameStates::Character)
-	{
-		processKeyboard(dtConverted);
-		m_player.updatePlayer(dtConverted);
 	}
 
 	// FPS
@@ -498,32 +450,12 @@ void Game::update(sf::Time t_deltaTime)
 		m_hud.updateFPSText(m_fps);
 	}
 	
-	// Player
-	// Player collision
-	if (m_player.getHitbox().findIntersection(m_testBlockShape.getGlobalBounds()))
-	{
-		//std::cerr << "[HITBOX] Player colliding with test block" << std::endl;
-	}
-	if (m_player.getHurtbox().findIntersection(m_testBlockShape.getGlobalBounds()))
-	{
-		//std::cerr << "[HURTBOX] Player colliding with test block" << std::endl;
-	}
-	if (m_player.getBreakHitbox().findIntersection(m_testBlockShape.getGlobalBounds()))
-	{
-		//std::cerr << "[BREAKBOX] Player colliding with test block" << std::endl;
-	}
-	// Wall Collision
-	if (m_collisionManager.checkCollision(m_player.getHitbox(), "WALL"))
-	{
-		m_player.revertPosition();
-		m_player.updatePlayer(dtConverted);
-	}
-	// Block Collision
-	if (m_collisionManager.checkCollision(m_player.getHitbox(), "BLOCK"))
-	{
-		m_player.revertPosition();
-		m_player.updatePlayer(dtConverted);
-	}
+	// Block Collision															// LOOK AT THIS FOR REFERENCE FOR COLLIDERS FOR KEYS
+	//if (m_collisionManager.checkCollision(m_player.getHitbox(), "BLOCK"))
+	//{
+	//	m_player.revertPosition();
+	//	m_player.updatePlayer(dtConverted);
+	//}
 
 	drumVisualiser.updateIntroAnim(dtConverted);
 }
@@ -573,23 +505,13 @@ void Game::render()
 	{
 		m_options.renderOptions(m_window);
 	}
-	// Character
-	if (m_currentGameState == GameStates::Character)
-	{
-		m_player.renderPlayer(m_window);
-		m_window.draw(m_testBlockShape);
-		// Stage
-		m_window.draw(m_floorShape);
-		m_window.draw(m_wallLeftShape);
-		m_window.draw(m_wallRightShape);
-	}
 	// Rand Gen
 	if (m_currentGameState == GameStates::RandGen)
 	{
 		m_blockGen.renderBlocks(m_window);
 	}
 
-	//		Selection Scenes
+	// ----- Selection Scenes -----
 	// Midi File Select
 	if (m_currentGameState == GameStates::MidiFileSelectScene)
 	{
@@ -607,22 +529,19 @@ void Game::render()
 	}
 
 
-	//		Visualisers
-
+	// ----- Visualisers -----
 	// Track Visualiser
 	if (m_currentGameState == GameStates::TrackVis)
 	{
 		// visualiser shapes
 		trackVisualiser.renderTrackVis(m_window);
 	}
-
 	// Piano Visualiser
 	if (m_currentGameState == GameStates::PianoVis)
 	{
 		// visualiser shapes
 		pianoVisualiser.renderKeys(m_window);
 	}
-
 	// Drum Visualiser
 	if (m_currentGameState == GameStates::DrumVis)
 	{
@@ -630,20 +549,12 @@ void Game::render()
 		drumVisualiser.renderDrums(m_window);
 	}
 
-	// Sheet Music Visualiser
-	//if (m_currentGameState == GameStates::SheetVis)
-	//{
-
-	//}
-
 	// UI
 	m_hud.drawHUD(m_window);
 	gridDisplay.renderGrid(m_window);
 	
-	
 	m_window.display();
 }
-
 
 void Game::setupTexts()
 {
@@ -786,20 +697,12 @@ void Game::setupMainMenu()
 	sf::Vector2f optionsTextOffset = { m_optionsButton.getPosition().x + 20.0f, m_optionsButton.getPosition().y };
 	m_optionsText.setPosition(optionsTextOffset);
 
-	// Visualisers
-	// Visualiser Selection Button (leads to that scene) 
-
-
 	// Exit 
 	m_exitButton.setPosition(sf::Vector2f{ m_topLeftStart.x + 500.0f, m_topLeftStart.y + m_buttonSpacing * 2 });
 	m_exitButton.setSize(m_buttonSize);
 	m_exitButton.setFillColor(sf::Color::Magenta);
 	sf::Vector2f exitTextOffset = { m_exitButton.getPosition().x + 20.0f, m_exitButton.getPosition().y };
 	m_exitText.setPosition(exitTextOffset);
-
-	// Midi Selection Button
-	// 3/4, 4/4. 5/6, 6/7, etc
-
 }
 
 bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)
@@ -840,13 +743,6 @@ void Game::setupGrid()
 			m_grid.push_back(cell);
 		}
 	}
-}
-
-
-void Game::setupPlayer()
-{
-	m_player.setupPlayer();
-	m_player.setSpawnPos(sf::Vector2f{ 100.0f, 100.0f });
 }
 
 void Game::setupSounds()

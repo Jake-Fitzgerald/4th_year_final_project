@@ -35,7 +35,6 @@
     <ClCompile Include="MIDIParse.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="PianoVisualiser.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Results.cpp" />
     <ClCompile Include="SheetVisualiser.cpp" />
     <ClCompile Include="SongSelect.cpp" />
@@ -62,7 +61,6 @@
     <ClInclude Include="Notes.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="PianoVisualiser.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="Results.h" />
     <ClInclude Include="SheetVisualiser.h" />
     <ClInclude Include="SongSelect.h" />
