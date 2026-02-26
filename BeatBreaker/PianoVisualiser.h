@@ -44,6 +44,12 @@ public:
 	void handleClick(sf::Vector2f t_mousePos);
 	bool checkIfKeyClicked(sf::Vector2f t_mousePos, const PianoKey& t_key);
 
+	// Midi Input
+	void noteOn(const std::string& t_noteName);
+	void noteOff(const std::string& t_noteName);
+
+
+
 private:
 	SoundManager* m_soundManager;
 

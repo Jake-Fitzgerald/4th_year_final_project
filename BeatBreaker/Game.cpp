@@ -956,7 +956,8 @@ void Game::setupMidiInput()
 		// Open a specific midi device for receiving messages
 		// https://learn.microsoft.com/en-us/windows/win32/api/mmeapi/nf-mmeapi-midiinopen
 		// handle is 'LPHMIDIIN', which is a pointer to 'HMIDIIN', 
-		MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, 0, CALLBACK_FUNCTION);
+		//MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, 0, CALLBACK_FUNCTION); 
+		MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, (DWORD_PTR)&pianoVisualiser, CALLBACK_FUNCTION);
 
 		if (m_resultMidiOpen != MMSYSERR_NOERROR)
 		{
@@ -1069,15 +1070,32 @@ void CALLBACK MidiInProc(
 			// The note value for the lowest C on our keyboard is 48, so 48 / 12 = 4, 4 - 1 = 3, so we are in the third octave
 			int octave = (msgNote / 12) - 1;
 			std::string noteNames[12] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+			std::string noteName = noteNames[msgNote % 12] + std::to_string(octave);
+
+			// Get the Piano Visualiser pointer we are after passing into midiInOpen 
+			// The compiler will know this address is our Piano Visualiser
+			//PianoVisualiser* pianoListener = static_cast<PianoVisualiser*>((void*)dwInstance);
+			PianoVisualiser* pianoListener = reinterpret_cast<PianoVisualiser*>(dwInstance);
+			
 
 			if ((msgType & messageTypeMask) == noteOn && msgVel > 0)
 			{
-				std::cout << "Note ON: " << noteNames[msgNote % 12] << octave << " Velocity: " << msgVel << std::endl;
+				std::cout << "Note ON: " << noteName << " Velocity: " << msgVel << std::endl;
+
+				if (pianoListener)
+				{
+					pianoListener->noteOn(noteName);
+				}
 			}
 
 			if ((msgType & messageTypeMask) == noteOff || (msgType & messageTypeMask) == noteOn && msgVel == 0)
 			{
-				std::cout << "Note OFF:" << noteNames[msgNote % 12] << octave << " Velocity: " << msgVel << std::endl;
+				std::cout << "Note OFF:" << noteName << " Velocity: " << msgVel << std::endl;
+
+				if (pianoListener)
+				{
+					pianoListener->noteOff(noteName);
+				}
 			}
 		}
 

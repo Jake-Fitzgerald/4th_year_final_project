@@ -233,3 +233,28 @@ bool PianoVisualiser::checkIfKeyClicked(sf::Vector2f t_mousePos, const PianoKey&
     return false;
 }
 
+void PianoVisualiser::noteOn(const std::string& t_noteName)
+{
+    for (int i = 0; i < m_keys.size(); i++)
+    {
+        if (m_keys[i].noteName == t_noteName)
+        {
+            keysTurnOn(i);
+            m_soundManager->play(t_noteName);
+            return;
+        }
+    }
+}
+
+void PianoVisualiser::noteOff(const std::string& t_noteName)
+{
+    for (int i = 0; i < m_keys.size(); i++)
+    {
+        if (m_keys[i].noteName == t_noteName)
+        {
+            keysTurnOff(i);
+            return;
+        }
+    }
+}
+
