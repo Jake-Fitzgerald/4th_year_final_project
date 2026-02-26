@@ -111,14 +111,14 @@ void SongSelect::render(sf::RenderWindow& t_window)
 }
 
 
-bool SongSelect::mouseClick(sf::Vector2f t_mousePos)
+SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 {
 	for (auto& button : m_buttons)
 	{
 		// Reset colours if you click again
 		button.m_buttonShape.setFillColor(sf::Color::Blue);
 
-
+		// Song Button
 		sf::Vector2f topLeft = button.m_buttonShape.getPosition();
 		sf::Vector2f size = button.m_buttonShape.getSize();
 
@@ -129,15 +129,23 @@ bool SongSelect::mouseClick(sf::Vector2f t_mousePos)
 
 			// Turn it red to show it has been clicked
 			button.m_buttonShape.setFillColor(sf::Color::Red);
+			return SongClickResult::SongSelected;
+		}
 
-			return true;
+		// Preview Sprite Button
+		sf::Vector2f topLeftPreview = button.m_musicNoteSprite.getPosition();
+		sf::Vector2f sizePreview = sf::Vector2f{
+												button.m_musicNoteSprite.getGlobalBounds().size.x,
+												button.m_musicNoteSprite.getGlobalBounds().size.y };
 
-			// Preview the song (temp)
-			//stopMidiMCIPreview();
-			//playMidiMCIPreview(button.midiPath);
+		if (checkIfAreaClicked(t_mousePos, topLeftPreview, sizePreview) == true)
+		{
+			std::cerr << "Preview clicked for: " << button.midiPath << std::endl;
+			m_previewPath = button.midiPath;
+			return SongClickResult::PreviewClicked;
 		}
 	}
-	return false;
+	return SongClickResult::None;
 }
 
 bool SongSelect::returnClick(sf::Vector2f t_mousePos)
@@ -178,6 +186,11 @@ bool SongSelect::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topL
 std::string SongSelect::getMidiPathString()
 {
 	return m_selectedPath;
+}
+
+std::string SongSelect::getPreviewPathString()
+{
+	return m_previewPath;
 }
 
 

@@ -36,6 +36,13 @@ struct SongButton
 	}
 };
 
+struct SongPaths
+{
+	std::string name = " ";
+	std::string path = " ";
+};
+
+
 enum SONGDIFFICULTIES
 {
 	EASY,
@@ -44,11 +51,13 @@ enum SONGDIFFICULTIES
 	UNKNOWN
 };
 
-struct SongPaths
+enum class SongClickResult
 {
-	std::string name = " ";
-	std::string path = " ";
+	None,
+	SongSelected,
+	PreviewClicked
 };
+
 
 class SongSelect
 {
@@ -60,16 +69,18 @@ public:
 	
 	void render(sf::RenderWindow& t_window);
 
-	bool mouseClick(sf::Vector2f t_mousePos);
+	SongClickResult mouseClick(sf::Vector2f t_mousePos);
 	bool returnClick(sf::Vector2f t_mousePos);
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
 	std::string getMidiPathString();
+	std::string getPreviewPathString();
 
 private:
 	std::vector<SongButton> m_buttons;
 	std::shared_ptr<const sf::Font> m_font;
 	std::string m_selectedPath = "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid"; // Default midi file
+	std::string m_previewPath = " ";
 
 	sf::RectangleShape m_returnButton;
 	sf::Texture m_returnTexture;

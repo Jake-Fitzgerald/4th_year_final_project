@@ -350,13 +350,17 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	}
 	else if (m_currentGameState == GameStates::SongSelectionScene) // Song Selection
 	{
-		m_songSelect.mouseClick(mouseWorldPos);
+		SongClickResult clickResult = m_songSelect.mouseClick(mouseWorldPos);
 
-		// MCI playback
-		if (m_songSelect.mouseClick(mouseWorldPos) == true)
+		if (clickResult == SongClickResult::SongSelected)
 		{
 			stopMidiMCI();
 			m_midiPath = m_songSelect.getMidiPathString();
+		}
+		else if (clickResult == SongClickResult::PreviewClicked)
+		{
+			stopMidiMCI();
+			m_midiPath = m_songSelect.getPreviewPathString();
 			playMidiMCI();
 		}
 
