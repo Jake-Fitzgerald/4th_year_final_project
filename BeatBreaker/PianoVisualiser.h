@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "MIDIParse.h"
 #include "SoundManager.h"
+#include "CollisionManager.h"
 
 /*
 * 
@@ -26,10 +27,18 @@ struct PianoKey
 	sf::Color originalColour;      
 };
 
+struct FallingNote
+{
+	sf::RectangleShape noteShape;
+	sf::RectangleShape earlyTrigger;
+	sf::RectangleShape lateTrigger;
+	std::string targetNoteName; 
+};
+
 class PianoVisualiser
 {
 public:
-	PianoVisualiser(SoundManager& t_soundManager);
+	PianoVisualiser(SoundManager& t_soundManager, CollisionManager& t_collisionManager);
 	void setupPianoShapes();
 	void setupWhiteKey(int t_index, std::string t_noteLetter, int t_octave);
 	void setupBlackKey(int t_whiteKeyIndex, std::string t_noteLetter, int t_octave);
@@ -48,17 +57,20 @@ public:
 	void noteOn(const std::string& t_noteName);
 	void noteOff(const std::string& t_noteName);
 
-
+	// Note Test (temp)
+	void spawnTestNote();
+	void updateNotes(float t_deltaTime);
 
 private:
 	SoundManager* m_soundManager;
+	CollisionManager* m_collisionManager;
 
 	//std::vector<sf::RectangleShape> keyShapes;
 	std::vector<PianoKey> m_keys;
 
 	// Piano Position
 	float pianoPosX = paddingX;
-	float pianoPosY = paddingY + 200.0f;
+	float pianoPosY = paddingY + 400.0f;
 
 
 	// Key sizes
@@ -80,5 +92,12 @@ private:
 	sf::RectangleShape m_keyboardBase;
 
 	bool b_midiLiveMode = false;
+
+	// Note Test (temp)
+	FallingNote m_testNote;
+	float m_noteTestSpawnY = -100.0f;
+	float m_noteSpeed = 300.0f;
+
+	bool b_testNoteActive = false;
 };
 

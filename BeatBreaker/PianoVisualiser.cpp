@@ -1,6 +1,7 @@
 #include "PianoVisualiser.h"
 
-PianoVisualiser::PianoVisualiser(SoundManager& t_soundManager) : m_soundManager(&t_soundManager)
+PianoVisualiser::PianoVisualiser(SoundManager& t_soundManager, CollisionManager& t_collisionManager) 
+                               : m_soundManager(&t_soundManager), m_collisionManager(&t_collisionManager)
 {
     
 }
@@ -45,17 +46,16 @@ void PianoVisualiser::setupPianoShapes()
     sf::Vector2f lastKey = sf::Vector2f{ lastKeyPosX, lastKeyPosY };
 
     m_keyboardBase.setSize(sf::Vector2f{ firstKey.x, lastKey.y });
+
+    // Set each key as a collidable
+    for (int i = 0; i < m_keys.size(); i++)
+    {
+        m_collisionManager->addCollidable(m_keys[i].shape, "Keys");
+    }
 }
 
 void PianoVisualiser::setupWhiteKey(int t_index, std::string t_noteLetter, int t_octave)
 {
-    //sf::RectangleShape keyShape;
-    //keyShape.setSize(whiteKeySize);
-    //keyShape.setFillColor(sf::Color::White);
-    //keyShape.setOutlineThickness(1.0f);
-    //keyShape.setOutlineColor(sf::Color::Black);
-    //keyShape.setPosition(sf::Vector2f{pianoPosX + t_index * (whiteKeySize.x + whiteSpacing), pianoPosY });
-
     PianoKey key; 
 
     key.shape.setSize(whiteKeySize);
@@ -74,14 +74,6 @@ void PianoVisualiser::setupWhiteKey(int t_index, std::string t_noteLetter, int t
 
 void PianoVisualiser::setupBlackKey(int t_whiteKeyIndex, std::string t_noteLetter, int t_octave)
 {
-    //sf::RectangleShape keyShape;
-    //keyShape.setSize(blackKeySize);
-    //keyShape.setFillColor(sf::Color::Black);
-    //keyShape.setOutlineThickness(1.0f);
-    //keyShape.setOutlineColor(sf::Color::Black);
-    //float blackKeyOffsetX = (whiteKeySize.x + whiteSpacing) * t_whiteKeyIndex + whiteKeySize.x * 0.7f;
-    //keyShape.setPosition(sf::Vector2f{pianoPosX + blackKeyOffsetX, pianoPosY});
-
     PianoKey key;
 
     key.shape.setSize(blackKeySize);
@@ -97,7 +89,6 @@ void PianoVisualiser::setupBlackKey(int t_whiteKeyIndex, std::string t_noteLette
     key.originalColour = sf::Color::Black;
 
     m_keys.push_back(key);
-
 }
 
 void PianoVisualiser::setupPianoSounds()
@@ -153,10 +144,6 @@ void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
     // White keys first
     for (int i = 0; i < m_keys.size(); i++)
     {
-        //if (keyShapes[i].getFillColor() == sf::Color::White)
-        //{
-        //    t_window.draw(keyShapes[i]);
-        //}
         if (m_keys[i].b_isSharpKey == false)
         {
             t_window.draw(m_keys[i].shape);
@@ -166,20 +153,21 @@ void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
     // Black keys on top of the white ones
     for (int i = 0; i < m_keys.size(); i++)
     {
-        //if (keyShapes[i].getFillColor() == sf::Color::Black)
-        //{
-        //    t_window.draw(keyShapes[i]);
-        //}
         if (m_keys[i].b_isSharpKey == true)
         {
             t_window.draw(m_keys[i].shape);
         }
     }
+
+    if (b_testNoteActive == true)
+    {
+        t_window.draw(m_testNote.noteShape);;
+    }
+   
 }
 
 void PianoVisualiser::handleClick(sf::Vector2f t_mousePos)
 {
-
     // Black keys (they are ontop so check first)
     for (int i = 0; i < m_keys.size(); i++)
     {
@@ -256,5 +244,47 @@ void PianoVisualiser::noteOff(const std::string& t_noteName)
             return;
         }
     }
+}
+
+void PianoVisualiser::spawnTestNote()
+{
+    for (int i = 0; i < m_keys.size(); i++)
+    {
+        // Base note 
+        if (m_keys[i].noteName == "C4")
+        {
+            m_testNote.noteShape.setSize(sf::Vector2f{ m_keys[i].shape.getSize().x, 20.0f });
+            m_testNote.noteShape.setFillColor(sf::Color::Cyan);
+            m_testNote.noteShape.setPosition(sf::Vector2f{ m_keys[i].shape.getPosition().x, m_noteTestSpawnY });
+            m_testNote.targetNoteName = "C4";
+            b_testNoteActive = true;
+            return;
+        }
+
+        // Early
+
+
+        // Late
+    }
+}
+
+void PianoVisualiser::updateNotes(float t_deltaTime)
+{
+    if (b_testNoteActive == false)
+    {
+        return;
+    }
+
+    m_testNote.noteShape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
+
+    // Check collision against the Keys layer
+    if (m_collisionManager->checkCollision(m_testNote.noteShape.getGlobalBounds(), "Keys"))
+    {
+        std::cerr << "Test note hit: " << m_testNote.targetNoteName << std::endl;
+        noteOn(m_testNote.targetNoteName);
+        b_testNoteActive = false;
+    }
+
+    // Delete the note when it goes offscreen
 }
 

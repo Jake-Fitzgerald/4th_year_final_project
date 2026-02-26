@@ -21,7 +21,6 @@ std::shared_ptr<const sf::Font> Game::loadFont()
 Game::Game() :
 	m_window{ sf::VideoMode{ sf::Vector2u{SCREEN_WIDTH, SCREEN_HEIGHT}, 32U }, "Beat Breaker" },
 	m_DELETEexitGame{false},
-		//m_jerseyFont(std::make_shared<sf::Font>()),
 		m_jerseyFont(loadFont()),
 		m_beatBreakerText(*m_jerseyFont), 
 		m_startText(*m_jerseyFont),
@@ -37,7 +36,7 @@ Game::Game() :
 	    drumVisualiser(m_jerseyFont, m_soundManager),
 		m_midiFileSelectScene(m_jerseyFont),
 		m_visSelect(m_jerseyFont),
-		pianoVisualiser(m_soundManager),
+		pianoVisualiser(m_soundManager, m_collisionManager),
 	    m_songSelect(m_jerseyFont)
 
 {
@@ -414,6 +413,11 @@ void Game::checkKeyboardState()
 	{
 		m_DELETEexitGame = true; 
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+	{
+		pianoVisualiser.spawnTestNote();
+	}
 }
 
 void Game::processKeyboard(float dtSeconds)
@@ -458,6 +462,9 @@ void Game::update(sf::Time t_deltaTime)
 	//}
 
 	drumVisualiser.updateIntroAnim(dtConverted);
+
+	// Piano Note Test
+	pianoVisualiser.updateNotes(dtConverted);
 }
 
 

@@ -69,6 +69,7 @@ struct MidiCallbackData
 {
 	PianoVisualiser* piano;
 	DrumVisualiser* drums;
+	// Gameplay?
 };
 
 class Game
@@ -165,7 +166,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::SongSelectionScene;
+	GameStates m_currentGameState = GameStates::PianoVis;
 
 	// Test Blocks
 	const int COLS = 8;   
