@@ -5,6 +5,12 @@
 #include "Globals.h"
 #include <windows.h>
 
+/*
+Notes:
+	Assign each song a specific difficulty, then change that text's colour to correspond to that difficulty.
+
+*/
+
 struct SongButton
 {
 	sf::RectangleShape m_buttonShape;
@@ -36,13 +42,6 @@ struct SongButton
 	}
 };
 
-struct SongPaths
-{
-	std::string name = " ";
-	std::string path = " ";
-};
-
-
 enum SONGDIFFICULTIES
 {
 	EASY,
@@ -58,6 +57,12 @@ enum class SongClickResult
 	PreviewClicked
 };
 
+struct SongPaths
+{
+	std::string name = " ";
+	std::string path = " ";
+	SONGDIFFICULTIES difficulty = SONGDIFFICULTIES::UNKNOWN;
+};
 
 class SongSelect
 {
@@ -75,6 +80,8 @@ public:
 
 	std::string getMidiPathString();
 	std::string getPreviewPathString();
+
+	std::string DifficultyToString(SONGDIFFICULTIES t_difficulty);
 
 private:
 	std::vector<SongButton> m_buttons;
@@ -110,7 +117,8 @@ private:
 	std::vector<SongPaths> m_pathVector;
 
 	sf::Color c_Easy = sf::Color::Green;
-	sf::Color c_Medium = sf::Color::Magenta;
+	sf::Color c_Medium = sf::Color::Yellow;
 	sf::Color c_Hard = sf::Color::Red;
+	sf::Color c_Unknown = sf::Color::White;
 };
 

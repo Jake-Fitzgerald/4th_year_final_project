@@ -9,9 +9,9 @@ void SongSelect::setupPathStrings()
 {
 	m_pathVector =
 	{
-		{"C Scale", "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid"},
-		{"Major / Minor Chords", "ASSETS\\AUDIO\\MUSIC\\Major_and_Minor_Chords.mid"},
-		{"Hard Song", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid"},
+		{"C Scale", "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid", SONGDIFFICULTIES::EASY},
+		{"Major / Minor Chords", "ASSETS\\AUDIO\\MUSIC\\Major_and_Minor_Chords.mid", SONGDIFFICULTIES::MEDIUM},
+		{"Hard Song", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid", SONGDIFFICULTIES::HARD},
 	};
 
 	m_pathsCount = m_pathVector.size();
@@ -53,9 +53,27 @@ void SongSelect::setupButtons()
 
 		// Song Difficulty (temp)
 		button.m_songDifficultyText.setFont(*m_font);
-		button.m_songDifficultyText.setString("UNKOWN");
+		button.m_songDifficultyText.setString(DifficultyToString(m_pathVector[i].difficulty));
 		button.m_songDifficultyText.setCharacterSize(20);
-		button.m_songDifficultyText.setFillColor(sf::Color::White);
+
+		// Difficulty Text colour change
+		if (m_pathVector[i].difficulty == SONGDIFFICULTIES::EASY)
+		{
+			button.m_songDifficultyText.setFillColor(c_Easy);
+		}
+		else if (m_pathVector[i].difficulty == SONGDIFFICULTIES::MEDIUM)
+		{
+			button.m_songDifficultyText.setFillColor(c_Medium);
+		}
+		else if (m_pathVector[i].difficulty == SONGDIFFICULTIES::HARD)
+		{
+			button.m_songDifficultyText.setFillColor(c_Hard);
+		}
+		else
+		{
+			button.m_songDifficultyText.setFillColor(c_Unknown);
+		}
+
 		button.m_songDifficultyText.setPosition(sf::Vector2f{
 																button.m_buttonShape.getPosition().x + m_difficultyTextSpacing + 100.0f,
 																button.m_buttonShape.getPosition().y + 10.f });
@@ -191,6 +209,29 @@ std::string SongSelect::getMidiPathString()
 std::string SongSelect::getPreviewPathString()
 {
 	return m_previewPath;
+}
+
+std::string SongSelect::DifficultyToString(SONGDIFFICULTIES t_difficulty)
+{
+	switch (t_difficulty)
+	{
+		case SONGDIFFICULTIES::EASY:
+		{
+			return "Easy";
+		}
+		case SONGDIFFICULTIES::MEDIUM:
+		{
+			return "Medium";
+		}
+		case SONGDIFFICULTIES::HARD:
+		{
+			return "Hard";
+		}
+		default:
+		{
+			return "Unknown";
+		}
+	}
 }
 
 
