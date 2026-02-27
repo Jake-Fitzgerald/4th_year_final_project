@@ -70,14 +70,14 @@
     <Filter Include="Source Files\UI\SelectionMenus">
       <UniqueIdentifier>{cc3be89e-5190-4b8c-98db-85e292d81759}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{c649b5e0-40a9-4127-a1ee-a84c5eb7fa57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{68edef64-7691-4f95-94a3-b3510e2d5395}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities.cpp">
       <Filter>Utilites</Filter>
     </ClCompile>
@@ -138,16 +138,16 @@
     <ClCompile Include="SongSelect.cpp">
       <Filter>Source Files\UI\SelectionMenus</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Utilites</Filter>
-    </ClInclude>
-    <ClInclude Include="Globals.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Notes.h">
       <Filter>Header Files</Filter>
@@ -208,6 +208,12 @@
     </ClInclude>
     <ClInclude Include="SongSelect.h">
       <Filter>Header Files\Scenes\SelectionMenus</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
