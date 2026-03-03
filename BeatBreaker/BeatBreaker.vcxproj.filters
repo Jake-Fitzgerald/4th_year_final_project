@@ -76,6 +76,12 @@
     <Filter Include="Source Files\Core">
       <UniqueIdentifier>{68edef64-7691-4f95-94a3-b3510e2d5395}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{c71c9aa5-c1a5-4462-8b60-6066e104c1dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{dbd969f7-c3a0-47c2-8edb-82d38577266c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Utilities.cpp">
@@ -99,17 +105,11 @@
     <ClCompile Include="BlockGenerator.cpp">
       <Filter>Source Files\Block</Filter>
     </ClCompile>
-    <ClCompile Include="Results.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="GameOver.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
       <Filter>Source Files\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Highscore.cpp">
-      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Source Files\Managers</Filter>
@@ -144,6 +144,15 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Results.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Leaderboard.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -170,17 +179,11 @@
     <ClInclude Include="BlockGenerator.h">
       <Filter>Header Files\Block</Filter>
     </ClInclude>
-    <ClInclude Include="Results.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="GameOver.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h">
       <Filter>Header Files\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Highscore.h">
-      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Header Files\Managers</Filter>
@@ -214,6 +217,15 @@
     </ClInclude>
     <ClInclude Include="Globals.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Results.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Leaderboard.h">
+      <Filter>Header Files\Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

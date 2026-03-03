@@ -13,6 +13,11 @@ Displays the recorded data that was collected during the run.
  Score Calculation: 
  What depth was reached, how many lives were lost (if none then give bonus points), how on beat you were (perfect hits)
 
+ Grab the song's details 
+ - Song name
+ - Song difficulty
+ - Song length (pbTime - total s0ng time to calculate the percentage of the song completed)
+
 */
 
 class Results
