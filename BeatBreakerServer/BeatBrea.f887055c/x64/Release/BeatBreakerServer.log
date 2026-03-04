@@ -1,7 +1,7 @@
 ﻿  main.cpp
   Generating code
-  8 of 81 functions ( 9.9%) were compiled, the rest were copied from previous compilation.
-    2 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+  2 of 82 functions ( 2.4%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   BeatBreakerServer.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreakerServer\x64\Release\BeatBreakerServer.exe

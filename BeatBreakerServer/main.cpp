@@ -1,6 +1,5 @@
 #include <iostream>
-#define WIN32_LEAN_AND_MEAN  // strips rarely used windows stuff
-#include <windows.h>         // must come first
+#include <windows.h>         
 
 
 #include <string>
@@ -54,17 +53,43 @@ int main(int argc, char* argv[])
 	SQLHSTMT handleStatement;
 
 	// Setup environment
-	SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &handleEnvir);
+	SQLRETURN returnAllocCheck;
+
+	returnAllocCheck = SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &handleEnvir);
+	if (returnAllocCheck != SQL_SUCCESS && returnAllocCheck != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "Allocation connection failed" << std::endl;
+		return 1;
+	}
+
 	SQLSetEnvAttr(handleEnvir, SQL_ATTR_ODBC_VERSION, (void*)SQL_OV_ODBC3, 0);
 
 	SQLAllocHandle(SQL_HANDLE_DBC, handleEnvir, &handleDbc);
 
 	// Connect with the token
-	SQLDriverConnect(handleDbc, NULL, (SQLWCHAR*)ODBCToken.c_str(), SQL_NTS, NULL, 0, NULL, SQL_DRIVER_NOPROMPT);
+	//std::wstring ODBCTokenW(ODBCToken.begin(), ODBCToken.end());
 
+	SQLRETURN returnDriverCheck = SQLDriverConnectA(handleDbc, NULL, (SQLCHAR*)ODBCToken.c_str(), SQL_NTS, NULL, 0, NULL, SQL_DRIVER_NOPROMPT);
+	if (returnDriverCheck != SQL_SUCCESS && returnDriverCheck != SQL_SUCCESS_WITH_INFO)
+	{
+
+		std::cerr << "Driver connection failed" << std::endl;
+		return 1;
+	}
+
+
+
+	// ---------------------------------------------------------------------------------------------------------------------------------------------------
 	// Query
 	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
-	SQLExecDirect(handleStatement, (SQLWCHAR*)"SELECT id, username, score FROM users", SQL_NTS);
+
+	SQLRETURN returnExecCheck;
+	returnExecCheck = SQLExecDirectA(handleStatement, (SQLCHAR*)"SELECT id, username, score FROM users", SQL_NTS);
+	if (returnExecCheck != SQL_SUCCESS && returnExecCheck != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "ExecDirect connection failed (query)" << std::endl;
+		return 1;
+	}
 
 	// Variables
 	int  id;
@@ -77,10 +102,18 @@ int main(int argc, char* argv[])
 	SQLBindCol(handleStatement, 3, SQL_C_LONG, &score, 0, NULL);
 
 	// Fetch
-	while (SQLFetch(handleStatement) == SQL_SUCCESS) {
+	SQLRETURN returnFetch;
+
+	while ((returnFetch = SQLFetch(handleStatement)) == SQL_SUCCESS) 
+	{
 										std::cerr << "ID: " << id << std::endl;
 										std::cerr << "Username: " << username << std::endl;
 										std::cerr << "Score: " << score << std::endl;
+	}
+
+	if (returnFetch != SQL_NO_DATA)
+	{
+		std::cerr << "Fetch failed" << std::endl;;
 	}
 
 	std::cin;
