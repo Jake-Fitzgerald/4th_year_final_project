@@ -49,6 +49,9 @@
 #include <sqlext.h>
 #pragma comment(lib, "odbc32.lib")
 
+// Leaderboard
+#include "Leaderboard.h"
+
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
 enum GameStates 
@@ -67,8 +70,11 @@ enum GameStates
 	// Visualisers
 	TrackVis,
 	PianoVis,
-	DrumVis
-	//SheetVis
+	DrumVis,
+
+	// Leaderboard
+	LeaderboardScene
+
 };
 
 struct MidiCallbackData
@@ -172,7 +178,7 @@ private:
 	sf::Text m_exitText/*{ m_jerseyFont }*/;
 
 	// States
-	GameStates m_currentGameState = GameStates::PianoVis;
+	GameStates m_currentGameState = GameStates::LeaderboardScene;
 
 	// Test Blocks
 	const int COLS = 8;   
@@ -253,7 +259,7 @@ private:
 	Database m_database;
 
 	// Leaderboard
-
+	Leaderboard m_leaderboard;
 };
 
 #pragma warning( pop ) 

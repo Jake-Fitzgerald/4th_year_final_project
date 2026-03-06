@@ -37,7 +37,8 @@ Game::Game() :
 		m_midiFileSelectScene(m_jerseyFont),
 		m_visSelect(m_jerseyFont),
 		pianoVisualiser(m_soundManager, m_collisionManager),
-	    m_songSelect(m_jerseyFont)
+	    m_songSelect(m_jerseyFont),
+	    m_leaderboard(m_jerseyFont)
 
 {
 	setupTexts(); // load font 
@@ -110,7 +111,6 @@ Game::Game() :
 	m_songSelect.setupPathStrings();
 	m_songSelect.setupButtons();
 
-
 	// UI 
 	gridDisplay.setupGrid();
 
@@ -120,6 +120,9 @@ Game::Game() :
 
 	// Midi Input
 	setupMidiInput();
+
+	// Leaderboard
+	m_leaderboard.setupLeaderboard();
 }
 
 Game::~Game()
@@ -568,6 +571,12 @@ void Game::render()
 	{
 		// visualiser shapes
 		drumVisualiser.renderDrums(m_window);
+	}
+
+	// Leaderboard
+	if (m_currentGameState == GameStates::LeaderboardScene)
+	{
+		m_leaderboard.render(m_window);
 	}
 
 	// UI

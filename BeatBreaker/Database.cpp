@@ -1,5 +1,6 @@
 #include "Database.h"
 
+
 bool Database::sqlConnect(std::string t_ODBCString)
 {
 
