@@ -153,6 +153,9 @@
     <ClCompile Include="Leaderboard.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -225,6 +228,9 @@
       <Filter>Header Files\Database</Filter>
     </ClInclude>
     <ClInclude Include="Leaderboard.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
   </ItemGroup>

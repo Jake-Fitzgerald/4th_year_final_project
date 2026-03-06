@@ -43,6 +43,12 @@
 #include "PianoVisualiser.h"
 #include "DrumVisualiser.h"
 
+// SQL
+#include "Database.h"
+#include <sql.h>
+#include <sqlext.h>
+#pragma comment(lib, "odbc32.lib")
+
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
 enum GameStates 
@@ -243,6 +249,10 @@ private:
 	// Midi Input Custom Data
 	MidiCallbackData m_midiCallbackData;
 
+	// SQL
+	Database m_database;
+
+	// Leaderboard
 
 };
 

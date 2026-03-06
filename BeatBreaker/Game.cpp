@@ -214,6 +214,20 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 			stopMidiMCI();
 		}
 	}
+
+	// SQL
+	if (sf::Keyboard::Key::L == newKeypress->code)
+	{
+		if (m_database.sqlConnect("Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;") == true)
+		{
+			std::vector<USERDATA> leaderboard = m_database.getLeaderboardData();
+
+			for (const USERDATA& entry : leaderboard)
+			{
+				std::cerr << entry.id << " " << entry.username << " " << entry.score << std::endl;
+			}
+		}
+	}
 }
 
 void Game::processKeysPressed(const std::optional<sf::Event> t_event)
