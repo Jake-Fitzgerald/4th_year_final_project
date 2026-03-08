@@ -105,6 +105,13 @@ std::vector<USERDATA> Database::getLeaderboardData()
 		std::cerr << "ID: " << id << ", ";
 		std::cerr << "Username: " << username << ", ";
 		std::cerr << "Score: " << score << std::endl;
+
+
+		USERDATA entry;
+		entry.id = id;
+		entry.username = std::string(username);
+		entry.score = score;
+		leaderboardVec.push_back(entry);
 	}
 
 	if (returnFetch != SQL_NO_DATA)

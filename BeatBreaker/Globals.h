@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <SFML/Graphics.hpp>
 
 // Screen Width + Height
 const int SCREEN_WIDTH = 1280U;
@@ -16,6 +18,15 @@ const float TRACK_SIZE_X = 1200.0f;
 // Padding
 const float paddingX = 40.0f;
 const float paddingY = 10.0f;
+
+// SQL
+struct USERDATA
+{
+	int id = -1;
+	std::string username = " ";
+	int score = -1;
+};
+
 
 // --------------------------------------------------------------------------------------------
 

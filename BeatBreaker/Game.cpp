@@ -123,6 +123,7 @@ Game::Game() :
 
 	// Leaderboard
 	m_leaderboard.setupLeaderboard();
+	m_leaderboard.populateFromDatabase(m_localLeaderboard);
 }
 
 Game::~Game()
@@ -223,9 +224,10 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 	{
 		if (m_database.sqlConnect("Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;") == true)
 		{
-			std::vector<USERDATA> leaderboard = m_database.getLeaderboardData();
+			m_localLeaderboard = m_database.getLeaderboardData();
+			m_leaderboard.populateFromDatabase(m_localLeaderboard);
 
-			for (const USERDATA& entry : leaderboard)
+			for (const USERDATA& entry : m_localLeaderboard)
 			{
 				std::cerr << entry.id << " " << entry.username << " " << entry.score << std::endl;
 			}

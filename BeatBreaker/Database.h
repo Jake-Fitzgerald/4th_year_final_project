@@ -3,18 +3,26 @@
 #include <iostream>
 #include <vector>
 #include <windows.h>
-
+#include "Globals.h"
 
 #include <sql.h>
 #include <sqlext.h>
 #pragma comment(lib, "odbc32.lib")
 
-struct USERDATA
-{
-	int id = -1;
-	std::string username = " ";
-	int score = -1;
-};
+/*
+Notes:
+ 
+Another query call when pulling if we want the list to be ordered:
+"SELECT id, username, score FROM users ORDER BY score DESC"
+
+*/
+
+//struct USERDATA
+//{
+//	int id = -1;
+//	std::string username = " ";
+//	int score = -1;
+//};
 
 class Database
 {

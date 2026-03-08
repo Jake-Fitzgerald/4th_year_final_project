@@ -39,36 +39,39 @@ void Leaderboard::setupLeaderboard()
 	userdata.m_headerScoreText.setFillColor(sf::Color::White);
 	userdata.m_headerScoreText.setPosition(sf::Vector2f{ userdata.m_headerShape.getPosition().x + m_offsetX_Score, userdata.m_headerShape.getPosition().y + m_offsetY_text });
 
+	m_leaderboardVec.push_back(userdata);
+
 	for (int i = 0; i < m_pageCount; i++)
 	{
-		userdata.m_userShape.setSize(m_buttonSize);
-		userdata.m_userShape.setPosition(sf::Vector2f{ paddingX , paddingY + i * m_spacing });
-		userdata.m_userShape.setFillColor(c_userShapeOdd);
-		userdata.m_userShape.setOutlineThickness(2.0f);
-		userdata.m_userShape.setOutlineColor(sf::Color::Black);
+		LeaderboardData rowData(m_font);
+
+		rowData.m_userShape.setSize(m_buttonSize);
+		rowData.m_userShape.setPosition(sf::Vector2f{ paddingX , paddingY + (i +1) * m_spacing });
+		rowData.m_userShape.setFillColor(c_userShapeOdd);
+		rowData.m_userShape.setOutlineThickness(2.0f);
+		rowData.m_userShape.setOutlineColor(sf::Color::Black);
 
 		// Text
-		userdata.m_IDText.setFont(*m_font);
-		userdata.m_IDText.setString("?");
-		userdata.m_IDText.setCharacterSize(20);
-		userdata.m_IDText.setFillColor(sf::Color::White);
-		userdata.m_IDText.setPosition(sf::Vector2f{ userdata.m_userShape.getPosition().x + m_offsetX_ID, userdata.m_userShape.getPosition().y + m_offsetY_text });
+		rowData.m_IDText.setFont(*m_font);
+		rowData.m_IDText.setString("?");
+		rowData.m_IDText.setCharacterSize(20);
+		rowData.m_IDText.setFillColor(sf::Color::White);
+		rowData.m_IDText.setPosition(sf::Vector2f{ rowData.m_userShape.getPosition().x + m_offsetX_ID, rowData.m_userShape.getPosition().y + m_offsetY_text });
 
-		userdata.m_usernameText.setFont(*m_font);
-		userdata.m_usernameText.setString("?????");
-		userdata.m_usernameText.setCharacterSize(20);
-		userdata.m_usernameText.setFillColor(sf::Color::White);
-		userdata.m_usernameText.setPosition(sf::Vector2f{ userdata.m_userShape.getPosition().x + m_offsetX_Username, userdata.m_userShape.getPosition().y + m_offsetY_text });
+		rowData.m_usernameText.setFont(*m_font);
+		rowData.m_usernameText.setString("?????");
+		rowData.m_usernameText.setCharacterSize(20);
+		rowData.m_usernameText.setFillColor(sf::Color::White);
+		rowData.m_usernameText.setPosition(sf::Vector2f{ rowData.m_userShape.getPosition().x + m_offsetX_Username, rowData.m_userShape.getPosition().y + m_offsetY_text });
 
-		userdata.m_scoreText.setFont(*m_font);
-		userdata.m_scoreText.setString("???");
-		userdata.m_scoreText.setCharacterSize(20);
-		userdata.m_scoreText.setFillColor(sf::Color::White);
-		userdata.m_scoreText.setPosition(sf::Vector2f{ userdata.m_userShape.getPosition().x + m_offsetX_Score, userdata.m_userShape.getPosition().y + m_offsetY_text });
-		m_leaderboardVec.push_back(userdata);
+		rowData.m_scoreText.setFont(*m_font);
+		rowData.m_scoreText.setString("???");
+		rowData.m_scoreText.setCharacterSize(20);
+		rowData.m_scoreText.setFillColor(sf::Color::White);
+		rowData.m_scoreText.setPosition(sf::Vector2f{ rowData.m_userShape.getPosition().x + m_offsetX_Score, rowData.m_userShape.getPosition().y + m_offsetY_text });
+
+		m_leaderboardVec.push_back(rowData);
 	}
-
-	m_leaderboardVec.push_back(userdata);
 
 	setupUI();
 }
@@ -98,6 +101,37 @@ void Leaderboard::setupUI()
 	rightHandLine.setPosition(sf::Vector2f{ m_offsetX_Score + 240.0f , paddingY });
 	rightHandLine.setFillColor(sf::Color::Black);
 	m_verticalLines.push_back(rightHandLine);
+}
+
+void Leaderboard::populateFromDatabase(const std::vector<USERDATA>& t_data)
+{
+
+	int count = -1;
+
+	if (t_data.size() < m_pageCount)
+	{
+		count = t_data.size();
+	}
+	else
+	{
+		count = m_pageCount;
+	}
+
+	for (int i = 0; i < count; i++)
+	{
+		// index 0 is the header so we add 1
+		m_leaderboardVec[i + 1].m_id = t_data[i].id;
+		m_leaderboardVec[i + 1].m_username = t_data[i].username;
+		m_leaderboardVec[i + 1].m_score = t_data[i].score;
+
+		m_leaderboardVec[i + 1].m_IDText.setString(std::to_string(t_data[i].id));
+		m_leaderboardVec[i + 1].m_usernameText.setString(t_data[i].username);
+		m_leaderboardVec[i + 1].m_scoreText.setString(std::to_string(t_data[i].score));
+
+		// Alternate row colours
+		sf::Color rowColor = (i % 2 == 0) ? c_userShapeEven : c_userShapeOdd;
+		m_leaderboardVec[i + 1].m_userShape.setFillColor(rowColor);
+	}
 }
 
 void Leaderboard::render(sf::RenderWindow& t_window)

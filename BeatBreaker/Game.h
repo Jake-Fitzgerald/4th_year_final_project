@@ -257,6 +257,7 @@ private:
 
 	// SQL
 	Database m_database;
+	std::vector<USERDATA> m_localLeaderboard;
 
 	// Leaderboard
 	Leaderboard m_leaderboard;

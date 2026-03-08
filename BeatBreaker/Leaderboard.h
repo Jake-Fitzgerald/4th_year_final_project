@@ -54,6 +54,8 @@ public:
 	void setupLeaderboard();
 	void setupUI();
 
+	void populateFromDatabase(const std::vector<USERDATA>& t_data);
+
 	void render(sf::RenderWindow& t_window);
 
 private:
@@ -80,7 +82,7 @@ private:
 	// UI
 	std::vector<sf::RectangleShape> m_verticalLines;
 	std::vector<sf::RectangleShape> m_horizontalLines;
-	sf::Vector2f m_verticalLineSize = { 4.0f, 400.0f };
+	sf::Vector2f m_verticalLineSize = { 4.0f, 450.0f };
 	sf::Vector2f m_horizintalLineSize = { 100.0f, 2.0f };
 
 	// Colours
