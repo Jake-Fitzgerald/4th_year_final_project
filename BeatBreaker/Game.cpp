@@ -205,7 +205,7 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 		std::cerr << "========================" << std::endl;
 		std::cerr << " " << std::endl;
 
-		if (m_database.sqlConnect("Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;") == true)
+		if (m_database.sqlConnect(ODBCString) == true)
 		{
 			m_localLeaderboard = m_database.getLeaderboardData();
 			m_leaderboard.populateFromDatabase(m_localLeaderboard);
@@ -224,7 +224,12 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 		std::string m_playerName = "TestName";
 		int m_tempScore = 100;
 
-		m_database.submitScore(m_playerName, m_tempScore);
+		if (m_database.sqlConnect(ODBCString) == true)
+		{
+			//m_database.submitScore(m_playerName, m_tempScore);
+			m_database.submitScoreFromFile(m_highscorePath);
+		}
+		
 	}
 }
 

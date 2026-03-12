@@ -218,6 +218,8 @@ private:
 	// SQL
 	Database m_database;
 	std::vector<USERDATA> m_localLeaderboard;
+	std::string ODBCString = "Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;";
+	std::string m_highscorePath = "ASSETS/SAVEDATA/Highscores_Saves/saved scores.txt";
 
 	// Leaderboard
 	Leaderboard m_leaderboard;

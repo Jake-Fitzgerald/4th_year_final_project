@@ -4,6 +4,7 @@
 #include <vector>
 #include <windows.h>
 #include "Globals.h"
+#include <fstream> 
 
 #include <sql.h>
 #include <sqlext.h>
@@ -31,6 +32,7 @@ public:
 	std::vector<USERDATA> getLeaderboardData();
 
 	bool submitScore(std::string t_username, int t_score);
+	bool submitScoreFromFile(std::string t_filePath);
 
 	void SQLCleanup(SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement);
 

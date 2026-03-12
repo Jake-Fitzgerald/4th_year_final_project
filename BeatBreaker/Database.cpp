@@ -142,6 +142,54 @@ bool Database::submitScore(std::string t_username, int t_score)
 	return true;
 }
 
+bool Database::submitScoreFromFile(std::string t_filePath)
+{
+	std::ifstream file(t_filePath);
+	
+
+	if (!file.is_open())
+	{
+		std::cerr << "Failed to open score file" << std::endl;
+		return false;
+	}
+
+	std::string currentLine;
+	while (std::getline(file, currentLine))
+	{
+		std::cerr << currentLine << std::endl;
+
+		int pos = -1;
+		// Find ',' using a normal for loop
+		for (int i = 0; i < currentLine.length(); i++)
+		{
+			if (currentLine[i] == ',')
+			{
+				pos = i;
+				break;
+			}
+		}
+		// Skip any bad lines
+		if (pos == -1)
+		{
+			continue;
+		}
+
+		// Split username and score (before , is username, after , is score)
+		std::string username = currentLine.substr(0, pos);
+		std::string scoreStr = currentLine.substr(pos + 1);
+		// Convert the string to a number
+		int score = std::stoi(scoreStr);
+
+		std::cerr << "Username: " << username << " Score: " << score << std::endl;
+		submitScore(username, score);
+	}
+
+	file.close();
+
+	SQLCleanup(handleEnvir, handleDbc, handleStatement);
+	return true;
+}
+
 void Database::SQLCleanup(SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement)
 {
 	SQLFreeHandle(SQL_HANDLE_STMT, t_handleStatement);
