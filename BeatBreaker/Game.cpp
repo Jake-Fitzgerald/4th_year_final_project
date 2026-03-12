@@ -196,7 +196,7 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 		}
 	}
 
-	// SQL
+	// SQL  
 	if (sf::Keyboard::Key::L == newKeypress->code)
 	{
 		std::cerr << " " << std::endl;
@@ -215,6 +215,16 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 				std::cerr << entry.id << " " << entry.username << " " << entry.score << std::endl;
 			}
 		}
+	}
+
+	// Upload to database
+	if (sf::Keyboard::Key::K == newKeypress->code)
+	{
+		
+		std::string m_playerName = "TestName";
+		int m_tempScore = 100;
+
+		m_database.submitScore(m_playerName, m_tempScore);
 	}
 }
 

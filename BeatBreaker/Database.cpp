@@ -69,12 +69,10 @@ std::vector<USERDATA> Database::getLeaderboardData()
 
 		if (diagRet == SQL_SUCCESS || diagRet == SQL_SUCCESS_WITH_INFO)
 		{
-			std::cerr << "SQLState:     " << sqlState << std::endl;
-			std::cerr << "NativeError:  " << nativeError << std::endl;
-			std::cerr << "Message:      " << messageText << std::endl;
+			std::cerr << "SQLState: " << sqlState << std::endl;
+			std::cerr << "NativeError: " << nativeError << std::endl;
+			std::cerr << "Message: " << messageText << std::endl;
 		}
-
-
 
 		std::cerr << "ExecDirect connection failed (query)" << std::endl;
 		//return 1;
@@ -122,6 +120,26 @@ std::vector<USERDATA> Database::getLeaderboardData()
 	SQLCleanup(handleEnvir, handleDbc, handleStatement);
 
 	return leaderboardVec;
+}
+
+bool Database::submitScore(std::string t_username, int t_score)
+{
+	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
+
+	std::string query = "INSERT INTO users (username, score) VALUES ('" + t_username + "', " + std::to_string(t_score) + ")";
+
+	SQLRETURN returnExecCheck = SQLExecDirectA(handleStatement, (SQLCHAR*)query.c_str(), SQL_NTS);
+
+	if (returnExecCheck != SQL_SUCCESS && returnExecCheck != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "Submit score failed" << std::endl;
+		SQLCleanup(handleEnvir, handleDbc, handleStatement);
+		return false;
+	}
+
+	std::cerr << "Submit score SUCCESS!" << std::endl;
+	SQLCleanup(handleEnvir, handleDbc, handleStatement);
+	return true;
 }
 
 void Database::SQLCleanup(SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement)

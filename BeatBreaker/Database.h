@@ -30,6 +30,8 @@ public:
 	bool sqlConnect(std::string t_ODBCString);
 	std::vector<USERDATA> getLeaderboardData();
 
+	bool submitScore(std::string t_username, int t_score);
+
 	void SQLCleanup(SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement);
 
 private:
