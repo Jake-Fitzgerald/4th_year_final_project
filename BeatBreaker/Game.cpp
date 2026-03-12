@@ -284,6 +284,10 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_currentGameState = GameStates::OptionsScene;
 			m_soundManager.play("ui_confirm");
 		}
+		if (clicked == "Leaderboard")
+		{
+			m_currentGameState = GameStates::LeaderboardScene;
+		}
 		if (clicked == "EXIT")
 		{
 			m_DELETEexitGame = true;
@@ -490,30 +494,6 @@ void Game::render()
 	//mainMenu.render(m_window);
 	if (m_currentGameState == GameStates::MainMenuScene)
 	{
-		/*
-		m_window.draw(m_beatBreakerText);
-		// Start
-		m_window.draw(m_startButton);
-		m_window.draw(m_startText);
-		// Rand Gen
-		m_window.draw(m_midiSelectButton);
-		m_window.draw(m_midiSelectText);
-		// Input Test
-		m_window.draw(m_testInputButton);
-		m_window.draw(m_testInputText);
-		// MIDI Parse
-		m_window.draw(m_MIDIParseButton);
-		m_window.draw(m_MIDIParseText);
-		// Character
-		m_window.draw(m_visSelectButton);
-		m_window.draw(m_visSelectText);
-		// Options
-		m_window.draw(m_optionsButton);
-		m_window.draw(m_optionsText);
-		// Exit Button
-		m_window.draw(m_exitButton);
-		m_window.draw(m_exitText);
-		*/
 		m_mainMenu.render(m_window);
 	}
 
@@ -588,16 +568,6 @@ void Game::render()
 
 void Game::setupTexts()
 {
-	//auto font = std::make_shared<sf::Font>();
-	//if (!font->openFromFile("ASSETS\\FONTS\\Jersey20-Regular.ttf"))
-	//{
-	//	std::cout << "problem loading arial black font" << std::endl;
-	//}
-	//m_jerseyFont = std::static_pointer_cast<const sf::Font>(font);
-
-
-	
-
 }
 
 void Game::setupSprites()

@@ -18,7 +18,8 @@ void MainMenu::setupMainMenu()
 		{ "MIDI Parse", { m_topLeftStart.x, m_topLeftStart.y + m_buttonSpacing * 3 }, sf::Color::Blue },
 		{ "Vis Selection", { m_topLeftStart.x, m_topLeftStart.y + m_buttonSpacing * 4 }, sf::Color::Blue },
 		{ "Options", { m_topLeftStart.x + 500.0f, m_topLeftStart.y + m_buttonSpacing }, sf::Color::Blue },
-		{ "EXIT", { m_topLeftStart.x + 500.0f, m_topLeftStart.y + m_buttonSpacing * 2 }, sf::Color::Magenta },
+		{ "Leaderboard", { m_topLeftStart.x + 500.0f, m_topLeftStart.y + m_buttonSpacing * 2}, sf::Color::Blue },
+		{ "EXIT", { m_topLeftStart.x + 500.0f, m_topLeftStart.y + m_buttonSpacing * 3 }, sf::Color::Magenta },
 	};
 
 	// Shapes
