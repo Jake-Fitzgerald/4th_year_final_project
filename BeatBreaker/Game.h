@@ -56,7 +56,7 @@ const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
 enum GameStates 
 {
-	MainMenu,
+	MainMenuScene,
 	Gameplay,
 	RandGen,
 	OptionsScene,
@@ -135,7 +135,6 @@ private:
 	//sf::Font m_jerseyFont;
 	std::shared_ptr<const sf::Font> m_jerseyFont;
 	
-	sf::Text m_beatBreakerText/*{ m_jerseyFont }*/; 
 	sf::Texture m_DELETElogoTexture;
 	sf::Sprite m_DELETElogoSprite{ m_DELETElogoTexture }; 
 	
@@ -143,42 +142,8 @@ private:
 	sf::Sound m_DELETEsound{ m_DELETEsoundBuffer }; 
 	bool m_DELETEexitGame; 
 
-	// Main Menu
-	//MainMenu mainMenu;
-
-	// Main Menu Variables
-	sf::Vector2f m_topLeftStart{ paddingX, paddingY + 100.0f };
-	float m_buttonSpacing = 100.0f;
-	sf::Vector2f m_buttonSize = { 300.0f, 50.0f };
-
-
-	// Main Menu Text
-	//std::unique_ptr<sf::Text>m_title;
-	// ----------- Buttons ----------- 
-	// Start Gameplay
-	sf::RectangleShape m_startButton;
-	sf::Text m_startText/*{ m_jerseyFont }*/;
-	// Midi Select 
-	sf::RectangleShape m_midiSelectButton;
-	sf::Text m_midiSelectText/*{ m_jerseyFont }*/;
-	// Input Test
-	sf::RectangleShape m_testInputButton;
-	sf::Text m_testInputText/*{ m_jerseyFont }*/;
-	// MIDI Parse
-	sf::RectangleShape m_MIDIParseButton;
-	sf::Text m_MIDIParseText/*{ m_jerseyFont }*/;
-	// Visualiser Select
-	sf::RectangleShape m_visSelectButton;
-	sf::Text m_visSelectText/*{ m_jerseyFont }*/;
-	// Options 
-	sf::RectangleShape m_optionsButton;
-	sf::Text m_optionsText/*{ m_jerseyFont }*/;
-	// Exit 
-	sf::RectangleShape m_exitButton;
-	sf::Text m_exitText/*{ m_jerseyFont }*/;
-
 	// States
-	GameStates m_currentGameState = GameStates::LeaderboardScene;
+	GameStates m_currentGameState = GameStates::MainMenuScene;
 
 	// Test Blocks
 	const int COLS = 8;   
@@ -219,12 +184,6 @@ private:
 	SoundManager m_soundManager;
 	SoundType m_soundType;
 
-	// TEST Collision
-	sf::RectangleShape m_testBlockShape;
-	sf::RectangleShape m_floorShape;
-	sf::RectangleShape m_wallLeftShape;
-	sf::RectangleShape m_wallRightShape;
-
 	CollisionManager m_collisionManager;
 
 	// Block Generation
@@ -244,6 +203,7 @@ private:
 	MidiFileSelect m_midiFileSelectScene;
 	VisualiserSelect m_visSelect;
 	SongSelect m_songSelect;
+	MainMenu m_mainMenu;
 
 	// Custom Icon
 	sf::Image m_customIcon;
