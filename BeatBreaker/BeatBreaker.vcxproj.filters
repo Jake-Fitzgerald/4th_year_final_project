@@ -82,6 +82,9 @@
     <Filter Include="Source Files\Database">
       <UniqueIdentifier>{dbd969f7-c3a0-47c2-8edb-82d38577266c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{887e6f5f-b8a9-40e8-be63-29398554d443}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Utilities.cpp">
@@ -156,11 +159,11 @@
     <ClCompile Include="Database.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Utilites</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Utilities.h">
-      <Filter>Utilites</Filter>
-    </ClInclude>
     <ClInclude Include="Notes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -232,6 +235,12 @@
     </ClInclude>
     <ClInclude Include="Database.h">
       <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

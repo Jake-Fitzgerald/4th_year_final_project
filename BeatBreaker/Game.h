@@ -37,6 +37,7 @@
 #include "Globals.h"
 // winmm.lib
 #include <windows.h>
+#include "Keyboard.h"
 
 // Visualisers
 #include "TrackVisualiser.h"
@@ -141,7 +142,7 @@ private:
 	bool m_DELETEexitGame; 
 
 	// States
-	GameStates m_currentGameState = GameStates::SongSelectionScene;
+	GameStates m_currentGameState = GameStates::Gameplay;
 
 
 	// Block colours				[DEBUG]
@@ -215,6 +216,8 @@ private:
 
 	// Leaderboard
 	Leaderboard m_leaderboard;
+
+	Keyboard m_keyboard;
 };
 
 #pragma warning( pop ) 

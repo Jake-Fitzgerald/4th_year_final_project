@@ -29,6 +29,7 @@
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="GridDisplay.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Leaderboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GridDisplay.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Leaderboard.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MidiFileSelect.h" />

@@ -31,7 +31,8 @@ Game::Game() :
 		pianoVisualiser(m_soundManager, m_collisionManager),
 	    m_songSelect(m_jerseyFont),
 	    m_leaderboard(m_jerseyFont),
-		m_mainMenu(m_jerseyFont)
+		m_mainMenu(m_jerseyFont),
+		m_keyboard(m_soundManager)
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
