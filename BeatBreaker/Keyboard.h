@@ -56,7 +56,7 @@ private:
 
     sf::RectangleShape m_keyboardBase;
 
-    float m_posX = paddingX;
+    float m_posX = paddingX + 300.0f;
     float m_posY = paddingY + 400.0f;
 
     // Key sizes

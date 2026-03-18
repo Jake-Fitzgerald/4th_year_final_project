@@ -32,7 +32,8 @@ Game::Game() :
 	    m_songSelect(m_jerseyFont),
 	    m_leaderboard(m_jerseyFont),
 		m_mainMenu(m_jerseyFont),
-		m_keyboard(m_soundManager)
+		//m_keyboard(m_soundManager),
+		m_gameplay(m_soundManager)
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
@@ -100,6 +101,9 @@ Game::Game() :
 
 	// Main Menu
 	m_mainMenu.setupMainMenu();
+
+	// Gameplay
+	m_gameplay.setup();
 }
 
 Game::~Game()
@@ -373,7 +377,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			stopMidiMCI();
 			m_selectedSong = m_songSelect.getMidiPathString();
 			m_soundManager.play("start_game");
-			m_currentGameState = GameStates::Gameplay;
+			m_currentGameState = GameStates::GameplayScene;
 		}
 
 		if (m_songSelect.returnClick(mouseWorldPos) == true)
@@ -381,6 +385,10 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			stopMidiMCI();
 			m_currentGameState = GameStates::MainMenuScene;
 		}
+	}
+	else if (m_currentGameState == GameStates::GameplayScene)
+	{
+		m_gameplay.handleClick(mouseWorldPos);
 	}
 	
 	// HUD
@@ -502,9 +510,9 @@ void Game::render()
 		m_mainMenu.render(m_window);
 	}
 
-	if (m_currentGameState == GameStates::Gameplay)
+	if (m_currentGameState == GameStates::GameplayScene)
 	{
-		
+		m_gameplay.render(m_window);
 	}
 	// Options
 	if (m_currentGameState == GameStates::OptionsScene)

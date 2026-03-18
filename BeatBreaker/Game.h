@@ -53,14 +53,17 @@
 // Leaderboard
 #include "Leaderboard.h"
 
+// Gameplay
+#include "Gameplay.h"
+
 const sf::Vector2u WINDOW_SIZE = sf::VideoMode::getDesktopMode().size;
 
 enum GameStates 
 {
 	MainMenuScene,
-	Gameplay,
+	GameplayScene,
 	OptionsScene,
-	GameOver,
+	GameOverScene,
 
 	// Selection scenes
 	MidiFileSelectScene,
@@ -109,12 +112,12 @@ private:
 	void setupSprites();
 	void setupAudio();
 	void setupMainMenu();
+	void setupSounds();
+	void setupCustomIcon();
 
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
-	void setupSounds();
 
-	void setupCustomIcon();
 
 	void changeMidiPath(std::string t_pathName);
 	void changeGameState();
@@ -126,8 +129,6 @@ private:
 	// MCI Midi Playback
 	void playMidiMCI();
 	void stopMidiMCI();
-
-
 
 	
 	sf::RenderWindow m_window; 
@@ -142,7 +143,7 @@ private:
 	bool m_DELETEexitGame; 
 
 	// States
-	GameStates m_currentGameState = GameStates::Gameplay;
+	GameStates m_currentGameState = GameStates::GameplayScene;
 
 
 	// Block colours				[DEBUG]
@@ -217,7 +218,9 @@ private:
 	// Leaderboard
 	Leaderboard m_leaderboard;
 
-	Keyboard m_keyboard;
+	// Gameplay
+	Gameplay m_gameplay;
+	//Keyboard m_keyboard;
 };
 
 #pragma warning( pop ) 
