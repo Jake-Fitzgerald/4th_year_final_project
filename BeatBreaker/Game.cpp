@@ -38,8 +38,6 @@ Game::Game() :
 	setupAudio(); // load sounds
 	setupMainMenu();
 
-	setupGrid();
-
 	// MIDI
 	setupMidiParser();
 
@@ -256,13 +254,12 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			stopMidiMCI();
 			m_currentGameState = GameStates::SongSelectionScene;
 			std::cout << "Start button clicked!" << std::endl;
-			m_testSound.play();
+			m_soundManager.play("ui_confirm");
 		}
 		if (clicked == "Midi Selection")
 		{
-			m_soundManager.play("ui_cancel");
-			m_soundManager.play("ui_confirm");
 			m_currentGameState = GameStates::MidiFileSelectScene;
+			m_soundManager.play("ui_confirm");
 		}
 		if (clicked == "Input Test")
 		{
@@ -270,14 +267,14 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		}
 		if (clicked == "MIDI Parse")
 		{
-			m_soundManager.play("ui_cancel");
-			m_soundManager.play("ui_confirm");
 			midiParser.resetTrack();
 			setupMidiParser();
+			m_soundManager.play("ui_confirm");
 		}
 		if (clicked == "Vis Selection")
 		{
 			m_currentGameState = GameStates::VisualiserSelectScene;
+			m_soundManager.play("ui_confirm");
 		}
 		if (clicked == "Options")
 		{
@@ -287,10 +284,12 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		if (clicked == "Leaderboard")
 		{
 			m_currentGameState = GameStates::LeaderboardScene;
+			m_soundManager.play("ui_confirm");
 		}
 		if (clicked == "EXIT")
 		{
 			m_DELETEexitGame = true;
+			m_soundManager.play("ui_confirm");
 		}
 	}
 	else if (m_currentGameState == OptionsScene)
@@ -318,16 +317,21 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 
 		if (buttonSelected >= 0)  
 		{
+			m_visSelect.resetButtons();
+
 			switch (buttonSelected)
 			{
 			case 0:
 				m_currentGameState = GameStates::TrackVis;
+				m_soundManager.play("ui_confirm");
 				break;
 			case 1:
 				m_currentGameState = GameStates::PianoVis;
+				m_soundManager.play("ui_confirm");
 				break;
 			case 2:
 				m_currentGameState = GameStates::DrumVis;
+				m_soundManager.play("ui_confirm");
 				break;
 			default:
 				break;
@@ -336,6 +340,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 
 		if (m_visSelect.returnClick(mouseWorldPos) == true)
 		{
+			m_visSelect.resetButtons();
 			m_currentGameState = GameStates::MainMenuScene;
 		}
 	}
@@ -362,6 +367,13 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_midiPath = m_songSelect.getPreviewPathString();
 			playMidiMCI();
 		}
+		else if (clickResult == SongClickResult::BeginClicked)
+		{
+			stopMidiMCI();
+			m_selectedSong = m_songSelect.getMidiPathString();
+			m_soundManager.play("start_game");
+			m_currentGameState = GameStates::Gameplay;
+		}
 
 		if (m_songSelect.returnClick(mouseWorldPos) == true)
 		{
@@ -371,51 +383,44 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	}
 	
 	// HUD
-
 	// Play
 	if (m_hud.playClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Play button clicked" << std::endl;
-		
 	}
-
 	// Pause
 	if (m_hud.pauseClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Pause button clicked" << std::endl;
 
 	}
-
 	// Stop
 	if (m_hud.stopClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Stop button clicked" << std::endl;
 
 	}
-
 	// Skip to Start
 	if (m_hud.skipToStart(mouseWorldPos) == true)
 	{
 		std::cerr << "Skip to start button clicked" << std::endl;
 
 	}
-
 	// Skip to End
 	if (m_hud.skipToEnd(mouseWorldPos) == true)
 	{
 		std::cerr << "Skip to end button clicked" << std::endl;
 
 	}
-
 	// Mute
 	if (m_hud.muteClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Mute button clicked" << std::endl; 
 		m_options.muteSound(m_soundManager);
 	}
-
 	if (m_hud.returnClick(mouseWorldPos) == true)
 	{
+		m_soundManager.play("ui_cancel");
 		m_currentGameState = GameStates::MainMenuScene;
 	}
 
@@ -491,7 +496,6 @@ void Game::render()
 	m_window.clear(BG_COLOUR);
 	
 	// Main Menu
-	//mainMenu.render(m_window);
 	if (m_currentGameState == GameStates::MainMenuScene)
 	{
 		m_mainMenu.render(m_window);
@@ -499,20 +503,12 @@ void Game::render()
 
 	if (m_currentGameState == GameStates::Gameplay)
 	{
-		for (const auto& cell : m_grid)
-		{
-			m_window.draw(cell);
-		}
+		
 	}
 	// Options
 	if (m_currentGameState == GameStates::OptionsScene)
 	{
 		m_options.renderOptions(m_window);
-	}
-	// Rand Gen
-	if (m_currentGameState == GameStates::RandGen)
-	{
-		m_blockGen.renderBlocks(m_window);
 	}
 
 	// ----- Selection Scenes -----
@@ -616,30 +612,6 @@ bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, s
 	}
 }
 
-void Game::setupGrid()
-{
-	// Reserve space for each cell
-	m_grid.reserve(COLS * ROWS);
-
-	for (int i = 0; i < ROWS; ++i)
-	{
-		for (int j = 0; j < COLS; ++j)
-		{
-			sf::RectangleShape cell(sf::Vector2f(CELL_WIDTH, CELL_HEIGHT));
-			cell.setOutlineThickness(1.f);
-			cell.setOutlineColor(sf::Color::Black);
-
-			// Pick a random colour from the vectpr
-			int index = std::rand() % colors.size();
-			cell.setFillColor(colors[index]);
-
-			cell.setPosition(sf::Vector2f{ j * CELL_WIDTH, i * CELL_HEIGHT });
-
-			// Add to the end of the vector
-			m_grid.push_back(cell);
-		}
-	}
-}
 
 void Game::setupSounds()
 {

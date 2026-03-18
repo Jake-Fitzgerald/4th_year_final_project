@@ -58,7 +58,6 @@ enum GameStates
 {
 	MainMenuScene,
 	Gameplay,
-	RandGen,
 	OptionsScene,
 	GameOver,
 
@@ -111,7 +110,6 @@ private:
 	void setupMainMenu();
 
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
-	void setupGrid();
 
 	void setupSounds();
 
@@ -143,14 +141,8 @@ private:
 	bool m_DELETEexitGame; 
 
 	// States
-	GameStates m_currentGameState = GameStates::MainMenuScene;
+	GameStates m_currentGameState = GameStates::SongSelectionScene;
 
-	// Test Blocks
-	const int COLS = 8;   
-	const int ROWS = 12;  
-	const float CELL_WIDTH = 50.f;
-	const float CELL_HEIGHT = 50.f;
-	std::vector<sf::RectangleShape> m_grid;
 
 	// Block colours				[DEBUG]
 	sf::Color BLUE = sf::Color::Blue;
@@ -179,7 +171,6 @@ private:
 
 	// Audio
 	sf::SoundBuffer m_soundBuffer;
-	sf::Sound m_testSound{ m_soundBuffer };
 	const int m_soundPoolSize = 200;
 	SoundManager m_soundManager;
 	SoundType m_soundType;
@@ -203,6 +194,7 @@ private:
 	MidiFileSelect m_midiFileSelectScene;
 	VisualiserSelect m_visSelect;
 	SongSelect m_songSelect;
+	std::string m_selectedSong = "";
 	MainMenu m_mainMenu;
 
 	// Custom Icon

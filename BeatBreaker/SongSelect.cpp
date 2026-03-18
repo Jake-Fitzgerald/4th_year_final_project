@@ -1,7 +1,8 @@
 #include "SongSelect.h"
 
-SongSelect::SongSelect(std::shared_ptr<const sf::Font> font) : m_font(font)
+SongSelect::SongSelect(std::shared_ptr<const sf::Font> font) : m_font(font), m_beginText(*font)
 {
+	b_isSongChosen = false;
 }
 
 
@@ -112,6 +113,32 @@ void SongSelect::setupButtons()
 		button.midiPath = m_pathVector[i].path;
 		m_buttons.push_back(button);
 	}
+
+	setupBeginButton();
+}
+
+void SongSelect::setupBeginButton()
+{
+	// Position the Begin button below the last song row
+	float beginY = paddingY + m_pathsCount * m_spacing + 20.0f;
+
+	m_beginButton.setSize(sf::Vector2f{ 200.0f, 50.0f });
+	m_beginButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 300.0f});
+	m_beginButton.setFillColor(sf::Color(100, 100, 100));
+	m_beginButton.setOutlineThickness(2.0f);
+	m_beginButton.setOutlineColor(sf::Color::Black);
+
+	m_beginText.setFont(*m_font);
+	m_beginText.setString("Begin");
+	m_beginText.setCharacterSize(30);
+	m_beginText.setFillColor(sf::Color::White);
+
+	sf::FloatRect textBounds = m_beginText.getLocalBounds();
+	m_beginText.setPosition(sf::Vector2f
+	{
+			m_beginButton.getPosition().x + (m_beginButton.getSize().x - textBounds.size.x) / 2.0f,
+			m_beginButton.getPosition().y + (m_beginButton.getSize().y - textBounds.size.y) / 2.0f - textBounds.position.y 
+	});
 }
 
 void SongSelect::render(sf::RenderWindow& t_window)
@@ -126,11 +153,15 @@ void SongSelect::render(sf::RenderWindow& t_window)
 		t_window.draw(button.m_pbScore);
 		t_window.draw(button.m_musicNoteSprite);
 	}
+
+	t_window.draw(m_beginButton);
+	t_window.draw(m_beginText);
 }
 
 
 SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 {
+	// Songs
 	for (auto& button : m_buttons)
 	{
 		// Reset colours if you click again
@@ -144,6 +175,7 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 		{
 			m_selectedPath = button.midiPath;
 			std::cerr << "Selected [SONG] Path is: " << m_selectedPath << std::endl;
+			b_isSongChosen = true;
 
 			// Turn it red to show it has been clicked
 			button.m_buttonShape.setFillColor(sf::Color::Red);
@@ -163,6 +195,21 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 			return SongClickResult::PreviewClicked;
 		}
 	}
+
+
+	// Begin button
+	if (b_isSongChosen == true)
+	{
+		sf::Vector2f beginTopLeft = m_beginButton.getPosition();
+		sf::Vector2f beginSize = m_beginButton.getSize();
+
+		if (checkIfAreaClicked(t_mousePos, beginTopLeft, beginSize) == true)
+		{
+			std::cerr << "Begin button with song: " << m_selectedPath << std::endl;
+			return SongClickResult::BeginClicked;
+		}
+	}
+
 	return SongClickResult::None;
 }
 

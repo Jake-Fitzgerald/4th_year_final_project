@@ -28,14 +28,18 @@ public:
 	bool returnClick(sf::Vector2f t_mousePos);
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
+	void resetButtons();
+
+
+private:
+	std::vector<VisButton> m_buttons;
+	std::vector<sf::RectangleShape> m_buttonShapes;
+
 	// Button 
 	float m_posX = paddingX;
 	float m_poY = paddingY;
 	float m_spacing = 60.0f;
 	sf::Vector2f m_buttonSize = { 200.0f, 40.0f };
-private:
-	std::vector<VisButton> m_buttons;
-	std::vector<sf::RectangleShape> m_buttonShapes;
 
 	std::shared_ptr<const sf::Font> m_font;
 	std::vector<sf::Text> m_buttonTexts;

@@ -54,7 +54,8 @@ enum class SongClickResult
 {
 	None,
 	SongSelected,
-	PreviewClicked
+	PreviewClicked,
+	BeginClicked
 };
 
 struct SongPaths
@@ -71,6 +72,7 @@ public:
 
 	void setupPathStrings();
 	void setupButtons();
+	void setupBeginButton();
 	
 	void render(sf::RenderWindow& t_window);
 
@@ -103,6 +105,11 @@ private:
 	int m_pathsCount = 3; // Change this in setup paths function to be consistent
 
 	bool b_isPreviewPlaying = false;
+
+	// Begin button
+	sf::RectangleShape m_beginButton;
+	sf::Text m_beginText;
+	bool b_isSongChosen = false;
 
 	// File Paths
 	// EASY
