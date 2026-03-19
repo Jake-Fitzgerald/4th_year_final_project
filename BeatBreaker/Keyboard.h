@@ -53,6 +53,7 @@ public:
     bool checkInputCollision();
 
     float getKeyPosX(std::string& t_noteName);
+    float getKillTriggerY();
 
 private:
     SoundManager* m_soundManager;
@@ -70,7 +71,11 @@ private:
     float m_whiteSpacing = 2.0f;
 
     sf::Color c_pressedColour = sf::Color::Red;
+    sf::Color c_killTriggerColour = sf::Color(255, 0, 0, 100);
 
     bool b_testNoteActive = false;
+
+    // Collision
+    sf::RectangleShape m_killShape;
 };
 

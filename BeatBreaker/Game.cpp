@@ -381,7 +381,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			std::cerr << "Parsing song: " << m_selectedSong << std::endl;
 
 			// Third track is the instrument track
-			m_gameplay.loadTrack(midiParser.getMidiTracks()[2]);
+			m_gameplay.loadTrack(midiParser.getMidiTracks()[2], midiParser.getBPM());
 
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;

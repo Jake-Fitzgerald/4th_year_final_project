@@ -34,6 +34,10 @@ void Keyboard::setupKeys()
     m_keyboardBase.setSize(sf::Vector2f{ baseWidth, m_whiteKeySize.y + 6.0f });
     m_keyboardBase.setPosition(sf::Vector2f{ m_posX, m_posY - 3.0f });
     m_keyboardBase.setFillColor(sf::Color::Black);
+
+    m_killShape.setSize(sf::Vector2f{ baseWidth, 10.0f });
+    m_killShape.setPosition(sf::Vector2f{ m_posX, m_posY });
+    m_killShape.setFillColor(c_killTriggerColour);
 }
 
 void Keyboard::setupWhiteKey(int t_whiteIndex, std::string t_noteLetter, int t_octave)
@@ -114,6 +118,8 @@ void Keyboard::render(sf::RenderWindow& t_window)
             t_window.draw(key.shape);
         }
     }
+
+    t_window.draw(m_killShape);
 }
 
 void Keyboard::handleClick(sf::Vector2f t_mousePos)
@@ -173,7 +179,13 @@ float Keyboard::getKeyPosX(std::string& t_noteName)
             return key.shape.getPosition().x;
         }
     }
+
     return -1.0f; 
+}
+
+float Keyboard::getKillTriggerY()
+{
+    return m_killShape.getPosition().y;
 }
 
 

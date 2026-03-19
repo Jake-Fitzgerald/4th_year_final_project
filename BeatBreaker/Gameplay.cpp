@@ -18,7 +18,22 @@ void Gameplay::setupKeyboard()
 
 void Gameplay::update(float t_deltaTime)
 {
+	m_playbackTime += t_deltaTime;
 
+	for (auto& note : m_fallingNotes)
+	{
+		note.shape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
+	}
+
+	// Kill notes
+	for (int i = static_cast<int>(m_fallingNotes.size()) - 1; i >= 0; i--)
+	{
+		if (m_fallingNotes[i].shape.getPosition().y > m_keyboard.getKillTriggerY())
+		{
+			std::cerr << "MISS: " << m_fallingNotes[i].noteName << std::endl;
+			m_fallingNotes.erase(m_fallingNotes.begin() + i);
+		}
+	}
 }
 
 void Gameplay::render(sf::RenderWindow& t_window)
