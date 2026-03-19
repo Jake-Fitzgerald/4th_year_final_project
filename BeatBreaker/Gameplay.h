@@ -25,8 +25,12 @@ public:
 
     void update(float t_deltaTime);
     void render(sf::RenderWindow& t_window);
+
     void handleClick(sf::Vector2f t_mousePos);
     void handleRelease(sf::Vector2f t_mousePos);
+
+    void noteOn(std::string& t_noteName);
+    void noteOff(std::string& t_noteName);
 
 private:
     SoundManager* m_soundManager;

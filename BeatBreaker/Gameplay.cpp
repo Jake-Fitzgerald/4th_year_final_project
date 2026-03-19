@@ -35,3 +35,13 @@ void Gameplay::handleRelease(sf::Vector2f t_mousePos)
 {
 	m_keyboard.handleRelease(t_mousePos);
 }
+
+void Gameplay::noteOn(std::string& t_noteName)
+{
+	m_keyboard.noteOn(t_noteName);
+}
+
+void Gameplay::noteOff(std::string& t_noteName)
+{
+	m_keyboard.noteOff(t_noteName);
+}

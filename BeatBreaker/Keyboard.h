@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
 #include "SoundManager.h"
+#include "CollisionManager.h"
 
 /*
     25-key keyboard: C3 to C5 (2 full octaves + final C)
@@ -49,6 +50,8 @@ public:
 
     bool checkIfKeyClicked(sf::Vector2f t_mousePos, Key& t_key);
 
+    bool checkInputCollision();
+
 private:
     SoundManager* m_soundManager;
 
@@ -66,5 +69,6 @@ private:
 
     sf::Color c_pressedColour = sf::Color::Red;
 
+    bool b_testNoteActive = false;
 };
 

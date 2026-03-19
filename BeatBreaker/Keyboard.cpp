@@ -153,6 +153,17 @@ bool Keyboard::checkIfKeyClicked(sf::Vector2f t_mousePos, Key& t_key)
         t_mousePos.y <= topLeft.y + size.y;
 }
 
+bool Keyboard::checkInputCollision()
+{
+    if (b_testNoteActive == false)
+    {
+        return false;
+    }
+
+    // Check if the falling note overlaps the hit zone
+    //return m_testNote.noteShape.getGlobalBounds().findIntersection(m_inputCollider.getGlobalBounds()).has_value();
+}
+
 
 void Keyboard::handleRelease(sf::Vector2f t_mousePos)
 {
@@ -175,25 +186,23 @@ void Keyboard::noteOn(const std::string& t_noteName)
             keyTurnOn(i);
             m_soundManager->play(t_noteName);
             
-            /*
             // Collision Test
             if (checkInputCollision() == true)
             {
-                if (m_testNote.targetNoteName == t_noteName)
-                {
-                    std::cerr << "HIT! : " << t_noteName << std::endl;
-                    b_testNoteActive = false;
-                }
-                else
-                {
-                    std::cerr << "WRONG KEY!" << std::endl;
-                }
+                //if (m_testNote.targetNoteName == t_noteName)
+                //{
+                //    std::cerr << "HIT! : " << t_noteName << std::endl;
+                //    b_testNoteActive = false;
+                //}
+                //else
+                //{
+                //    std::cerr << "WRONG KEY!" << std::endl;
+                //}
             }
             else
             {
                 std::cerr << "MISS! No note in hit zone" << std::endl;
             }
-            */
         }
     }
 }

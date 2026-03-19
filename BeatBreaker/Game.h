@@ -84,7 +84,8 @@ struct MidiCallbackData
 {
 	PianoVisualiser* piano;
 	DrumVisualiser* drums;
-	// Gameplay?
+	Gameplay* gameplay;
+	GameStates* currentState;
 };
 
 class Game

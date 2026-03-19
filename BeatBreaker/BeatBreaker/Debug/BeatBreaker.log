@@ -26,12 +26,56 @@ C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.c
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(250,40): warning C4189: 'newMouseReleased': local variable is initialized but not referenced
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(437,7): warning C4189: 'buttonFound': local variable is initialized but not referenced
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(455,34): warning C4100: 'dtSeconds': unreferenced parameter
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(800,25): warning C4244: 'initializing': conversion from 'DWORD_PTR' to 'unsigned char', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(799,25): warning C4244: 'initializing': conversion from 'DWORD_PTR' to 'unsigned char', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(800,26): warning C4244: 'initializing': conversion from 'DWORD_PTR' to 'unsigned char', possible loss of data
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(801,26): warning C4244: 'initializing': conversion from 'DWORD_PTR' to 'unsigned char', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(802,26): warning C4244: 'initializing': conversion from 'DWORD_PTR' to 'unsigned char', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(776,12): warning C4100: 'dwParam2': unreferenced parameter
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(772,10): warning C4100: 'hMidiIn': unreferenced parameter
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(794,12): warning C4189: 'CC_LSB_VOLUME': local variable is initialized but not referenced
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(793,12): warning C4189: 'CC_PAN': local variable is initialized but not referenced
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(792,12): warning C4189: 'CC_CHANNELVOLUME': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(775,12): warning C4100: 'dwParam2': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(771,10): warning C4100: 'hMidiIn': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(793,12): warning C4189: 'CC_LSB_VOLUME': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(792,12): warning C4189: 'CC_PAN': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(791,12): warning C4189: 'CC_CHANNELVOLUME': local variable is initialized but not referenced
+  Gameplay.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'Gameplay.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Gameplay.cpp(19,29): warning C4100: 't_deltaTime': unreferenced parameter
+  Keyboard.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'Keyboard.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Keyboard.cpp(170,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Keyboard.cpp(182,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Keyboard.cpp(212,23): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(140,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(141,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(142,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(143,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,49): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,41): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,34): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'main.cpp')
+  
+  Generating Code...
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Keyboard.cpp(165,1): warning C4715: 'Keyboard::checkInputCollision': not all control paths return a value
   BeatBreaker.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Debug\BeatBreaker.exe

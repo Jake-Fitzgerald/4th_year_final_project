@@ -631,7 +631,6 @@ void Game::setupSounds()
 	m_soundManager.loadBuffer("results_scene_load", "ASSETS\\AUDIO\\SFX\\UI\\results_scene_load.wav", SoundType::SFX);
 	m_soundManager.loadBuffer("start_game", "ASSETS\\AUDIO\\SFX\\UI\\start_game.wav", SoundType::SFX);
 
-
 	// Music
 	m_soundManager.loadBuffer("Test_MIDI_MUSIC", "ASSETS\\AUDIO\\MUSIC\\WAV\\Test_MIDI.wav", SoundType::MUSIC);
 
@@ -731,7 +730,7 @@ void Game::setupMidiInput()
 		// handle is 'LPHMIDIIN', which is a pointer to 'HMIDIIN', 
 		//MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, 0, CALLBACK_FUNCTION);  
 
-		m_midiCallbackData = { &pianoVisualiser, &drumVisualiser };
+		m_midiCallbackData = { &pianoVisualiser, &drumVisualiser, &m_gameplay, &m_currentGameState };
 		//MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, (DWORD_PTR)&pianoVisualiser, CALLBACK_FUNCTION);
 		MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, (DWORD_PTR)&m_midiCallbackData, CALLBACK_FUNCTION);
 
@@ -838,6 +837,7 @@ void CALLBACK MidiInProc(
 		MidiCallbackData* callbackData = reinterpret_cast<MidiCallbackData*>(dwInstance);
 		PianoVisualiser* pianoListener = callbackData->piano;
 		DrumVisualiser* drumListener = callbackData->drums;
+		Gameplay* gameplayListener = callbackData->gameplay;
 
 		// Channel 10 is always drums
 		if (channel == 9)
@@ -872,14 +872,22 @@ void CALLBACK MidiInProc(
 			//PianoVisualiser* pianoListener = static_cast<PianoVisualiser*>((void*)dwInstance);
 			//PianoVisualiser* pianoListener = reinterpret_cast<PianoVisualiser*>(dwInstance);
 			
-
+			//if (m_currentGameState == GameStates::PianoVis)
 			if ((msgType & messageTypeMask) == noteOn && msgVel > 0)
 			{
 				std::cout << "Note ON: " << noteName << " Velocity: " << msgVel << std::endl;
 
-				if (pianoListener)
+				if (callbackData->currentState && *callbackData->currentState == GameStates::GameplayScene)
 				{
-					pianoListener->noteOn(noteName);
+					if (gameplayListener)
+						gameplayListener->noteOn(noteName);
+				}
+				else 
+				{
+					if (pianoListener)
+					{
+						pianoListener->noteOn(noteName);
+					}
 				}
 			}
 
@@ -887,9 +895,17 @@ void CALLBACK MidiInProc(
 			{
 				std::cout << "Note OFF:" << noteName << " Velocity: " << msgVel << std::endl;
 
-				if (pianoListener)
+				if (callbackData->currentState && *callbackData->currentState == GameStates::GameplayScene)
 				{
-					pianoListener->noteOff(noteName);
+					if (gameplayListener)
+						gameplayListener->noteOff(noteName);
+				}
+				else 
+				{
+					if (pianoListener)
+					{
+						pianoListener->noteOff(noteName);
+					}
 				}
 			}
 		}
