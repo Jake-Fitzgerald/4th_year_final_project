@@ -47,6 +47,9 @@ public:
     void loadTrack(MidiTrack& t_track, double t_BPM);
     void spawnNote(MidiNote& t_note);
 
+    // Playback
+    void startSong();
+
 private:
     SoundManager* m_soundManager;
     Keyboard m_keyboard;
@@ -67,5 +70,9 @@ private:
     sf::Color c_lateNoteColour = sf::Color::Red;
     sf::Color c_earlyNoteColour = sf::Color::Yellow;
     sf::Color c_perfectNoteColour = sf::Color::Green;
+
+    int m_score = 0;
+
+    bool b_isPlaying = false;
 };
 

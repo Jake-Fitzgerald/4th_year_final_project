@@ -50,10 +50,12 @@ public:
 
     bool checkIfKeyClicked(sf::Vector2f t_mousePos, Key& t_key);
 
-    bool checkInputCollision();
+    bool checkInputCollision(sf::RectangleShape& t_noteShape);
 
     float getKeyPosX(std::string& t_noteName);
     float getKillTriggerY();
+
+    int getScore();
 
 private:
     SoundManager* m_soundManager;
@@ -72,10 +74,13 @@ private:
 
     sf::Color c_pressedColour = sf::Color::Red;
     sf::Color c_killTriggerColour = sf::Color(255, 0, 0, 100);
+    sf::Color c_inputTriggerColour = sf::Color(0, 255, 0, 100);
 
     bool b_testNoteActive = false;
 
     // Collision
-    sf::RectangleShape m_killShape;
+    sf::RectangleShape m_killTrigger;
+    sf::RectangleShape m_inputTrigger;
+    int m_score = 0;
 };
 

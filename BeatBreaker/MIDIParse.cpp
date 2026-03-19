@@ -217,6 +217,7 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 		{
 			note.startTime = note.startTick * secondsPerTick;
 			note.endTime = note.endTick * secondsPerTick;
+			std::cerr << "Note: " << note.noteName << " startTick: " << note.startTick << " startTime: " << note.startTime << std::endl;
 		}
 	}
 

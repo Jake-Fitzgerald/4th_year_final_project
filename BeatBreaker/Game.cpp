@@ -218,7 +218,6 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 			}
 		}
 	}
-
 	// Upload to database
 	if (sf::Keyboard::Key::K == newKeypress->code)
 	{
@@ -231,7 +230,15 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 			//m_database.submitScore(m_playerName, m_tempScore);
 			m_database.submitScoreFromFile(m_highscorePath);
 		}
-		
+	}
+
+	// Gamplay
+	if (m_currentGameState == GameStates::GameplayScene)
+	{
+		if (sf::Keyboard::Key::P == newKeypress->code)
+		{
+			m_gameplay.startSong();
+		}
 	}
 }
 
@@ -499,6 +506,12 @@ void Game::update(sf::Time t_deltaTime)
 
 	// Piano Note Test
 	pianoVisualiser.updateNotes(dtConverted);
+
+	// Gameplay
+	if (m_currentGameState == GameStates::GameplayScene)
+	{
+		m_gameplay.update(dtConverted);
+	}
 }
 
 

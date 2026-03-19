@@ -35,9 +35,13 @@ void Keyboard::setupKeys()
     m_keyboardBase.setPosition(sf::Vector2f{ m_posX, m_posY - 3.0f });
     m_keyboardBase.setFillColor(sf::Color::Black);
 
-    m_killShape.setSize(sf::Vector2f{ baseWidth, 10.0f });
-    m_killShape.setPosition(sf::Vector2f{ m_posX, m_posY });
-    m_killShape.setFillColor(c_killTriggerColour);
+    m_killTrigger.setSize(sf::Vector2f{ baseWidth, 10.0f });
+    m_killTrigger.setPosition(sf::Vector2f{ m_posX, m_posY });
+    m_killTrigger.setFillColor(c_killTriggerColour);
+
+    m_inputTrigger.setSize(sf::Vector2f{ baseWidth, 20.0f });
+    m_inputTrigger.setPosition(sf::Vector2f{ m_posX, m_posY - 20.0f});
+    m_inputTrigger.setFillColor(c_inputTriggerColour);
 }
 
 void Keyboard::setupWhiteKey(int t_whiteIndex, std::string t_noteLetter, int t_octave)
@@ -119,7 +123,8 @@ void Keyboard::render(sf::RenderWindow& t_window)
         }
     }
 
-    t_window.draw(m_killShape);
+    t_window.draw(m_killTrigger);
+    t_window.draw(m_inputTrigger);
 }
 
 void Keyboard::handleClick(sf::Vector2f t_mousePos)
@@ -159,15 +164,9 @@ bool Keyboard::checkIfKeyClicked(sf::Vector2f t_mousePos, Key& t_key)
         t_mousePos.y <= topLeft.y + size.y;
 }
 
-bool Keyboard::checkInputCollision()
+bool Keyboard::checkInputCollision(sf::RectangleShape& t_noteShape)
 {
-    if (b_testNoteActive == false)
-    {
-        return false;
-    }
-
-    // Check if the falling note overlaps the hit zone
-    //return m_testNote.noteShape.getGlobalBounds().findIntersection(m_inputCollider.getGlobalBounds()).has_value();
+    return t_noteShape.getGlobalBounds().findIntersection(m_inputTrigger.getGlobalBounds()).has_value();
 }
 
 float Keyboard::getKeyPosX(std::string& t_noteName)
@@ -180,12 +179,18 @@ float Keyboard::getKeyPosX(std::string& t_noteName)
         }
     }
 
+    std::cerr << "Key not found: " << t_noteName << std::endl;
     return -1.0f; 
 }
 
 float Keyboard::getKillTriggerY()
 {
-    return m_killShape.getPosition().y;
+    return m_killTrigger.getPosition().y;
+}
+
+int Keyboard::getScore()
+{
+    return m_score;
 }
 
 
@@ -209,24 +214,7 @@ void Keyboard::noteOn(const std::string& t_noteName)
         {
             keyTurnOn(i);
             m_soundManager->play(t_noteName);
-            
-            // Collision Test
-            if (checkInputCollision() == true)
-            {
-                //if (m_testNote.targetNoteName == t_noteName)
-                //{
-                //    std::cerr << "HIT! : " << t_noteName << std::endl;
-                //    b_testNoteActive = false;
-                //}
-                //else
-                //{
-                //    std::cerr << "WRONG KEY!" << std::endl;
-                //}
-            }
-            else
-            {
-                std::cerr << "MISS! No note in hit zone" << std::endl;
-            }
+            return; // stop the loop
         }
     }
 }
@@ -242,7 +230,6 @@ void Keyboard::noteOff(const std::string& t_noteName)
         }
     }
 }
-
 
 void Keyboard::keyTurnOn(int t_index)
 {
