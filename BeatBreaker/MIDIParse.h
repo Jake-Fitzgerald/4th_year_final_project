@@ -43,11 +43,14 @@
 
 struct MidiNote
 {
-	int pitch = 0;        // 0 - 127
-	int velocity = 0;     // 0 - 127
+	int pitch = 0; // 0 - 127
+	int velocity = 0; // 0 - 127
+	std::string noteName = "";
+
 	// Microseconds
 	uint32_t startTick = 0;  
 	uint32_t endTick = 0;    
+
 	// Seconds
 	double startTime = 0.0f; 
 	double endTime = 0.0f;  
@@ -129,6 +132,8 @@ public:
 	int getNominator();
 	int getDenominator();
 	std::string getMidiFileName();
+
+	std::string pitchToNoteName(int t_pitch);
 
 	// Save the parsed data
 	void saveToFile();

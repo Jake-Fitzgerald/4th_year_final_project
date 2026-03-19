@@ -168,7 +168,7 @@ void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
 
     if (b_testNoteActive == true)
     {
-        t_window.draw(m_testNote.noteShape);;
+        //t_window.draw(m_testNote.noteShape);;
     }
    
 }
@@ -236,25 +236,24 @@ void PianoVisualiser::noteOn(const std::string& t_noteName)
         {
             keysTurnOn(i);
             m_soundManager->play(t_noteName);
-            //return;
 
             // Collision Test
-            if (checkInputCollision() == true)
-            {
-                if (m_testNote.targetNoteName == t_noteName)
-                {
-                    std::cerr << "HIT! : " << t_noteName << std::endl;
-                    b_testNoteActive = false; 
-                }
-                else
-                {
-                    std::cerr << "WRONG KEY!" << std::endl;
-                }
-            }
-            else
-            {
-                std::cerr << "MISS! No note in hit zone" << std::endl;
-            }
+            //if (checkInputCollision() == true)
+            //{
+            //    if (m_testNote.targetNoteName == t_noteName)
+            //    {
+            //        std::cerr << "HIT! : " << t_noteName << std::endl;
+            //        b_testNoteActive = false; 
+            //    }
+            //    else
+            //    {
+            //        std::cerr << "WRONG KEY!" << std::endl;
+            //    }
+            //}
+            //else
+            //{
+            //    std::cerr << "MISS! No note in hit zone" << std::endl;
+            //}
         }
     }
 }
@@ -275,16 +274,16 @@ void PianoVisualiser::spawnTestNote()
 {
     for (int i = 0; i < m_keys.size(); i++)
     {
-        // Base note 
-        if (m_keys[i].noteName == "C4")
-        {
-            m_testNote.noteShape.setSize(sf::Vector2f{ m_keys[i].shape.getSize().x, 20.0f });
-            m_testNote.noteShape.setFillColor(sf::Color::Cyan);
-            m_testNote.noteShape.setPosition(sf::Vector2f{ m_keys[i].shape.getPosition().x, m_noteTestSpawnY });
-            m_testNote.targetNoteName = "C4";
-            b_testNoteActive = true;
-            return;
-        }
+        //// Base note 
+        //if (m_keys[i].noteName == "C4")
+        //{
+        //    m_testNote.noteShape.setSize(sf::Vector2f{ m_keys[i].shape.getSize().x, 20.0f });
+        //    m_testNote.noteShape.setFillColor(sf::Color::Cyan);
+        //    m_testNote.noteShape.setPosition(sf::Vector2f{ m_keys[i].shape.getPosition().x, m_noteTestSpawnY });
+        //    m_testNote.targetNoteName = "C4";
+        //    b_testNoteActive = true;
+        //    return;
+        //}
 
         // Early
 
@@ -300,27 +299,27 @@ void PianoVisualiser::updateNotes(float t_deltaTime)
         return;
     }
 
-    m_testNote.noteShape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
+    //m_testNote.noteShape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
 
-    // Check collision against the Keys layer
-    if (m_collisionManager->checkCollision(m_testNote.noteShape.getGlobalBounds(), "Keys"))
-    {
-        std::cerr << "Test note hit: " << m_testNote.targetNoteName << std::endl;
-        noteOn(m_testNote.targetNoteName);
-        b_testNoteActive = false;
-    }
+    //// Check collision against the Keys layer
+    //if (m_collisionManager->checkCollision(m_testNote.noteShape.getGlobalBounds(), "Keys"))
+    //{
+    //    std::cerr << "Test note hit: " << m_testNote.targetNoteName << std::endl;
+    //    noteOn(m_testNote.targetNoteName);
+    //    b_testNoteActive = false;
+    //}
 
     // Delete the note when it goes offscreen
 }
 
-bool PianoVisualiser::checkInputCollision()
-{
-    if (b_testNoteActive == false)
-    {
-        return false;
-    }
-
-    // Check if the falling note overlaps the hit zone
-    return m_testNote.noteShape.getGlobalBounds().findIntersection(m_inputCollider.getGlobalBounds()).has_value();
-}
+//bool PianoVisualiser::checkInputCollision()
+//{
+//    if (b_testNoteActive == false)
+//    {
+//        return false;
+//    }
+//
+//    // Check if the falling note overlaps the hit zone
+//    return m_testNote.noteShape.getGlobalBounds().findIntersection(m_inputCollider.getGlobalBounds()).has_value();
+//}
 

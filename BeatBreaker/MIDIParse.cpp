@@ -206,6 +206,18 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 		midiTracks.push_back(currentTrack);
 	}
 
+	// Convert ticks toseconds for every note in every track
+	double secondsPerTick = (60.0 / m_BPM) / static_cast<double>(m_ticksPerQuarter);
+
+	for (auto& track : midiTracks)
+	{
+		for (auto& note : track.midiNotes)
+		{
+			note.startTime = note.startTick * secondsPerTick;
+			note.endTime = note.endTick * secondsPerTick;
+		}
+	}
+
 	return false;
 }
 
@@ -338,8 +350,8 @@ void MIDIParse::noteOn(std::ifstream& t_file, uint8_t firstDataByte)
 		{
 			// Complete the note by setting end tick so the note actually ends
 			activeNotes[note].endTick = currentTick;
+			activeNotes[note].noteName = pitchToNoteName(note);
 
-			// Add note
 			currentTrack.midiNotes.push_back(activeNotes[note]);
 
 			// Remove from active notes
@@ -489,4 +501,14 @@ int MIDIParse::getDenominator()
 std::string MIDIParse::getMidiFileName()
 {
 	return m_midifileName;
+}
+
+std::string MIDIParse::pitchToNoteName(int t_pitch)
+{
+	std::string noteNames[12] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+
+	int octave = (t_pitch / 12) - 1;
+	std::string noteName = noteNames[t_pitch % 12] + std::to_string(octave);
+
+	return noteName;
 }

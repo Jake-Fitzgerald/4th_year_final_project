@@ -15,6 +15,17 @@ You gain points based on on early/late a note was hit. Also if you actually held
 
 */
 
+struct FallingNote
+{
+    sf::RectangleShape shape;
+    sf::RectangleShape earlyTrigger;
+    sf::RectangleShape lateTrigger;
+
+    std::string noteName;   
+    float speed = 200.0f;
+    bool b_isActive = true;
+};
+
 class Gameplay
 {
 public:

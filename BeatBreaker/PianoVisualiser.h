@@ -27,13 +27,6 @@ struct PianoKey
 	sf::Color originalColour;      
 };
 
-struct FallingNote
-{
-	sf::RectangleShape noteShape;
-	sf::RectangleShape earlyTrigger;
-	sf::RectangleShape lateTrigger;
-	std::string targetNoteName; 
-};
 
 class PianoVisualiser
 {
@@ -95,7 +88,7 @@ private:
 	bool b_midiLiveMode = false;
 
 	// Note Test (temp)
-	FallingNote m_testNote;
+	//FallingNote m_testNote;
 	float m_noteTestSpawnY = -100.0f;
 	float m_noteSpeed = 100.0f;
 
