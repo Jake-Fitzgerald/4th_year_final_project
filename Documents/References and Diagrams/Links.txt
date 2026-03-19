@@ -17,3 +17,6 @@ https://learn.microsoft.com/en-us/windows/win32/multimedia/sending-a-command
 
 Winmm other:
 https://learn.microsoft.com/en-us/windows-hardware/drivers/audio/audio-device-messages-for-midi
+
+Midi Parser Explanation: (old)
+http://www.petesqbsite.com/sections/express/issue18/midifilespart1.html
