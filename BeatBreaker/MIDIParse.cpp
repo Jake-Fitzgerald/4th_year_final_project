@@ -11,6 +11,8 @@ MIDIParse::MIDIParse(const std::string& t_fileName)
 
 bool MIDIParse::parseFile(const std::string& t_fileName)
 {
+	midiTracks.clear();
+
 	// Open the file
 	std::ifstream file;
 
@@ -313,6 +315,16 @@ void MIDIParse::noteOff(std::ifstream& t_file, uint8_t firstDataByte)
 	uint8_t velocity = readByte(t_file);
 
 	//std::cerr << "Note Off: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
+
+	if (activeNotes.find(note) != activeNotes.end())
+	{
+		activeNotes[note].endTick = currentTick;
+		activeNotes[note].noteName = pitchToNoteName(note);
+
+		currentTrack.midiNotes.push_back(activeNotes[note]);
+		std::cerr << "Note stored: " << activeNotes[note].noteName << std::endl;
+		activeNotes.erase(note);
+	}
 }
 
 void MIDIParse::noteOn(std::ifstream& t_file, uint8_t firstDataByte)
@@ -334,7 +346,7 @@ void MIDIParse::noteOn(std::ifstream& t_file, uint8_t firstDataByte)
 
 	uint8_t velocity = readByte(t_file);
 
-	//std::cerr << "Note On: " << (int)note << ", Velocity: " << (int)velocity << std::endl;
+	std::cerr << "Note On: " << (int)note << " Velocity: " << (int)velocity << std::endl;
 
 	bool b_noteExists = false;
 	// Velocity at 0 tells us the note is off not on
@@ -353,7 +365,7 @@ void MIDIParse::noteOn(std::ifstream& t_file, uint8_t firstDataByte)
 			activeNotes[note].noteName = pitchToNoteName(note);
 
 			currentTrack.midiNotes.push_back(activeNotes[note]);
-
+			std::cerr << "Note stored: " << activeNotes[note].noteName << std::endl;
 			// Remove from active notes
 			activeNotes.erase(note);
 		}

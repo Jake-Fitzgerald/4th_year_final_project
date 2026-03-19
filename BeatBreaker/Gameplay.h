@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Keyboard.h"
 #include "SoundManager.h"
-
+#include "MIDIParse.h"
 
 /*
 Similar to synthesia (program that teaches how to play piano songs) https://www.youtube.com/watch?v=urKSKHXsU3I
@@ -43,10 +43,16 @@ public:
     void noteOn(std::string& t_noteName);
     void noteOff(std::string& t_noteName);
 
+    // Note Generation
+    void loadTrack(MidiTrack& t_track);
+
 private:
     SoundManager* m_soundManager;
     Keyboard m_keyboard;
 
-    
+    const MidiTrack* m_currentTrack = nullptr;
+    double m_playbackTime = 0.0;
+    int m_spawnIndex = 0;
+    std::vector<FallingNote> m_fallingNotes;
 };
 

@@ -7,7 +7,19 @@
 
 
 /*
-Pull database tables and fill each column with it's ID, Username and Score.
+	Pull database tables and fill each column with it's ID, Username and Score.
+
+	Data to store:
+		Notes:
+		- Missed notes (int)
+		- Late notes (int)
+		- Early notes (int)
+
+		Scores:
+		- Personal Best
+		- Current Score
+
+
 
 */
 

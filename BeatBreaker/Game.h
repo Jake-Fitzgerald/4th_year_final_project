@@ -112,7 +112,6 @@ private:
 	void setupTexts();
 	void setupSprites();
 	void setupAudio();
-	void setupMainMenu();
 	void setupSounds();
 	void setupCustomIcon();
 
@@ -130,6 +129,8 @@ private:
 	// MCI Midi Playback
 	void playMidiMCI();
 	void stopMidiMCI();
+
+
 
 	
 	sf::RenderWindow m_window; 

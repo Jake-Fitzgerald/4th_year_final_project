@@ -38,7 +38,6 @@ Game::Game() :
 	setupTexts(); // load font 
 	setupSprites(); // load texture
 	setupAudio(); // load sounds
-	setupMainMenu();
 
 	// MIDI
 	setupMidiParser();
@@ -375,7 +374,15 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		else if (clickResult == SongClickResult::BeginClicked)
 		{
 			stopMidiMCI();
+
 			m_selectedSong = m_songSelect.getMidiPathString();
+
+			midiParser.parseFile(m_selectedSong);
+			std::cerr << "Parsing song: " << m_selectedSong << std::endl;
+
+			// Third track is the instrument track
+			m_gameplay.loadTrack(midiParser.getMidiTracks()[2]);
+
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;
 		}
@@ -444,11 +451,6 @@ void Game::checkKeyboardState()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 	{
 		m_DELETEexitGame = true; 
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-	{
-		pianoVisualiser.spawnTestNote();
 	}
 }
 
@@ -537,7 +539,6 @@ void Game::render()
 		m_songSelect.render(m_window);
 	}
 
-
 	// ----- Visualisers -----
 	// Track Visualiser
 	if (m_currentGameState == GameStates::TrackVis)
@@ -601,10 +602,6 @@ void Game::setupAudio()
 	//m_testSound.play();
 }
 
-void Game::setupMainMenu()
-{
-	
-}
 
 bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)
 {
@@ -959,6 +956,7 @@ void Game::stopMidiMCI()
 	mciSendString("stop mciMIDI", NULL, 0, NULL);
 	mciSendString("close mciMIDI", NULL, 0, NULL);
 }
+
 
 void Game::setupMidiParser()
 {

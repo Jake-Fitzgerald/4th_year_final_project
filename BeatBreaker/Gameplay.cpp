@@ -45,3 +45,13 @@ void Gameplay::noteOff(std::string& t_noteName)
 {
 	m_keyboard.noteOff(t_noteName);
 }
+
+void Gameplay::loadTrack(MidiTrack& t_track)
+{
+	m_currentTrack = &t_track;
+	m_playbackTime = 0.0;
+	m_spawnIndex = 0;
+	m_fallingNotes.clear();
+
+	std::cerr << "Gameplay loaded track: " << t_track.trackName << " | Notes: " << t_track.midiNotes.size() << std::endl;
+}
