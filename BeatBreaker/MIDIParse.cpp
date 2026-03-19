@@ -174,29 +174,36 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 				{
 					noteOn(file, firstDataByte);
 				}
-				else if (messageType == EventType::afterTouch)
+				else if (messageType == EventType::afterTouch ||
+						 messageType == EventType::controlChange || 
+					     messageType == EventType::pitchBend)
 				{
 					//std::cerr << "After touch" << std::endl;
+					if (firstDataByte == 0)
+					{
+						// Two bytes
+						readByte(file);
+						readByte(file);
+					}
 				}
-				else if (messageType == EventType::controlChange)
-				{
-					//std::cerr << "Control change" << std::endl;
-				}
-				else if (messageType == EventType::programChange)
+				else if (messageType == EventType::programChange ||
+						 messageType == EventType::channelAftertouch)
 				{
 					//std::cerr << "Program change" << std::endl;
+					if (firstDataByte == 0)
+					{
+						readByte(file);
+					}
 				}
-				else if (messageType == EventType::channelAftertouch)
-				{
-					//std::cerr << "Channel After touch" << std::endl;
-				}
-				else if (messageType == EventType::pitchBend)
-				{
-					//std::cerr << "Pitch bend" << std::endl;
-				}
+
 				else if (messageType == EventType::systemExclusive)
 				{
 					//std::cerr << "System exclusive" << std::endl;
+					uint8_t byte;
+					do
+					{
+						byte = readByte(file);
+					} while (byte != 0xF7);
 				}
 				else
 				{

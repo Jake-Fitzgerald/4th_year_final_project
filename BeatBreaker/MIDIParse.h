@@ -154,7 +154,7 @@ private:
 	int m_denominator; // 4 from 3/4
 	std::string m_timeSignature = " ";
 	// Tempo
-	double m_BPM;
+	double m_BPM = 120.0f;
 
 	// Timing
 	uint32_t currentTick;
