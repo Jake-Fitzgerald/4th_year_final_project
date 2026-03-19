@@ -164,6 +164,18 @@ bool Keyboard::checkInputCollision()
     //return m_testNote.noteShape.getGlobalBounds().findIntersection(m_inputCollider.getGlobalBounds()).has_value();
 }
 
+float Keyboard::getKeyPosX(std::string& t_noteName)
+{
+    for (const auto& key : m_keys)
+    {
+        if (key.noteName == t_noteName)
+        {
+            return key.shape.getPosition().x;
+        }
+    }
+    return -1.0f; 
+}
+
 
 void Keyboard::handleRelease(sf::Vector2f t_mousePos)
 {

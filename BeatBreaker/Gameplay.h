@@ -44,7 +44,8 @@ public:
     void noteOff(std::string& t_noteName);
 
     // Note Generation
-    void loadTrack(MidiTrack& t_track);
+    void loadTrack(MidiTrack& t_track, double t_BPM);
+    void spawnNote(MidiNote& t_note);
 
 private:
     SoundManager* m_soundManager;
@@ -54,5 +55,17 @@ private:
     double m_playbackTime = 0.0;
     int m_spawnIndex = 0;
     std::vector<FallingNote> m_fallingNotes;
+    // BPM
+    float m_noteSpeed = 0.0f;
+    float m_noteSpeedMultiplier = 3.0f; // might need this if it doesn't sync up with the screen resolution
+
+
+    sf::Vector2f m_flatNoteSize{ 36.0f, 10.0f };
+    sf::Vector2f m_sharpNoteSize{ 20.0f, 10.0f };
+
+    sf::Color c_activeNoteColour = sf::Color::Blue;
+    sf::Color c_lateNoteColour = sf::Color::Red;
+    sf::Color c_earlyNoteColour = sf::Color::Yellow;
+    sf::Color c_perfectNoteColour = sf::Color::Green;
 };
 

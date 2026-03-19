@@ -52,6 +52,8 @@ public:
 
     bool checkInputCollision();
 
+    float getKeyPosX(std::string& t_noteName);
+
 private:
     SoundManager* m_soundManager;
 
