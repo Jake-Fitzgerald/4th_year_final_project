@@ -7,15 +7,33 @@
 #include "SoundManager.h"
 #include <iostream>
 #include <fstream> 
+#include "Gameplay.h"
 
+struct OptionButton
+{
+	sf::RectangleShape m_buttonShape;
+	sf::Vector2f m_buttonSize{ 300.0f, 50.0f };
+	sf::Vector2f m_buttonPos{ paddingX + 50.0f,paddingY + 250.0f };
+
+	sf::Text m_buttonText;
+	sf::Color c_enabledColour = sf::Color::Green;
+	sf::Color c_disabledColour = sf::Color::Red;
+
+	OptionButton(std::shared_ptr<const sf::Font> font) : m_buttonText(*font)	
+	{
+
+	}
+};
 
 class Options
 {
 public:
-	Options(const sf::Font& font);
+	Options(std::shared_ptr<const sf::Font> font);
 
 	void setupOptionsTexts();
 	void setupOptionsButtons();
+	void setupMidiOptions();
+	void setupUIFrames();
 
 	void renderOptions(sf::RenderWindow& t_window);
 
@@ -32,6 +50,7 @@ public:
 	void setupOptionsTextures();
 
 private:
+	std::shared_ptr<const sf::Font> m_font;
 	sf::Text m_OptionsText;
 	sf::Text m_musicText;
 	sf::Text m_sfxText;
@@ -79,5 +98,25 @@ private:
 	// Background
 	sf::Texture m_bgTex;
 	sf::Sprite m_bgSprite{ m_bgTex };
+
+	// Midi Options
+	std::vector<OptionButton> m_buttons;
+	bool b_playNotesNoInput = false;
+
+	// UI Background Frames
+	sf::RectangleShape m_soundOptionsFrame;
+	sf::RectangleShape m_soundTextFrame;
+	sf::RectangleShape m_midiOptionsFrame;
+	sf::RectangleShape m_midiTextFrame;
+	sf::RectangleShape m_saveOptionsFrame;
+	sf::RectangleShape m_titleFrame;
+
+	sf::Vector2f m_frameSize{ 400.0f, 300.0f };
+	sf::Vector2f m_frameTextSize{ 200.0f, 50.0f };
+	sf::Color c_frameColour = sf::Color(100, 100, 100, 100);
+	sf::Text m_midiFrameText;
+	sf::Text m_soundFrameText;
+
+	Gameplay* m_gameplay;
 };
 

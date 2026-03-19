@@ -28,6 +28,16 @@ void Gameplay::update(float t_deltaTime)
 	for (auto& note : m_fallingNotes)
 	{
 		note.shape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
+
+		if (b_playNotesNoInput)
+		{
+			// Play note when entering the input collider
+			if (note.b_isActive && m_keyboard.checkInputCollision(note.shape))
+			{
+				m_keyboard.noteOn(note.noteName);
+				note.b_isActive = false;
+			}
+		}
 	}
 
 	// Kill notes
@@ -111,6 +121,11 @@ void Gameplay::spawnNote(MidiNote& t_note)
 	float timeToHit = t_note.startTime - m_playbackTime;
 	float noteSpawnY = -(timeToHit * m_noteSpeed);
 
+	// Note length
+	float noteDuration = t_note.endTime - t_note.startTime;
+	float noteHeight = noteDuration * m_noteSpeed;
+
+
 	bool b_isSharp = false;
 	for (char c : t_note.noteName)
 	{
@@ -127,11 +142,11 @@ void Gameplay::spawnNote(MidiNote& t_note)
 
 	if (b_isSharp == true)
 	{
-		currentNote.shape.setSize(m_sharpNoteSize);
+		currentNote.shape.setSize(sf::Vector2f{ m_sharpNoteSize.x, noteHeight });
 	}
 	else
 	{
-		currentNote.shape.setSize(m_flatNoteSize);
+		currentNote.shape.setSize(sf::Vector2f{ m_flatNoteSize.x, noteHeight });
 	}
 	currentNote.shape.setFillColor(c_activeNoteColour);
 	currentNote.shape.setPosition(sf::Vector2f{ keyPosX, noteSpawnY });
@@ -146,4 +161,21 @@ void Gameplay::startSong()
 	b_isPlaying = true;
 	m_playbackTime = 0.0f;
 	std::cerr << "Song started" << std::endl;
+}
+
+bool Gameplay::getNoteOnColliderFlag()
+{
+	return b_playNotesNoInput;
+}
+
+void Gameplay::setNoteOnColliderFlag(int t_bool)
+{
+	if (t_bool == 0)
+	{
+		b_playNotesNoInput = true;
+	}
+	else
+	{
+		b_playNotesNoInput = false;
+	}
 }

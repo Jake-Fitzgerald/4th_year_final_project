@@ -50,6 +50,9 @@ public:
     // Playback
     void startSong();
 
+    bool getNoteOnColliderFlag();
+    void setNoteOnColliderFlag(int t_bool);
+
 private:
     SoundManager* m_soundManager;
     Keyboard m_keyboard;
@@ -63,8 +66,8 @@ private:
     float m_noteSpeedMultiplier = 3.0f; // might need this if it doesn't sync up with the screen resolution
 
 
-    sf::Vector2f m_flatNoteSize{ 36.0f, 10.0f };
-    sf::Vector2f m_sharpNoteSize{ 20.0f, 10.0f };
+    sf::Vector2f m_flatNoteSize{ 36.0f, 100.0f };
+    sf::Vector2f m_sharpNoteSize{ 20.0f, 100.0f };
 
     sf::Color c_activeNoteColour = sf::Color::Blue;
     sf::Color c_lateNoteColour = sf::Color::Red;
@@ -74,5 +77,6 @@ private:
     int m_score = 0;
 
     bool b_isPlaying = false;
+    bool b_playNotesNoInput = true;
 };
 

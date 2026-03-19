@@ -90,9 +90,6 @@
     <ClCompile Include="Utilities.cpp">
       <Filter>Utilites</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="MIDIParse.cpp">
       <Filter>Source Files\MIDI</Filter>
     </ClCompile>
@@ -161,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
       <Filter>Utilites</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\UI\SelectionMenus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

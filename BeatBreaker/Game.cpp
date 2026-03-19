@@ -23,7 +23,7 @@ Game::Game() :
 	m_DELETEexitGame{false},
 		m_jerseyFont(loadFont()),
 		m_hud(*m_jerseyFont),
-		m_options(*m_jerseyFont),
+		m_options(m_jerseyFont),
 		trackVisualiser(m_jerseyFont),
 	    drumVisualiser(m_jerseyFont, m_soundManager),
 		m_midiFileSelectScene(m_jerseyFont),

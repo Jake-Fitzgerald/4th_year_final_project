@@ -30,13 +30,13 @@ struct SongButton
 	sf::Sprite m_musicNoteSprite;
 
 	SongButton(std::shared_ptr<const sf::Font> font)
-													: m_songNameText(*font),
-													m_songDifficultyText(*font),
-													m_difficultyText(*font),
-													m_pbScoreText(*font),
-													m_pbScore(*font),
-													m_musicNoteTex(std::make_shared<sf::Texture>()),
-													m_musicNoteSprite(*m_musicNoteTex)
+				: m_songNameText(*font),
+				m_songDifficultyText(*font),
+				m_difficultyText(*font),
+				m_pbScoreText(*font),
+				m_pbScore(*font),
+				m_musicNoteTex(std::make_shared<sf::Texture>()),
+				m_musicNoteSprite(*m_musicNoteTex)
 	{
 
 	}
@@ -102,7 +102,7 @@ private:
 	sf::Vector2f m_buttonSize = { 600.0f, 40.0f };
 	float m_difficultyTextSpacing = 200.0f;
 
-	int m_pathsCount = 3; // Change this in setup paths function to be consistent
+	int m_pathsCount = 4; // Change this in setup paths function to be consistent
 
 	bool b_isPreviewPlaying = false;
 
@@ -120,6 +120,7 @@ private:
 
 	// HARD 
 	std::string m_hardSong = "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid"; // temp since it has too many instruments
+	std::string m_thousandMiles = "ASSETS\\AUDIO\\MUSIC\\ThousandMilesRiff.mid";
 
 	std::vector<SongPaths> m_pathVector;
 

@@ -10,7 +10,7 @@ void Keyboard::setupKeys()
     m_keys.clear();
     int whiteIndex = 0;
 
-    // Two full octaves: C3-B3, C4-B4
+    // Two full octaves: C3 to B4
     for (int octave = 3; octave <= 4; octave++)
     {
         setupWhiteKey(whiteIndex++, "C", octave);

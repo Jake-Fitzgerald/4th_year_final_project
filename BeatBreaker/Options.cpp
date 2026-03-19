@@ -1,7 +1,16 @@
 #include "Options.h"
 
-Options::Options(const sf::Font& font)
-	: m_OptionsText(font), m_musicText(font), m_sfxText(font), m_fpsText(font), m_returnText(font), m_saveText(font), m_loadText(font)
+Options::Options(std::shared_ptr<const sf::Font> font)
+	: m_font(font),
+	m_OptionsText(*font),
+	m_musicText(*font),
+	m_sfxText(*font),
+	m_fpsText(*font),
+	m_returnText(*font),
+	m_saveText(*font),
+	m_loadText(*font),
+	m_midiFrameText(*font),
+	m_soundFrameText(*font)
 {
 	setupOptionsTexts();
 	setupOptionsButtons();
@@ -99,12 +108,100 @@ void Options::setupOptionsButtons()
 	m_loadButton.setFillColor(sf::Color::Magenta);
 	m_loadButton.setSize(m_buttonSmallScale);
 	m_loadButton.setPosition(m_loadPos);
+
+	setupMidiOptions();
+	setupUIFrames();
+}
+
+void Options::setupMidiOptions()
+{
+	OptionButton optionButton(m_font);
+
+	optionButton.m_buttonShape.setSize(optionButton.m_buttonSize);
+	optionButton.m_buttonShape.setPosition(optionButton.m_buttonPos);
+	optionButton.m_buttonShape.setFillColor(optionButton.c_enabledColour);
+	optionButton.m_buttonShape.setOutlineThickness(2.0f);
+	optionButton.m_buttonShape.setOutlineColor(sf::Color::Black);
+
+	optionButton.m_buttonText.setString("Play note no input");
+	optionButton.m_buttonText.setFillColor(sf::Color::Black);
+	optionButton.m_buttonText.setCharacterSize(40U);
+	optionButton.m_buttonText.setPosition({ optionButton.m_buttonShape.getPosition().x + 20.0f, optionButton.m_buttonShape.getPosition().y });
+
+	m_buttons.push_back(optionButton);
+}
+
+void Options::setupUIFrames()
+{
+	m_soundOptionsFrame.setSize(m_frameSize);
+	m_soundOptionsFrame.setPosition(sf::Vector2f{ m_musicButton.getPosition().x - 25.0f, m_musicButton.getPosition().y - 25.0f });
+	m_soundOptionsFrame.setFillColor(c_frameColour);
+	m_soundOptionsFrame.setOutlineThickness(2.0f);
+	m_soundOptionsFrame.setOutlineColor(sf::Color::Blue);
+	// Text
+	m_soundFrameText.setPosition(sf::Vector2f{ m_soundOptionsFrame.getPosition().x + 25.0f, m_soundOptionsFrame.getPosition().y - 60.0f });
+	m_soundFrameText.setString("SOUND");
+	m_soundFrameText.setFillColor(sf::Color::Blue);
+	m_soundFrameText.setOutlineColor(sf::Color::Black);
+	m_soundFrameText.setOutlineThickness(2.0f);
+	m_soundFrameText.setCharacterSize(50U);
+	// Text Frame
+	m_soundTextFrame.setSize(m_frameTextSize);
+	m_soundTextFrame.setPosition(sf::Vector2f{ m_musicButton.getPosition().x - 25.0f, m_musicButton.getPosition().y - 76.0f });
+	m_soundTextFrame.setFillColor(c_frameColour);
+	m_soundTextFrame.setOutlineThickness(2.0f);
+	m_soundTextFrame.setOutlineColor(sf::Color::Blue);
+
+	// ---------------------------------------------------------------------------------------------------------------------------------
+
+	m_midiOptionsFrame.setSize(m_frameSize);
+	m_midiOptionsFrame.setPosition(sf::Vector2f{ m_buttons[0].m_buttonPos.x - 25.0f, m_buttons[0].m_buttonPos.y - 25.0f });
+	m_midiOptionsFrame.setFillColor(c_frameColour);
+	m_midiOptionsFrame.setOutlineThickness(2.0f);
+	m_midiOptionsFrame.setOutlineColor(sf::Color::Green);
+	// Text
+	m_midiFrameText.setPosition(sf::Vector2f{ m_midiOptionsFrame.getPosition().x + 25.0f, m_midiOptionsFrame.getPosition().y - 60.0f });
+	m_midiFrameText.setString("MIDI");
+	m_midiFrameText.setFillColor(sf::Color::Green);
+	m_midiFrameText.setOutlineColor(sf::Color::Black);
+	m_midiFrameText.setOutlineThickness(2.0f);
+	m_midiFrameText.setCharacterSize(50U); 
+	// Text Frame
+	m_midiTextFrame.setSize(m_frameTextSize);
+	m_midiTextFrame.setPosition(sf::Vector2f{ m_buttons[0].m_buttonPos.x - 25.0f, m_buttons[0].m_buttonPos.y - 76.0f });
+	m_midiTextFrame.setFillColor(c_frameColour);
+	m_midiTextFrame.setOutlineThickness(2.0f);
+	m_midiTextFrame.setOutlineColor(sf::Color::Green);
+
+	// ---------------------------------------------------------------------------------------------------------------------------------
+
+	m_saveOptionsFrame.setSize(sf::Vector2f{ 400.0f, 75.0f });
+	m_saveOptionsFrame.setPosition(sf::Vector2f{ m_saveButton.getPosition().x - 25.0f, m_saveButton.getPosition().y - 15.0f});
+	m_saveOptionsFrame.setFillColor(c_frameColour);
+	m_saveOptionsFrame.setOutlineThickness(2.0f);
+	m_saveOptionsFrame.setOutlineColor(sf::Color::Magenta);
+
+	// ---------------------------------------------------------------------------------------------------------------------------------
+
+	m_titleFrame.setSize(sf::Vector2f{ SCREEN_WIDTH - 120.0f, 50.0f });
+	m_titleFrame.setPosition(sf::Vector2f{ paddingX,  m_OptionsText.getPosition().y + 8.0f});
+	m_titleFrame.setFillColor(c_frameColour);
+	m_titleFrame.setOutlineThickness(4.0f);
+	m_titleFrame.setOutlineColor(sf::Color::Black);
 }
 
 void Options::renderOptions(sf::RenderWindow& t_window)
 {
 	// Background
 	t_window.draw(m_bgSprite);
+
+	// UI Frames
+	t_window.draw(m_soundOptionsFrame);
+	t_window.draw(m_soundTextFrame);
+	t_window.draw(m_midiOptionsFrame);
+	t_window.draw(m_midiTextFrame);
+	t_window.draw(m_saveOptionsFrame); 
+	t_window.draw(m_titleFrame);
 
 	// BUTTONS
 	t_window.draw(m_musicButton);
@@ -127,10 +224,20 @@ void Options::renderOptions(sf::RenderWindow& t_window)
 	t_window.draw(m_returnText);
 	t_window.draw(m_saveText);
 	t_window.draw(m_loadText);
+	// Frame Texts
+	t_window.draw(m_midiFrameText);
+	t_window.draw(m_soundFrameText);
 
 	// Sprites
 	t_window.draw(m_musicNoteSprite);
 	t_window.draw(m_sfxNoteSprite);
+
+	// Midi Options
+	for (auto& button : m_buttons)
+	{
+		t_window.draw(button.m_buttonShape);
+		t_window.draw(button.m_buttonText);
+	}
 }
 
 bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager& t_soundManager)
@@ -197,6 +304,25 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	if (m_loadButton.getGlobalBounds().contains(t_mousePos))
 	{
 		loadPreferences(t_soundManager);
+	}
+
+	// Midi Buttons
+	for (auto& button : m_buttons)
+	{
+		if (button.m_buttonShape.getGlobalBounds().contains(t_mousePos))
+		{
+			//std::cerr << "Midi button pressed" << std::endl;
+			if (m_gameplay->getNoteOnColliderFlag() == false)
+			{
+				m_gameplay->setNoteOnColliderFlag(1);
+			}
+			else 
+			{
+				m_gameplay->setNoteOnColliderFlag(0);
+			}
+
+			changeButtonColours();
+		}
 	}
 
 	return false;
@@ -327,6 +453,20 @@ void Options::changeButtonColours()
 	else
 	{
 		m_sfxButton.setFillColor(sf::Color::Blue);
+	}
+
+	// Midi Button
+	for (auto& button : m_buttons)
+	{
+		if (m_gameplay->getNoteOnColliderFlag() == false)
+		{
+			m_buttons[0].m_buttonShape.setFillColor(m_buttons[0].c_disabledColour);
+		}
+		else
+		{
+			m_buttons[0].m_buttonShape.setFillColor(m_buttons[0].c_enabledColour);
+		}
+		
 	}
 }
 

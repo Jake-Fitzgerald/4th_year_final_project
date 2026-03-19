@@ -76,8 +76,6 @@ private:
     sf::Color c_killTriggerColour = sf::Color(255, 0, 0, 100);
     sf::Color c_inputTriggerColour = sf::Color(0, 255, 0, 100);
 
-    bool b_testNoteActive = false;
-
     // Collision
     sf::RectangleShape m_killTrigger;
     sf::RectangleShape m_inputTrigger;
