@@ -13,6 +13,20 @@ It will be a showcase of the Midi parsing and the Live Midi input combined and i
 You gain points based on on early/late a note was hit. Also if you actually held the note for that long.
 (Guitar Hero reference for scoring)
 
+Statistics: (show this in the statistics tab on the left hand side of the screen)
+- Hit percentage 
+- Hits notes (45/50)
+- Average notes per second?
+
+- Missed notes
+- Early notes
+- Late notes
+- Wrong Key pressed
+
+Score: (right hand side)
+- Current score
+- Personal best score
+
 */
 
 struct FallingNote
@@ -29,10 +43,11 @@ struct FallingNote
 class Gameplay
 {
 public:
-	Gameplay(SoundManager& t_soundManager);
+	Gameplay(SoundManager& t_soundManager, std::shared_ptr<const sf::Font> font);
 
     void setup();
     void setupKeyboard();
+    void setupUIFrames();
 
     void update(float t_deltaTime);
     void render(sf::RenderWindow& t_window);
@@ -51,10 +66,11 @@ public:
     void startSong();
 
     bool getNoteOnColliderFlag();
-    void setNoteOnColliderFlag(int t_bool);
+    void setNoteOnColliderFlag(bool t_bool);
 
 private:
     SoundManager* m_soundManager;
+    std::shared_ptr<const sf::Font> m_font;
     Keyboard m_keyboard;
 
     const MidiTrack* m_currentTrack = nullptr;
@@ -76,7 +92,19 @@ private:
 
     int m_score = 0;
 
+    // UI Background Frames
+    sf::RectangleShape m_scoreFrame;
+    sf::RectangleShape m_statisticFrame;
+    sf::Vector2f m_frameSize{ 300.0f, 525.0f };
+    sf::Vector2f m_frameTextSize{ 200.0f, 50.0f };
+    sf::Color c_frameColour = sf::Color(100, 100, 100, 100);
+    // Frame Texts
+    sf::Text m_statisticFrameText;
+    sf::Text m_scoreFrameText;
+
+    // Bools
     bool b_isPlaying = false;
     bool b_playNotesNoInput = true;
+    bool b_isPreviewMode = false;
 };
 

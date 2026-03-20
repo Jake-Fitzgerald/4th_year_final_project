@@ -1,6 +1,6 @@
 #include "Options.h"
 
-Options::Options(std::shared_ptr<const sf::Font> font)
+Options::Options(std::shared_ptr<const sf::Font> font, Gameplay& t_gameplay)
 	: m_font(font),
 	m_OptionsText(*font),
 	m_musicText(*font),
@@ -10,7 +10,8 @@ Options::Options(std::shared_ptr<const sf::Font> font)
 	m_saveText(*font),
 	m_loadText(*font),
 	m_midiFrameText(*font),
-	m_soundFrameText(*font)
+	m_soundFrameText(*font),
+	m_gameplay(&t_gameplay)
 {
 	setupOptionsTexts();
 	setupOptionsButtons();
@@ -186,8 +187,8 @@ void Options::setupUIFrames()
 	m_titleFrame.setSize(sf::Vector2f{ SCREEN_WIDTH - 120.0f, 50.0f });
 	m_titleFrame.setPosition(sf::Vector2f{ paddingX,  m_OptionsText.getPosition().y + 8.0f});
 	m_titleFrame.setFillColor(c_frameColour);
-	m_titleFrame.setOutlineThickness(4.0f);
-	m_titleFrame.setOutlineColor(sf::Color::Black);
+	//m_titleFrame.setOutlineThickness(4.0f);
+	//m_titleFrame.setOutlineColor(sf::Color::Black);
 }
 
 void Options::renderOptions(sf::RenderWindow& t_window)
@@ -311,17 +312,10 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	{
 		if (button.m_buttonShape.getGlobalBounds().contains(t_mousePos))
 		{
-			//std::cerr << "Midi button pressed" << std::endl;
-			if (m_gameplay->getNoteOnColliderFlag() == false)
-			{
-				m_gameplay->setNoteOnColliderFlag(1);
-			}
-			else 
-			{
-				m_gameplay->setNoteOnColliderFlag(0);
-			}
-
+			bool currentFlag = m_gameplay->getNoteOnColliderFlag();
+			m_gameplay->setNoteOnColliderFlag(!currentFlag);
 			changeButtonColours();
+
 		}
 	}
 
@@ -363,6 +357,9 @@ void Options::savePreferences()
 	// Save the floats line by line
 	MyFile << "Music_volume=" << m_currentMusicVolume << "\n";
 	MyFile << "SFX_volume=" << m_currentSFXVolume << "\n";
+
+	// Midi
+	MyFile << "PlayNotesNoInput=" << m_gameplay->getNoteOnColliderFlag();
 
 	MyFile.close();
 }
@@ -421,6 +418,12 @@ void Options::loadPreferences(SoundManager& t_soundManager)
 		{
 			m_currentSFXVolume = value;
 			std::cerr << "SFX volume: " << m_currentSFXVolume << std::endl;
+		}
+		else if (name == "PlayNotesNoInput")
+		{
+			bool savedFlag = static_cast<bool>(value);
+			m_gameplay->setNoteOnColliderFlag(savedFlag);
+			std::cerr << "PlayNotesNoInput: " << savedFlag << std::endl;
 		}
 	}
 	

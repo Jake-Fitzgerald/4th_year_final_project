@@ -20,3 +20,5 @@ https://learn.microsoft.com/en-us/windows-hardware/drivers/audio/audio-device-me
 
 Midi Parser Explanation: (old)
 http://www.petesqbsite.com/sections/express/issue18/midifilespart1.html
+http://www.petesqbsite.com/sections/express/issue19/midifilespart2.html
+http://www.petesqbsite.com/sections/express/issue20/midifilespart3.html

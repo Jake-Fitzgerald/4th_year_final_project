@@ -1,6 +1,10 @@
 #include "Gameplay.h"
 
-Gameplay::Gameplay(SoundManager& t_soundManager) : m_soundManager(&t_soundManager), m_keyboard(t_soundManager)
+Gameplay::Gameplay(SoundManager& t_soundManager, std::shared_ptr<const sf::Font> font)
+	: m_soundManager(&t_soundManager),
+	  m_keyboard(t_soundManager),
+	  m_statisticFrameText(*font),
+	  m_scoreFrameText(*font)
 {
 
 }
@@ -8,12 +12,42 @@ Gameplay::Gameplay(SoundManager& t_soundManager) : m_soundManager(&t_soundManage
 void Gameplay::setup()
 {
 	setupKeyboard();
+	setupUIFrames();
 }
 
 void Gameplay::setupKeyboard()
 {
 	m_keyboard.setupKeys();
 	m_keyboard.setupSounds();
+}
+
+void Gameplay::setupUIFrames()
+{
+	m_scoreFrame.setSize(m_frameSize);
+	m_scoreFrame.setPosition(sf::Vector2f{ paddingX - 25.0f, paddingY + 50.0f });
+	m_scoreFrame.setFillColor(c_frameColour);
+	m_scoreFrame.setOutlineThickness(2.0f);
+	m_scoreFrame.setOutlineColor(sf::Color::Black);
+	// Text
+	m_scoreFrameText.setPosition(sf::Vector2f{ m_scoreFrame.getPosition().x + 25.0f, m_scoreFrame.getPosition().y - 60.0f });
+	m_scoreFrameText.setString("SCORE");
+	m_scoreFrameText.setFillColor(sf::Color::Black);
+	m_scoreFrameText.setOutlineColor(sf::Color::Black);
+	m_scoreFrameText.setOutlineThickness(2.0f);
+	m_scoreFrameText.setCharacterSize(50U);
+
+	m_statisticFrame.setSize(m_frameSize);
+	m_statisticFrame.setPosition(sf::Vector2f{ paddingX + 925.0f, paddingY + 50.0f });
+	m_statisticFrame.setFillColor(c_frameColour);
+	m_statisticFrame.setOutlineThickness(2.0f);
+	m_statisticFrame.setOutlineColor(sf::Color::Black);
+	// Text
+	m_statisticFrameText.setPosition(sf::Vector2f{ m_statisticFrame.getPosition().x + 25.0f, m_statisticFrame.getPosition().y - 60.0f });
+	m_statisticFrameText.setString("STATISTICS");
+	m_statisticFrameText.setFillColor(sf::Color::Black);
+	m_statisticFrameText.setOutlineColor(sf::Color::Black);
+	m_statisticFrameText.setOutlineThickness(2.0f);
+	m_statisticFrameText.setCharacterSize(50U);
 }
 
 void Gameplay::update(float t_deltaTime)
@@ -45,6 +79,11 @@ void Gameplay::update(float t_deltaTime)
 	{
 		if (m_fallingNotes[i].shape.getPosition().y > m_keyboard.getKillTriggerY())
 		{
+			if (m_fallingNotes[i].b_isActive == false)
+			{
+				m_keyboard.noteOff(m_fallingNotes[i].noteName);
+			}
+
 			std::cerr << "MISS: " << m_fallingNotes[i].noteName << std::endl;
 			m_fallingNotes.erase(m_fallingNotes.begin() + i);
 		}
@@ -53,6 +92,12 @@ void Gameplay::update(float t_deltaTime)
 
 void Gameplay::render(sf::RenderWindow& t_window)
 {
+	// UI
+	t_window.draw(m_scoreFrame);
+	t_window.draw(m_statisticFrame);
+	t_window.draw(m_scoreFrameText);
+	t_window.draw(m_statisticFrameText);
+
 	for (auto& note : m_fallingNotes)
 	{
 		t_window.draw(note.shape);
@@ -150,6 +195,8 @@ void Gameplay::spawnNote(MidiNote& t_note)
 	}
 	currentNote.shape.setFillColor(c_activeNoteColour);
 	currentNote.shape.setPosition(sf::Vector2f{ keyPosX, noteSpawnY });
+	currentNote.shape.setOutlineColor(sf::Color::Black);
+	currentNote.shape.setOutlineThickness(2.0f);
 
 	m_fallingNotes.push_back(currentNote);
 
@@ -168,14 +215,12 @@ bool Gameplay::getNoteOnColliderFlag()
 	return b_playNotesNoInput;
 }
 
-void Gameplay::setNoteOnColliderFlag(int t_bool)
+void Gameplay::setNoteOnColliderFlag(bool t_bool)
 {
-	if (t_bool == 0)
-	{
-		b_playNotesNoInput = true;
-	}
-	else
-	{
-		b_playNotesNoInput = false;
-	}
+	b_playNotesNoInput = t_bool;
+
+	std::cerr << "" << std::endl;
+	std::cerr << "b_playNotesNoInput toggled" << std::endl;
+	std::cerr << "" << std::endl;
+
 }

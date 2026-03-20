@@ -55,7 +55,8 @@ enum class SongClickResult
 	None,
 	SongSelected,
 	PreviewClicked,
-	BeginClicked
+	BeginClicked,
+	PreviewDemoClicked
 };
 
 struct SongPaths
@@ -73,6 +74,8 @@ public:
 	void setupPathStrings();
 	void setupButtons();
 	void setupBeginButton();
+	void setupPreviewButton();
+	void setupUIFrames();
 	
 	void render(sf::RenderWindow& t_window);
 
@@ -97,7 +100,7 @@ private:
 
 	// Button 
 	float m_posX = paddingX;
-	float m_poY = paddingY;
+	float m_posY = paddingY + 100.0f;
 	float m_spacing = 60.0f;
 	sf::Vector2f m_buttonSize = { 600.0f, 40.0f };
 	float m_difficultyTextSpacing = 200.0f;
@@ -110,6 +113,10 @@ private:
 	sf::RectangleShape m_beginButton;
 	sf::Text m_beginText;
 	bool b_isSongChosen = false;
+	// Preview button
+	sf::RectangleShape m_previewButton;
+	sf::Text m_previewText;
+	sf::Vector2f m_playButtonSize{ 200.0f, 50.0f };
 
 	// File Paths
 	// EASY
@@ -128,5 +135,10 @@ private:
 	sf::Color c_Medium = sf::Color::Yellow;
 	sf::Color c_Hard = sf::Color::Red;
 	sf::Color c_Unknown = sf::Color::White;
+
+	// UI Background Frames
+	sf::RectangleShape m_songListFrame;
+	sf::RectangleShape m_modeButtonsFrame;
+	sf::Color c_frameColour = sf::Color(100, 100, 100, 100);
 };
 

@@ -2,7 +2,7 @@
 
 Keyboard::Keyboard(SoundManager& t_soundManager) : m_soundManager(&t_soundManager)
 {
-
+    
 }
 
 void Keyboard::setupKeys()
@@ -42,6 +42,8 @@ void Keyboard::setupKeys()
     m_inputTrigger.setSize(sf::Vector2f{ baseWidth, 20.0f });
     m_inputTrigger.setPosition(sf::Vector2f{ m_posX, m_posY - 20.0f});
     m_inputTrigger.setFillColor(c_inputTriggerColour);
+
+    resetAllKeys();
 }
 
 void Keyboard::setupWhiteKey(int t_whiteIndex, std::string t_noteLetter, int t_octave)
@@ -198,10 +200,10 @@ void Keyboard::handleRelease(sf::Vector2f t_mousePos)
 {
     for (int i = 0; i < m_keys.size(); i++)
     {
-        if (m_keys[i].b_isPressed && checkIfKeyClicked(t_mousePos, m_keys[i]))
+        if (m_keys[i].b_isPressed /*&& checkIfKeyClicked(t_mousePos, m_keys[i])*/)
         {
             keyTurnOff(i);
-            return;
+            //return;
         }
     }
 }

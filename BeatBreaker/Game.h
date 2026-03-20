@@ -145,7 +145,7 @@ private:
 	bool m_DELETEexitGame; 
 
 	// States
-	GameStates m_currentGameState = GameStates::OptionsScene;
+	GameStates m_currentGameState = GameStates::GameplayScene;
 
 
 	// Block colours				[DEBUG]

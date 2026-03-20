@@ -1,6 +1,6 @@
 #include "SongSelect.h"
 
-SongSelect::SongSelect(std::shared_ptr<const sf::Font> font) : m_font(font), m_beginText(*font)
+SongSelect::SongSelect(std::shared_ptr<const sf::Font> font) : m_font(font), m_beginText(*font), m_previewText(*font)
 {
 	b_isSongChosen = false;
 }
@@ -31,7 +31,7 @@ void SongSelect::setupButtons()
 		SongButton button(m_font);
 
 		button.m_buttonShape.setSize(m_buttonSize);
-		button.m_buttonShape.setPosition(sf::Vector2f{ paddingX , paddingY + i * m_spacing });
+		button.m_buttonShape.setPosition(sf::Vector2f{ m_posX , m_posY + i * m_spacing });
 		button.m_buttonShape.setFillColor(sf::Color::Blue);
 		button.m_buttonShape.setOutlineThickness(2.0f);
 		button.m_buttonShape.setOutlineColor(sf::Color::Black);
@@ -117,6 +117,8 @@ void SongSelect::setupButtons()
 	}
 
 	setupBeginButton();
+	setupPreviewButton();
+	setupUIFrames();
 }
 
 void SongSelect::setupBeginButton()
@@ -124,8 +126,8 @@ void SongSelect::setupBeginButton()
 	// Position the Begin button below the last song row
 	float beginY = paddingY + m_pathsCount * m_spacing + 20.0f;
 
-	m_beginButton.setSize(sf::Vector2f{ 200.0f, 50.0f });
-	m_beginButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 300.0f});
+	m_beginButton.setSize(m_playButtonSize);
+	m_beginButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 100.0f});
 	m_beginButton.setFillColor(sf::Color(100, 100, 100));
 	m_beginButton.setOutlineThickness(2.0f);
 	m_beginButton.setOutlineColor(sf::Color::Black);
@@ -143,8 +145,49 @@ void SongSelect::setupBeginButton()
 	});
 }
 
+void SongSelect::setupPreviewButton()
+{
+	float beginY = paddingY + m_pathsCount * m_spacing + 20.0f;
+
+	m_previewButton.setSize(m_playButtonSize);
+	m_previewButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 200.0f });
+	m_previewButton.setFillColor(sf::Color(100, 100, 100));
+	m_previewButton.setOutlineThickness(2.0f);
+	m_previewButton.setOutlineColor(sf::Color::Black);
+
+	m_previewText.setFont(*m_font);
+	m_previewText.setString("Preview");
+	m_previewText.setCharacterSize(30);
+	m_previewText.setFillColor(sf::Color::White);
+
+	sf::FloatRect textBounds = m_previewText.getLocalBounds();
+	m_previewText.setPosition(sf::Vector2f
+		{
+				m_previewButton.getPosition().x + (m_previewButton.getSize().x - textBounds.size.x) / 2.0f,
+				m_previewButton.getPosition().y + (m_previewButton.getSize().y - textBounds.size.y) / 2.0f - textBounds.position.y
+		});
+}
+
+void SongSelect::setupUIFrames()
+{
+	m_songListFrame.setSize(sf::Vector2f{ m_buttonSize.x + 100.0f, m_buttonSize.y + 300.0f });
+	m_songListFrame.setPosition(sf::Vector2f{ m_posX - 25.0f, m_posY - 25.0f });
+	m_songListFrame.setFillColor(c_frameColour);
+	m_songListFrame.setOutlineThickness(2.0f);
+	m_songListFrame.setOutlineColor(sf::Color::Blue);
+
+	m_modeButtonsFrame.setSize(sf::Vector2f{ m_playButtonSize.x + 50.0f, m_playButtonSize.y + 150.0f });
+	m_modeButtonsFrame.setPosition(sf::Vector2f{ m_beginButton.getPosition().x - 25.0f, m_beginButton.getPosition().y - 25.0f });
+	m_modeButtonsFrame.setFillColor(c_frameColour);
+	m_modeButtonsFrame.setOutlineThickness(2.0f);
+	m_modeButtonsFrame.setOutlineColor(sf::Color::Green);
+}
+
 void SongSelect::render(sf::RenderWindow& t_window)
 {
+	t_window.draw(m_songListFrame);
+	t_window.draw(m_modeButtonsFrame);
+
 	for (auto& button : m_buttons)
 	{
 		t_window.draw(button.m_buttonShape);
@@ -158,6 +201,8 @@ void SongSelect::render(sf::RenderWindow& t_window)
 
 	t_window.draw(m_beginButton);
 	t_window.draw(m_beginText);
+	t_window.draw(m_previewButton);
+	t_window.draw(m_previewText);
 }
 
 

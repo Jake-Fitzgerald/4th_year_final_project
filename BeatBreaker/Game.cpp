@@ -23,7 +23,8 @@ Game::Game() :
 	m_DELETEexitGame{false},
 		m_jerseyFont(loadFont()),
 		m_hud(*m_jerseyFont),
-		m_options(m_jerseyFont),
+	    m_gameplay(m_soundManager, m_jerseyFont),
+		m_options(m_jerseyFont, m_gameplay),
 		trackVisualiser(m_jerseyFont),
 	    drumVisualiser(m_jerseyFont, m_soundManager),
 		m_midiFileSelectScene(m_jerseyFont),
@@ -31,9 +32,9 @@ Game::Game() :
 		pianoVisualiser(m_soundManager, m_collisionManager),
 	    m_songSelect(m_jerseyFont),
 	    m_leaderboard(m_jerseyFont),
-		m_mainMenu(m_jerseyFont),
+		m_mainMenu(m_jerseyFont)
 		//m_keyboard(m_soundManager),
-		m_gameplay(m_soundManager)
+		
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
@@ -402,7 +403,9 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	}
 	else if (m_currentGameState == GameStates::GameplayScene)
 	{
+		// Debugging with mouse
 		m_gameplay.handleClick(mouseWorldPos);
+		m_gameplay.handleRelease(mouseWorldPos);
 	}
 	
 	// HUD

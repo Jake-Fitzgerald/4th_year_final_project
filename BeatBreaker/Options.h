@@ -28,7 +28,7 @@ struct OptionButton
 class Options
 {
 public:
-	Options(std::shared_ptr<const sf::Font> font);
+	Options(std::shared_ptr<const sf::Font> font, Gameplay& t_gameplay);
 
 	void setupOptionsTexts();
 	void setupOptionsButtons();
