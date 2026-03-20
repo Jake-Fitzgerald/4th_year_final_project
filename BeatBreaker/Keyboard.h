@@ -31,6 +31,7 @@ public:
     Keyboard(SoundManager& t_soundManager);
 
     void setupKeys();
+    void setupTriggers();
     void setEasyInput();
     void setupSounds();
 
@@ -64,6 +65,7 @@ private:
     std::vector<Key> m_keys;
 
     sf::RectangleShape m_keyboardBase;
+    float m_baseWidth = 0.0f;
 
     float m_posX = paddingX + 300.0f;
     float m_posY = paddingY + 400.0f;
@@ -76,10 +78,12 @@ private:
     sf::Color c_pressedColour = sf::Color::Red;
     sf::Color c_killTriggerColour = sf::Color(255, 0, 0, 100);
     sf::Color c_inputTriggerColour = sf::Color(0, 255, 0, 100);
+    sf::Color c_noteSoundTriggerColour = sf::Color(0, 0, 255, 100);
 
     // Collision
     sf::RectangleShape m_killTrigger;
     sf::RectangleShape m_inputTrigger;
+    sf::RectangleShape m_noteSoundTrigger;
     float m_inputTriggerSizeY = 80.0f;
     int m_score = 0;
 };

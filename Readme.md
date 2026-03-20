@@ -120,14 +120,56 @@ PHASE TWO
 PHASE THREE 
 (28/11/2025 -> Base code implemented to work on core)
 /////////////////////////////////////
+### MIDI Parser 
+- [x] Header Data/ Track 1/ 2 parsed and saved as local variables to be used for later (BPM).
+
+### Scenes
+- [x] Track Visualiser scene.
+- [x] Drum Visualiser scene.
+- [x] Piano Visualiser scene.
 
 
 /////////////////////////////////////
 PHASE FOUR 
 (01/01/2026
 /////////////////////////////////////
+### Scenes
+- [x] Main Menu scene.
+- [x] Gameplay scene.
+- [x] Midi Selection scene.
+- [x] Song Selection scene.
+
+### Midi
+- [x] Live Midi callback function for Midi Keyboard input.
+
+### Keyboard
+= [x] Keyboard object that is instanced and used in the Gameplay scene.
+
+### Server/ Database
+- [x] Basic Azure Server and Database created with an ODBC token string.
+- [x] Token string used to access the server through the connection handle.
+
+### Art
+- [x] Drum Pieces sprites created and implemented (both enabled and disabled).
+
+### Midi Files/ MCI
+- [x] Created midi for testing different tempos, note lengths, polyphony (chords).
+- [x] MCI playback using the loaded midi path as an alias that microsoft's built-in midi player can use.
+
+### Documentation
+- [x] Midi Archticture Documents -> Go through .midi file byte by byte.
+- [x] Official Midi Documentation (Control Change Messages, Midi Messages, Midi Specification).
 
 /////////////////////////////////////
 PHASE FIVE 
-(01/02/2026
+(20/03/2026
 /////////////////////////////////////
+
+/////////////////////////////////////
+### Presentation 2
+- [] Add images from the Midi Architecture documentation
+
+
+/////////////////////////////////////
+### MIDI Parser 
+- [] Restructure the Midi Parsing code

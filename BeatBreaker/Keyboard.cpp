@@ -30,22 +30,31 @@ void Keyboard::setupKeys()
     // Final C5
     setupWhiteKey(whiteIndex++, "C", 5);
 
-    float baseWidth = (whiteIndex) * (m_whiteKeySize.x + m_whiteSpacing) - m_whiteSpacing;
-    m_keyboardBase.setSize(sf::Vector2f{ baseWidth, m_whiteKeySize.y + 6.0f });
+    m_baseWidth = (whiteIndex) * (m_whiteKeySize.x + m_whiteSpacing) - m_whiteSpacing;
+
+    setupTriggers();
+    resetAllKeys();
+}
+
+void Keyboard::setupTriggers()
+{
+    m_keyboardBase.setSize(sf::Vector2f{ m_baseWidth, m_whiteKeySize.y + 6.0f });
     m_keyboardBase.setPosition(sf::Vector2f{ m_posX, m_posY - 3.0f });
     m_keyboardBase.setFillColor(sf::Color::Black);
 
-    m_killTrigger.setSize(sf::Vector2f{ baseWidth, 10.0f });
-    m_killTrigger.setPosition(sf::Vector2f{ m_posX, m_posY });
+    m_killTrigger.setSize(sf::Vector2f{ m_baseWidth, 50.0f });
+    m_killTrigger.setPosition(sf::Vector2f{ m_posX, m_posY + 50.0f });
     m_killTrigger.setFillColor(c_killTriggerColour);
 
-   
-    m_inputTrigger.setSize(sf::Vector2f{ baseWidth, m_inputTriggerSizeY });
+
+    m_inputTrigger.setSize(sf::Vector2f{ m_baseWidth, m_inputTriggerSizeY });
     m_inputTrigger.setOrigin(sf::Vector2f{ 0.0f, m_inputTriggerSizeY });
     m_inputTrigger.setPosition(sf::Vector2f{ m_posX, m_posY });
     m_inputTrigger.setFillColor(c_inputTriggerColour);
 
-    resetAllKeys();
+    m_noteSoundTrigger.setSize(sf::Vector2f{ m_baseWidth, 20.0f });
+    m_noteSoundTrigger.setPosition(sf::Vector2f{ m_posX, m_posY });
+    m_noteSoundTrigger.setFillColor(c_noteSoundTriggerColour);
 }
 
 void Keyboard::setEasyInput()
@@ -139,6 +148,7 @@ void Keyboard::render(sf::RenderWindow& t_window)
 
     t_window.draw(m_killTrigger);
     t_window.draw(m_inputTrigger);
+    t_window.draw(m_noteSoundTrigger);
 }
 
 void Keyboard::handleClick(sf::Vector2f t_mousePos)

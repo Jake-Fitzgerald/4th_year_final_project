@@ -83,9 +83,10 @@ private:
     double m_playbackTime = 0.0;
     int m_spawnIndex = 0;
     std::vector<FallingNote> m_fallingNotes;
+
     // BPM
     float m_noteSpeed = 0.0f;
-    float m_noteSpeedMultiplier = 3.0f; // might need this if it doesn't sync up with the screen resolution
+    float m_noteSpeedMultiplier = 3.0f; // might need this if it doesn't sync up with the screen resolution                                                                                                                            
 
 
     sf::Vector2f m_flatNoteSize{ 36.0f, 100.0f };
@@ -95,8 +96,6 @@ private:
     sf::Color c_lateNoteColour = sf::Color::Red;
     sf::Color c_earlyNoteColour = sf::Color::Yellow;
     sf::Color c_perfectNoteColour = sf::Color::Green;
-
-    
 
     // UI Background Frames
     sf::RectangleShape m_scoreFrame;
@@ -124,6 +123,13 @@ private:
     sf::Text m_lateNotesValueText;
     sf::Text m_wrongNotesText;
     sf::Text m_wrongNotesValueText;
+
+    sf::Text m_hitpercentageText;
+    sf::Text m_hitpercentageValueText;
+    sf::Text m_hitNotesText;
+    sf::Text m_hitNotesValueText;
+    sf::Text m_anpsText; // Average Notes per second
+    sf::Text m_anpsValueText;
 
     // Bools
     bool b_isPlaying = false;

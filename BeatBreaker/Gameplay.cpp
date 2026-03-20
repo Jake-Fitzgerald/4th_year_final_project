@@ -5,10 +5,12 @@ Gameplay::Gameplay(SoundManager& t_soundManager, std::shared_ptr<const sf::Font>
 	  m_keyboard(t_soundManager),
 	  m_statisticFrameText(*font),
 	  m_scoreFrameText(*font),
+	  // Score
 	  m_currentScoreText(*font),
 	  m_currentScoreValueText(*font),
 	  m_pbScoreText(*font),
 	  m_pbScoreValueText(*font),
+	  // Statistics 1
 	  m_missedNotesText(*font),
 	  m_missedNotesValueText(*font),
 	  m_earlyNotesText(*font),
@@ -16,8 +18,14 @@ Gameplay::Gameplay(SoundManager& t_soundManager, std::shared_ptr<const sf::Font>
 	  m_lateNotesText(*font),
 	  m_lateNotesValueText(*font),
 	  m_wrongNotesText(*font),
-	  m_wrongNotesValueText(*font)
-
+	  m_wrongNotesValueText(*font),
+	  // Statistics 2
+	  m_hitpercentageText(*font),
+	  m_hitpercentageValueText(*font),
+	  m_hitNotesText(*font),
+	  m_hitNotesValueText(*font),
+	  m_anpsText(*font),
+	  m_anpsValueText(*font)
 {
 
 }
@@ -167,6 +175,53 @@ void Gameplay::setupStatisticText()
 	m_wrongNotesValueText.setOutlineColor(sf::Color::Black);
 	m_wrongNotesValueText.setOutlineThickness(2.0f);
 	m_wrongNotesValueText.setCharacterSize(30U);
+
+	// --------------------------------------------------------------------------------------------------------------
+
+	// Hit Percentage
+	m_hitpercentageText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 325.0f });
+	m_hitpercentageText.setString("Hit Percentage: %");
+	m_hitpercentageText.setFillColor(sf::Color::White);
+	m_hitpercentageText.setOutlineColor(sf::Color::Black);
+	m_hitpercentageText.setOutlineThickness(2.0f);
+	m_hitpercentageText.setCharacterSize(30U);
+	// Value
+	m_hitpercentageValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 350.0f });
+	m_hitpercentageValueText.setString("??%");
+	m_hitpercentageValueText.setFillColor(sf::Color::White);
+	m_hitpercentageValueText.setOutlineColor(sf::Color::Black);
+	m_hitpercentageValueText.setOutlineThickness(2.0f);
+	m_hitpercentageValueText.setCharacterSize(30U);
+
+	// Hit Notes
+	m_hitNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 375.0f });
+	m_hitNotesText.setString("Hit Notes:");
+	m_hitNotesText.setFillColor(sf::Color::White);
+	m_hitNotesText.setOutlineColor(sf::Color::Black);
+	m_hitNotesText.setOutlineThickness(2.0f);
+	m_hitNotesText.setCharacterSize(30U);
+	// Value
+	m_hitNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 400.0f });
+	m_hitNotesValueText.setString("? / ?");
+	m_hitNotesValueText.setFillColor(sf::Color::White);
+	m_hitNotesValueText.setOutlineColor(sf::Color::Black);
+	m_hitNotesValueText.setOutlineThickness(2.0f);
+	m_hitNotesValueText.setCharacterSize(30U);
+
+	// Average Notes Per Second
+	m_anpsText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 425.0f });
+	m_anpsText.setString("Avg Notes Per Second:");
+	m_anpsText.setFillColor(sf::Color::White);
+	m_anpsText.setOutlineColor(sf::Color::Black);
+	m_anpsText.setOutlineThickness(2.0f);
+	m_anpsText.setCharacterSize(30U);
+	// Value
+	m_anpsValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 450.0f });
+	m_anpsValueText.setString("?");
+	m_anpsValueText.setFillColor(sf::Color::White);
+	m_anpsValueText.setOutlineColor(sf::Color::Black);
+	m_anpsValueText.setOutlineThickness(2.0f);
+	m_anpsValueText.setCharacterSize(30U);
 }
 
 void Gameplay::update(float t_deltaTime)
@@ -228,7 +283,7 @@ void Gameplay::render(sf::RenderWindow& t_window)
 	t_window.draw(m_pbScoreText);
 	t_window.draw(m_pbScoreValueText);
 
-	// Statistic Text
+	// Statistic Text 1
 	t_window.draw(m_missedNotesText);
 	t_window.draw(m_missedNotesValueText);
 	t_window.draw(m_earlyNotesText);
@@ -237,6 +292,13 @@ void Gameplay::render(sf::RenderWindow& t_window)
 	t_window.draw(m_lateNotesValueText);
 	t_window.draw(m_wrongNotesText);
 	t_window.draw(m_wrongNotesValueText);
+	// Statistic Text 2
+	t_window.draw(m_hitpercentageText);
+	t_window.draw(m_hitpercentageValueText);
+	t_window.draw(m_hitNotesText);
+	t_window.draw(m_hitNotesValueText);
+	t_window.draw(m_anpsText);
+	t_window.draw(m_anpsValueText);
 
 	for (auto& note : m_fallingNotes)
 	{
@@ -292,15 +354,13 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 	m_spawnIndex = 0;
 	m_fallingNotes.clear();
 
-	m_noteSpeed = t_BPM   * m_noteSpeedMultiplier;
+	m_noteSpeed = t_BPM /** m_noteSpeedMultiplier*/;
 	std::cerr << "Note speed is: " << m_noteSpeed << std::endl;
 
 	for (MidiNote note : t_track.midiNotes)
 	{
 		spawnNote(note);
 	}
-
-	std::cerr << "Gameplay loaded track: " << t_track.trackName << " | Notes: " << t_track.midiNotes.size() << std::endl;
 }
 
 void Gameplay::spawnNote(MidiNote& t_note)

@@ -13,6 +13,7 @@ void SongSelect::setupPathStrings()
 		{"C Scale", "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid", SONGDIFFICULTIES::EASY},
 		{"Note Length", "ASSETS\\AUDIO\\MUSIC\\NoteLengthExample.mid", SONGDIFFICULTIES::EASY},
 		{"Major / Minor Chords", "ASSETS\\AUDIO\\MUSIC\\Major_and_Minor_Chords.mid", SONGDIFFICULTIES::MEDIUM},
+		{"Fast BPM", "ASSETS\\AUDIO\\MUSIC\\Fast_BPM.mid", SONGDIFFICULTIES::HARD},
 		{"Thousand Miles", "ASSETS\\AUDIO\\MUSIC\\ThousandMilesRiff.mid", SONGDIFFICULTIES::HARD},
 		{"Full MCI Example [TEST]", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid", SONGDIFFICULTIES::UNKNOWN},
 	};
@@ -23,7 +24,6 @@ void SongSelect::setupPathStrings()
 void SongSelect::setupButtons()
 {
 	m_buttons.reserve(m_pathsCount);
-
 
 	// Shapes
 	for (int i = 0; i < m_pathsCount; i++)
@@ -170,7 +170,7 @@ void SongSelect::setupPreviewButton()
 
 void SongSelect::setupUIFrames()
 {
-	m_songListFrame.setSize(sf::Vector2f{ m_buttonSize.x + 100.0f, m_buttonSize.y + 300.0f });
+	m_songListFrame.setSize(sf::Vector2f{ m_buttonSize.x + 100.0f, m_buttonSize.y + 500.0f });
 	m_songListFrame.setPosition(sf::Vector2f{ m_posX - 25.0f, m_posY - 25.0f });
 	m_songListFrame.setFillColor(c_frameColour);
 	m_songListFrame.setOutlineThickness(2.0f);
