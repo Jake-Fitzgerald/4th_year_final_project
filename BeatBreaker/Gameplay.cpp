@@ -4,7 +4,20 @@ Gameplay::Gameplay(SoundManager& t_soundManager, std::shared_ptr<const sf::Font>
 	: m_soundManager(&t_soundManager),
 	  m_keyboard(t_soundManager),
 	  m_statisticFrameText(*font),
-	  m_scoreFrameText(*font)
+	  m_scoreFrameText(*font),
+	  m_currentScoreText(*font),
+	  m_currentScoreValueText(*font),
+	  m_pbScoreText(*font),
+	  m_pbScoreValueText(*font),
+	  m_missedNotesText(*font),
+	  m_missedNotesValueText(*font),
+	  m_earlyNotesText(*font),
+	  m_earlyNotesValueText(*font),
+	  m_lateNotesText(*font),
+	  m_lateNotesValueText(*font),
+	  m_wrongNotesText(*font),
+	  m_wrongNotesValueText(*font)
+
 {
 
 }
@@ -13,6 +26,13 @@ void Gameplay::setup()
 {
 	setupKeyboard();
 	setupUIFrames();
+
+	// Text
+	setupScoreText();
+	setupStatisticText();
+
+	// Update Text
+	updateScore();
 }
 
 void Gameplay::setupKeyboard()
@@ -48,6 +68,105 @@ void Gameplay::setupUIFrames()
 	m_statisticFrameText.setOutlineColor(sf::Color::Black);
 	m_statisticFrameText.setOutlineThickness(2.0f);
 	m_statisticFrameText.setCharacterSize(50U);
+}
+
+void Gameplay::setupScoreText()
+{
+	sf::Vector2f scoreTextPos{ m_scoreFrame.getPosition().x, m_scoreFrame.getPosition().y };
+
+	m_currentScoreText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 25.0f});
+	m_currentScoreText.setString("Score: ");
+	m_currentScoreText.setFillColor(sf::Color::White);
+	m_currentScoreText.setOutlineColor(sf::Color::Black);
+	m_currentScoreText.setOutlineThickness(2.0f);
+	m_currentScoreText.setCharacterSize(30U);
+	// Value
+	m_currentScoreValueText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 50.0f });
+	m_currentScoreValueText.setString("0");
+	m_currentScoreValueText.setFillColor(sf::Color::White);
+	m_currentScoreValueText.setOutlineColor(sf::Color::Black);
+	m_currentScoreValueText.setOutlineThickness(2.0f);
+	m_currentScoreValueText.setCharacterSize(30U);
+
+	// Personal Best
+	m_pbScoreText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 100.0f });
+	m_pbScoreText.setString("Personal Best: ");
+	m_pbScoreText.setFillColor(sf::Color::White);
+	m_pbScoreText.setOutlineColor(sf::Color::Black);
+	m_pbScoreText.setOutlineThickness(2.0f);
+	m_pbScoreText.setCharacterSize(30U);
+	// Value
+	m_pbScoreValueText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 125.0f });
+	m_pbScoreValueText.setString("888");
+	m_pbScoreValueText.setFillColor(sf::Color::White);
+	m_pbScoreValueText.setOutlineColor(sf::Color::Black);
+	m_pbScoreValueText.setOutlineThickness(2.0f);
+	m_pbScoreValueText.setCharacterSize(30U);
+}
+
+void Gameplay::setupStatisticText()
+{
+	sf::Vector2f statisticTextPos{ m_statisticFrame.getPosition().x, m_statisticFrame.getPosition().y };
+
+	// Missed
+	m_missedNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 25.0f });
+	m_missedNotesText.setString("Missed Notes: ");
+	m_missedNotesText.setFillColor(sf::Color::White);
+	m_missedNotesText.setOutlineColor(sf::Color::Black);
+	m_missedNotesText.setOutlineThickness(2.0f);
+	m_missedNotesText.setCharacterSize(30U);
+	// Value
+	m_missedNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 50.0f });
+	m_missedNotesValueText.setString("???");
+	m_missedNotesValueText.setFillColor(sf::Color::White);
+	m_missedNotesValueText.setOutlineColor(sf::Color::Black);
+	m_missedNotesValueText.setOutlineThickness(2.0f);
+	m_missedNotesValueText.setCharacterSize(30U);
+
+	// Early
+	m_earlyNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 100.0f });
+	m_earlyNotesText.setString("Early Notes: ");
+	m_earlyNotesText.setFillColor(sf::Color::White);
+	m_earlyNotesText.setOutlineColor(sf::Color::Black);
+	m_earlyNotesText.setOutlineThickness(2.0f);
+	m_earlyNotesText.setCharacterSize(30U);
+	// Value
+	m_earlyNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 125.0f });
+	m_earlyNotesValueText.setString("???");
+	m_earlyNotesValueText.setFillColor(sf::Color::White);
+	m_earlyNotesValueText.setOutlineColor(sf::Color::Black);
+	m_earlyNotesValueText.setOutlineThickness(2.0f);
+	m_earlyNotesValueText.setCharacterSize(30U);
+
+	// Late
+	m_lateNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 175.0f });
+	m_lateNotesText.setString("Late Notes: ");
+	m_lateNotesText.setFillColor(sf::Color::White);
+	m_lateNotesText.setOutlineColor(sf::Color::Black);
+	m_lateNotesText.setOutlineThickness(2.0f);
+	m_lateNotesText.setCharacterSize(30U);
+	// Value
+	m_lateNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 200.0f });
+	m_lateNotesValueText.setString("???");
+	m_lateNotesValueText.setFillColor(sf::Color::White);
+	m_lateNotesValueText.setOutlineColor(sf::Color::Black);
+	m_lateNotesValueText.setOutlineThickness(2.0f);
+	m_lateNotesValueText.setCharacterSize(30U);
+
+	// Wrong
+	m_wrongNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 250.0f });
+	m_wrongNotesText.setString("Wrong Notes: ");
+	m_wrongNotesText.setFillColor(sf::Color::White);
+	m_wrongNotesText.setOutlineColor(sf::Color::Black);
+	m_wrongNotesText.setOutlineThickness(2.0f);
+	m_wrongNotesText.setCharacterSize(30U);
+	// Value
+	m_wrongNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 275.0f });
+	m_wrongNotesValueText.setString("???");
+	m_wrongNotesValueText.setFillColor(sf::Color::White);
+	m_wrongNotesValueText.setOutlineColor(sf::Color::Black);
+	m_wrongNotesValueText.setOutlineThickness(2.0f);
+	m_wrongNotesValueText.setCharacterSize(30U);
 }
 
 void Gameplay::update(float t_deltaTime)
@@ -90,6 +209,11 @@ void Gameplay::update(float t_deltaTime)
 	}
 }
 
+void Gameplay::updateScore()
+{
+	m_currentScoreValueText.setString(std::to_string(m_score));
+}
+
 void Gameplay::render(sf::RenderWindow& t_window)
 {
 	// UI
@@ -97,6 +221,22 @@ void Gameplay::render(sf::RenderWindow& t_window)
 	t_window.draw(m_statisticFrame);
 	t_window.draw(m_scoreFrameText);
 	t_window.draw(m_statisticFrameText);
+
+	// Score Text
+	t_window.draw(m_currentScoreText);
+	t_window.draw(m_currentScoreValueText);
+	t_window.draw(m_pbScoreText);
+	t_window.draw(m_pbScoreValueText);
+
+	// Statistic Text
+	t_window.draw(m_missedNotesText);
+	t_window.draw(m_missedNotesValueText);
+	t_window.draw(m_earlyNotesText);
+	t_window.draw(m_earlyNotesValueText);
+	t_window.draw(m_lateNotesText);
+	t_window.draw(m_lateNotesValueText);
+	t_window.draw(m_wrongNotesText);
+	t_window.draw(m_wrongNotesValueText);
 
 	for (auto& note : m_fallingNotes)
 	{
@@ -129,12 +269,15 @@ void Gameplay::noteOn(std::string& t_noteName)
 		{
 			std::cerr << "HIT: " << t_noteName << std::endl;
 			m_score += 100;
+			updateScore();
+
 			m_fallingNotes.erase(m_fallingNotes.begin() + i);
 			return;
 		}
 	}
 
 	std::cerr << "WRONG KEY: " << t_noteName << std::endl;
+	// minus score points
 }
 
 void Gameplay::noteOff(std::string& t_noteName)

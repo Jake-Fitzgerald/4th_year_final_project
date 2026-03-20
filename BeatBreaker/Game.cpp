@@ -707,17 +707,27 @@ void Game::setupMidiInput()
 		    // https://learn.microsoft.com/en-us/windows/win32/api/mmeapi/nf-mmeapi-midiingetdevcaps // reference 
 			// Error check if the device can actually be used
 			// device ID, pointer to MIDIINCAPS, size of MIDIINCAPS for error checking
-			bool b_result = midiInGetDevCaps(i, &deviceInfo, sizeof(MIDIINCAPS));
+			//bool b_result = midiInGetDevCaps(i, &deviceInfo, sizeof(MIDIINCAPS));
+			MMRESULT b_result = midiInGetDevCaps(i, &deviceInfo, sizeof(MIDIINCAPS));
 
 			if (b_result == MMSYSERR_NOERROR)
 			{
 				std::cerr << "[KEYBOARD " << i << "]" << std::endl;
 				std::cerr << deviceInfo.szPname << std::endl;
+				std::string deviceName = deviceInfo.szPname;
 				//std::cerr << deviceInfo.vDriverVersion << std::endl;
 				//std::cerr << HIWORD(deviceInfo.vDriverVersion) << " || " << LOWORD(deviceInfo.vDriverVersion) << std::endl; 
 				//std::cerr << deviceInfo.wMid << std::endl; // Manufacturer ID (useless)
 				//std::cerr << deviceInfo.wPid << std::endl; // Product ID (useless)
 				//std::cerr << deviceInfo.dwSupport << std::endl; // "Reserved; must be zero" (unsure but not needed)
+
+				if (deviceName == "MIDI function" || deviceName == "Microsoft GS Wavetable Synth")
+				{
+					std::cerr << "Skip mircrosoft midi: " << deviceName << std::endl;
+					continue;
+				}
+
+
 				std::cerr << " " << std::endl;
 
 				validMidiID = i;

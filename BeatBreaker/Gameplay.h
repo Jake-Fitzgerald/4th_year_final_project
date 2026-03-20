@@ -49,7 +49,11 @@ public:
     void setupKeyboard();
     void setupUIFrames();
 
+    void setupScoreText();
+    void setupStatisticText();
+
     void update(float t_deltaTime);
+    void updateScore();
     void render(sf::RenderWindow& t_window);
 
     void handleClick(sf::Vector2f t_mousePos);
@@ -92,7 +96,7 @@ private:
     sf::Color c_earlyNoteColour = sf::Color::Yellow;
     sf::Color c_perfectNoteColour = sf::Color::Green;
 
-    int m_score = 0;
+    
 
     // UI Background Frames
     sf::RectangleShape m_scoreFrame;
@@ -103,6 +107,23 @@ private:
     // Frame Texts
     sf::Text m_statisticFrameText;
     sf::Text m_scoreFrameText;
+
+    // Score Text
+    int m_score = 0;
+    sf::Text m_currentScoreText;
+    sf::Text m_currentScoreValueText;
+    sf::Text m_pbScoreText;
+    sf::Text m_pbScoreValueText;
+
+    // Statistic Text
+    sf::Text m_missedNotesText;
+    sf::Text m_missedNotesValueText;
+    sf::Text m_earlyNotesText;
+    sf::Text m_earlyNotesValueText;
+    sf::Text m_lateNotesText;
+    sf::Text m_lateNotesValueText;
+    sf::Text m_wrongNotesText;
+    sf::Text m_wrongNotesValueText;
 
     // Bools
     bool b_isPlaying = false;
