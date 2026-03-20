@@ -67,6 +67,8 @@ public:
 
     bool getNoteOnColliderFlag();
     void setNoteOnColliderFlag(bool t_bool);
+    bool getEasyInputFlag();
+    void setEasyInputFlag(bool t_bool);
 
 private:
     SoundManager* m_soundManager;
@@ -104,7 +106,10 @@ private:
 
     // Bools
     bool b_isPlaying = false;
+
     bool b_playNotesNoInput = true;
+    bool b_easyInputMode = true;
+
     bool b_isPreviewMode = false;
 };
 

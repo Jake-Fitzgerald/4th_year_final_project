@@ -39,11 +39,23 @@ void Keyboard::setupKeys()
     m_killTrigger.setPosition(sf::Vector2f{ m_posX, m_posY });
     m_killTrigger.setFillColor(c_killTriggerColour);
 
-    m_inputTrigger.setSize(sf::Vector2f{ baseWidth, 20.0f });
-    m_inputTrigger.setPosition(sf::Vector2f{ m_posX, m_posY - 20.0f});
+   
+    m_inputTrigger.setSize(sf::Vector2f{ baseWidth, m_inputTriggerSizeY });
+    m_inputTrigger.setOrigin(sf::Vector2f{ 0.0f, m_inputTriggerSizeY });
+    m_inputTrigger.setPosition(sf::Vector2f{ m_posX, m_posY });
     m_inputTrigger.setFillColor(c_inputTriggerColour);
 
     resetAllKeys();
+}
+
+void Keyboard::setEasyInput()
+{
+    //m_inputTrigger
+
+    //if (b_EasyInput == true)
+    //{
+
+    //}
 }
 
 void Keyboard::setupWhiteKey(int t_whiteIndex, std::string t_noteLetter, int t_octave)

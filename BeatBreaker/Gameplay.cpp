@@ -31,7 +31,7 @@ void Gameplay::setupUIFrames()
 	// Text
 	m_scoreFrameText.setPosition(sf::Vector2f{ m_scoreFrame.getPosition().x + 25.0f, m_scoreFrame.getPosition().y - 60.0f });
 	m_scoreFrameText.setString("SCORE");
-	m_scoreFrameText.setFillColor(sf::Color::Black);
+	m_scoreFrameText.setFillColor(sf::Color::White);
 	m_scoreFrameText.setOutlineColor(sf::Color::Black);
 	m_scoreFrameText.setOutlineThickness(2.0f);
 	m_scoreFrameText.setCharacterSize(50U);
@@ -44,7 +44,7 @@ void Gameplay::setupUIFrames()
 	// Text
 	m_statisticFrameText.setPosition(sf::Vector2f{ m_statisticFrame.getPosition().x + 25.0f, m_statisticFrame.getPosition().y - 60.0f });
 	m_statisticFrameText.setString("STATISTICS");
-	m_statisticFrameText.setFillColor(sf::Color::Black);
+	m_statisticFrameText.setFillColor(sf::Color::White);
 	m_statisticFrameText.setOutlineColor(sf::Color::Black);
 	m_statisticFrameText.setOutlineThickness(2.0f);
 	m_statisticFrameText.setCharacterSize(50U);
@@ -222,5 +222,18 @@ void Gameplay::setNoteOnColliderFlag(bool t_bool)
 	std::cerr << "" << std::endl;
 	std::cerr << "b_playNotesNoInput toggled" << std::endl;
 	std::cerr << "" << std::endl;
+}
 
+bool Gameplay::getEasyInputFlag()
+{
+	return b_easyInputMode;
+}
+
+void Gameplay::setEasyInputFlag(bool t_bool)
+{
+	b_easyInputMode = t_bool;
+
+	std::cerr << "" << std::endl;
+	std::cerr << "b_easyInputMode toggled" << std::endl;
+	std::cerr << "" << std::endl;
 }

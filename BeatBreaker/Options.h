@@ -8,12 +8,14 @@
 #include <iostream>
 #include <fstream> 
 #include "Gameplay.h"
+#include "Keyboard.h"
 
 struct OptionButton
 {
 	sf::RectangleShape m_buttonShape;
 	sf::Vector2f m_buttonSize{ 300.0f, 50.0f };
-	sf::Vector2f m_buttonPos{ paddingX + 50.0f,paddingY + 250.0f };
+	sf::Vector2f m_buttonPos1{ paddingX + 50.0f,paddingY + 250.0f };
+	sf::Vector2f m_buttonPos2{ paddingX + 50.0f,paddingY + 350.0f };
 
 	sf::Text m_buttonText;
 	sf::Color c_enabledColour = sf::Color::Green;
@@ -28,7 +30,7 @@ struct OptionButton
 class Options
 {
 public:
-	Options(std::shared_ptr<const sf::Font> font, Gameplay& t_gameplay);
+	Options(std::shared_ptr<const sf::Font> font, Gameplay& t_gameplay/*, Keyboard& m_keyboard*/);
 
 	void setupOptionsTexts();
 	void setupOptionsButtons();
@@ -118,5 +120,6 @@ private:
 	sf::Text m_soundFrameText;
 
 	Gameplay* m_gameplay;
+	//Keyboard* m_keyboard;
 };
 

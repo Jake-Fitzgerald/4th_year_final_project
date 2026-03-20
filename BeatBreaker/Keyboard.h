@@ -31,6 +31,7 @@ public:
     Keyboard(SoundManager& t_soundManager);
 
     void setupKeys();
+    void setEasyInput();
     void setupSounds();
 
     void render(sf::RenderWindow& t_window);
@@ -79,6 +80,7 @@ private:
     // Collision
     sf::RectangleShape m_killTrigger;
     sf::RectangleShape m_inputTrigger;
+    float m_inputTriggerSizeY = 80.0f;
     int m_score = 0;
 };
 

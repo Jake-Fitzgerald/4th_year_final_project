@@ -1,6 +1,6 @@
 #include "Options.h"
 
-Options::Options(std::shared_ptr<const sf::Font> font, Gameplay& t_gameplay)
+Options::Options(std::shared_ptr<const sf::Font> font, Gameplay& t_gameplay/*, Keyboard& m_keyboard*/)
 	: m_font(font),
 	m_OptionsText(*font),
 	m_musicText(*font),
@@ -116,20 +116,36 @@ void Options::setupOptionsButtons()
 
 void Options::setupMidiOptions()
 {
-	OptionButton optionButton(m_font);
+	OptionButton colTriggerBool(m_font);
 
-	optionButton.m_buttonShape.setSize(optionButton.m_buttonSize);
-	optionButton.m_buttonShape.setPosition(optionButton.m_buttonPos);
-	optionButton.m_buttonShape.setFillColor(optionButton.c_enabledColour);
-	optionButton.m_buttonShape.setOutlineThickness(2.0f);
-	optionButton.m_buttonShape.setOutlineColor(sf::Color::Black);
+	colTriggerBool.m_buttonShape.setSize(colTriggerBool.m_buttonSize);
+	colTriggerBool.m_buttonShape.setPosition(colTriggerBool.m_buttonPos1);
+	colTriggerBool.m_buttonShape.setFillColor(colTriggerBool.c_enabledColour);
+	colTriggerBool.m_buttonShape.setOutlineThickness(2.0f);
+	colTriggerBool.m_buttonShape.setOutlineColor(sf::Color::Black);
 
-	optionButton.m_buttonText.setString("Play note no input");
-	optionButton.m_buttonText.setFillColor(sf::Color::Black);
-	optionButton.m_buttonText.setCharacterSize(40U);
-	optionButton.m_buttonText.setPosition({ optionButton.m_buttonShape.getPosition().x + 20.0f, optionButton.m_buttonShape.getPosition().y });
+	colTriggerBool.m_buttonText.setString("Play note no input");
+	colTriggerBool.m_buttonText.setFillColor(sf::Color::Black);
+	colTriggerBool.m_buttonText.setCharacterSize(40U);
+	colTriggerBool.m_buttonText.setPosition({ colTriggerBool.m_buttonShape.getPosition().x + 20.0f, colTriggerBool.m_buttonShape.getPosition().y });
 
-	m_buttons.push_back(optionButton);
+	m_buttons.push_back(colTriggerBool);
+
+	// Input Trigger Size
+	OptionButton colTriggerSize(m_font);
+
+	colTriggerSize.m_buttonShape.setSize(colTriggerSize.m_buttonSize);
+	colTriggerSize.m_buttonShape.setPosition(colTriggerSize.m_buttonPos2);
+	colTriggerSize.m_buttonShape.setFillColor(colTriggerSize.c_enabledColour);
+	colTriggerSize.m_buttonShape.setOutlineThickness(2.0f);
+	colTriggerSize.m_buttonShape.setOutlineColor(sf::Color::Black);
+
+	colTriggerSize.m_buttonText.setString("Easy Input Mode");
+	colTriggerSize.m_buttonText.setFillColor(sf::Color::Black);
+	colTriggerSize.m_buttonText.setCharacterSize(40U);
+	colTriggerSize.m_buttonText.setPosition({ colTriggerSize.m_buttonShape.getPosition().x + 20.0f, colTriggerSize.m_buttonShape.getPosition().y });
+
+	m_buttons.push_back(colTriggerSize);
 }
 
 void Options::setupUIFrames()
@@ -156,7 +172,7 @@ void Options::setupUIFrames()
 	// ---------------------------------------------------------------------------------------------------------------------------------
 
 	m_midiOptionsFrame.setSize(m_frameSize);
-	m_midiOptionsFrame.setPosition(sf::Vector2f{ m_buttons[0].m_buttonPos.x - 25.0f, m_buttons[0].m_buttonPos.y - 25.0f });
+	m_midiOptionsFrame.setPosition(sf::Vector2f{ m_buttons[0].m_buttonPos1.x - 25.0f, m_buttons[0].m_buttonPos1.y - 25.0f });
 	m_midiOptionsFrame.setFillColor(c_frameColour);
 	m_midiOptionsFrame.setOutlineThickness(2.0f);
 	m_midiOptionsFrame.setOutlineColor(sf::Color::Green);
@@ -169,7 +185,7 @@ void Options::setupUIFrames()
 	m_midiFrameText.setCharacterSize(50U); 
 	// Text Frame
 	m_midiTextFrame.setSize(m_frameTextSize);
-	m_midiTextFrame.setPosition(sf::Vector2f{ m_buttons[0].m_buttonPos.x - 25.0f, m_buttons[0].m_buttonPos.y - 76.0f });
+	m_midiTextFrame.setPosition(sf::Vector2f{ m_buttons[0].m_buttonPos1.x - 25.0f, m_buttons[0].m_buttonPos1.y - 76.0f });
 	m_midiTextFrame.setFillColor(c_frameColour);
 	m_midiTextFrame.setOutlineThickness(2.0f);
 	m_midiTextFrame.setOutlineColor(sf::Color::Green);
@@ -308,17 +324,21 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	}
 
 	// Midi Buttons
-	for (auto& button : m_buttons)
+	// Bool
+	if (m_buttons[0].m_buttonShape.getGlobalBounds().contains(t_mousePos))
 	{
-		if (button.m_buttonShape.getGlobalBounds().contains(t_mousePos))
-		{
-			bool currentFlag = m_gameplay->getNoteOnColliderFlag();
-			m_gameplay->setNoteOnColliderFlag(!currentFlag);
-			changeButtonColours();
-
-		}
+		bool currentFlag = m_gameplay->getNoteOnColliderFlag();
+		m_gameplay->setNoteOnColliderFlag(!currentFlag);
+		changeButtonColours();
 	}
-
+	// Size
+	else if (m_buttons[1].m_buttonShape.getGlobalBounds().contains(t_mousePos))
+	{
+		bool currentFlag = m_gameplay->getEasyInputFlag();
+		m_gameplay->setEasyInputFlag(!currentFlag);
+		changeButtonColours();
+	}
+	
 	return false;
 }
 
@@ -360,6 +380,7 @@ void Options::savePreferences()
 
 	// Midi
 	MyFile << "PlayNotesNoInput=" << m_gameplay->getNoteOnColliderFlag();
+	MyFile << "EasyInputMode=" << m_gameplay->getEasyInputFlag();
 
 	MyFile.close();
 }
@@ -425,6 +446,12 @@ void Options::loadPreferences(SoundManager& t_soundManager)
 			m_gameplay->setNoteOnColliderFlag(savedFlag);
 			std::cerr << "PlayNotesNoInput: " << savedFlag << std::endl;
 		}
+		else if (name == "EasyInputMode")
+		{
+			bool savedFlag = static_cast<bool>(value);
+			m_gameplay->setEasyInputFlag(savedFlag);
+			std::cerr << "EasyInputMode: " << savedFlag << std::endl;
+		}
 	}
 	
 	// Update the sound manager
@@ -459,18 +486,26 @@ void Options::changeButtonColours()
 	}
 
 	// Midi Button
-	for (auto& button : m_buttons)
+
+	// Bool
+	if (m_gameplay->getNoteOnColliderFlag() == false)
 	{
-		if (m_gameplay->getNoteOnColliderFlag() == false)
-		{
-			m_buttons[0].m_buttonShape.setFillColor(m_buttons[0].c_disabledColour);
-		}
-		else
-		{
-			m_buttons[0].m_buttonShape.setFillColor(m_buttons[0].c_enabledColour);
-		}
-		
+		m_buttons[0].m_buttonShape.setFillColor(m_buttons[0].c_disabledColour);
 	}
+	else
+	{
+		m_buttons[0].m_buttonShape.setFillColor(m_buttons[0].c_enabledColour);
+	}
+	// Size
+	if (m_gameplay->getEasyInputFlag() == false)
+	{
+		m_buttons[1].m_buttonShape.setFillColor(m_buttons[1].c_disabledColour);
+	}
+	else
+	{
+		m_buttons[1].m_buttonShape.setFillColor(m_buttons[1].c_enabledColour);
+	}
+	
 }
 
 void Options::setupOptionsTextures()
