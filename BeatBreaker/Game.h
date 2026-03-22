@@ -63,7 +63,7 @@ enum GameStates
 	MainMenuScene,
 	GameplayScene,
 	OptionsScene,
-	GameOverScene,
+	ResultsScene,
 
 	// Selection scenes
 	MidiFileSelectScene,

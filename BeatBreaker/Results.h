@@ -9,7 +9,6 @@ Displays the recorded data that was collected during the run.
  - Total Time,
  - Total Score,
 
-
  Score Calculation: 
  What depth was reached, how many lives were lost (if none then give bonus points), how on beat you were (perfect hits)
 
@@ -23,16 +22,16 @@ Displays the recorded data that was collected during the run.
 class Results
 {
 public:
+	Results();
 
+	void setup();
+	void setupButtons();
+
+	void render(sf::RenderWindow& t_window);
 private:
 	// Current run
-	int m_depthReached;
-	int m_timeReached;
-	int m_scoreReached;
-
-	// Load from saved data
-	int m_pbDepth;
-	int m_pbTime;
+	int m_currentScore;
 	int m_pbScore;
+
 };
 

@@ -27,13 +27,18 @@ Gameplay::Gameplay(SoundManager& t_soundManager, std::shared_ptr<const sf::Font>
 	  m_hitNotesText(*font),
 	  m_hitNotesValueText(*font),
 	  m_anpsText(*font),
-	  m_anpsValueText(*font)
+	  m_anpsValueText(*font),
+	  // Playback
+	  m_songTimeText(*font),
+	  m_songEndTimeText(*font)
 {
 
 }
 
 void Gameplay::setup()
 {
+	resetSession();
+
 	setupKeyboard();
 	setupUIFrames();
 
@@ -78,6 +83,23 @@ void Gameplay::setupUIFrames()
 	m_statisticFrameText.setOutlineColor(sf::Color::Black);
 	m_statisticFrameText.setOutlineThickness(2.0f);
 	m_statisticFrameText.setCharacterSize(50U);
+}
+
+void Gameplay::setupPlaybackText()
+{
+	m_songTimeText.setPosition(sf::Vector2f{ m_playbackTextPos.x, m_playbackTextPos.y });
+	m_songTimeText.setString(std::to_string(m_playbackTime));
+	m_songTimeText.setFillColor(sf::Color::Yellow);
+	m_songTimeText.setOutlineColor(sf::Color::Black);
+	m_songTimeText.setOutlineThickness(2.0f);
+	m_songTimeText.setCharacterSize(30U);
+
+	m_songEndTimeText.setPosition(sf::Vector2f{ m_playbackTextPos.x, m_playbackTextPos.y + 50.0f});
+	m_songEndTimeText.setString(std::to_string(m_songEndTime));
+	m_songEndTimeText.setFillColor(sf::Color::White);
+	m_songEndTimeText.setOutlineColor(sf::Color::Black);
+	m_songEndTimeText.setOutlineThickness(2.0f);
+	m_songEndTimeText.setCharacterSize(30U);
 }
 
 void Gameplay::setupScoreText()
@@ -242,6 +264,14 @@ void Gameplay::update(float t_deltaTime)
 	}
 
 	m_playbackTime += t_deltaTime;
+	m_songTimeText.setString(std::to_string(m_playbackTime));
+
+	if (b_isPlaying == true && m_playbackTime >= m_songEndTime)
+	{
+		b_isPlaying = false;
+		b_isSongFinished = true;
+		std::cerr << "Song finished" << std::endl;
+	}
 
 	for (auto& note : m_fallingNotes)
 	{
@@ -313,6 +343,12 @@ void Gameplay::updateStatistics()
 
 void Gameplay::resetSession()
 {
+	m_playbackTime = 0.0;
+	//m_songEndTime = 0.0f;
+	b_isSongFinished = false;
+	b_isPlaying = false;
+	m_fallingNotes.clear();
+
 	resetScore();
 	resetStatistics();
 }
@@ -341,6 +377,10 @@ void Gameplay::render(sf::RenderWindow& t_window)
 	t_window.draw(m_statisticFrame);
 	t_window.draw(m_scoreFrameText);
 	t_window.draw(m_statisticFrameText);
+
+	// Playback Text
+	t_window.draw(m_songTimeText);
+	t_window.draw(m_songEndTimeText);
 
 	// Score Text
 	t_window.draw(m_currentScoreText);
@@ -483,6 +523,12 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 	m_spawnIndex = 0;
 	m_fallingNotes.clear();
 
+	if (!t_track.midiNotes.empty())
+	{
+		m_songEndTime = t_track.midiNotes.back().endTime;
+		std::cerr << "Song end time: " << m_songEndTime << std::endl;
+	}
+
 	m_noteSpeed = t_BPM /** m_noteSpeedMultiplier*/;
 	std::cerr << "Note speed is: " << m_noteSpeed << std::endl;
 
@@ -491,7 +537,9 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 		spawnNote(note);
 	}
 
+
 	setupStatistics();
+	setupPlaybackText();
 }
 
 void Gameplay::spawnNote(MidiNote& t_note)
@@ -602,4 +650,9 @@ bool Gameplay::getTriggerDisplayFlag()
 void Gameplay::setTriggerDisplayFlag(bool t_bool)
 {
 	b_displayTriggers = t_bool;
+}
+
+bool Gameplay::getSongFinishedFlag()
+{
+	return b_isSongFinished;
 }

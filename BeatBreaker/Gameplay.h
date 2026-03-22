@@ -66,6 +66,7 @@ public:
     void setupKeyboard();
     void setupUIFrames();
 
+    void setupPlaybackText();
     void setupScoreText();
     void setupStatisticText();
     void setupStatistics();
@@ -99,6 +100,7 @@ public:
     void setEasyInputFlag(bool t_bool);
     bool getTriggerDisplayFlag();
     void setTriggerDisplayFlag(bool t_bool);
+    bool getSongFinishedFlag();
 
 private:
     SoundManager* m_soundManager;
@@ -110,6 +112,11 @@ private:
     double m_songEndTime = 0.0;
     int m_spawnIndex = 0;
     std::vector<FallingNote> m_fallingNotes;
+
+    // Playback Text
+    sf::Vector2f m_playbackTextPos{ paddingX + 25.0f, paddingY + 400.0f };
+    sf::Text m_songTimeText;
+    sf::Text m_songEndTimeText;
 
     // BPM
     float m_noteSpeed = 0.0f;
@@ -125,9 +132,9 @@ private:
     sf::Color c_earlyNoteColour = sf::Color::Yellow;
     sf::Color c_perfectNoteColour = sf::Color::Green;
     // Trigger Colours
-    sf::Color c_earlyTriggerColour = sf::Color(255, 255, 50, 200);
-    sf::Color c_perfectTriggerColour = sf::Color(50, 255, 50, 200);
-    sf::Color c_lateTriggerColour = sf::Color(255, 50, 50, 200);
+    sf::Color c_earlyTriggerColour = sf::Color(255, 255, 50, 100);
+    sf::Color c_perfectTriggerColour = sf::Color(50, 255, 50, 100);
+    sf::Color c_lateTriggerColour = sf::Color(255, 50, 50, 100);
 
 
     // UI Background Frames
@@ -185,6 +192,7 @@ private:
 
     // Bools
     bool b_isPlaying = false;
+    bool b_isSongFinished = false;
 
     bool b_playNotesNoInput = true;
     bool b_easyInputMode = true;

@@ -279,6 +279,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		{
 			stopMidiMCI();
 			m_currentGameState = GameStates::SongSelectionScene;
+			m_gameplay.resetSession();
 			std::cout << "Start button clicked!" << std::endl;
 			m_soundManager.play("ui_confirm");
 		}
@@ -528,6 +529,11 @@ void Game::update(sf::Time t_deltaTime)
 	if (m_currentGameState == GameStates::GameplayScene)
 	{
 		m_gameplay.update(dtConverted);
+
+		if (m_gameplay.getSongFinishedFlag() == true)
+		{
+			m_currentGameState = GameStates::ResultsScene;
+		}
 	}
 }
 

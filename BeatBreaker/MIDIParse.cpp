@@ -456,7 +456,7 @@ uint8_t MIDIParse::readByte(std::ifstream& t_file)
 	// std::ifstream::read only accepts char, and uint8_t is a typedef of char
 	t_file.read(&byte, sizeof(byte));
 
-	// Convert to unsigned 8-bit value (0–255)
+	// Convert to unsigned 8-bit value (0 255)
 	return static_cast<uint8_t>(byte);
 }
 
