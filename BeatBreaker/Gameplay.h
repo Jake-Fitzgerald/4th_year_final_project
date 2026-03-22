@@ -17,6 +17,10 @@ Statistics: (show this in the statistics tab on the left hand side of the screen
 - Hit percentage 
 - Hits notes (45/50)
 - Average notes per second?
+                                    Count how many notes in the vector and use that for the hit percentage and hit notes counter. [TODO]
+                                    Count how long the song is by looking at the timestamp for the last note in the vector and adding 5 seconds to it.
+
+    
 
 - Missed notes
 - Early notes
@@ -27,6 +31,9 @@ Score: (right hand side)
 - Current score
 - Personal best score
 
+Combo
+- 5 notes in sequence hit with perfect timing?
+
 */
 
 struct FallingNote
@@ -34,10 +41,20 @@ struct FallingNote
     sf::RectangleShape shape;
     sf::RectangleShape earlyTrigger;
     sf::RectangleShape lateTrigger;
+    sf::RectangleShape perfectTrigger;
 
     std::string noteName;   
     float speed = 200.0f;
     bool b_isActive = true;
+};
+
+enum class HitType
+{
+    Early,
+    Perfect,
+    Late,
+    Miss,
+    Wrong
 };
 
 class Gameplay
@@ -92,10 +109,16 @@ private:
     sf::Vector2f m_flatNoteSize{ 36.0f, 100.0f };
     sf::Vector2f m_sharpNoteSize{ 20.0f, 100.0f };
 
+    // Note Colours
     sf::Color c_activeNoteColour = sf::Color::Blue;
     sf::Color c_lateNoteColour = sf::Color::Red;
     sf::Color c_earlyNoteColour = sf::Color::Yellow;
     sf::Color c_perfectNoteColour = sf::Color::Green;
+    // Trigger Colours
+    sf::Color c_earlyTriggerColour = sf::Color(255, 255, 50, 200);
+    sf::Color c_perfectTriggerColour = sf::Color(50, 255, 50, 200);
+    sf::Color c_lateTriggerColour = sf::Color(255, 50, 50, 200);
+
 
     // UI Background Frames
     sf::RectangleShape m_scoreFrame;
@@ -107,8 +130,14 @@ private:
     sf::Text m_statisticFrameText;
     sf::Text m_scoreFrameText;
 
-    // Score Text
+    // Score
     int m_score = 0;
+    int m_scoreEarly = 75;
+    int m_scorePerfect = 100;
+    int m_scoreLate = 50;
+    int m_scoreMiss = 25;
+    int m_scoreWrong = 50;
+    // Score Text
     sf::Text m_currentScoreText;
     sf::Text m_currentScoreValueText;
     sf::Text m_pbScoreText;

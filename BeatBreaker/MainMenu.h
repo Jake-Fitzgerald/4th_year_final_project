@@ -37,7 +37,6 @@ public:
 	
 	void setupMainMenu();
 
-
 	void render(sf::RenderWindow& t_window);
 
 	// Selection

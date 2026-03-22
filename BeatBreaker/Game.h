@@ -76,8 +76,9 @@ enum GameStates
 	DrumVis,
 
 	// Leaderboard
-	LeaderboardScene
+	LeaderboardScene,
 
+	RecordScene
 };
 
 struct MidiCallbackData

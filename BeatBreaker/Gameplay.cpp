@@ -235,7 +235,12 @@ void Gameplay::update(float t_deltaTime)
 
 	for (auto& note : m_fallingNotes)
 	{
-		note.shape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
+		//note.shape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
+		sf::Vector2f movement{ 0.0f, m_noteSpeed * t_deltaTime };
+		note.shape.move(movement);
+		note.earlyTrigger.move(movement);
+		note.perfectTrigger.move(movement);
+		note.lateTrigger.move(movement);
 
 		if (b_playNotesNoInput)
 		{
@@ -306,6 +311,14 @@ void Gameplay::render(sf::RenderWindow& t_window)
 	}
 
 	m_keyboard.render(t_window);
+
+	// Triggers
+	for (auto& note : m_fallingNotes)
+	{
+		t_window.draw(note.earlyTrigger);
+		t_window.draw(note.perfectTrigger);
+		t_window.draw(note.lateTrigger);
+	}
 }
 
 void Gameplay::handleClick(sf::Vector2f t_mousePos)
@@ -325,21 +338,41 @@ void Gameplay::noteOn(std::string& t_noteName)
 	for (int i = 0; i < m_fallingNotes.size(); i++)
 	{
 		bool b_nameMatches = m_fallingNotes[i].noteName == t_noteName;
-		bool b_inHitZone = m_keyboard.checkInputCollision(m_fallingNotes[i].shape);
+		//bool b_inHitZone = m_keyboard.checkInputCollision(m_fallingNotes[i].shape);
 
-		if (b_nameMatches && b_inHitZone)
+		if (b_nameMatches)
 		{
-			std::cerr << "HIT: " << t_noteName << std::endl;
-			m_score += 100;
-			updateScore();
-
-			m_fallingNotes.erase(m_fallingNotes.begin() + i);
-			return;
+			if (m_keyboard.checkInputCollision(m_fallingNotes[i].earlyTrigger))
+			{
+				std::cerr << "EARLY: " << t_noteName << std::endl;
+				m_score += m_scoreEarly;
+				updateScore();
+				m_fallingNotes.erase(m_fallingNotes.begin() + i);
+				return;
+			}
+			if (m_keyboard.checkInputCollision(m_fallingNotes[i].perfectTrigger))
+			{
+				std::cerr << "PERFECT: " << t_noteName << std::endl;
+				m_score += m_scorePerfect;
+				updateScore();
+				m_fallingNotes.erase(m_fallingNotes.begin() + i);
+				return;
+			}
+			if (m_keyboard.checkInputCollision(m_fallingNotes[i].lateTrigger))
+			{
+				std::cerr << "LATE: " << t_noteName << std::endl;
+				m_score += m_scoreLate;
+				updateScore();
+				m_fallingNotes.erase(m_fallingNotes.begin() + i);
+				return;
+			}
 		}
 	}
 
 	std::cerr << "WRONG KEY: " << t_noteName << std::endl;
-	// minus score points
+	m_score -= m_scoreWrong;
+	updateScore();
+	//m_fallingNotes.erase(m_fallingNotes.begin() + i);
 }
 
 void Gameplay::noteOff(std::string& t_noteName)
@@ -401,9 +434,39 @@ void Gameplay::spawnNote(MidiNote& t_note)
 	currentNote.shape.setOutlineColor(sf::Color::Black);
 	currentNote.shape.setOutlineThickness(2.0f);
 
-	m_fallingNotes.push_back(currentNote);
+	// --------------------------------------------------------------------------------
+	// Triggers
+	
+	
+	float triggerHeight = 40.0f;
+	float noteWidth = m_flatNoteSize.x - 15.0f;
 
-	std::cerr << "Spawned note: " << t_note.noteName << " at x =" << keyPosX << " y =" << noteSpawnY << std::endl;
+	if (b_isSharp == true)
+	{
+		noteWidth = m_sharpNoteSize.x - 15.0f;
+	}
+
+	sf::Vector2f triggerSize{ noteWidth, triggerHeight };
+	sf::Vector2f notePos{ currentNote.shape.getPosition() };
+	sf::Vector2f noteBottomLeft{ notePos.x, notePos.y + noteHeight };
+
+	// Early
+	currentNote.earlyTrigger.setSize(triggerSize);
+	currentNote.earlyTrigger.setFillColor(c_earlyTriggerColour);
+	currentNote.earlyTrigger.setPosition(sf::Vector2f{ notePos.x, noteBottomLeft.y });
+
+	// Perfect
+	currentNote.perfectTrigger.setSize(triggerSize);
+	currentNote.perfectTrigger.setFillColor(c_perfectTriggerColour);
+	currentNote.perfectTrigger.setPosition(sf::Vector2f{ notePos.x, noteBottomLeft.y - triggerHeight});
+
+	// Late
+	currentNote.lateTrigger.setSize(triggerSize);
+	currentNote.lateTrigger.setFillColor(c_lateTriggerColour);
+	currentNote.lateTrigger.setPosition(sf::Vector2f{ notePos.x, noteBottomLeft.y - triggerHeight * 2});
+
+	m_fallingNotes.push_back(currentNote);
+	//std::cerr << "Spawned note: " << t_note.noteName << " at x =" << keyPosX << " y =" << noteSpawnY << std::endl;
 }
 
 void Gameplay::startSong()
