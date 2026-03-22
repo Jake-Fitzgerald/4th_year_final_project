@@ -12,18 +12,18 @@ void PianoVisualiser::setupPianoShapes()
 
     for (int octave = 2; octave <= 5; octave++)
     {
-        setupWhiteKey(keyIndex++, "C", octave);   // C
-        setupBlackKey(keyIndex - 1, "C#", octave); // C#
-        setupWhiteKey(keyIndex++, "D", octave);   // D
-        setupBlackKey(keyIndex - 1, "D#", octave); // D#
-        setupWhiteKey(keyIndex++, "E", octave);   // E
-        setupWhiteKey(keyIndex++, "F", octave);   // F
-        setupBlackKey(keyIndex - 1, "F#", octave); // F#
-        setupWhiteKey(keyIndex++, "G", octave);   // G
-        setupBlackKey(keyIndex - 1, "G#", octave); // G#
-        setupWhiteKey(keyIndex++, "A", octave);   // A
-        setupBlackKey(keyIndex - 1, "A#", octave); // A#
-        setupWhiteKey(keyIndex++, "B", octave);   // B
+        setupWhiteKey(keyIndex++, "C", octave);   
+        setupBlackKey(keyIndex - 1, "C#", octave); 
+        setupWhiteKey(keyIndex++, "D", octave);  
+        setupBlackKey(keyIndex - 1, "D#", octave); 
+        setupWhiteKey(keyIndex++, "E", octave);  
+        setupWhiteKey(keyIndex++, "F", octave);   
+        setupBlackKey(keyIndex - 1, "F#", octave); 
+        setupWhiteKey(keyIndex++, "G", octave);   
+        setupBlackKey(keyIndex - 1, "G#", octave); 
+        setupWhiteKey(keyIndex++, "A", octave); 
+        setupBlackKey(keyIndex - 1, "A#", octave); 
+        setupWhiteKey(keyIndex++, "B", octave); 
     }
 
     // Final C6
@@ -112,7 +112,7 @@ void PianoVisualiser::setupPianoSounds()
         {
             std::string soundName = noteNames[note] + std::to_string(octave);
             std::string filename = "ASSETS\\AUDIO\\Piano\\" + soundName + ".WAV";
-            std::cerr << "WAV loading: " << filename << std::endl;
+            //std::cerr << "WAV loading: " << filename << std::endl;
             m_soundManager->loadBuffer(soundName, filename, SoundType::MUSIC);
         }
     }

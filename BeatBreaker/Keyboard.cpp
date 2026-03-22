@@ -116,7 +116,7 @@ void Keyboard::setupSounds()
         {
             std::string soundName = note + std::to_string(octave);
             std::string filename = "ASSETS\\AUDIO\\Piano\\" + soundName + ".WAV";
-            std::cerr << "WAV loading: " << filename << std::endl;
+           // std::cerr << "WAV loading: " << filename << std::endl;
             m_soundManager->loadBuffer(soundName, filename, SoundType::MUSIC);
         }
     }

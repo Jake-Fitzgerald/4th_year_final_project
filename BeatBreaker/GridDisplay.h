@@ -7,12 +7,14 @@
 class GridDisplay
 {
 public:
+	GridDisplay();
+
 	void setupGrid();
+	void setupSprites();
 
 	void renderGrid(sf::RenderWindow& t_window);
 
 	void toggleGridVisible();
-
 
 private:
 	std::vector<sf::RectangleShape> m_lineShapesVertical;
@@ -24,5 +26,9 @@ private:
 
 	bool b_isGridVisible;
 
+
+	// Vignette
+	sf::Texture m_vignetteTexture;
+	sf::Sprite m_vignetteSprite;
 };
 

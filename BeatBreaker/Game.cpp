@@ -87,6 +87,7 @@ Game::Game() :
 
 	// UI 
 	gridDisplay.setupGrid();
+	gridDisplay.setupSprites();
 
 	// Custom Icon
 	setupCustomIcon();

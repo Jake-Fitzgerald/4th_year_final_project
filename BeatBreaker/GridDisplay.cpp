@@ -1,5 +1,12 @@
 #include "GridDisplay.h"
 
+
+
+GridDisplay::GridDisplay() : m_vignetteTexture(), m_vignetteSprite(m_vignetteTexture)
+{
+
+}
+
 void GridDisplay::setupGrid()
 {
     int columns = SCREEN_WIDTH / m_gridSpaceSize;
@@ -35,6 +42,21 @@ void GridDisplay::setupGrid()
     }
 
     b_isGridVisible = true;
+
+    setupSprites();
+}
+
+void GridDisplay::setupSprites()
+{
+    if (!m_vignetteTexture.loadFromFile("ASSETS\\IMAGES\\Overlay\\Vignette_Overlay.png"))
+    {
+        // simple error message if previous call fails
+        std::cout << "problem loading vignette overlay" << std::endl;
+    }
+
+    m_vignetteSprite.setTexture(m_vignetteTexture, true);
+    m_vignetteSprite.setPosition(sf::Vector2f{ 0.0f, 0.0f });
+    m_vignetteSprite.setColor(sf::Color(255, 255, 255, 100)); 
 }
 
 void GridDisplay::renderGrid(sf::RenderWindow& t_window)
@@ -51,6 +73,7 @@ void GridDisplay::renderGrid(sf::RenderWindow& t_window)
             t_window.draw(line);
         }
     } 
+    t_window.draw(m_vignetteSprite);
 }
 
 void GridDisplay::toggleGridVisible()
