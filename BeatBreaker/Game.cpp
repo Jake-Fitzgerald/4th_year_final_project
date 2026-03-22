@@ -241,6 +241,19 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 		{
 			m_gameplay.startSong();
 		}
+
+		if (sf::Keyboard::Key::T == newKeypress->code)
+		{
+			bool triggerDisplay = m_gameplay.getTriggerDisplayFlag();
+			if (triggerDisplay == true)
+			{
+				m_gameplay.setTriggerDisplayFlag(!triggerDisplay);
+			}
+			else
+			{
+				m_gameplay.setTriggerDisplayFlag(!triggerDisplay);
+			}
+		}
 	}
 }
 

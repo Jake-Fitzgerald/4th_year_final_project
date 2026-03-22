@@ -15,6 +15,8 @@ Gameplay::Gameplay(SoundManager& t_soundManager, std::shared_ptr<const sf::Font>
 	  m_missedNotesValueText(*font),
 	  m_earlyNotesText(*font),
 	  m_earlyNotesValueText(*font),
+	  m_perfectNotesText(*font),
+	  m_perfectNotesValueText(*font),
 	  m_lateNotesText(*font),
 	  m_lateNotesValueText(*font),
 	  m_wrongNotesText(*font),
@@ -224,6 +226,14 @@ void Gameplay::setupStatisticText()
 	m_anpsValueText.setCharacterSize(30U);
 }
 
+void Gameplay::setupStatistics()
+{
+	m_noteCountTotal = m_fallingNotes.size();
+	m_currentNotesHit = m_fallingNotes.size();
+	std::cerr << "Note amount: " << m_noteCountTotal << std::endl;
+	m_hitNotesValueText.setString(std::to_string(m_currentNotesHit) + " / " + std::to_string(m_noteCountTotal));
+}
+
 void Gameplay::update(float t_deltaTime)
 {
 	if (b_isPlaying == false)
@@ -258,12 +268,19 @@ void Gameplay::update(float t_deltaTime)
 	{
 		if (m_fallingNotes[i].shape.getPosition().y > m_keyboard.getKillTriggerY())
 		{
-			if (m_fallingNotes[i].b_isActive == false)
+			if (m_fallingNotes[i].b_isActive == true)
+			{
+				std::cerr << "MISS: " << std::endl;
+				m_score -= m_scoreMiss;
+				updateScore();
+				m_missedNotes++;
+				updateStatistics();
+			}
+			else
 			{
 				m_keyboard.noteOff(m_fallingNotes[i].noteName);
 			}
-
-			std::cerr << "MISS: " << m_fallingNotes[i].noteName << std::endl;
+			//std::cerr << "MISS: " << m_fallingNotes[i].noteName << std::endl;
 			m_fallingNotes.erase(m_fallingNotes.begin() + i);
 		}
 	}
@@ -272,6 +289,49 @@ void Gameplay::update(float t_deltaTime)
 void Gameplay::updateScore()
 {
 	m_currentScoreValueText.setString(std::to_string(m_score));
+}
+
+void Gameplay::updateStatistics()
+{
+	// Statistics 1
+	m_earlyNotesValueText.setString(std::to_string(m_earlyNotes));
+	m_perfectNotesValueText.setString(std::to_string(m_perfectNotes));
+	m_lateNotesValueText.setString(std::to_string(m_lateNotes));
+	m_missedNotesValueText.setString(std::to_string(m_missedNotes));
+	m_wrongNotesValueText.setString(std::to_string(m_wrongNotes));
+	
+	// Statistics 2
+	m_hitNotesValueText.setString(std::to_string(m_currentNotesHit) + " / " + std::to_string(m_noteCountTotal));
+
+	// Note Percentage
+	if (m_noteCountTotal > 0)
+	{
+		float hitPercentage = (static_cast<float>(m_currentNotesHit) / static_cast<float>(m_noteCountTotal)) * 100.0f;
+		m_hitpercentageValueText.setString(std::to_string(static_cast<int>(hitPercentage)) + "%");
+	}
+}
+
+void Gameplay::resetSession()
+{
+	resetScore();
+	resetStatistics();
+}
+
+void Gameplay::resetScore()
+{
+	m_score = 0;
+}
+
+void Gameplay::resetStatistics()
+{
+	m_earlyNotes = 0;
+	m_perfectNotes = 0;
+	m_lateNotes = 0;
+	m_missedNotes = 0;
+	m_wrongNotes = 0;
+
+	m_noteCountTotal = 0;
+	m_currentNotesHit = 0;
 }
 
 void Gameplay::render(sf::RenderWindow& t_window)
@@ -313,12 +373,16 @@ void Gameplay::render(sf::RenderWindow& t_window)
 	m_keyboard.render(t_window);
 
 	// Triggers
-	for (auto& note : m_fallingNotes)
+	if (b_displayTriggers == true)
 	{
-		t_window.draw(note.earlyTrigger);
-		t_window.draw(note.perfectTrigger);
-		t_window.draw(note.lateTrigger);
+		for (auto& note : m_fallingNotes)
+		{
+			t_window.draw(note.earlyTrigger);
+			t_window.draw(note.perfectTrigger);
+			t_window.draw(note.lateTrigger);
+		}
 	}
+
 }
 
 void Gameplay::handleClick(sf::Vector2f t_mousePos)
@@ -337,6 +401,11 @@ void Gameplay::noteOn(std::string& t_noteName)
 
 	for (int i = 0; i < m_fallingNotes.size(); i++)
 	{
+		if (m_fallingNotes[i].b_isActive == false)
+		{
+			continue;
+		}
+
 		bool b_nameMatches = m_fallingNotes[i].noteName == t_noteName;
 		//bool b_inHitZone = m_keyboard.checkInputCollision(m_fallingNotes[i].shape);
 
@@ -345,34 +414,61 @@ void Gameplay::noteOn(std::string& t_noteName)
 			if (m_keyboard.checkInputCollision(m_fallingNotes[i].earlyTrigger))
 			{
 				std::cerr << "EARLY: " << t_noteName << std::endl;
+				// Score
 				m_score += m_scoreEarly;
 				updateScore();
-				m_fallingNotes.erase(m_fallingNotes.begin() + i);
+				// Statistics
+				m_currentNotesHit++;
+				m_earlyNotes++;
+				updateStatistics();
+
+				m_fallingNotes[i].shape.setFillColor(c_earlyNoteColour);
+				m_fallingNotes[i].b_isActive = false;
 				return;
 			}
 			if (m_keyboard.checkInputCollision(m_fallingNotes[i].perfectTrigger))
 			{
 				std::cerr << "PERFECT: " << t_noteName << std::endl;
+				// Score
 				m_score += m_scorePerfect;
 				updateScore();
-				m_fallingNotes.erase(m_fallingNotes.begin() + i);
+				// Statistics
+				m_currentNotesHit++;
+				m_perfectNotes++;
+				updateStatistics();
+
+				m_fallingNotes[i].shape.setFillColor(c_perfectNoteColour);
+				m_fallingNotes[i].b_isActive = false;
 				return;
 			}
 			if (m_keyboard.checkInputCollision(m_fallingNotes[i].lateTrigger))
 			{
 				std::cerr << "LATE: " << t_noteName << std::endl;
+				// Score
 				m_score += m_scoreLate;
 				updateScore();
-				m_fallingNotes.erase(m_fallingNotes.begin() + i);
+				// Statistics
+				m_currentNotesHit++;
+				m_lateNotes++;
+				updateStatistics();
+
+				m_fallingNotes[i].shape.setFillColor(c_lateNoteColour);
+				m_fallingNotes[i].b_isActive = false;
 				return;
 			}
+
+			//std::cerr << "MISS: " << t_noteName << std::endl;
+			//m_score -= m_scoreMiss;
+			//updateScore();
 		}
 	}
 
 	std::cerr << "WRONG KEY: " << t_noteName << std::endl;
 	m_score -= m_scoreWrong;
 	updateScore();
-	//m_fallingNotes.erase(m_fallingNotes.begin() + i);
+	m_wrongNotes++;
+	updateStatistics();
+
 }
 
 void Gameplay::noteOff(std::string& t_noteName)
@@ -394,6 +490,8 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 	{
 		spawnNote(note);
 	}
+
+	setupStatistics();
 }
 
 void Gameplay::spawnNote(MidiNote& t_note)
@@ -405,7 +503,6 @@ void Gameplay::spawnNote(MidiNote& t_note)
 	// Note length
 	float noteDuration = t_note.endTime - t_note.startTime;
 	float noteHeight = noteDuration * m_noteSpeed;
-
 
 	bool b_isSharp = false;
 	for (char c : t_note.noteName)
@@ -438,7 +535,8 @@ void Gameplay::spawnNote(MidiNote& t_note)
 	// Triggers
 	
 	
-	float triggerHeight = 40.0f;
+	//float triggerHeight = 40.0f;
+	float triggerHeight = noteHeight / 3.0f;
 	float noteWidth = m_flatNoteSize.x - 15.0f;
 
 	if (b_isSharp == true)
@@ -484,10 +582,6 @@ bool Gameplay::getNoteOnColliderFlag()
 void Gameplay::setNoteOnColliderFlag(bool t_bool)
 {
 	b_playNotesNoInput = t_bool;
-
-	std::cerr << "" << std::endl;
-	std::cerr << "b_playNotesNoInput toggled" << std::endl;
-	std::cerr << "" << std::endl;
 }
 
 bool Gameplay::getEasyInputFlag()
@@ -498,8 +592,14 @@ bool Gameplay::getEasyInputFlag()
 void Gameplay::setEasyInputFlag(bool t_bool)
 {
 	b_easyInputMode = t_bool;
+}
 
-	std::cerr << "" << std::endl;
-	std::cerr << "b_easyInputMode toggled" << std::endl;
-	std::cerr << "" << std::endl;
+bool Gameplay::getTriggerDisplayFlag()
+{
+	return b_displayTriggers;
+}
+
+void Gameplay::setTriggerDisplayFlag(bool t_bool)
+{
+	b_displayTriggers = t_bool;
 }

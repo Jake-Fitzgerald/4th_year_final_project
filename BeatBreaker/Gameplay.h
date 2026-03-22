@@ -68,9 +68,16 @@ public:
 
     void setupScoreText();
     void setupStatisticText();
+    void setupStatistics();
 
     void update(float t_deltaTime);
     void updateScore();
+    void updateStatistics();
+
+    void resetSession();
+    void resetScore();
+    void resetStatistics();
+
     void render(sf::RenderWindow& t_window);
 
     void handleClick(sf::Vector2f t_mousePos);
@@ -90,6 +97,8 @@ public:
     void setNoteOnColliderFlag(bool t_bool);
     bool getEasyInputFlag();
     void setEasyInputFlag(bool t_bool);
+    bool getTriggerDisplayFlag();
+    void setTriggerDisplayFlag(bool t_bool);
 
 private:
     SoundManager* m_soundManager;
@@ -98,6 +107,7 @@ private:
 
     const MidiTrack* m_currentTrack = nullptr;
     double m_playbackTime = 0.0;
+    double m_songEndTime = 0.0;
     int m_spawnIndex = 0;
     std::vector<FallingNote> m_fallingNotes;
 
@@ -143,11 +153,24 @@ private:
     sf::Text m_pbScoreText;
     sf::Text m_pbScoreValueText;
 
+    // Statistics
+    int m_earlyNotes = 0;
+    int m_perfectNotes = 0;
+    int m_lateNotes = 0;
+    int m_missedNotes = 0;
+    int m_wrongNotes = 0;
+
+    int m_noteCountTotal = 0;
+    int m_currentNotesHit = 0;
+
+
     // Statistic Text
     sf::Text m_missedNotesText;
     sf::Text m_missedNotesValueText;
     sf::Text m_earlyNotesText;
     sf::Text m_earlyNotesValueText;
+    sf::Text m_perfectNotesText;                                                                                                     //TODO
+    sf::Text m_perfectNotesValueText;                                                                                                //TODO
     sf::Text m_lateNotesText;
     sf::Text m_lateNotesValueText;
     sf::Text m_wrongNotesText;
@@ -167,5 +190,7 @@ private:
     bool b_easyInputMode = true;
 
     bool b_isPreviewMode = false;
+    bool b_displayTriggers = false;
+
 };
 

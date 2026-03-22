@@ -10,6 +10,7 @@ void SongSelect::setupPathStrings()
 {
 	m_pathVector =
 	{
+		{"Debug Gameplay", "ASSETS\\AUDIO\\MUSIC\\Debug Gameplay.mid", SONGDIFFICULTIES::EASY},
 		{"C Scale", "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid", SONGDIFFICULTIES::EASY},
 		{"Note Length", "ASSETS\\AUDIO\\MUSIC\\NoteLengthExample.mid", SONGDIFFICULTIES::EASY},
 		{"Major / Minor Chords", "ASSETS\\AUDIO\\MUSIC\\Major_and_Minor_Chords.mid", SONGDIFFICULTIES::MEDIUM},
