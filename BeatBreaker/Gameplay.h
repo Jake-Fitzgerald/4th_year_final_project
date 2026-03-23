@@ -110,6 +110,8 @@ private:
     const MidiTrack* m_currentTrack = nullptr;
     double m_playbackTime = 0.0;
     double m_songEndTime = 0.0;
+    double m_songEndWaitTime = 0.0;
+
     int m_spawnIndex = 0;
     std::vector<FallingNote> m_fallingNotes;
 

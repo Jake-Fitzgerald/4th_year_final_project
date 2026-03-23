@@ -251,7 +251,7 @@ void Gameplay::setupStatisticText()
 void Gameplay::setupStatistics()
 {
 	m_noteCountTotal = m_fallingNotes.size();
-	m_currentNotesHit = m_fallingNotes.size();
+	m_currentNotesHit = 0;
 	std::cerr << "Note amount: " << m_noteCountTotal << std::endl;
 	m_hitNotesValueText.setString(std::to_string(m_currentNotesHit) + " / " + std::to_string(m_noteCountTotal));
 }
@@ -523,20 +523,25 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 	m_spawnIndex = 0;
 	m_fallingNotes.clear();
 
-	if (!t_track.midiNotes.empty())
-	{
-		m_songEndTime = t_track.midiNotes.back().endTime;
-		std::cerr << "Song end time: " << m_songEndTime << std::endl;
-	}
-
 	m_noteSpeed = t_BPM /** m_noteSpeedMultiplier*/;
 	std::cerr << "Note speed is: " << m_noteSpeed << std::endl;
+
+	if (!t_track.midiNotes.empty())
+	{
+		MidiNote finalNote = t_track.midiNotes.back();
+
+		double soundTriggerY = static_cast<double>(m_keyboard.getSoundNoteTriggerY());
+		//double screenCrossTime = soundTriggerY / m_noteSpeed;
+		double travelTime = soundTriggerY / m_noteSpeed;
+
+		m_songEndTime = finalNote.endTime + travelTime /*+ m_songEndWaitTime*/;
+		std::cerr << "Song End Time is: " << m_songEndTime << std::endl;
+	}
 
 	for (MidiNote note : t_track.midiNotes)
 	{
 		spawnNote(note);
 	}
-
 
 	setupStatistics();
 	setupPlaybackText();

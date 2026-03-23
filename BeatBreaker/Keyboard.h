@@ -56,6 +56,7 @@ public:
 
     float getKeyPosX(std::string& t_noteName);
     float getKillTriggerY();
+    float getSoundNoteTriggerY();
 
     int getScore();
 

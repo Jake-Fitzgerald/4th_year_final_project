@@ -212,6 +212,11 @@ float Keyboard::getKillTriggerY()
     return m_killTrigger.getPosition().y;
 }
 
+float Keyboard::getSoundNoteTriggerY()
+{
+    return m_noteSoundTrigger.getPosition().y;
+}
+
 int Keyboard::getScore()
 {
     return m_score;
