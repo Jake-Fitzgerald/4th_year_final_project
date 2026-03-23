@@ -378,10 +378,6 @@ void Gameplay::render(sf::RenderWindow& t_window)
 	t_window.draw(m_scoreFrameText);
 	t_window.draw(m_statisticFrameText);
 
-	// Playback Text
-	t_window.draw(m_songTimeText);
-	t_window.draw(m_songEndTimeText);
-
 	// Score Text
 	t_window.draw(m_currentScoreText);
 	t_window.draw(m_currentScoreValueText);
@@ -421,6 +417,10 @@ void Gameplay::render(sf::RenderWindow& t_window)
 			t_window.draw(note.perfectTrigger);
 			t_window.draw(note.lateTrigger);
 		}
+
+		// Playback Text
+		t_window.draw(m_songTimeText);
+		t_window.draw(m_songEndTimeText);
 	}
 
 }

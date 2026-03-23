@@ -132,9 +132,9 @@ private:
     sf::Color c_earlyNoteColour = sf::Color::Yellow;
     sf::Color c_perfectNoteColour = sf::Color::Green;
     // Trigger Colours
-    sf::Color c_earlyTriggerColour = sf::Color(255, 255, 50, 100);
-    sf::Color c_perfectTriggerColour = sf::Color(50, 255, 50, 100);
-    sf::Color c_lateTriggerColour = sf::Color(255, 50, 50, 100);
+    sf::Color c_earlyTriggerColour = sf::Color(255, 255, 50, 150);
+    sf::Color c_perfectTriggerColour = sf::Color(50, 255, 50, 150);
+    sf::Color c_lateTriggerColour = sf::Color(255, 50, 50, 150);
 
 
     // UI Background Frames

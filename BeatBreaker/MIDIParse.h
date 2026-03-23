@@ -43,8 +43,8 @@
 
 struct MidiNote
 {
-	int pitch = 0; // 0 - 127
-	int velocity = 0; // 0 - 127
+	int pitch = 0; 
+	int velocity = 0;
 	std::string noteName = "";
 
 	// Microseconds
@@ -55,14 +55,13 @@ struct MidiNote
 	double startTime = 0.0f; 
 	double endTime = 0.0f;  
 	bool b_hasPlayed = false;
-
 };
 
 struct MidiTrack
 {
 	std::string trackName = " ";
 	std::string intrumentName = " ";
-	std::vector<MidiNote> midiNotes; // Holds all the notes for this track
+	std::vector<MidiNote> midiNotes; 
 };
 
 // Taken from the Expanded Messages Documentation in the references folder

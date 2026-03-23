@@ -163,9 +163,8 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 			else
 			{
 				// Keep only the upper 4 bits (message type) and ignore lower 4 bits (channel)
-				uint8_t messageType = status & EventType::messageTypeMask;
+				uint8_t messageType = status& EventType::messageTypeMask;
 
-				// Note Off 
 				if (messageType == EventType::noteOff)
 				{
 					noteOff(file, firstDataByte);

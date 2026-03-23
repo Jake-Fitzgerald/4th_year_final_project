@@ -746,14 +746,11 @@ void Game::setupMidiInput()
 					std::cerr << "Skip mircrosoft midi: " << deviceName << std::endl;
 					continue;
 				}
-
-
 				std::cerr << " " << std::endl;
 
 				validMidiID = i;
 				break;
 			}
-			
 		}
 
 		// Check if the device is valid if it got stopped by the error check
@@ -774,7 +771,6 @@ void Game::setupMidiInput()
 		//MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, 0, CALLBACK_FUNCTION);  
 
 		m_midiCallbackData = { &pianoVisualiser, &drumVisualiser, &m_gameplay, &m_currentGameState };
-		//MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, (DWORD_PTR)&pianoVisualiser, CALLBACK_FUNCTION);
 		MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, (DWORD_PTR)&m_midiCallbackData, CALLBACK_FUNCTION);
 
 		if (m_resultMidiOpen != MMSYSERR_NOERROR)
@@ -923,7 +919,9 @@ void CALLBACK MidiInProc(
 				if (callbackData->currentState && *callbackData->currentState == GameStates::GameplayScene)
 				{
 					if (gameplayListener)
+					{
 						gameplayListener->noteOn(noteName);
+					}
 				}
 				else 
 				{
@@ -941,7 +939,9 @@ void CALLBACK MidiInProc(
 				if (callbackData->currentState && *callbackData->currentState == GameStates::GameplayScene)
 				{
 					if (gameplayListener)
+					{
 						gameplayListener->noteOff(noteName);
+					}
 				}
 				else 
 				{
@@ -952,7 +952,6 @@ void CALLBACK MidiInProc(
 				}
 			}
 		}
-
 	}
 }
 
@@ -1008,7 +1007,6 @@ void Game::setupMidiParser()
 {
 	m_midiPath = m_midiFileSelectScene.getMidiPathString();
 	midiParser.parseFile(m_midiPath);
-	//midiParser.parseFile("ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid");
 	
 	m_hud.loadMidiData( midiParser.getMidiTracks(),
 						midiParser.getTimeSignature(),
