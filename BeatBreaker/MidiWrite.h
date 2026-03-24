@@ -46,6 +46,7 @@ public:
 	void writeHeader(std::ofstream& t_file);
 	void writeTimeSigTrack(std::ofstream& t_file);
 	void writeTempoTrack(std::ofstream& t_file);
+	void writeNoteTrack(std::ofstream& t_file);
 
 	void write_uint32(std::ofstream& t_file, uint32_t t_value);
 	void write_uint16(std::ofstream& t_file, uint16_t t_value);
@@ -53,10 +54,21 @@ public:
 
 	void writeMicroSeconds(std::ofstream& t_file);
 
+	void writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint8_t t_deltatime);
+	void writeNoteOff(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint8_t t_deltatime);
+
+	void setupNotes();
+
 private:
 
 	std::string m_drectoryPath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\";
 	
 	double m_BPM = 120.0;
+
+	int m_noteTrackLength = 0;
+
+
+	std::vector<MidiNote> m_testNotes;
+	int m_quarterNoteLength = 96;
 };
 

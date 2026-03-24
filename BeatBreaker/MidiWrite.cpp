@@ -2,7 +2,7 @@
 
 MidiWrite::MidiWrite()
 {
-
+    setupNotes();
 }
 
 //MidiWrite::MidiWrite(std::string& t_fileName)
@@ -29,7 +29,7 @@ bool MidiWrite::writeFile(std::string& t_fileName)
     writeHeader(file);
     writeTimeSigTrack(file);
     writeTempoTrack(file);
-
+    writeNoteTrack(file);
 
     file.close();
 
@@ -90,6 +90,35 @@ void MidiWrite::writeTempoTrack(std::ofstream& t_file)
 
 }
 
+void MidiWrite::writeNoteTrack(std::ofstream& t_file)
+{
+    std::string trackString = "MTrk";
+    t_file.write(trackString.c_str(), 4);
+
+    write_uint32(t_file, m_noteTrackLength); // Note Track Length
+
+    // -------------------------------------------------------------
+    // CC
+
+
+
+    // -------------------------------------------------------------
+    // Notes
+
+    uint32_t previousTick = 0;
+
+    for (auto& note : m_testNotes)
+    {
+        uint32_t deltaOn = note.startTick - previousTick;
+        uint32_t deltaOff = note.endTick - note.startTick;
+
+        writeNoteOn(t_file, note.pitch, note.velocity, deltaOn);
+        writeNoteOff(t_file, note.pitch, note.velocity, deltaOff);
+
+        previousTick = note.endTick;
+    }
+}
+
 void MidiWrite::write_uint32(std::ofstream& t_file, uint32_t t_value)
 {
     uint8_t bytes[4];
@@ -141,4 +170,47 @@ void MidiWrite::writeMicroSeconds(std::ofstream& t_file)
     std::cerr << "[ Tempo ]" << std::endl;
     std::cerr << "===================" << std::endl;
     std::cerr << "Tempo: " << m_BPM << ", BPM :" << microsecondsPerClick << " (microseconds)" << std::endl;
+}
+
+void MidiWrite::writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint8_t t_deltatime)
+{
+    writeByte(t_file, t_deltatime);
+    writeByte(t_file, EventType::noteOn);
+    writeByte(t_file, t_pitch);
+    writeByte(t_file, t_velocity);
+}
+
+void MidiWrite::writeNoteOff(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint8_t t_deltatime)
+{
+    writeByte(t_file, t_deltatime);
+    writeByte(t_file, EventType::noteOff);
+    writeByte(t_file, t_pitch);
+    writeByte(t_file, t_velocity);
+}
+
+void MidiWrite::setupNotes()
+{
+    MidiNote note1;
+    MidiNote note2;
+    MidiNote note3;
+
+    note1.pitch = 60;
+    note2.pitch = 62;
+    note3.pitch = 60;
+
+    note1.velocity = 100;
+    note2.velocity = 100;
+    note3.velocity = 100;
+
+    note1.startTick = 0;
+    note2.startTick = m_quarterNoteLength;
+    note3.startTick = m_quarterNoteLength * 2;
+
+    note1.endTick = note2.startTick;
+    note2.endTick = note3.startTick;
+    note3.endTick = note3.startTick + m_quarterNoteLength;
+
+    m_testNotes.push_back(note1);
+    m_testNotes.push_back(note2);
+    m_testNotes.push_back(note3);
 }
