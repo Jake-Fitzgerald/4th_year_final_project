@@ -27,7 +27,8 @@ bool MidiWrite::writeFile(std::string& t_fileName)
     std::cerr << "Created a midi file" << std::endl;
 
     writeHeader(file);
-
+    writeTimeSigTrack(file);
+    writeTempoTrack(file);
 
 
     file.close();
@@ -38,6 +39,77 @@ bool MidiWrite::writeFile(std::string& t_fileName)
 void MidiWrite::writeHeader(std::ofstream& t_file)
 {
     std::string headerString = "MThd";
-
     t_file.write(headerString.c_str(), 4);
+
+    write_uint32(t_file, 6); // Header Length
+    write_uint16(t_file, 1); // Version
+    write_uint16(t_file, 3); // Track count
+    write_uint16(t_file, 96); // Ticks per quarter note
+}
+
+void MidiWrite::writeTimeSigTrack(std::ofstream& t_file)
+{
+    std::string trackString = "MTrk";
+    t_file.write(trackString.c_str(), 4);
+
+    write_uint32(t_file, 12); // Time Sig Length
+
+    //uint8_t delta = 0x00;
+    writeByte(t_file, 0x00);
+
+    //uint8_t metaEvent = EventType::metaEvent;
+    writeByte(t_file, EventType::metaEvent);
+    writeByte(t_file, EventType::timeSignature);
+
+    //uint8_t metaLength = 4;
+    writeByte(t_file, 0x04); // Meta length
+    writeByte(t_file, 0x04); // Numerator
+    writeByte(t_file, 0x02); // Denominator
+    writeByte(t_file, 0x18); // Ticks per click
+    writeByte(t_file, 0x08); // Thirty seconds per crotchet
+
+    writeByte(t_file, 0x00); // delta
+    writeByte(t_file, EventType::metaEvent);
+    writeByte(t_file, EventType::endOfTrack); 
+    writeByte(t_file, 0x00); // Meta length
+}
+
+void MidiWrite::writeTempoTrack(std::ofstream& t_file)
+{
+
+}
+
+void MidiWrite::write_uint32(std::ofstream& t_file, uint32_t t_value)
+{
+    uint8_t bytes[4];
+
+    (bytes[0] = t_value >> 24);
+    (bytes[1] = t_value >> 16);
+    (bytes[2] = t_value >> 8);
+    (bytes[3] = t_value );
+
+    if (!t_file.write(reinterpret_cast<char*>(bytes), 4))
+    {
+        std::cerr << "Error: can't write uint32" << std::endl;
+    }
+}
+
+void MidiWrite::write_uint16(std::ofstream& t_file, uint16_t t_value)
+{
+    uint8_t bytes[2];
+
+    (bytes[0] = t_value >> 8);
+    (bytes[1] = t_value);
+
+    if (!t_file.write(reinterpret_cast<char*>(bytes), 2))
+    {
+        std::cerr << "Error: can't write uint16" << std::endl;
+    }
+}
+
+void MidiWrite::writeByte(std::ofstream& t_file, uint8_t t_value)
+{
+    char byte = static_cast<char>(t_value);
+
+    t_file.write(&byte, sizeof(byte));
 }

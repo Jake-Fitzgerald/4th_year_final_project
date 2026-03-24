@@ -70,6 +70,7 @@ enum EventType : uint8_t
 	metaEvent = 0xFF,
 
 	// Meta types:
+	endOfTrack = 0x2F,
 	tempo = 0x51,
 	timeSignature = 0x58,
 	keySignature = 0x59,
