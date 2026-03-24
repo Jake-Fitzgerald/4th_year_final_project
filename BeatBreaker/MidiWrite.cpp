@@ -54,14 +54,10 @@ void MidiWrite::writeTimeSigTrack(std::ofstream& t_file)
 
     write_uint32(t_file, 12); // Time Sig Length
 
-    //uint8_t delta = 0x00;
-    writeByte(t_file, 0x00);
-
-    //uint8_t metaEvent = EventType::metaEvent;
+    writeByte(t_file, 0x00); // delta
     writeByte(t_file, EventType::metaEvent);
     writeByte(t_file, EventType::timeSignature);
 
-    //uint8_t metaLength = 4;
     writeByte(t_file, 0x04); // Meta length
     writeByte(t_file, 0x04); // Numerator
     writeByte(t_file, 0x02); // Denominator
@@ -76,6 +72,21 @@ void MidiWrite::writeTimeSigTrack(std::ofstream& t_file)
 
 void MidiWrite::writeTempoTrack(std::ofstream& t_file)
 {
+    std::string trackString = "MTrk";
+    t_file.write(trackString.c_str(), 4);
+
+    write_uint32(t_file, 11); // Tempo Length
+
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::metaEvent);
+    writeByte(t_file, EventType::tempo);
+    writeByte(t_file, 0x03); // Meta length
+    
+    writeMicroSeconds(t_file); // uint24
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::metaEvent);
+    writeByte(t_file, EventType::endOfTrack);
+    writeByte(t_file, 0x00); // Meta length
 
 }
 
@@ -112,4 +123,22 @@ void MidiWrite::writeByte(std::ofstream& t_file, uint8_t t_value)
     char byte = static_cast<char>(t_value);
 
     t_file.write(&byte, sizeof(byte));
+}
+
+void MidiWrite::writeMicroSeconds(std::ofstream& t_file)
+{
+    uint32_t microsecondsPerClick = 60000000.0 / m_BPM;
+
+    uint8_t firstByte = (microsecondsPerClick >> 16);
+    uint8_t secondByte = (microsecondsPerClick >> 8);
+    uint8_t thirdByte = (microsecondsPerClick);
+
+    writeByte(t_file, firstByte);
+    writeByte(t_file, secondByte);
+    writeByte(t_file, thirdByte);
+
+    std::cerr << "===================" << std::endl;
+    std::cerr << "[ Tempo ]" << std::endl;
+    std::cerr << "===================" << std::endl;
+    std::cerr << "Tempo: " << m_BPM << ", BPM :" << microsecondsPerClick << " (microseconds)" << std::endl;
 }

@@ -51,9 +51,12 @@ public:
 	void write_uint16(std::ofstream& t_file, uint16_t t_value);
 	void writeByte(std::ofstream& t_file, uint8_t t_value);
 
+	void writeMicroSeconds(std::ofstream& t_file);
+
 private:
 
 	std::string m_drectoryPath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\";
 	
+	double m_BPM = 120.0;
 };
 
