@@ -347,7 +347,16 @@ void Gameplay::resetSession()
 	//m_songEndTime = 0.0f;
 	b_isSongFinished = false;
 	b_isPlaying = false;
+	m_spawnIndex = 0;
 	m_fallingNotes.clear();
+
+	if (m_currentTrack != nullptr)
+	{
+		for (MidiNote note : m_currentTrack->midiNotes)
+		{
+			spawnNote(note);
+		}
+	}
 
 	resetScore();
 	resetStatistics();

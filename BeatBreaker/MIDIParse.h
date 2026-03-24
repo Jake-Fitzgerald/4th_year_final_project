@@ -98,9 +98,9 @@ class MIDIParse
 public:
 	MIDIParse();
 
-	MIDIParse(const std::string& t_fileName);
+	MIDIParse(std::string& t_fileName);
 
-	bool parseFile(const std::string& t_fileName);
+	bool parseFile(std::string& t_fileName);
 
 	std::string readString(std::ifstream &t_file, uint32_t nbyteLength);
 

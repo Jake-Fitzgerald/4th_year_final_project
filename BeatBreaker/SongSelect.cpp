@@ -209,13 +209,14 @@ void SongSelect::render(sf::RenderWindow& t_window)
 
 SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 {
-	// Songs
 	for (auto& button : m_buttons)
 	{
 		// Reset colours if you click again
 		button.m_buttonShape.setFillColor(sf::Color::Blue);
+	}
 
-		// Song Button
+	for (auto& button : m_buttons)
+	{
 		sf::Vector2f topLeft = button.m_buttonShape.getPosition();
 		sf::Vector2f size = button.m_buttonShape.getSize();
 

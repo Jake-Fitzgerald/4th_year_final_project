@@ -48,6 +48,8 @@ public:
 	std::string mouseClick(sf::Vector2f t_mousePos);
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
+	void setupBG();
+
 private:
 	int m_menuSelection = -1;
 
@@ -64,4 +66,8 @@ private:
 	sf::Vector2f m_topLeftStart;
 	float m_buttonSpacing = 100.0f;
 	sf::Vector2f m_buttonSize = { 300.0f, 50.0f };
+
+	// BG
+	sf::Texture m_bgTexture;
+	sf::Sprite m_bgSprite;
 };

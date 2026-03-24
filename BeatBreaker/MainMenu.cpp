@@ -1,6 +1,11 @@
 #include "MainMenu.h"
 
-MainMenu::MainMenu(std::shared_ptr<const sf::Font> t_font) : m_font(t_font), m_titleText(*t_font), m_topLeftStart({ paddingX, paddingY + 100.0f })
+MainMenu::MainMenu(std::shared_ptr<const sf::Font> t_font) 
+	: m_font(t_font),
+	m_titleText(*t_font),
+	m_topLeftStart({ paddingX, paddingY + 100.0f }),
+	m_bgTexture(),
+	m_bgSprite(m_bgTexture)
 {
 
 
@@ -47,10 +52,13 @@ void MainMenu::setupMainMenu()
 	m_titleText.setOutlineColor(sf::Color::Black);
 	m_titleText.setOutlineThickness(2.0f);
 	m_titleText.setPosition({ SCREEN_CENTRE.x - 200.0f, SCREEN_CENTRE.y - 350.0f });
+
+	setupBG();
 }
 
 void MainMenu::render(sf::RenderWindow& t_window)
 {
+	t_window.draw(m_bgSprite);
 	t_window.draw(m_titleText);
 
 	for (auto& button : m_buttons)
@@ -104,4 +112,18 @@ bool MainMenu::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLef
 	{
 		return false;
 	}
+}
+
+void MainMenu::setupBG()
+{
+	if (!m_bgTexture.loadFromFile("ASSETS\\IMAGES\\Backgrounds\\MainMenuBG.png"))
+	{
+		// simple error message if previous call fails
+		std::cout << "problem loading Main Menu BG" << std::endl;
+	}
+
+	m_bgSprite.setTexture(m_bgTexture, true);
+	m_bgSprite.setPosition(sf::Vector2f{ 0.0f, 0.0f });
+	m_bgSprite.setColor(sf::Color(255, 255, 255, 100));
+	
 }

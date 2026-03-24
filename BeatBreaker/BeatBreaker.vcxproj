@@ -35,6 +35,7 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MidiFileSelect.cpp" />
     <ClCompile Include="MIDIParse.cpp" />
+    <ClCompile Include="MidiWrite.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="PianoVisualiser.cpp" />
     <ClCompile Include="Results.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MidiFileSelect.h" />
     <ClInclude Include="MIDIParse.h" />
+    <ClInclude Include="MidiWrite.h" />
     <ClInclude Include="Notes.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="PianoVisualiser.h" />

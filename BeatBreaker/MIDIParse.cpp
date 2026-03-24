@@ -4,12 +4,12 @@ MIDIParse::MIDIParse()
 {
 }
 
-MIDIParse::MIDIParse(const std::string& t_fileName)
+MIDIParse::MIDIParse(std::string& t_fileName)
 {
 	parseFile(t_fileName);
 }
 
-bool MIDIParse::parseFile(const std::string& t_fileName)
+bool MIDIParse::parseFile(std::string& t_fileName)
 {
 	midiTracks.clear();
 
@@ -20,20 +20,17 @@ bool MIDIParse::parseFile(const std::string& t_fileName)
 	// the reading in the file and reading it in binary
 	file.open(t_fileName, std::ifstream::in | std::ios::binary);
 
-	// If we can't open the file then return false
 	if (!file.is_open())
 	{
 		std::cerr << "Failed to open MIDI file" << std::endl;
 		return false;
 	}
 	
-	// Parse Header Chunk
+
 	std::string header = readString(file, 4);
-	// Check if it is a MIDI file if it contains MThd at the start
 	if (header != "MThd")
 	{
 		std::cerr << "Not a MIDI file" << std::endl;
-		//return false;
 	}
 	else
 	{

@@ -67,9 +67,6 @@
     <Filter Include="Header Files\Scenes\SelectionMenus">
       <UniqueIdentifier>{042d4c7e-64b1-439b-bc74-1e5aace81788}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\UI\SelectionMenus">
-      <UniqueIdentifier>{cc3be89e-5190-4b8c-98db-85e292d81759}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Core">
       <UniqueIdentifier>{c649b5e0-40a9-4127-a1ee-a84c5eb7fa57}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,9 @@
     </Filter>
     <Filter Include="Header Files\Utilities">
       <UniqueIdentifier>{887e6f5f-b8a9-40e8-be63-29398554d443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\SelectionMenus">
+      <UniqueIdentifier>{cc3be89e-5190-4b8c-98db-85e292d81759}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -130,13 +130,13 @@
       <Filter>Source Files\Visualisers</Filter>
     </ClCompile>
     <ClCompile Include="MidiFileSelect.cpp">
-      <Filter>Source Files\UI\SelectionMenus</Filter>
+      <Filter>Source Files\Scenes\SelectionMenus</Filter>
     </ClCompile>
     <ClCompile Include="VisualiserSelect.cpp">
-      <Filter>Source Files\UI\SelectionMenus</Filter>
+      <Filter>Source Files\Scenes\SelectionMenus</Filter>
     </ClCompile>
     <ClCompile Include="SongSelect.cpp">
-      <Filter>Source Files\UI\SelectionMenus</Filter>
+      <Filter>Source Files\Scenes\SelectionMenus</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Core</Filter>
@@ -160,7 +160,10 @@
       <Filter>Utilites</Filter>
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files\UI\SelectionMenus</Filter>
+      <Filter>Source Files\Scenes\SelectionMenus</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiWrite.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiWrite.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

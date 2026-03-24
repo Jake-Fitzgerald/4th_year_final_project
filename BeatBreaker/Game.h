@@ -28,6 +28,7 @@
 
 // MIDI
 #include "MIDIParse.h"
+#include "MidiWrite.h"
 
 // UI
 #include "HUD.h"
@@ -158,9 +159,12 @@ private:
 	std::vector<sf::Color> colors = { BLUE, PINK, GREEN, YELLOW };
 
 	// MIDI
-	MIDIParse midiParser;
+	MIDIParse m_midiParser;
 	void setupMidiParser();
 	std::string m_midiPath = "ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid";
+	MidiWrite m_midiWrite;
+	std::string m_midiWritePath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\";
+	void setupMidiWrite();
 
 	// UI
 	HUD m_hud;
@@ -182,16 +186,12 @@ private:
 
 	CollisionManager m_collisionManager;
 
-	// Block Generation
-	BlockGenerator m_blockGen;
-
 	// ----- Visualisers -----
 	// Track Visualiser
 	TrackVisualiser trackVisualiser;
 	PianoVisualiser pianoVisualiser;
 	DrumVisualiser drumVisualiser;
 
-	// UI
 	// Overlays
 	GridDisplay gridDisplay;
 

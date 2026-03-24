@@ -42,20 +42,15 @@ Game::Game() :
 
 	// MIDI
 	setupMidiParser();
+	//setupMidiWrite();
 
 	// Sound Manager
 	setupSounds();
-	
-
-	// Block Gen Test
-	m_blockGen.setDifficulty("EASY");
-	//m_blockGen.setDifficulty("HARD");
-	m_blockGen.genRandomPattern(10);
 
 	// ----- VIUALISERS -----
 	// Track Visualiser
 	trackVisualiser.setupShapes();
-	trackVisualiser.loadMidiTracks(midiParser.getMidiTracks(), midiParser.getTicksPerQuarter(), midiParser.getBPM());
+	trackVisualiser.loadMidiTracks(m_midiParser.getMidiTracks(), m_midiParser.getTicksPerQuarter(), m_midiParser.getBPM());
 
 	// Piano Visualiser
 	pianoVisualiser.setupPianoShapes();
@@ -66,12 +61,12 @@ Game::Game() :
 	//drumVisualiser.setupDrums();
 
 	// HUD
-	m_hud.loadMidiData( midiParser.getMidiTracks(),
-						midiParser.getTimeSignature(),
-						midiParser.getBPM(),
-						midiParser.getMidiFileName(),
-						midiParser.getNominator(),
-						midiParser.getDenominator() );
+	m_hud.loadMidiData( m_midiParser.getMidiTracks(),
+						m_midiParser.getTimeSignature(),
+						m_midiParser.getBPM(),
+						m_midiParser.getMidiFileName(),
+						m_midiParser.getNominator(),
+						m_midiParser.getDenominator() );
 
 	// Selection Scenes
 	// Midi File Select
@@ -288,13 +283,15 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_currentGameState = GameStates::MidiFileSelectScene;
 			m_soundManager.play("ui_confirm");
 		}
-		if (clicked == "Input Test")
+		if (clicked == "Record Midi")
 		{
-			// add your Input Test behaviour here
+			setupMidiWrite();
+
+
 		}
 		if (clicked == "MIDI Parse")
 		{
-			midiParser.resetTrack();
+			m_midiParser.resetTrack();
 			setupMidiParser();
 			m_soundManager.play("ui_confirm");
 		}
@@ -400,11 +397,11 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 
 			m_selectedSong = m_songSelect.getMidiPathString();
 
-			midiParser.parseFile(m_selectedSong);
+			m_midiParser.parseFile(m_selectedSong);
 			std::cerr << "Parsing song: " << m_selectedSong << std::endl;
 
 			// Third track is the instrument track
-			m_gameplay.loadTrack(midiParser.getMidiTracks()[2], midiParser.getBPM());
+			m_gameplay.loadTrack(m_midiParser.getMidiTracks()[2], m_midiParser.getBPM());
 
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;
@@ -428,6 +425,8 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	if (m_hud.playClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Play button clicked" << std::endl;
+		m_gameplay.startSong();
+		m_soundManager.play("ui_cancel");
 	}
 	// Pause
 	if (m_hud.pauseClick(mouseWorldPos) == true)
@@ -439,19 +438,19 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	if (m_hud.stopClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Stop button clicked" << std::endl;
-
+		m_gameplay.resetSession();
 	}
 	// Skip to Start
 	if (m_hud.skipToStart(mouseWorldPos) == true)
 	{
 		std::cerr << "Skip to start button clicked" << std::endl;
-
+		m_gameplay.resetSession();
+		m_gameplay.startSong();
 	}
 	// Skip to End
 	if (m_hud.skipToEnd(mouseWorldPos) == true)
 	{
 		std::cerr << "Skip to end button clicked" << std::endl;
-
 	}
 	// Mute
 	if (m_hud.muteClick(mouseWorldPos) == true)
@@ -467,7 +466,6 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 
 	// Check Modes Buttons
 	bool buttonFound = false;
-
 }
 
 
@@ -1006,12 +1004,19 @@ void Game::stopMidiMCI()
 void Game::setupMidiParser()
 {
 	m_midiPath = m_midiFileSelectScene.getMidiPathString();
-	midiParser.parseFile(m_midiPath);
+	m_midiParser.parseFile(m_midiPath);
 	
-	m_hud.loadMidiData( midiParser.getMidiTracks(),
-						midiParser.getTimeSignature(),
-						midiParser.getBPM(),
-						midiParser.getMidiFileName(),
-						midiParser.getNominator(),
-						midiParser.getDenominator() );
+	m_hud.loadMidiData( m_midiParser.getMidiTracks(),
+						m_midiParser.getTimeSignature(),
+						m_midiParser.getBPM(),
+						m_midiParser.getMidiFileName(),
+						m_midiParser.getNominator(),
+						m_midiParser.getDenominator() );
+}
+
+void Game::setupMidiWrite()
+{
+	std::cerr << "Midi Write" << std::endl;
+	std::string m_tempName = "temp"; // [DEBUGGING]
+	m_midiWrite.writeFile(m_tempName);
 }
