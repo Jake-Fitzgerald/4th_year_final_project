@@ -53,6 +53,7 @@ public:
     bool checkIfKeyClicked(sf::Vector2f t_mousePos, Key& t_key);
 
     bool checkInputCollision(sf::RectangleShape& t_noteShape);
+    bool checkSoundCollision(sf::RectangleShape& t_noteShape);
 
     float getKeyPosX(std::string& t_noteName);
     float getKillTriggerY();
@@ -85,7 +86,7 @@ private:
     sf::RectangleShape m_killTrigger;
     sf::RectangleShape m_inputTrigger;
     sf::RectangleShape m_noteSoundTrigger;
-    float m_inputTriggerSizeY = 80.0f;
+    float m_inputTriggerSizeY = 200.0f;
     int m_score = 0;
 };
 

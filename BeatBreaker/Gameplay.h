@@ -132,9 +132,7 @@ private:
     sf::Text m_songEndTimeText;
 
     // BPM
-    float m_noteSpeed = 0.0f;
-    float m_noteSpeedMultiplier = 3.0f; // might need this if it doesn't sync up with the screen resolution                                                                                                                            
-
+    float m_noteSpeed = 0.0f;                                                                                                                     
 
     sf::Vector2f m_flatNoteSize{ 36.0f, 100.0f };
     sf::Vector2f m_sharpNoteSize{ 20.0f, 100.0f };
@@ -148,7 +146,6 @@ private:
     sf::Color c_earlyTriggerColour = sf::Color(255, 255, 50, 150);
     sf::Color c_perfectTriggerColour = sf::Color(50, 255, 50, 150);
     sf::Color c_lateTriggerColour = sf::Color(255, 50, 50, 150);
-
 
     // UI Background Frames
     sf::RectangleShape m_scoreFrame;
@@ -165,8 +162,8 @@ private:
     int m_scoreEarly = 75;
     int m_scorePerfect = 100;
     int m_scoreLate = 50;
-    int m_scoreMiss = 25;
-    int m_scoreWrong = 50;
+    int m_scoreMiss = 5;
+    int m_scoreWrong = 10;
     // Score Text
     sf::Text m_currentScoreText;
     sf::Text m_currentScoreValueText;

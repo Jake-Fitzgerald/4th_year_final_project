@@ -190,6 +190,11 @@ bool Keyboard::checkIfKeyClicked(sf::Vector2f t_mousePos, Key& t_key)
 
 bool Keyboard::checkInputCollision(sf::RectangleShape& t_noteShape)
 {
+    return t_noteShape.getGlobalBounds().findIntersection(m_inputTrigger.getGlobalBounds()).has_value();
+}
+
+bool Keyboard::checkSoundCollision(sf::RectangleShape& t_noteShape)
+{
     return t_noteShape.getGlobalBounds().findIntersection(m_noteSoundTrigger.getGlobalBounds()).has_value();
 }
 
