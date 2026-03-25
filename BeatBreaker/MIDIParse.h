@@ -91,6 +91,11 @@ enum EventType : uint8_t
 	programChange = 0xC0,
 	channelAftertouch = 0xD0,
 	pitchBend = 0xE0,
+	pan = 0x0A,
+	volume = 0x07,
+	regParamNum_MSB = 0x65,
+	regParamNum_LSB = 0x65,
+	dataEntry = 0x05,
 	systemExclusive = 0xF0
 };
 

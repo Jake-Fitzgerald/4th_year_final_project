@@ -97,9 +97,20 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
 
     write_uint32(t_file, m_noteTrackLength); // Note Track Length
 
-    // -------------------------------------------------------------
-    // CC
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::metaEvent);
+    writeByte(t_file, EventType::trackName);
 
+    writeByte(t_file, 0x07); // Meta length
+    std::string trackNameString = "FL Keys";
+
+    // -------------------------------------------------------------
+    // CC for each note
+    //for (int i = 0; i < static_cast<int>(m_testNotes.size()); i++)
+    //{
+    //    writeCC(t_file);
+    //}
+    writeCC(t_file);
 
 
     // -------------------------------------------------------------
@@ -170,6 +181,39 @@ void MidiWrite::writeMicroSeconds(std::ofstream& t_file)
     std::cerr << "[ Tempo ]" << std::endl;
     std::cerr << "===================" << std::endl;
     std::cerr << "Tempo: " << m_BPM << ", BPM :" << microsecondsPerClick << " (microseconds)" << std::endl;
+}
+
+void MidiWrite::writeCC(std::ofstream& t_file)
+{
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::controlChange);
+    writeByte(t_file, EventType::pan);
+    writeByte(t_file, 0x64);
+
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::controlChange);
+    writeByte(t_file, EventType::volume);
+    writeByte(t_file, 0x64);
+
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::pitchBend);
+    writeByte(t_file, 0x00); // byte 1
+    writeByte(t_file, 0x40); // byte 2
+
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::controlChange);
+    writeByte(t_file, EventType::regParamNum_MSB);
+    writeByte(t_file, 0x00); // regParamNum Value
+
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::controlChange);
+    writeByte(t_file, EventType::regParamNum_LSB);
+    writeByte(t_file, 0x00); // regParamNum Value
+
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::controlChange);
+    writeByte(t_file, EventType::dataEntry);
+    writeByte(t_file, 0x12);
 }
 
 void MidiWrite::writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint8_t t_deltatime)
