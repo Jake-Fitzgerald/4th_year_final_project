@@ -1,28 +1,272 @@
-﻿  MidiWrite.cpp
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(145,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+﻿  DrumVisualiser.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'DrumVisualiser.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'DrumVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'DrumVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'DrumVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'DrumVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\DrumVisualiser.cpp(198,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\DrumVisualiser.cpp(279,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\DrumVisualiser.cpp(287,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\DrumVisualiser.cpp(338,28): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\DrumVisualiser.cpp(354,28): warning C4018: '>=': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\DrumVisualiser.cpp(362,20): warning C4018: '<': signed/unsigned mismatch
+  Game.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'Game.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'Game.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'Game.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'Game.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,49): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,41): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,34): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(223,7): warning C4189: 'm_tempScore': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(257,31): warning C4189: 'newKeyPress': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(260,62): warning C4100: 't_event': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(266,40): warning C4189: 'newMouseReleased': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(468,7): warning C4189: 'buttonFound': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(480,34): warning C4100: 'dtSeconds': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(836,25): warning C4244: 'initializing': conversion from 'DWORD_PTR' to 'unsigned char', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(837,26): warning C4244: 'initializing': conversion from 'DWORD_PTR' to 'unsigned char', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(838,26): warning C4244: 'initializing': conversion from 'DWORD_PTR' to 'unsigned char', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(812,12): warning C4100: 'dwParam2': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(808,10): warning C4100: 'hMidiIn': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(830,12): warning C4189: 'CC_LSB_VOLUME': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(829,12): warning C4189: 'CC_PAN': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.cpp(828,12): warning C4189: 'CC_CHANNELVOLUME': local variable is initialized but not referenced
+  Gameplay.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'Gameplay.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'Gameplay.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'Gameplay.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'Gameplay.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'Gameplay.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Gameplay.cpp(451,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Gameplay.cpp(535,16): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Gameplay.cpp(562,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Gameplay.cpp(566,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  HUD.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'HUD.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'HUD.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'HUD.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'HUD.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'HUD.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\HUD.cpp(72,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\HUD.cpp(237,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\HUD.cpp(264,13): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\HUD.cpp(254,54): warning C4100: 't_tracks': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\HUD.cpp(323,35): warning C4100: 't_mousePos': unreferenced parameter
+  MIDIParse.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'MIDIParse.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'MIDIParse.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'MIDIParse.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'MIDIParse.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(273,10): warning C4189: 'thirtyTwoSecsPerQuarter': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(272,10): warning C4189: 'clocksPerMetronomeClick': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(319,10): warning C4189: 'velocity': local variable is initialized but not referenced
+  MidiWrite.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
   (compiling source file 'MidiWrite.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(146,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
   (compiling source file 'MidiWrite.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(147,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
   (compiling source file 'MidiWrite.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(148,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
   (compiling source file 'MidiWrite.cpp')
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(115,56): warning C4244: 'argument': conversion from 'uint32_t' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(115,45): warning C4244: 'argument': conversion from 'int' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(115,33): warning C4244: 'argument': conversion from 'int' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(116,57): warning C4244: 'argument': conversion from 'uint32_t' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(116,46): warning C4244: 'argument': conversion from 'int' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(116,34): warning C4244: 'argument': conversion from 'int' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(127,25): warning C4244: '=': conversion from 'uint32_t' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(128,25): warning C4244: '=': conversion from 'uint32_t' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(129,17): warning C4244: '=': conversion from 'uint32_t' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(142,17): warning C4244: '=': conversion from 'uint16_t' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(159,35): warning C4244: 'initializing': conversion from 'double' to 'uint32_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(161,23): warning C4244: 'initializing': conversion from 'uint32_t' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(162,24): warning C4244: 'initializing': conversion from 'uint32_t' to 'uint8_t', possible loss of data
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(163,23): warning C4244: 'initializing': conversion from 'uint32_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(121,56): warning C4244: 'argument': conversion from 'uint32_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(121,45): warning C4244: 'argument': conversion from 'int' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(121,33): warning C4244: 'argument': conversion from 'int' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(122,57): warning C4244: 'argument': conversion from 'uint32_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(122,46): warning C4244: 'argument': conversion from 'int' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(122,34): warning C4244: 'argument': conversion from 'int' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(139,25): warning C4244: '=': conversion from 'uint32_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(140,25): warning C4244: '=': conversion from 'uint32_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(141,17): warning C4244: '=': conversion from 'uint32_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(154,17): warning C4244: '=': conversion from 'uint16_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(171,35): warning C4244: 'initializing': conversion from 'double' to 'uint32_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(173,23): warning C4244: 'initializing': conversion from 'uint32_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(174,24): warning C4244: 'initializing': conversion from 'uint32_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(175,23): warning C4244: 'initializing': conversion from 'uint32_t' to 'uint8_t', possible loss of data
+  Options.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'Options.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'Options.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'Options.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'Options.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'Options.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Options.cpp(409,21): warning C4018: '<': signed/unsigned mismatch
+  PianoVisualiser.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'PianoVisualiser.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'PianoVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'PianoVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'PianoVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'PianoVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(51,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(87,53): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(87,47): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(87,41): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(102,9): warning C4189: 'keysLoaded': local variable is initialized but not referenced
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(127,35): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(137,35): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(150,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(159,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(179,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(197,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(233,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(263,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(275,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.cpp(295,41): warning C4100: 't_deltaTime': unreferenced parameter
+  TrackVisualiser.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'TrackVisualiser.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'TrackVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'TrackVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'TrackVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'TrackVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,49): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'TrackVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,41): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'TrackVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,34): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'TrackVisualiser.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.cpp(114,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.cpp(120,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.cpp(127,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.cpp(133,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.cpp(139,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.cpp(145,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.cpp(151,36): warning C4100: 't_deltaTime': unreferenced parameter
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.cpp(166,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.cpp(190,23): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(150,28): warning C4245: 'initializing': conversion from 'int' to 'uint32_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(151,26): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(152,25): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.h(153,31): warning C4245: 'initializing': conversion from 'int' to 'uint16_t', signed/unsigned mismatch
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,49): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,41): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(94,34): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+  (compiling source file 'main.cpp')
+  
+  Generating Code...
   BeatBreaker.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Debug\BeatBreaker.exe

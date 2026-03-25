@@ -64,10 +64,7 @@ void MidiWrite::writeTimeSigTrack(std::ofstream& t_file)
     writeByte(t_file, 0x18); // Ticks per click
     writeByte(t_file, 0x08); // Thirty seconds per crotchet
 
-    writeByte(t_file, 0x00); // delta
-    writeByte(t_file, EventType::metaEvent);
-    writeByte(t_file, EventType::endOfTrack); 
-    writeByte(t_file, 0x00); // Meta length
+    writeEndOfTrack(t_file);
 }
 
 void MidiWrite::writeTempoTrack(std::ofstream& t_file)
@@ -83,10 +80,8 @@ void MidiWrite::writeTempoTrack(std::ofstream& t_file)
     writeByte(t_file, 0x03); // Meta length
     
     writeMicroSeconds(t_file); // uint24
-    writeByte(t_file, 0x00);
-    writeByte(t_file, EventType::metaEvent);
-    writeByte(t_file, EventType::endOfTrack);
-    writeByte(t_file, 0x00); // Meta length
+    
+    writeEndOfTrack(t_file);
 
 }
 
@@ -102,7 +97,8 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
     writeByte(t_file, EventType::trackName);
 
     writeByte(t_file, 0x07); // Meta length
-    std::string trackNameString = "FL Keys";
+    //std::string trackNameString = "FL Keys";
+    t_file.write("FL Keys", 7);
 
     // -------------------------------------------------------------
     // CC for each note
@@ -111,7 +107,6 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
     //    writeCC(t_file);
     //}
     writeCC(t_file);
-
 
     // -------------------------------------------------------------
     // Notes
@@ -128,6 +123,12 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
 
         previousTick = note.endTick;
     }
+
+    writeCC(t_file);
+
+    writeEndOfTrack(t_file);
+
+    std::cerr << "Completed writing midi file" << std::endl;
 }
 
 void MidiWrite::write_uint32(std::ofstream& t_file, uint32_t t_value)
@@ -214,6 +215,16 @@ void MidiWrite::writeCC(std::ofstream& t_file)
     writeByte(t_file, EventType::controlChange);
     writeByte(t_file, EventType::dataEntry);
     writeByte(t_file, 0x12);
+
+    writeProgamChange(t_file);
+}
+
+void MidiWrite::writeProgamChange(std::ofstream& t_file)
+{
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::programChange);
+    writeByte(t_file, 0x00); // Program number (padding?)
+    writeByte(t_file, 0x00); // Instrument
 }
 
 void MidiWrite::writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint8_t t_deltatime)
@@ -230,6 +241,14 @@ void MidiWrite::writeNoteOff(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_v
     writeByte(t_file, EventType::noteOff);
     writeByte(t_file, t_pitch);
     writeByte(t_file, t_velocity);
+}
+
+void MidiWrite::writeEndOfTrack(std::ofstream& t_file)
+{
+    writeByte(t_file, 0x00); // delta
+    writeByte(t_file, EventType::metaEvent);
+    writeByte(t_file, EventType::endOfTrack);
+    writeByte(t_file, 0x00); // Meta length
 }
 
 void MidiWrite::setupNotes()
