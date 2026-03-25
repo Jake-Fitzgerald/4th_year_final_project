@@ -5,17 +5,12 @@ MidiWrite::MidiWrite()
     setupNotes();
 }
 
-//MidiWrite::MidiWrite(std::string& t_fileName)
-//{
-//	writeFile(t_fileName);
-//}
-
-
 bool MidiWrite::writeFile(std::string& t_fileName)
 {
     std::ofstream file;
 
-    std::string pathWithFile = m_drectoryPath + t_fileName + ".midi";
+    //std::string pathWithFile = m_drectoryPath + t_fileName + ".midi";
+    std::string pathWithFile = m_drectoryPath + t_fileName + ".mid";
 
     file.open(pathWithFile, std::ofstream::out | std::ofstream::binary);
 
@@ -29,6 +24,7 @@ bool MidiWrite::writeFile(std::string& t_fileName)
     writeHeader(file);
     writeTimeSigTrack(file);
     writeTempoTrack(file);
+    calculateTrackLength();
     writeNoteTrack(file);
 
     file.close();
@@ -184,37 +180,51 @@ void MidiWrite::writeMicroSeconds(std::ofstream& t_file)
     std::cerr << "Tempo: " << m_BPM << ", BPM :" << microsecondsPerClick << " (microseconds)" << std::endl;
 }
 
+void MidiWrite::calculateTrackLength()
+{
+    m_noteLength = static_cast<int>(m_testNotes.size()) * 8;
+
+    m_noteTrackLength = m_noteTrackNameLength + m_ccLength + m_noteLength + m_endOfTrackLength;
+    std::cerr << "Note Track Length: " << m_noteTrackLength << std::endl;
+}
+
 void MidiWrite::writeCC(std::ofstream& t_file)
 {
     writeByte(t_file, 0x00);
     writeByte(t_file, EventType::controlChange);
     writeByte(t_file, EventType::pan);
-    writeByte(t_file, 0x64);
+    writeByte(t_file, 0x40);
+    m_ccCounter += 4;
 
     writeByte(t_file, 0x00);
     writeByte(t_file, EventType::controlChange);
     writeByte(t_file, EventType::volume);
     writeByte(t_file, 0x64);
+    m_ccCounter += 4;
 
     writeByte(t_file, 0x00);
     writeByte(t_file, EventType::pitchBend);
     writeByte(t_file, 0x00); // byte 1
     writeByte(t_file, 0x40); // byte 2
+    m_ccCounter += 4;
 
     writeByte(t_file, 0x00);
     writeByte(t_file, EventType::controlChange);
     writeByte(t_file, EventType::regParamNum_MSB);
     writeByte(t_file, 0x00); // regParamNum Value
+    m_ccCounter += 4;
 
     writeByte(t_file, 0x00);
     writeByte(t_file, EventType::controlChange);
     writeByte(t_file, EventType::regParamNum_LSB);
     writeByte(t_file, 0x00); // regParamNum Value
+    m_ccCounter += 4;
 
     writeByte(t_file, 0x00);
     writeByte(t_file, EventType::controlChange);
     writeByte(t_file, EventType::dataEntry);
-    writeByte(t_file, 0x12);
+    writeByte(t_file, 0x0C);
+    m_ccCounter += 4;
 
     writeProgamChange(t_file);
 }
@@ -223,8 +233,8 @@ void MidiWrite::writeProgamChange(std::ofstream& t_file)
 {
     writeByte(t_file, 0x00);
     writeByte(t_file, EventType::programChange);
-    writeByte(t_file, 0x00); // Program number (padding?)
     writeByte(t_file, 0x00); // Instrument
+    m_ccCounter += 3;
 }
 
 void MidiWrite::writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint8_t t_deltatime)
@@ -258,7 +268,7 @@ void MidiWrite::setupNotes()
     MidiNote note3;
 
     note1.pitch = 60;
-    note2.pitch = 62;
+    note2.pitch = 60;
     note3.pitch = 60;
 
     note1.velocity = 100;

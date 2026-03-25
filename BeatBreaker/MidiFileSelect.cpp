@@ -18,7 +18,8 @@ void MidiFileSelect::setupPathStrings()
 		{"Drum Visualiser", "ASSETS\\AUDIO\\MUSIC\\DrumVis.mid"},
 		{"Piano Visualiser", "ASSETS\\AUDIO\\MUSIC\\PianoVis.mid"},
 		{"Chord", "ASSETS\\AUDIO\\MUSIC\\Chord.mid"},
-		{"Full MIDI Range", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid"}
+		{"Full MIDI Range", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid"},
+		{"Saved Midi", "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\temp.midi"}
 
 	};
 	

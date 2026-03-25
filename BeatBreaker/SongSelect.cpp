@@ -17,6 +17,7 @@ void SongSelect::setupPathStrings()
 		{"Fast BPM", "ASSETS\\AUDIO\\MUSIC\\Fast_BPM.mid", SONGDIFFICULTIES::HARD},
 		{"Thousand Miles", "ASSETS\\AUDIO\\MUSIC\\ThousandMilesRiff.mid", SONGDIFFICULTIES::HARD},
 		{"Full MCI Example [TEST]", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid", SONGDIFFICULTIES::UNKNOWN},
+		{"Saved Midi", "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\temp.midi", SONGDIFFICULTIES::UNKNOWN},
 	};
 
 	m_pathsCount = m_pathVector.size();
@@ -125,7 +126,7 @@ void SongSelect::setupButtons()
 void SongSelect::setupBeginButton()
 {
 	// Position the Begin button below the last song row
-	float beginY = paddingY + m_pathsCount * m_spacing + 20.0f;
+	float beginY = paddingY + m_pathsCount * m_spacing - 100.0f;
 
 	m_beginButton.setSize(m_playButtonSize);
 	m_beginButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 100.0f});
@@ -148,7 +149,7 @@ void SongSelect::setupBeginButton()
 
 void SongSelect::setupPreviewButton()
 {
-	float beginY = paddingY + m_pathsCount * m_spacing + 20.0f;
+	float beginY = paddingY + m_pathsCount * m_spacing - 100.0f;
 
 	m_previewButton.setSize(m_playButtonSize);
 	m_previewButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 200.0f });

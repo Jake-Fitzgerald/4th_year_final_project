@@ -54,6 +54,8 @@ public:
 
 	void writeMicroSeconds(std::ofstream& t_file);
 
+	void calculateTrackLength();
+
 	void writeCC(std::ofstream& t_file);
 	void writeProgamChange(std::ofstream& t_file);
 
@@ -67,7 +69,13 @@ public:
 private:
 
 	std::string m_drectoryPath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\";
-	
+
+	int m_noteTrackNameLength = 11;
+	int m_ccLength = 54; // 27 by 2
+	int m_ccCounter = 0;
+	int m_noteLength = 0;
+	int m_endOfTrackLength = 4;
+
 	double m_BPM = 120.0;
 
 	int m_noteTrackLength = 0;

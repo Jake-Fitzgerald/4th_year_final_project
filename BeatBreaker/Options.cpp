@@ -146,6 +146,22 @@ void Options::setupMidiOptions()
 	colTriggerSize.m_buttonText.setPosition({ colTriggerSize.m_buttonShape.getPosition().x + 20.0f, colTriggerSize.m_buttonShape.getPosition().y });
 
 	m_buttons.push_back(colTriggerSize);
+
+	// Input Trigger Size
+	OptionButton practiceModeBool(m_font);
+
+	practiceModeBool.m_buttonShape.setSize(practiceModeBool.m_buttonSize);
+	practiceModeBool.m_buttonShape.setPosition(practiceModeBool.m_buttonPos3);
+	practiceModeBool.m_buttonShape.setFillColor(practiceModeBool.c_enabledColour);
+	practiceModeBool.m_buttonShape.setOutlineThickness(2.0f);
+	practiceModeBool.m_buttonShape.setOutlineColor(sf::Color::Black);
+
+	practiceModeBool.m_buttonText.setString("Practice Mode");
+	practiceModeBool.m_buttonText.setFillColor(sf::Color::Black);
+	practiceModeBool.m_buttonText.setCharacterSize(40U);
+	practiceModeBool.m_buttonText.setPosition({ practiceModeBool.m_buttonShape.getPosition().x + 20.0f, practiceModeBool.m_buttonShape.getPosition().y });
+
+	m_buttons.push_back(practiceModeBool);
 }
 
 void Options::setupUIFrames()

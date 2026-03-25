@@ -34,6 +34,11 @@ Score: (right hand side)
 Combo
 - 5 notes in sequence hit with perfect timing?
 
+Practice Mode:
+- Practice Trigger is placed at the bottom of every note and when it hits the top of the keyboard it will trigger a call to pause the playback,
+then it will only resume when the user is after pressing the correct key on the keyboard.
+
+
 */
 
 struct FallingNote
