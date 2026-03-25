@@ -354,7 +354,14 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 		m_gameplay->setEasyInputFlag(!currentFlag);
 		changeButtonColours();
 	}
-	
+	// Practice
+	else if (m_buttons[2].m_buttonShape.getGlobalBounds().contains(t_mousePos))
+	{
+		bool currentFlag = m_gameplay->getPracticeModeFlag();
+		m_gameplay->setPracticeModeFlag(!currentFlag);
+		changeButtonColours();
+	}
+
 	return false;
 }
 
@@ -397,6 +404,7 @@ void Options::savePreferences()
 	// Midi
 	MyFile << "PlayNotesNoInput=" << m_gameplay->getNoteOnColliderFlag();
 	MyFile << "EasyInputMode=" << m_gameplay->getEasyInputFlag();
+	MyFile << "PracticeMode=" << m_gameplay->getPracticeModeFlag();
 
 	MyFile.close();
 }
@@ -437,7 +445,6 @@ void Options::loadPreferences(SoundManager& t_soundManager)
 			continue; 
 		}
 			
-
 		// Split key and value (before = is name, after = is float)
 		std::string name = currentLine.substr(0, pos);
 		std::string amount = currentLine.substr(pos + 1);
@@ -467,6 +474,12 @@ void Options::loadPreferences(SoundManager& t_soundManager)
 			bool savedFlag = static_cast<bool>(value);
 			m_gameplay->setEasyInputFlag(savedFlag);
 			std::cerr << "EasyInputMode: " << savedFlag << std::endl;
+		}
+		else if (name == "PracticeMode")
+		{
+			bool savedFlag = static_cast<bool>(value);
+			m_gameplay->setPracticeModeFlag(savedFlag);
+			std::cerr << "PracticeMode: " << savedFlag << std::endl;
 		}
 	}
 	
@@ -520,6 +533,15 @@ void Options::changeButtonColours()
 	else
 	{
 		m_buttons[1].m_buttonShape.setFillColor(m_buttons[1].c_enabledColour);
+	}
+	// Practice
+	if (m_gameplay->getPracticeModeFlag() == false)
+	{
+		m_buttons[2].m_buttonShape.setFillColor(m_buttons[1].c_disabledColour);
+	}
+	else
+	{
+		m_buttons[2].m_buttonShape.setFillColor(m_buttons[1].c_enabledColour);
 	}
 	
 }

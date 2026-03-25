@@ -111,7 +111,6 @@ private:
 	void update(sf::Time t_deltaTime);
 	void render();
 	
-	void setupTexts();
 	void setupSprites();
 	void setupAudio();
 	void setupSounds();

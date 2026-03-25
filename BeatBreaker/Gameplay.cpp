@@ -263,55 +263,66 @@ void Gameplay::update(float t_deltaTime)
 		return;
 	}
 
-	m_playbackTime += t_deltaTime;
-	m_songTimeText.setString(std::to_string(m_playbackTime));
-
-	if (b_isPlaying == true && m_playbackTime >= m_songEndTime)
+	if (b_isPaused == false && b_isPracticePaused == false)
 	{
-		b_isPlaying = false;
-		b_isSongFinished = true;
-		std::cerr << "Song finished" << std::endl;
-	}
 
-	for (auto& note : m_fallingNotes)
-	{
-		//note.shape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
-		sf::Vector2f movement{ 0.0f, m_noteSpeed * t_deltaTime };
-		note.shape.move(movement);
-		note.earlyTrigger.move(movement);
-		note.perfectTrigger.move(movement);
-		note.lateTrigger.move(movement);
+		m_playbackTime += t_deltaTime;
+		m_songTimeText.setString(std::to_string(m_playbackTime));
 
-		if (b_playNotesNoInput)
+		if (b_isPlaying == true && m_playbackTime >= m_songEndTime)
 		{
-			// Play note when entering the input collider
-			if (note.b_isActive && m_keyboard.checkInputCollision(note.shape))
+			b_isPlaying = false;
+			b_isSongFinished = true;
+			std::cerr << "Song finished" << std::endl;
+		}
+
+		for (auto& note : m_fallingNotes)
+		{
+			//note.shape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
+			sf::Vector2f movement{ 0.0f, m_noteSpeed * t_deltaTime };
+			note.shape.move(movement);
+			note.earlyTrigger.move(movement);
+			note.perfectTrigger.move(movement);
+			note.lateTrigger.move(movement);
+
+			if (b_isPracticeMode && note.b_isActive && m_keyboard.checkInputCollision(note.perfectTrigger))
 			{
-				m_keyboard.noteOn(note.noteName);
-				note.b_isActive = false;
+				b_isPracticePaused == true;
+				practiceWaitForNote = note.noteName;
+				break;
+			}
+
+			if (b_playNotesNoInput == true)
+			{
+				// Play note when entering the input collider
+				if (note.b_isActive && m_keyboard.checkInputCollision(note.perfectTrigger))
+				{
+					m_keyboard.noteOn(note.noteName);
+					note.b_isActive = false;
+				}
 			}
 		}
-	}
 
-	// Kill notes
-	for (int i = static_cast<int>(m_fallingNotes.size()) - 1; i >= 0; i--)
-	{
-		if (m_fallingNotes[i].shape.getPosition().y > m_keyboard.getKillTriggerY())
+		// Kill notes
+		for (int i = static_cast<int>(m_fallingNotes.size()) - 1; i >= 0; i--)
 		{
-			if (m_fallingNotes[i].b_isActive == true)
+			if (m_fallingNotes[i].shape.getPosition().y > m_keyboard.getKillTriggerY())
 			{
-				std::cerr << "MISS: " << std::endl;
-				m_score -= m_scoreMiss;
-				updateScore();
-				m_missedNotes++;
-				updateStatistics();
+				if (m_fallingNotes[i].b_isActive == true)
+				{
+					std::cerr << "MISS: " << std::endl;
+					m_score -= m_scoreMiss;
+					updateScore();
+					m_missedNotes++;
+					updateStatistics();
+				}
+				else
+				{
+					m_keyboard.noteOff(m_fallingNotes[i].noteName);
+				}
+				//std::cerr << "MISS: " << m_fallingNotes[i].noteName << std::endl;
+				m_fallingNotes.erase(m_fallingNotes.begin() + i);
 			}
-			else
-			{
-				m_keyboard.noteOff(m_fallingNotes[i].noteName);
-			}
-			//std::cerr << "MISS: " << m_fallingNotes[i].noteName << std::endl;
-			m_fallingNotes.erase(m_fallingNotes.begin() + i);
 		}
 	}
 }
@@ -446,82 +457,95 @@ void Gameplay::handleRelease(sf::Vector2f t_mousePos)
 
 void Gameplay::noteOn(std::string& t_noteName)
 {
-	m_keyboard.noteOn(t_noteName);
-
-	for (int i = 0; i < m_fallingNotes.size(); i++)
+	if (b_isPaused == true)
 	{
-		if (m_fallingNotes[i].b_isActive == false)
-		{
-			continue;
-		}
-
-		bool b_nameMatches = m_fallingNotes[i].noteName == t_noteName;
-		//bool b_inHitZone = m_keyboard.checkInputCollision(m_fallingNotes[i].shape);
-
-		if (b_nameMatches)
-		{
-			if (m_keyboard.checkInputCollision(m_fallingNotes[i].earlyTrigger))
-			{
-				std::cerr << "EARLY: " << t_noteName << std::endl;
-				// Score
-				m_score += m_scoreEarly;
-				updateScore();
-				// Statistics
-				m_currentNotesHit++;
-				m_earlyNotes++;
-				updateStatistics();
-
-				m_fallingNotes[i].shape.setFillColor(c_earlyNoteColour);
-				m_fallingNotes[i].b_isActive = false;
-				return;
-			}
-			if (m_keyboard.checkInputCollision(m_fallingNotes[i].perfectTrigger))
-			{
-				std::cerr << "PERFECT: " << t_noteName << std::endl;
-				// Score
-				m_score += m_scorePerfect;
-				updateScore();
-				// Statistics
-				m_currentNotesHit++;
-				m_perfectNotes++;
-				updateStatistics();
-
-				m_fallingNotes[i].shape.setFillColor(c_perfectNoteColour);
-				m_fallingNotes[i].b_isActive = false;
-				return;
-			}
-			if (m_keyboard.checkInputCollision(m_fallingNotes[i].lateTrigger))
-			{
-				std::cerr << "LATE: " << t_noteName << std::endl;
-				// Score
-				m_score += m_scoreLate;
-				updateScore();
-				// Statistics
-				m_currentNotesHit++;
-				m_lateNotes++;
-				updateStatistics();
-
-				m_fallingNotes[i].shape.setFillColor(c_lateNoteColour);
-				m_fallingNotes[i].b_isActive = false;
-				return;
-			}
-
-			//std::cerr << "MISS: " << t_noteName << std::endl;
-			//m_score -= m_scoreMiss;
-			//updateScore();
-		}
+		return;
 	}
 
-	std::cerr << "WRONG KEY: " << t_noteName << std::endl;
-	m_score -= m_scoreWrong;
-	updateScore();
-	m_wrongNotes++;
-	updateStatistics();
+	if (b_isPracticePaused == true)
+	{
 
+		m_keyboard.noteOn(t_noteName);
+
+		for (int i = 0; i < m_fallingNotes.size(); i++)
+		{
+			if (m_fallingNotes[i].b_isActive == false)
+			{
+				continue;
+			}
+
+			bool b_nameMatches = m_fallingNotes[i].noteName == t_noteName;
+			//bool b_inHitZone = m_keyboard.checkInputCollision(m_fallingNotes[i].shape);
+
+			if (b_nameMatches)
+			{
+				if (m_keyboard.checkInputCollision(m_fallingNotes[i].earlyTrigger))
+				{
+					std::cerr << "EARLY: " << t_noteName << std::endl;
+					// Score
+					m_score += m_scoreEarly;
+					updateScore();
+					// Statistics
+					m_currentNotesHit++;
+					m_earlyNotes++;
+					updateStatistics();
+
+					m_fallingNotes[i].shape.setFillColor(c_earlyNoteColour);
+					m_fallingNotes[i].b_isActive = false;
+					return;
+				}
+				if (m_keyboard.checkInputCollision(m_fallingNotes[i].perfectTrigger))
+				{
+					std::cerr << "PERFECT: " << t_noteName << std::endl;
+					// Score
+					m_score += m_scorePerfect;
+					updateScore();
+					// Statistics
+					m_currentNotesHit++;
+					m_perfectNotes++;
+					updateStatistics();
+
+					m_fallingNotes[i].shape.setFillColor(c_perfectNoteColour);
+					m_fallingNotes[i].b_isActive = false;
+					return;
+				}
+				if (m_keyboard.checkInputCollision(m_fallingNotes[i].lateTrigger))
+				{
+					std::cerr << "LATE: " << t_noteName << std::endl;
+					// Score
+					m_score += m_scoreLate;
+					updateScore();
+					// Statistics
+					m_currentNotesHit++;
+					m_lateNotes++;
+					updateStatistics();
+
+					m_fallingNotes[i].shape.setFillColor(c_lateNoteColour);
+					m_fallingNotes[i].b_isActive = false;
+					return;
+				}
+
+				//std::cerr << "MISS: " << t_noteName << std::endl;
+				//m_score -= m_scoreMiss;
+				//updateScore();
+			}
+		}
+
+		std::cerr << "WRONG KEY: " << t_noteName << std::endl;
+		m_score -= m_scoreWrong;
+		updateScore();
+		m_wrongNotes++;
+		updateStatistics();
+	}
 }
 
 void Gameplay::noteOff(std::string& t_noteName)
 {
+	if (b_isPaused == true)
+	{
+		return;
+	}
+
 	m_keyboard.noteOff(t_noteName);
 }
 
@@ -634,6 +658,33 @@ void Gameplay::startSong()
 	b_isPlaying = true;
 	m_playbackTime = 0.0f;
 	std::cerr << "Song started" << std::endl;
+}
+
+void Gameplay::togglePause()
+{
+	if (b_isPaused == true)
+	{
+		b_isPaused = false;
+	}
+	else
+	{
+		b_isPaused = true;
+	}
+}
+
+bool Gameplay::getPausedFlag()
+{
+	return b_isPaused;
+}
+
+void Gameplay::setPracticeModeFlag(bool t_bool)
+{
+	b_isPracticeMode = t_bool;
+}
+
+bool Gameplay::getPracticeModeFlag()
+{
+	return b_isPracticeMode;
 }
 
 bool Gameplay::getNoteOnColliderFlag()

@@ -98,6 +98,10 @@ public:
 
     // Playback
     void startSong();
+    void togglePause();
+    bool getPausedFlag();
+    void setPracticeModeFlag(bool t_bool);
+    bool getPracticeModeFlag();
 
     bool getNoteOnColliderFlag();
     void setNoteOnColliderFlag(bool t_bool);
@@ -199,12 +203,17 @@ private:
 
     // Bools
     bool b_isPlaying = false;
+    bool b_isPaused = false;
     bool b_isSongFinished = false;
-
+    
     bool b_playNotesNoInput = true;
     bool b_easyInputMode = true;
 
     bool b_isPreviewMode = false;
+    bool b_isPracticeMode = false;
+    bool b_isPracticePaused = false;
+    std::string practiceWaitForNote = " ";
+
     bool b_displayTriggers = false;
 
 };

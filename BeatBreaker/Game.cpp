@@ -36,7 +36,6 @@ Game::Game() :
 		//m_keyboard(m_soundManager),
 		
 {
-	setupTexts(); // load font 
 	setupSprites(); // load texture
 	setupAudio(); // load sounds
 
@@ -432,7 +431,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	if (m_hud.pauseClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Pause button clicked" << std::endl;
-
+		m_gameplay.togglePause();
 	}
 	// Stop
 	if (m_hud.stopClick(mouseWorldPos) == true)
@@ -606,9 +605,6 @@ void Game::render()
 	m_window.display();
 }
 
-void Game::setupTexts()
-{
-}
 
 void Game::setupSprites()
 {
