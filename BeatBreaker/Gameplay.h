@@ -83,6 +83,8 @@ public:
     void resetSession();
     void resetScore();
     void resetStatistics();
+    int getScore();
+    int getStatistic();
 
     void render(sf::RenderWindow& t_window);
 
@@ -212,7 +214,7 @@ private:
     bool b_isPreviewMode = false;
     bool b_isPracticeMode = false;
     bool b_isPracticePaused = false;
-    std::string practiceWaitForNote = " ";
+    std::string practiceWaitForNote = "";
 
     bool b_displayTriggers = false;
 

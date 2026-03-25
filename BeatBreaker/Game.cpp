@@ -32,7 +32,8 @@ Game::Game() :
 		pianoVisualiser(m_soundManager, m_collisionManager),
 	    m_songSelect(m_jerseyFont),
 	    m_leaderboard(m_jerseyFont),
-		m_mainMenu(m_jerseyFont)
+		m_mainMenu(m_jerseyFont),
+	    m_gameOver(m_jerseyFont)
 		//m_keyboard(m_soundManager),
 		
 {
@@ -90,9 +91,10 @@ Game::Game() :
 	// Midi Input
 	setupMidiInput();
 
-	// Leaderboard
+	// Leaderboard / Results
 	m_leaderboard.setupLeaderboard();
 	m_leaderboard.populateFromDatabase(m_localLeaderboard);
+	m_gameOver.setupGameOver();
 
 	// Main Menu
 	m_mainMenu.setupMainMenu();
@@ -529,6 +531,7 @@ void Game::update(sf::Time t_deltaTime)
 
 		if (m_gameplay.getSongFinishedFlag() == true)
 		{
+			m_gameOver.setScore(m_gameplay.getScore());
 			m_currentGameState = GameStates::ResultsScene;
 		}
 	}
@@ -596,6 +599,11 @@ void Game::render()
 	if (m_currentGameState == GameStates::LeaderboardScene)
 	{
 		m_leaderboard.render(m_window);
+	}
+	// Leaderboard
+	if (m_currentGameState == GameStates::ResultsScene)
+	{
+		m_gameOver.render(m_window);
 	}
 
 	// UI

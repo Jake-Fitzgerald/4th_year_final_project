@@ -537,11 +537,11 @@ void Options::changeButtonColours()
 	// Practice
 	if (m_gameplay->getPracticeModeFlag() == false)
 	{
-		m_buttons[2].m_buttonShape.setFillColor(m_buttons[1].c_disabledColour);
+		m_buttons[2].m_buttonShape.setFillColor(m_buttons[2].c_disabledColour);
 	}
 	else
 	{
-		m_buttons[2].m_buttonShape.setFillColor(m_buttons[1].c_enabledColour);
+		m_buttons[2].m_buttonShape.setFillColor(m_buttons[2].c_enabledColour);
 	}
 	
 }

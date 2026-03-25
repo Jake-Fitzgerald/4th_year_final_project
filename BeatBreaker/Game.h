@@ -12,8 +12,6 @@
 #include <vector>
 
 // Components
-#include "Block.h"
-#include "BlockGenerator.h"
 #include "SoundManager.h"
 #include "CollisionManager.h"
 
@@ -51,8 +49,9 @@
 #include <sqlext.h>
 #pragma comment(lib, "odbc32.lib")
 
-// Leaderboard
+// Leaderboard / Results
 #include "Leaderboard.h"
+#include "GameOver.h";
 
 // Gameplay
 #include "Gameplay.h"
@@ -118,8 +117,6 @@ private:
 
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
-
-
 	void changeMidiPath(std::string t_pathName);
 	void changeGameState();
 
@@ -132,8 +129,6 @@ private:
 	void stopMidiMCI();
 
 
-
-	
 	sf::RenderWindow m_window; 
 	//sf::Font m_jerseyFont;
 	std::shared_ptr<const sf::Font> m_jerseyFont;
@@ -146,7 +141,7 @@ private:
 	bool m_DELETEexitGame; 
 
 	// States
-	GameStates m_currentGameState = GameStates::MainMenuScene;
+	GameStates m_currentGameState = GameStates::ResultsScene;
 
 
 	// Block colours				[DEBUG]
@@ -219,6 +214,7 @@ private:
 
 	// Leaderboard
 	Leaderboard m_leaderboard;
+	GameOver m_gameOver;
 
 	// Gameplay
 	Gameplay m_gameplay;

@@ -287,7 +287,7 @@ void Gameplay::update(float t_deltaTime)
 
 			if (b_isPracticeMode && note.b_isActive && m_keyboard.checkInputCollision(note.perfectTrigger))
 			{
-				b_isPracticePaused == true;
+				b_isPracticePaused = true;
 				practiceWaitForNote = note.noteName;
 				break;
 			}
@@ -388,6 +388,11 @@ void Gameplay::resetStatistics()
 
 	m_noteCountTotal = 0;
 	m_currentNotesHit = 0;
+}
+
+int Gameplay::getScore()
+{
+	return m_score;
 }
 
 void Gameplay::render(sf::RenderWindow& t_window)
@@ -492,6 +497,9 @@ void Gameplay::noteOn(std::string& t_noteName)
 
 					m_fallingNotes[i].shape.setFillColor(c_earlyNoteColour);
 					m_fallingNotes[i].b_isActive = false;
+
+					b_isPracticePaused = false;
+					practiceWaitForNote = "";
 					return;
 				}
 				if (m_keyboard.checkInputCollision(m_fallingNotes[i].perfectTrigger))
@@ -507,6 +515,9 @@ void Gameplay::noteOn(std::string& t_noteName)
 
 					m_fallingNotes[i].shape.setFillColor(c_perfectNoteColour);
 					m_fallingNotes[i].b_isActive = false;
+
+					b_isPracticePaused = false;
+					practiceWaitForNote = "";
 					return;
 				}
 				if (m_keyboard.checkInputCollision(m_fallingNotes[i].lateTrigger))
@@ -522,6 +533,9 @@ void Gameplay::noteOn(std::string& t_noteName)
 
 					m_fallingNotes[i].shape.setFillColor(c_lateNoteColour);
 					m_fallingNotes[i].b_isActive = false;
+
+					b_isPracticePaused = false;
+					practiceWaitForNote = "";
 					return;
 				}
 

@@ -163,7 +163,7 @@
       <Filter>Source Files\Scenes\SelectionMenus</Filter>
     </ClCompile>
     <ClCompile Include="MidiWrite.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MIDI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,7 +246,7 @@
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="MidiWrite.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\MIDI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
