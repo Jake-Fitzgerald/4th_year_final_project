@@ -268,7 +268,7 @@ void MidiWrite::setupNotes()
     MidiNote note3;
 
     note1.pitch = 60;
-    note2.pitch = 60;
+    note2.pitch = 62;
     note3.pitch = 60;
 
     note1.velocity = 100;

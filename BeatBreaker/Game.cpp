@@ -511,13 +511,6 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_hud.updateFPSText(m_fps);
 	}
-	
-	// Block Collision															// LOOK AT THIS FOR REFERENCE FOR COLLIDERS FOR KEYS
-	//if (m_collisionManager.checkCollision(m_player.getHitbox(), "BLOCK"))
-	//{
-	//	m_player.revertPosition();
-	//	m_player.updatePlayer(dtConverted);
-	//}
 
 	drumVisualiser.updateIntroAnim(dtConverted);
 
@@ -613,7 +606,6 @@ void Game::render()
 	m_window.display();
 }
 
-
 void Game::setupSprites()
 {
 	if (!m_DELETElogoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
@@ -640,7 +632,6 @@ void Game::setupAudio()
 	//m_testSound.play();
 }
 
-
 bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)
 {
 	if (t_mousePos.x >= t_topLeft.x &&
@@ -655,7 +646,6 @@ bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, s
 		return false;
 	}
 }
-
 
 void Game::setupSounds()
 {
@@ -770,6 +760,8 @@ void Game::setupMidiInput()
 		// Open a specific midi device for receiving messages
 		// https://learn.microsoft.com/en-us/windows/win32/api/mmeapi/nf-mmeapi-midiinopen
 		// handle is 'LPHMIDIIN', which is a pointer to 'HMIDIIN', 
+		
+		// https://learn.microsoft.com/en-us/dotnet/framework/interop/callback-functions
 		//MMRESULT m_resultMidiOpen = midiInOpen(&handleMidiIn, validMidiID, (DWORD_PTR)&MidiInProc, 0, CALLBACK_FUNCTION);  
 
 		m_midiCallbackData = { &pianoVisualiser, &drumVisualiser, &m_gameplay, &m_currentGameState };
@@ -832,7 +824,6 @@ void CALLBACK MidiInProc(
 	const int CC_CHANNELVOLUME = 7;
 	const int CC_PAN = 10;
 	const int CC_LSB_VOLUME = 27; 
-
 
 	if (wMsg == MIM_DATA)
 	{
@@ -922,7 +913,7 @@ void CALLBACK MidiInProc(
 				{
 					if (gameplayListener)
 					{
-						gameplayListener->noteOn(noteName);
+						gameplayListener->noteOn(noteName, msgNote, msgVel);
 					}
 				}
 				else 
@@ -942,7 +933,7 @@ void CALLBACK MidiInProc(
 				{
 					if (gameplayListener)
 					{
-						gameplayListener->noteOff(noteName);
+						gameplayListener->noteOff(noteName, msgNote, msgVel);
 					}
 				}
 				else 

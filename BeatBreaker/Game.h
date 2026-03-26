@@ -141,8 +141,7 @@ private:
 	bool m_DELETEexitGame; 
 
 	// States
-	GameStates m_currentGameState = GameStates::ResultsScene;
-
+	GameStates m_currentGameState = GameStates::MainMenuScene;
 
 	// Block colours				[DEBUG]
 	sf::Color BLUE = sf::Color::Blue;

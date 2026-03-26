@@ -1,0 +1,112 @@
+﻿  Block.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Block.h(2,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'Block.cpp')
+  
+  BlockGenerator.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\BlockGenerator.h(2,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'BlockGenerator.cpp')
+  
+  CollisionManager.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\CollisionManager.h(2,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'CollisionManager.cpp')
+  
+  Database.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Globals.h(3,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'Database.cpp')
+  
+  DrumVisualiser.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\DrumVisualiser.h(4,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'DrumVisualiser.cpp')
+  
+  Game.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.h(10,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'Game.cpp')
+  
+  GameOver.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\GameOver.h(2,10): error C1083: Cannot open include file: 'SFML//Graphics/RenderWindow.hpp': No such file or directory
+  (compiling source file 'GameOver.cpp')
+  
+  Gameplay.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Gameplay.h(2,10): error C1083: Cannot open include file: 'SFML//Graphics/RenderWindow.hpp': No such file or directory
+  (compiling source file 'Gameplay.cpp')
+  
+  GridDisplay.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\GridDisplay.h(4,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'GridDisplay.cpp')
+  
+  HUD.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\HUD.h(2,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'HUD.cpp')
+  
+  Keyboard.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Keyboard.h(5,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'Keyboard.cpp')
+  
+  Leaderboard.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Leaderboard.h(5,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'Leaderboard.cpp')
+  
+  main.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Game.h(10,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'main.cpp')
+  
+  MainMenu.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MainMenu.h(2,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'MainMenu.cpp')
+  
+  MidiFileSelect.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiFileSelect.h(4,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'MidiFileSelect.cpp')
+  
+  MIDIParse.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(235,14): error C2664: 'std::basic_istream<char,std::char_traits<char>> &std::basic_istream<char,std::char_traits<char>>::read(_Elem *,std::streamsize)': cannot convert argument 1 from 'const _Elem *' to '_Elem *'
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(235,14): error C2664:         with
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(235,14): error C2664:         [
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(235,14): error C2664:             _Elem=char
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(235,14): error C2664:         ]
+      C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(235,38):
+      Conversion loses qualifiers
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\istream(531,39):
+      see declaration of 'std::basic_istream<char,std::char_traits<char>>::read'
+      C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(235,14):
+      while trying to match the argument list '(const _Elem *, uint32_t)'
+          with
+          [
+              _Elem=char
+          ]
+  
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MIDIParse.cpp(235,6): error C2088: built-in operator '!' cannot be applied to an operand of type 'std::basic_istream<char,std::char_traits<char>>'
+  MidiWrite.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(150,17): warning C4244: '=': conversion from 'uint16_t' to 'uint8_t', possible loss of data
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(167,35): warning C4244: 'initializing': conversion from 'double' to 'uint32_t', possible loss of data
+  Options.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Options.h(2,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'Options.cpp')
+  
+  PianoVisualiser.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\PianoVisualiser.h(4,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'PianoVisualiser.cpp')
+  
+  Results.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Results.h(2,10): error C1083: Cannot open include file: 'SFML//Graphics/RenderWindow.hpp': No such file or directory
+  (compiling source file 'Results.cpp')
+  
+  Compiling...
+  Score.cpp
+  SongSelect.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\SongSelect.h(4,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'SongSelect.cpp')
+  
+  SoundManager.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\SoundManager.h(2,10): error C1083: Cannot open include file: 'SFML/Audio.hpp': No such file or directory
+  (compiling source file 'SoundManager.cpp')
+  
+  TrackVisualiser.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\TrackVisualiser.h(4,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'TrackVisualiser.cpp')
+  
+  Utilities.cpp
+  VisualiserSelect.cpp
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\VisualiserSelect.h(4,10): error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  (compiling source file 'VisualiserSelect.cpp')
+  

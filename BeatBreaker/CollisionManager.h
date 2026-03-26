@@ -3,21 +3,6 @@
 #include <iostream>
 #include <vector>
 
-/*
-Notes:
-Layer types
-	Player
-	- Player Hitbox
-	- Player Hurtbox
-	- Player BreakHitbox
-
-	Blocks
-	- Colours (Red, Green, Yellow, Blue)
-	- Collectible (Health, Extra life)
-	- Barrier
-
-*/
-
 class CollisionManager
 {
 public:

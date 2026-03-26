@@ -1,24 +1,87 @@
+-----------------------------
+-- Drop tables
+-----------------------------
+DROP TABLE IF EXISTS results;
+DROP TABLE IF EXISTS songs;
+DROP TABLE IF EXISTS users;
 
---DROP TABLE users;
 
+-----------------------------
+-- Users
+-----------------------------
 CREATE TABLE users (
-    id INT PRIMARY KEY IDENTITY(1,1),
-    username VARCHAR(50) NOT NULL,
-    score int NOT NULL,
-    created_at DATETIME DEFAULT GETDATE()
+	id INT PRIMARY KEY IDENTITY(1,1),
+	username VARCHAR(50) NOT NULL
 );
 
-INSERT INTO users (username, score) VALUES ('Blake Fitzpatrick', 100);
-INSERT INTO users (username, score) VALUES ('Big Man Sam', 999);
-INSERT INTO users (username, score) VALUES ('ABCDEFG', 123);
-INSERT INTO users (username, score) VALUES ('CoolName', 450);
-INSERT INTO users (username, score) VALUES ('Seanie', 200);
-INSERT INTO users (username, score) VALUES ('MDOG', 320);
-INSERT INTO users (username, score) VALUES ('Rob', 200);
-INSERT INTO users (username, score) VALUES ('S', 500);
-INSERT INTO users (username, score) VALUES ('Keane', 700);
-INSERT INTO users (username, score) VALUES ('ASD', 600);
-INSERT INTO users (username, score) VALUES ('Liam', 777);
 
+-----------------------------
+-- Songs
+-----------------------------
+CREATE TABLE songs (
+	id INT PRIMARY KEY IDENTITY(1,1),
+	song_name VARCHAR(50) NOT NULL
+);
+
+
+-----------------------------
+-- Results
+-----------------------------
+CREATE TABLE results (
+	id INT PRIMARY KEY IDENTITY(1,1),
+
+	user_id INT,
+	song_id INT,
+
+	score INT,
+	early_notes INT,
+	perfect_notes INT,
+	late_notes INT,
+	missed_notes INT,
+	wrong_notes INT
+);
+
+-----------------------------
+-- Insert Users
+-----------------------------
+INSERT INTO users (username) VALUES ('Blake Fitzpatrick');
+INSERT INTO users (username) VALUES ('Big Man Sam');
+INSERT INTO users (username) VALUES ('ABCDEF');
+INSERT INTO users (username) VALUES ('CoolName');
+INSERT INTO users (username) VALUES ('Seanie');
+
+
+-----------------------------
+-- Insert Songs
+-----------------------------
+INSERT INTO songs (song_name) VALUES ('Song 1');
+INSERT INTO songs (song_name) VALUES ('Song 2');
+INSERT INTO songs (song_name) VALUES ('Song 3');
+
+
+-----------------------------
+-- Insert Results
+-----------------------------
+INSERT INTO results (user_id, song_id, score, early_notes, perfect_notes, late_notes, missed_notes, wrong_notes)
+VALUES (1, 1, 100, 5, 10, 3, 2, 0);
+
+INSERT INTO results (user_id, song_id, score, early_notes, perfect_notes, late_notes, missed_notes, wrong_notes)
+VALUES (2, 1, 300, 2, 1, 6, 11, 2);
+
+INSERT INTO results (user_id, song_id, score, early_notes, perfect_notes, late_notes, missed_notes, wrong_notes)
+VALUES (3, 2, 10, 50, 30, 5, 2, 2);
+
+INSERT INTO results (user_id, song_id, score, early_notes, perfect_notes, late_notes, missed_notes, wrong_notes)
+VALUES (4, 3, 60, 2, 8, 9, 5, 9);
+
+INSERT INTO results (user_id, song_id, score, early_notes, perfect_notes, late_notes, missed_notes, wrong_notes)
+VALUES (5, 2, 800, 7, 7, 7, 7, 7);
+
+
+-----------------------------
+-- Load
+-----------------------------
 SELECT * FROM users;
-
+SELECT * FROM songs;
+SELECT * FROM results;
+	

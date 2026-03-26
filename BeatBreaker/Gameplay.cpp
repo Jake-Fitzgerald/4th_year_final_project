@@ -285,7 +285,7 @@ void Gameplay::update(float t_deltaTime)
 			note.perfectTrigger.move(movement);
 			note.lateTrigger.move(movement);
 
-			if (b_isPracticeMode && note.b_isActive && m_keyboard.checkInputCollision(note.perfectTrigger))
+			if (b_isPracticeMode && note.b_isActive && m_keyboard.checkSoundCollision(note.perfectTrigger))
 			{
 				b_isPracticePaused = true;
 				practiceWaitForNote = note.noteName;
@@ -294,13 +294,6 @@ void Gameplay::update(float t_deltaTime)
 
 			if (b_playNotesNoInput == true)
 			{
-				//// Play note when entering the input collider
-				//if (note.b_isActive && m_keyboard.checkInputCollision(note.perfectTrigger))
-				//{
-				//	m_keyboard.noteOn(note.noteName);
-				//	note.b_isActive = false;
-				//}
-
 				// Play note when entering the input collider
 				if (note.b_isActive && m_keyboard.checkSoundCollision(note.perfectTrigger))
 				{
@@ -467,7 +460,7 @@ void Gameplay::handleRelease(sf::Vector2f t_mousePos)
 	m_keyboard.handleRelease(t_mousePos);
 }
 
-void Gameplay::noteOn(std::string& t_noteName)
+void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 {
 	if (b_isPaused == true)
 	{
@@ -493,7 +486,6 @@ void Gameplay::noteOn(std::string& t_noteName)
 
 		if (b_nameMatches)
 		{
-
 			if (m_keyboard.checkInputCollision(m_fallingNotes[i].lateTrigger))
 			{
 				std::cerr << "LATE: " << t_noteName << std::endl;
@@ -548,10 +540,6 @@ void Gameplay::noteOn(std::string& t_noteName)
 				practiceWaitForNote = "";
 				return;
 			}
-
-			//std::cerr << "MISS: " << t_noteName << std::endl;
-			//m_score -= m_scoreMiss;
-			//updateScore();
 		}
 	}
 
@@ -563,9 +551,20 @@ void Gameplay::noteOn(std::string& t_noteName)
 		m_wrongNotes++;
 		updateStatistics();
 	}
+
+	if (b_isRecording == true)
+	{
+		MidiNote note;
+		note.noteName = t_noteName;
+		note.pitch = t_pitch;
+		note.velocity = t_velocity;
+		note.startTime = m_playbackTime;
+
+		m_recordedNotes.push_back(note);
+	}
 }
 
-void Gameplay::noteOff(std::string& t_noteName)
+void Gameplay::noteOff(std::string& t_noteName, int t_pitch, int t_velocity)
 {
 	if (b_isPaused == true)
 	{
@@ -573,6 +572,18 @@ void Gameplay::noteOff(std::string& t_noteName)
 	}
 
 	m_keyboard.noteOff(t_noteName);
+
+	if (b_isRecording == true)
+	{
+		for (int i = m_recordedNotes.size() - 1; i >= 0; i--)
+		{
+			if (m_recordedNotes[i].noteName == t_noteName && m_recordedNotes[i].endTime == 0.0)
+			{
+				m_recordedNotes[i].endTime = m_playbackTime;
+				break;
+			}
+		}
+	}
 }
 
 void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
@@ -711,6 +722,16 @@ void Gameplay::setPracticeModeFlag(bool t_bool)
 bool Gameplay::getPracticeModeFlag()
 {
 	return b_isPracticeMode;
+}
+
+void Gameplay::setRecordingFlag(bool t_bool)
+{
+	b_isRecording = t_bool;
+}
+
+bool Gameplay::getRecordingFlag()
+{
+	return false;
 }
 
 bool Gameplay::getNoteOnColliderFlag()

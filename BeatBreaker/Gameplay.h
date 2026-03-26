@@ -91,8 +91,8 @@ public:
     void handleClick(sf::Vector2f t_mousePos);
     void handleRelease(sf::Vector2f t_mousePos);
 
-    void noteOn(std::string& t_noteName);
-    void noteOff(std::string& t_noteName);
+    void noteOn(std::string& t_noteName, int t_pitch, int t_velocity);
+    void noteOff(std::string& t_noteName, int t_pitch, int t_velocity);
 
     // Note Generation
     void loadTrack(MidiTrack& t_track, double t_BPM);
@@ -104,6 +104,8 @@ public:
     bool getPausedFlag();
     void setPracticeModeFlag(bool t_bool);
     bool getPracticeModeFlag();
+    void setRecordingFlag(bool t_bool);
+    bool getRecordingFlag();
 
     bool getNoteOnColliderFlag();
     void setNoteOnColliderFlag(bool t_bool);
@@ -125,6 +127,11 @@ private:
 
     int m_spawnIndex = 0;
     std::vector<FallingNote> m_fallingNotes;
+
+    // Recorded Midi
+    std::vector<MidiNote> m_recordedNotes;
+    std::string m_songName = "";
+    bool b_isRecording = true;
 
     // Playback Text
     sf::Vector2f m_playbackTextPos{ paddingX + 25.0f, paddingY + 400.0f };

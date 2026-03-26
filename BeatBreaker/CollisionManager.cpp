@@ -53,16 +53,6 @@ bool CollisionManager::checkCollision(const sf::FloatRect& t_bounds, const std::
         }
     }
     return false;
-
-    //for (const auto& shape : m_collidablesVec)
-    //{
-    //    if (t_bounds.findIntersection(shape.getGlobalBounds()))
-    //    {
-    //        std::cerr << "[COLLISION]" << std::endl;
-    //        return true;
-    //    }
-    //}
-    //return false;
 }
 
 bool CollisionManager::checkCollisionAllLayers(const sf::FloatRect& t_bounds, const std::string& t_layer)
