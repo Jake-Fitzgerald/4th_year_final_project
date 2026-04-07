@@ -17,19 +17,19 @@ InputField::InputField(std::shared_ptr<const sf::Font> font, sf::Vector2f t_pos,
 	m_inputText.setOutlineColor(sf::Color::Black);
 	m_inputText.setOutlineThickness(2.0f);
 	m_inputText.setPosition(sf::Vector2f{t_pos.x + 10.0f, t_pos.y + (t_size.y / t_charSize) / 2.0f});
+	m_inputText.setCharacterSize(t_charSize);
 	m_placeholderText.setFillColor(c_textPlaceholderColour);
-	m_placeholderText.setOutlineColor(sf::Color::White);
+	m_placeholderText.setOutlineColor(sf::Color(50, 50, 50, 200));
 	m_placeholderText.setOutlineThickness(1.0f);
 	m_placeholderText.setPosition(m_inputText.getPosition());
+	m_placeholderText.setString(m_placeholderString);
+	m_placeholderText.setCharacterSize(t_charSize);
 
 	m_cursorShape.setSize(sf::Vector2f{ 10.0f, 40.0f });
 	m_cursorShape.setFillColor(sf::Color::White);
 }
 
-void InputField::setupInputField()
-{
-	
-}
+
 
 void InputField::handleEvent(sf::Event& t_event)
 {
@@ -41,7 +41,7 @@ void InputField::handleEvent(sf::Event& t_event)
 			float yPos = static_cast<float>(mousePressed->position.y);
 			sf::Vector2f mousePos{ xPos, yPos};
 
-			b_isActive = checkIfAreaClicked(mousePos, m_textBoxFrame.getPosition(), m_textBoxFrame.getSize());
+			setIsActive(checkIfAreaClicked(mousePos, m_textBoxFrame.getPosition(), m_textBoxFrame.getSize()));
 		    //m_textBoxFrame.setFillColor
 		}
 	}
@@ -90,8 +90,7 @@ bool InputField::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topL
 
 void InputField::update(float t_deltaTime)
 {
-	std::cerr << "Is cursor visible: " << b_isActive << std::endl;
-
+	//std::cerr << "Is cursor visible: " << b_isActive << std::endl;
 	if (b_isActive != true)
 	{
 		b_isCursorVisible = false;
@@ -180,6 +179,7 @@ void InputField::setMaxLength(int t_maxLength)
 void InputField::setPlaceholderString(std::string t_placeholderString)
 {
 	m_placeholderString = t_placeholderString;
+	m_placeholderText.setString(m_placeholderString);
 }
 
 void InputField::clearString()

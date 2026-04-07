@@ -770,3 +770,18 @@ bool Gameplay::getSongFinishedFlag()
 {
 	return b_isSongFinished;
 }
+
+std::vector<MidiNote> Gameplay::getRecordedNotes()
+{
+	return m_recordedNotes;
+}
+
+void Gameplay::setSongName(std::string t_name)
+{
+	m_songName = t_name;
+}
+
+std::string Gameplay::getSongName()
+{
+	return m_songName;
+}

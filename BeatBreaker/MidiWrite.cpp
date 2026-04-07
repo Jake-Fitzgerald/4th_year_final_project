@@ -1,6 +1,6 @@
 #include "MidiWrite.h"
 
-MidiWrite::MidiWrite()
+MidiWrite::MidiWrite() 
 {
     setupNotes();
 }
@@ -29,7 +29,7 @@ bool MidiWrite::writeFile(std::string& t_fileName)
 
     file.close();
 
-    return false;
+    return true;
 }
 
 void MidiWrite::writeHeader(std::ofstream& t_file)
@@ -109,7 +109,7 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
 
     uint32_t previousTick = 0;
 
-    for (auto& note : m_testNotes)
+    for (auto& note : m_recordedNotes)
     {
         uint32_t deltaOn = note.startTick - previousTick;
         uint32_t deltaOff = note.endTick - note.startTick;
@@ -182,7 +182,7 @@ void MidiWrite::writeMicroSeconds(std::ofstream& t_file)
 
 void MidiWrite::calculateTrackLength()
 {
-    m_noteLength = static_cast<int>(m_testNotes.size()) * 8;
+    m_noteLength = static_cast<int>(m_recordedNotes.size()) * 8;
 
     m_noteTrackLength = m_noteTrackNameLength + m_ccLength + m_noteLength + m_endOfTrackLength;
     std::cerr << "Note Track Length: " << m_noteTrackLength << std::endl;
@@ -263,27 +263,32 @@ void MidiWrite::writeEndOfTrack(std::ofstream& t_file)
 
 void MidiWrite::setupNotes()
 {
-    MidiNote note1;
-    MidiNote note2;
-    MidiNote note3;
+    //MidiNote note1;
+    //MidiNote note2;
+    //MidiNote note3;
 
-    note1.pitch = 60;
-    note2.pitch = 62;
-    note3.pitch = 60;
+    //note1.pitch = 60;
+    //note2.pitch = 62;
+    //note3.pitch = 60;
 
-    note1.velocity = 100;
-    note2.velocity = 100;
-    note3.velocity = 100;
+    //note1.velocity = 100;
+    //note2.velocity = 100;
+    //note3.velocity = 100;
 
-    note1.startTick = 0;
-    note2.startTick = m_quarterNoteLength;
-    note3.startTick = m_quarterNoteLength * 2;
+    //note1.startTick = 0;
+    //note2.startTick = m_quarterNoteLength;
+    //note3.startTick = m_quarterNoteLength * 2;
 
-    note1.endTick = note2.startTick;
-    note2.endTick = note3.startTick;
-    note3.endTick = note3.startTick + m_quarterNoteLength;
+    //note1.endTick = note2.startTick;
+    //note2.endTick = note3.startTick;
+    //note3.endTick = note3.startTick + m_quarterNoteLength;
 
-    m_testNotes.push_back(note1);
-    m_testNotes.push_back(note2);
-    m_testNotes.push_back(note3);
+    //m_testNotes.push_back(note1);
+    //m_testNotes.push_back(note2);
+    //m_testNotes.push_back(note3);
+}
+
+void MidiWrite::setupRecordedNotes(std::vector<MidiNote>& t_notes)
+{
+    m_recordedNotes = t_notes;
 }

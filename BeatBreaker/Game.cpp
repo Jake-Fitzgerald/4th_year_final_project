@@ -272,7 +272,6 @@ void Game::processKeysPressed(const std::optional<sf::Event> t_event)
 	const sf::Event::KeyPressed* newKeyPress = t_event->getIf<sf::Event::KeyPressed>();
 }
 
-
 void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 {
 	const sf::Event::MouseButtonReleased* newMouseReleased = t_event->getIf<sf::Event::MouseButtonReleased>();
@@ -415,6 +414,10 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			// Third track is the instrument track
 			m_gameplay.loadTrack(m_midiParser.getMidiTracks()[2], m_midiParser.getBPM());
 
+			std::filesystem::path path(m_selectedSong);
+			std::string fileName = path.filename().string();
+			m_gameplay.setSongName(fileName);
+
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;
 		}
@@ -541,6 +544,9 @@ void Game::update(sf::Time t_deltaTime)
 		if (m_gameplay.getSongFinishedFlag() == true)
 		{
 			m_gameOver.setScore(m_gameplay.getScore());
+			m_gameOver.setRecordedNotes(m_gameplay.getRecordedNotes());
+			m_gameOver.setSongName(m_gameplay.getSongName());
+			m_gameOver.setupGameOver();
 			m_currentGameState = GameStates::ResultsScene;
 		}
 	}

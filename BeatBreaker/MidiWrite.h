@@ -1,4 +1,6 @@
 #pragma once
+#include <SFML//Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <iostream>
 #include <vector>
 #include <fstream> // Loading file
@@ -6,6 +8,7 @@
 #include <string>
 #include <map>
 #include "MIDIParse.h"
+
 
 //enum EventType : uint8_t
 //{
@@ -65,6 +68,7 @@ public:
 	void writeEndOfTrack(std::ofstream& t_file);
 
 	void setupNotes();
+	void setupRecordedNotes(std::vector<MidiNote>& t_notes);
 
 private:
 
@@ -80,8 +84,8 @@ private:
 
 	int m_noteTrackLength = 0;
 
-
-	std::vector<MidiNote> m_testNotes;
+	std::vector<MidiNote> m_recordedNotes;
 	int m_quarterNoteLength = 96;
+
 };
 

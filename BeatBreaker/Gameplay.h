@@ -115,6 +115,10 @@ public:
     void setTriggerDisplayFlag(bool t_bool);
     bool getSongFinishedFlag();
 
+    std::vector<MidiNote> getRecordedNotes(); 
+    void setSongName(std::string t_name);
+    std::string getSongName();
+
 private:
     SoundManager* m_soundManager;
     std::shared_ptr<const sf::Font> m_font;
