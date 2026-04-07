@@ -1,0 +1,132 @@
+\doxysection{Options.\+h}
+\hypertarget{_options_8h_source}{}\label{_options_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Options.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Options.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <SFML/Audio.hpp>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Globals.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}HUD.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}SoundManager.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <fstream>}\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Gameplay.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}Keyboard.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{struct\ }OptionButton}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ sf::RectangleShape\ m\_buttonShape;}
+\DoxyCodeLine{00016\ \ \ \ \ sf::Vector2f\ m\_buttonSize\{\ 300.0f,\ 50.0f\ \};}
+\DoxyCodeLine{00017\ \ \ \ \ sf::Vector2f\ m\_buttonPos1\{\ paddingX\ +\ 50.0f,paddingY\ +\ 250.0f\ \};}
+\DoxyCodeLine{00018\ \ \ \ \ sf::Vector2f\ m\_buttonPos2\{\ paddingX\ +\ 50.0f,paddingY\ +\ 350.0f\ \};}
+\DoxyCodeLine{00019\ \ \ \ \ sf::Vector2f\ m\_buttonPos3\{\ paddingX\ +\ 50.0f,paddingY\ +\ 450.0f\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ sf::Text\ m\_buttonText;}
+\DoxyCodeLine{00022\ \ \ \ \ sf::Color\ c\_enabledColour\ =\ sf::Color::Green;}
+\DoxyCodeLine{00023\ \ \ \ \ sf::Color\ c\_disabledColour\ =\ sf::Color::Red;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ OptionButton(std::shared\_ptr<const\ sf::Font>\ font)\ :\ m\_buttonText(*font)\ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \{}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \}}
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{class\ }Options}
+\DoxyCodeLine{00032\ \{}
+\DoxyCodeLine{00033\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ \ \ Options(std::shared\_ptr<const\ sf::Font>\ font,\ \doxymbox{\hyperlink{class_gameplay}{Gameplay}}\&\ t\_gameplay\textcolor{comment}{/*,\ Keyboard\&\ m\_keyboard*/});}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ setupOptionsTexts();}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ setupOptionsButtons();}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ setupMidiOptions();}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ setupUIFrames();}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ renderOptions(sf::RenderWindow\&\ t\_window);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ handleMouseClick(sf::Vector2f\ t\_mousePos,\ \doxymbox{\hyperlink{class_h_u_d}{HUD}}\&\ t\_hud,\ \doxymbox{\hyperlink{class_sound_manager}{SoundManager}}\ \&t\_soundManager);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ muteSound(\doxymbox{\hyperlink{class_sound_manager}{SoundManager}}\&\ t\_soundManager);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ getSoundTypes();}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ savePreferences();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ loadPreferences(\doxymbox{\hyperlink{class_sound_manager}{SoundManager}}\&\ t\_soundManager);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ changeButtonColours();}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ setupOptionsTextures();}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00056\ \ \ \ \ std::shared\_ptr<const\ sf::Font>\ m\_font;}
+\DoxyCodeLine{00057\ \ \ \ \ sf::Text\ m\_OptionsText;}
+\DoxyCodeLine{00058\ \ \ \ \ sf::Text\ m\_musicText;}
+\DoxyCodeLine{00059\ \ \ \ \ sf::Text\ m\_sfxText;}
+\DoxyCodeLine{00060\ \ \ \ \ sf::Text\ m\_fpsText;}
+\DoxyCodeLine{00061\ \ \ \ \ sf::Text\ m\_returnText;}
+\DoxyCodeLine{00062\ \ \ \ \ sf::Text\ m\_saveText;}
+\DoxyCodeLine{00063\ \ \ \ \ sf::Text\ m\_loadText;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ sf::RectangleShape\ m\_musicButton;}
+\DoxyCodeLine{00066\ \ \ \ \ sf::RectangleShape\ m\_musicTestButton;}
+\DoxyCodeLine{00067\ \ \ \ \ sf::RectangleShape\ m\_sfxButton;}
+\DoxyCodeLine{00068\ \ \ \ \ sf::RectangleShape\ m\_sfxTestButton;}
+\DoxyCodeLine{00069\ \ \ \ \ sf::RectangleShape\ m\_fpsButton;}
+\DoxyCodeLine{00070\ \ \ \ \ sf::RectangleShape\ m\_returnButton;}
+\DoxyCodeLine{00071\ \ \ \ \ sf::RectangleShape\ m\_saveButton;}
+\DoxyCodeLine{00072\ \ \ \ \ sf::RectangleShape\ m\_loadButton;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ Positions}}
+\DoxyCodeLine{00075\ \ \ \ \ sf::Vector2f\ m\_screenCentre\ =\ SCREEN\_CENTRE;}
+\DoxyCodeLine{00076\ \ \ \ \ sf::Vector2f\ m\_optionsPos\ =\ sf::Vector2f\{\ m\_screenCentre.x\ -\/\ 100.0f,\ m\_screenCentre.y\ -\/\ 300.0f\ \};}
+\DoxyCodeLine{00077\ \ \ \ \ sf::Vector2f\ m\_musicPos\ =\ sf::Vector2f\{\ m\_screenCentre.x\ -\/\ 100.0f,\ m\_screenCentre.y\ -\/\ 100.0f\ \};}
+\DoxyCodeLine{00078\ \ \ \ \ sf::Vector2f\ m\_musicTestPos\ =\ sf::Vector2f\{\ m\_musicPos.x\ +\ 250.0f,\ m\_musicPos.y\ \};}
+\DoxyCodeLine{00079\ \ \ \ \ sf::Vector2f\ m\_sfxPos\ =\ sf::Vector2f\{\ m\_screenCentre.x\ -\/\ 100.0f,\ m\_screenCentre.y\ \};}
+\DoxyCodeLine{00080\ \ \ \ \ sf::Vector2f\ m\_sfxTestPos\ =\ sf::Vector2f\{\ m\_sfxPos.x\ +\ 250.0f,\ m\_sfxPos.y\ \};}
+\DoxyCodeLine{00081\ \ \ \ \ sf::Vector2f\ m\_fpsPos\ =\ sf::Vector2f\{\ m\_screenCentre.x\ -\/\ 100.0f,\ m\_screenCentre.y\ +\ 100.0f\};}
+\DoxyCodeLine{00082\ \ \ \ \ sf::Vector2f\ m\_returnPos\ =\ sf::Vector2f\{\ m\_screenCentre.x\ -\/\ 400.0f,\ m\_screenCentre.y\ +\ 200.0f\ \};}
+\DoxyCodeLine{00083\ \ \ \ \ sf::Vector2f\ m\_savePos\ =\ sf::Vector2f\{\ m\_screenCentre.x\ -\/\ 100.0f,\ m\_screenCentre.y\ +\ 200.0f\ \};}
+\DoxyCodeLine{00084\ \ \ \ \ sf::Vector2f\ m\_loadPos\ =\ sf::Vector2f\{\ m\_screenCentre.x\ +\ 100.0f,\ m\_screenCentre.y\ +\ 200.0f\ \};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ sf::Vector2f\ m\_buttonScale\ =\ sf::Vector2f\{\ 200.0f,\ 50.0f\ \};}
+\DoxyCodeLine{00087\ \ \ \ \ sf::Vector2f\ m\_buttonSmallScale\ =\ sf::Vector2f\{\ 100.0f,\ 50.0f\ \};}
+\DoxyCodeLine{00088\ \ \ \ \ sf::Vector2f\ m\_buttonTestScale\ =\ sf::Vector2f\{\ 50.0f,\ 50.0f\ \};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ Keep\ track\ of\ the\ sound\ types\ (assume\ they\ are\ already\ at\ full\ volume)}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_currentMusicVolume\ =\ 100.0f;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_currentSFXVolume\ =\ 100.0f;}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Textures/Sprites}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Music\ Note}}
+\DoxyCodeLine{00096\ \ \ \ \ sf::Texture\ m\_musicNoteTex;}
+\DoxyCodeLine{00097\ \ \ \ \ sf::Sprite\ m\_musicNoteSprite\{\ m\_musicNoteTex\ \};}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ SFX\ Note\ }}
+\DoxyCodeLine{00099\ \ \ \ \ sf::Texture\ m\_sfxNoteTex;}
+\DoxyCodeLine{00100\ \ \ \ \ sf::Sprite\ m\_sfxNoteSprite\{\ m\_sfxNoteTex\ \};}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//\ Background}}
+\DoxyCodeLine{00102\ \ \ \ \ sf::Texture\ m\_bgTex;}
+\DoxyCodeLine{00103\ \ \ \ \ sf::Sprite\ m\_bgSprite\{\ m\_bgTex\ \};}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Midi\ Options}}
+\DoxyCodeLine{00106\ \ \ \ \ std::vector<OptionButton>\ m\_buttons;}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{bool}\ b\_playNotesNoInput\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ UI\ Background\ Frames}}
+\DoxyCodeLine{00110\ \ \ \ \ sf::RectangleShape\ m\_soundOptionsFrame;}
+\DoxyCodeLine{00111\ \ \ \ \ sf::RectangleShape\ m\_soundTextFrame;}
+\DoxyCodeLine{00112\ \ \ \ \ sf::RectangleShape\ m\_midiOptionsFrame;}
+\DoxyCodeLine{00113\ \ \ \ \ sf::RectangleShape\ m\_midiTextFrame;}
+\DoxyCodeLine{00114\ \ \ \ \ sf::RectangleShape\ m\_saveOptionsFrame;}
+\DoxyCodeLine{00115\ \ \ \ \ sf::RectangleShape\ m\_titleFrame;}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ sf::Vector2f\ m\_frameSize\{\ 400.0f,\ 300.0f\ \};}
+\DoxyCodeLine{00118\ \ \ \ \ sf::Vector2f\ m\_frameTextSize\{\ 200.0f,\ 50.0f\ \};}
+\DoxyCodeLine{00119\ \ \ \ \ sf::Color\ c\_frameColour\ =\ sf::Color(100,\ 100,\ 100,\ 100);}
+\DoxyCodeLine{00120\ \ \ \ \ sf::Text\ m\_midiFrameText;}
+\DoxyCodeLine{00121\ \ \ \ \ sf::Text\ m\_soundFrameText;}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \doxymbox{\hyperlink{class_gameplay}{Gameplay}}*\ m\_gameplay;}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//Keyboard*\ m\_keyboard;}}
+\DoxyCodeLine{00125\ \};}
+\DoxyCodeLine{00126\ }
+
+\end{DoxyCode}

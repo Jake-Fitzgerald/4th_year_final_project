@@ -152,7 +152,7 @@ void Options::setupMidiOptions()
 
 	practiceModeBool.m_buttonShape.setSize(practiceModeBool.m_buttonSize);
 	practiceModeBool.m_buttonShape.setPosition(practiceModeBool.m_buttonPos3);
-	practiceModeBool.m_buttonShape.setFillColor(practiceModeBool.c_enabledColour);
+	practiceModeBool.m_buttonShape.setFillColor(practiceModeBool.c_disabledColour); // set to false on startup
 	practiceModeBool.m_buttonShape.setOutlineThickness(2.0f);
 	practiceModeBool.m_buttonShape.setOutlineColor(sf::Color::Black);
 
@@ -320,6 +320,7 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	// FPS
 	if (m_fpsButton.getGlobalBounds().contains(t_mousePos))
 	{
+		t_soundManager.play("ui_confirm");
 		t_hud.setFPSBool();
 	}
 	// Return
@@ -331,11 +332,13 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	// Save
 	if (m_saveButton.getGlobalBounds().contains(t_mousePos))
 	{
+		t_soundManager.play("ui_confirm");
 		savePreferences();
 	}
 	// Load
 	if (m_loadButton.getGlobalBounds().contains(t_mousePos))
 	{
+		t_soundManager.play("ui_confirm");
 		loadPreferences(t_soundManager);
 	}
 
@@ -343,6 +346,7 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	// Bool
 	if (m_buttons[0].m_buttonShape.getGlobalBounds().contains(t_mousePos))
 	{
+		t_soundManager.play("ui_confirm");
 		bool currentFlag = m_gameplay->getNoteOnColliderFlag();
 		m_gameplay->setNoteOnColliderFlag(!currentFlag);
 		changeButtonColours();
@@ -350,6 +354,7 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	// Size
 	else if (m_buttons[1].m_buttonShape.getGlobalBounds().contains(t_mousePos))
 	{
+		t_soundManager.play("ui_confirm");
 		bool currentFlag = m_gameplay->getEasyInputFlag();
 		m_gameplay->setEasyInputFlag(!currentFlag);
 		changeButtonColours();
@@ -357,6 +362,7 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	// Practice
 	else if (m_buttons[2].m_buttonShape.getGlobalBounds().contains(t_mousePos))
 	{
+		t_soundManager.play("ui_confirm");
 		bool currentFlag = m_gameplay->getPracticeModeFlag();
 		m_gameplay->setPracticeModeFlag(!currentFlag);
 		changeButtonColours();
@@ -515,7 +521,6 @@ void Options::changeButtonColours()
 	}
 
 	// Midi Button
-
 	// Bool
 	if (m_gameplay->getNoteOnColliderFlag() == false)
 	{
@@ -543,7 +548,6 @@ void Options::changeButtonColours()
 	{
 		m_buttons[2].m_buttonShape.setFillColor(m_buttons[2].c_enabledColour);
 	}
-	
 }
 
 void Options::setupOptionsTextures()

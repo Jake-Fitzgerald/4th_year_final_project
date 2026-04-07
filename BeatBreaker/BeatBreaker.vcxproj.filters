@@ -37,12 +37,6 @@
     <Filter Include="Source Files\MIDI">
       <UniqueIdentifier>{cdde3445-12b0-46d3-b6d4-2df1b9fe950a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Block">
-      <UniqueIdentifier>{c4f41b10-fb8d-4c7e-bb45-e003e8bb50f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Block">
-      <UniqueIdentifier>{aaa6d0f5-d8fe-4da0-9bb3-552885dcd3a9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\UI">
       <UniqueIdentifier>{be1ba46a-14b9-4432-803f-cebe4d0dc812}</UniqueIdentifier>
     </Filter>
@@ -98,12 +92,6 @@
     </ClCompile>
     <ClCompile Include="Options.cpp">
       <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Source Files\Block</Filter>
-    </ClCompile>
-    <ClCompile Include="BlockGenerator.cpp">
-      <Filter>Source Files\Block</Filter>
     </ClCompile>
     <ClCompile Include="GameOver.cpp">
       <Filter>Source Files\Scenes</Filter>
@@ -165,6 +153,9 @@
     <ClCompile Include="MidiWrite.cpp">
       <Filter>Source Files\MIDI</Filter>
     </ClCompile>
+    <ClCompile Include="InputField.cpp">
+      <Filter>Utilites</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Notes.h">
@@ -181,12 +172,6 @@
     </ClInclude>
     <ClInclude Include="Options.h">
       <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Header Files\Block</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockGenerator.h">
-      <Filter>Header Files\Block</Filter>
     </ClInclude>
     <ClInclude Include="GameOver.h">
       <Filter>Header Files\Scenes</Filter>
@@ -247,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="MidiWrite.h">
       <Filter>Header Files\MIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="InputField.h">
+      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

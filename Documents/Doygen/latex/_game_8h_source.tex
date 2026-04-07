@@ -1,0 +1,231 @@
+\doxysection{Game.\+h}
+\hypertarget{_game_8h_source}{}\label{_game_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Game.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Game.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ GAME\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ GAME\_HPP}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#pragma\ warning(\ push\ )}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#pragma\ warning(\ disable\ :\ 4275\ )}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ ignore\ this\ warning}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ C:\(\backslash\)SFML\ -\/\ 3.0.0\(\backslash\)include\(\backslash\)SFML\(\backslash\)System\(\backslash\)Exception.hpp(41,\ 47)\ :\ }}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ warning\ C4275\ :\ non\ dll\ -\/\ interface\ class\ 'std::runtime\_error'\ used\ as\ base\ for\ dll\ -\/\ interface\ class\ 'sf::Exception'}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Libraries}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <SFML/Audio.hpp>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ Components}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}SoundManager.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}CollisionManager.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ Scenes}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}MainMenu.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}Options.h"{}}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{comment}{//\ Selection\ Scenes}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}MidiFileSelect.h"{}}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}VisualiserSelect.h"{}}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ "{}SongSelect.h"{}}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ MIDI}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}MIDIParse.h"{}}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ "{}MidiWrite.h"{}}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ UI}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ "{}HUD.h"{}}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}GridDisplay.h"{}}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ Utilities}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ "{}Globals.h"{}}}
+\DoxyCodeLine{00037\ \textcolor{comment}{//\ winmm.lib}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}Keyboard.h"{}}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ Visualisers}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}TrackVisualiser.h"{}}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}PianoVisualiser.h"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}DrumVisualiser.h"{}}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ SQL}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ "{}Database.h"{}}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ <sql.h>}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ <sqlext.h>}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#pragma\ comment(lib,\ "{}odbc32.lib"{})}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ Leaderboard\ /\ Results}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#include\ "{}Leaderboard.h"{}}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#include\ "{}GameOver.h"{}};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ Gameplay}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#include\ "{}Gameplay.h"{}}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{const}\ sf::Vector2u\ WINDOW\_SIZE\ =\ sf::VideoMode::getDesktopMode().size;}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{enum}\ GameStates\ }
+\DoxyCodeLine{00062\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ MainMenuScene,}
+\DoxyCodeLine{00064\ \ \ \ \ GameplayScene,}
+\DoxyCodeLine{00065\ \ \ \ \ OptionsScene,}
+\DoxyCodeLine{00066\ \ \ \ \ ResultsScene,}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Selection\ scenes}}
+\DoxyCodeLine{00069\ \ \ \ \ MidiFileSelectScene,}
+\DoxyCodeLine{00070\ \ \ \ \ VisualiserSelectScene,}
+\DoxyCodeLine{00071\ \ \ \ \ SongSelectionScene,}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Visualisers}}
+\DoxyCodeLine{00074\ \ \ \ \ TrackVis,}
+\DoxyCodeLine{00075\ \ \ \ \ PianoVis,}
+\DoxyCodeLine{00076\ \ \ \ \ DrumVis,}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Leaderboard}}
+\DoxyCodeLine{00079\ \ \ \ \ LeaderboardScene,}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ RecordScene}
+\DoxyCodeLine{00082\ \};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_midi_callback_data}{MidiCallbackData}}}
+\DoxyCodeLine{00085\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \doxymbox{\hyperlink{class_piano_visualiser}{PianoVisualiser}}*\ piano;}
+\DoxyCodeLine{00087\ \ \ \ \ \doxymbox{\hyperlink{class_drum_visualiser}{DrumVisualiser}}*\ drums;}
+\DoxyCodeLine{00088\ \ \ \ \ \doxymbox{\hyperlink{class_gameplay}{Gameplay}}*\ gameplay;}
+\DoxyCodeLine{00089\ \ \ \ \ GameStates*\ currentState;}
+\DoxyCodeLine{00090\ \};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{keyword}{class\ }Game}
+\DoxyCodeLine{00093\ \{}
+\DoxyCodeLine{00094\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00095\ \ \ \ \ Game();}
+\DoxyCodeLine{00096\ \ \ \ \ \string~Game();}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ run();}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<const\ sf::Font>\ loadFont();}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ processEvents();}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ processKeys(\textcolor{keyword}{const}\ std::optional<sf::Event>\ t\_event);}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ processKeysPressed(\textcolor{keyword}{const}\ std::optional<sf::Event>\ t\_event);}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ processKeysRelease(\textcolor{keyword}{const}\ std::optional<sf::Event>\ t\_event);}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ processMouseRelease(\textcolor{keyword}{const}\ std::optional<sf::Event>\ t\_event);}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{void}\ checkKeyboardState();}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ processKeyboard(\textcolor{keywordtype}{float}\ dtSeconds);\ \textcolor{comment}{//\ By\ frame}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ update(sf::Time\ t\_deltaTime);}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ render();}
+\DoxyCodeLine{00112\ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ setupSprites();}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{void}\ setupAudio();}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ setupSounds();}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ setupCustomIcon();}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{bool}\ checkIfAreaClicked(sf::Vector2f\ t\_mousePos,\ sf::Vector2f\ t\_topLeft,\ sf::Vector2f\ t\_size);}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{void}\ changeMidiPath(std::string\ t\_pathName);}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{void}\ changeGameState();}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ Midi\ Input}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{void}\ setupMidiInput();}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ freeMidiHandler();}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{//\ MCI\ Midi\ Playback}}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{void}\ playMidiMCI();}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{void}\ stopMidiMCI();}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ sf::RenderWindow\ m\_window;\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{comment}{//sf::Font\ m\_jerseyFont;}}
+\DoxyCodeLine{00134\ \ \ \ \ std::shared\_ptr<const\ sf::Font>\ m\_jerseyFont;}
+\DoxyCodeLine{00135\ \ \ \ \ }
+\DoxyCodeLine{00136\ \ \ \ \ sf::Texture\ m\_DELETElogoTexture;}
+\DoxyCodeLine{00137\ \ \ \ \ sf::Sprite\ m\_DELETElogoSprite\{\ m\_DELETElogoTexture\ \};\ }
+\DoxyCodeLine{00138\ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ sf::SoundBuffer\ m\_DELETEsoundBuffer;\ }
+\DoxyCodeLine{00140\ \ \ \ \ sf::Sound\ m\_DELETEsound\{\ m\_DELETEsoundBuffer\ \};\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_DELETEexitGame;\ }
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ States}}
+\DoxyCodeLine{00144\ \ \ \ \ GameStates\ m\_currentGameState\ =\ GameStates::MainMenuScene;}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ Block\ colours\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [DEBUG]}}
+\DoxyCodeLine{00147\ \ \ \ \ sf::Color\ BLUE\ =\ sf::Color::Blue;}
+\DoxyCodeLine{00148\ \ \ \ \ sf::Color\ PINK\ =\ sf::Color::Magenta;}
+\DoxyCodeLine{00149\ \ \ \ \ sf::Color\ GREEN\ =\ sf::Color::Green;}
+\DoxyCodeLine{00150\ \ \ \ \ sf::Color\ YELLOW\ =\ sf::Color::Yellow;}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{comment}{//\ Colour\ vector}}
+\DoxyCodeLine{00152\ \ \ \ \ std::vector<sf::Color>\ colors\ =\ \{\ BLUE,\ PINK,\ GREEN,\ YELLOW\ \};}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ MIDI}}
+\DoxyCodeLine{00155\ \ \ \ \ \doxymbox{\hyperlink{class_m_i_d_i_parse}{MIDIParse}}\ m\_midiParser;}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{void}\ setupMidiParser();}
+\DoxyCodeLine{00157\ \ \ \ \ std::string\ m\_midiPath\ =\ \textcolor{stringliteral}{"{}ASSETS\(\backslash\)\(\backslash\)AUDIO\(\backslash\)\(\backslash\)MUSIC\(\backslash\)\(\backslash\)Kick\_and\_Clap\_2\_track.mid"{}};}
+\DoxyCodeLine{00158\ \ \ \ \ \doxymbox{\hyperlink{class_midi_write}{MidiWrite}}\ m\_midiWrite;}
+\DoxyCodeLine{00159\ \ \ \ \ std::string\ m\_midiWritePath\ =\ \textcolor{stringliteral}{"{}ASSETS\(\backslash\)\(\backslash\)AUDIO\(\backslash\)\(\backslash\)MUSIC\(\backslash\)\(\backslash\)SavedMidi\(\backslash\)\(\backslash\)"{}};}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordtype}{void}\ setupMidiWrite();}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{//\ UI}}
+\DoxyCodeLine{00163\ \ \ \ \ \doxymbox{\hyperlink{class_h_u_d}{HUD}}\ m\_hud;}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{comment}{//\ FPS}}
+\DoxyCodeLine{00165\ \ \ \ \ sf::Clock\ m\_fpsClock;}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_fps\ =\ 0.0f;}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_frameCount\ =\ 0;}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{comment}{//\ BG}}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keyword}{const}\ sf::Color\ BG\_COLOUR\{\ 60,\ 30,\ 80,\ 50\ \};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//\ Options}}
+\DoxyCodeLine{00172\ \ \ \ \ \doxymbox{\hyperlink{class_options}{Options}}\ m\_options;}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{comment}{//\ Audio}}
+\DoxyCodeLine{00175\ \ \ \ \ sf::SoundBuffer\ m\_soundBuffer;}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ m\_soundPoolSize\ =\ 200;}
+\DoxyCodeLine{00177\ \ \ \ \ \doxymbox{\hyperlink{class_sound_manager}{SoundManager}}\ m\_soundManager;}
+\DoxyCodeLine{00178\ \ \ \ \ SoundType\ m\_soundType;}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \doxymbox{\hyperlink{class_collision_manager}{CollisionManager}}\ m\_collisionManager;}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/\ Visualisers\ -\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{comment}{//\ Track\ Visualiser}}
+\DoxyCodeLine{00184\ \ \ \ \ \doxymbox{\hyperlink{class_track_visualiser}{TrackVisualiser}}\ trackVisualiser;}
+\DoxyCodeLine{00185\ \ \ \ \ \doxymbox{\hyperlink{class_piano_visualiser}{PianoVisualiser}}\ pianoVisualiser;}
+\DoxyCodeLine{00186\ \ \ \ \ \doxymbox{\hyperlink{class_drum_visualiser}{DrumVisualiser}}\ drumVisualiser;}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{comment}{//\ Overlays}}
+\DoxyCodeLine{00189\ \ \ \ \ \doxymbox{\hyperlink{class_grid_display}{GridDisplay}}\ gridDisplay;}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{comment}{//\ Selection\ Scenes}}
+\DoxyCodeLine{00192\ \ \ \ \ \doxymbox{\hyperlink{class_midi_file_select}{MidiFileSelect}}\ m\_midiFileSelectScene;}
+\DoxyCodeLine{00193\ \ \ \ \ \doxymbox{\hyperlink{class_visualiser_select}{VisualiserSelect}}\ m\_visSelect;}
+\DoxyCodeLine{00194\ \ \ \ \ \doxymbox{\hyperlink{class_song_select}{SongSelect}}\ m\_songSelect;}
+\DoxyCodeLine{00195\ \ \ \ \ std::string\ m\_selectedSong\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00196\ \ \ \ \ \doxymbox{\hyperlink{class_main_menu}{MainMenu}}\ m\_mainMenu;}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{comment}{//\ Custom\ Icon}}
+\DoxyCodeLine{00199\ \ \ \ \ sf::Image\ m\_customIcon;}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//\ MIDI\ Input}}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{int}\ midiKeyboardAmount\ =\ 0;}
+\DoxyCodeLine{00203\ \ \ \ \ HMIDIIN\ handleMidiIn\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{comment}{//\ Midi\ Input\ Custom\ Data}}
+\DoxyCodeLine{00206\ \ \ \ \ \doxymbox{\hyperlink{struct_midi_callback_data}{MidiCallbackData}}\ m\_midiCallbackData;}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{comment}{//\ SQL}}
+\DoxyCodeLine{00209\ \ \ \ \ \doxymbox{\hyperlink{class_database}{Database}}\ m\_database;}
+\DoxyCodeLine{00210\ \ \ \ \ std::vector<USERDATA>\ m\_localLeaderboard;}
+\DoxyCodeLine{00211\ \ \ \ \ std::string\ ODBCString\ =\ \textcolor{stringliteral}{"{}Driver=\{ODBC\ Driver\ 18\ for\ SQL\ Server\};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection\ Timeout=30;"{}};}
+\DoxyCodeLine{00212\ \ \ \ \ std::string\ m\_highscorePath\ =\ \textcolor{stringliteral}{"{}ASSETS/SAVEDATA/Highscores\_Saves/saved\ scores.txt"{}};}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{comment}{//\ Leaderboard}}
+\DoxyCodeLine{00215\ \ \ \ \ \doxymbox{\hyperlink{class_leaderboard}{Leaderboard}}\ m\_leaderboard;}
+\DoxyCodeLine{00216\ \ \ \ \ \doxymbox{\hyperlink{class_game_over}{GameOver}}\ m\_gameOver;}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{comment}{//\ Gameplay}}
+\DoxyCodeLine{00219\ \ \ \ \ \doxymbox{\hyperlink{class_gameplay}{Gameplay}}\ m\_gameplay;}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{comment}{//Keyboard\ m\_keyboard;}}
+\DoxyCodeLine{00221\ \};}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\#pragma\ warning(\ pop\ )\ }}
+\DoxyCodeLine{00224\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ !GAME\_HPP}}
+\DoxyCodeLine{00225\ }
+
+\end{DoxyCode}

@@ -141,15 +141,7 @@ private:
 	bool m_DELETEexitGame; 
 
 	// States
-	GameStates m_currentGameState = GameStates::MainMenuScene;
-
-	// Block colours				[DEBUG]
-	sf::Color BLUE = sf::Color::Blue;
-	sf::Color PINK = sf::Color::Magenta;
-	sf::Color GREEN = sf::Color::Green;
-	sf::Color YELLOW = sf::Color::Yellow;
-	// Colour vector
-	std::vector<sf::Color> colors = { BLUE, PINK, GREEN, YELLOW };
+	GameStates m_currentGameState = GameStates::ResultsScene;
 
 	// MIDI
 	MIDIParse m_midiParser;

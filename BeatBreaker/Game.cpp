@@ -462,6 +462,11 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	if (m_hud.returnClick(mouseWorldPos) == true)
 	{
 		m_soundManager.play("ui_cancel");
+		if (m_currentGameState == GameStates::GameplayScene)
+		{
+			m_gameplay.resetSession();
+		}
+		
 		m_currentGameState = GameStates::MainMenuScene;
 	}
 

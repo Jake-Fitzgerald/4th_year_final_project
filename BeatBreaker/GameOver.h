@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "Globals.h"
 #include <iostream>
+#include "InputField.h"
 
 /*
 	TODO:
@@ -22,6 +23,8 @@ public:
 	void setupGameOver();
 	void setupUIFrames();
 	void setupText();
+	void setupServerField();
+	void setupMidiField();
 	
 	void setScore(int t_score);
 	void updateScore();
@@ -47,7 +50,6 @@ private:
 
 	// Statistic Text
 
-	
 
 	// UI
 	sf::RectangleShape m_scoreUIFrame;
@@ -56,5 +58,16 @@ private:
 	sf::Vector2f m_frameTextSize{ 200.0f, 50.0f };
 	sf::Color c_scoreFrameColour = sf::Color(50, 200, 150, 100);
 	sf::Color c_statisticFrameColour = sf::Color(100, 100, 250, 100);
+
+	// Fields
+	sf::Vector2f m_serverFieldPos{ paddingX + 100.0f, paddingY + 100.0f };
+	sf::Vector2f m_midiFieldPos{ 100.0f, 200.0f };
+	sf::Vector2f m_fieldSize{ 500.0f, 100.0f };
+	int m_characterSize = 40;
+
+	// InputField(std::shared_ptr<const sf::Font> font, sf::Vector2f t_pos, sf::Vector2f t_size, int t_charSize);
+	//InputField m_saveServerField(&m_font, m_serverFieldPos, m_fieldSize, m_characterSize);
+	InputField m_saveServerField;
+	InputField m_saveMidiField;
 };
 

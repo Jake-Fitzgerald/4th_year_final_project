@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Block.cpp" />
-    <ClCompile Include="BlockGenerator.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="DrumVisualiser.cpp" />
@@ -29,6 +27,7 @@
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="GridDisplay.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="InputField.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Leaderboard.cpp" />
     <ClCompile Include="main.cpp" />
@@ -47,8 +46,6 @@
     <ClCompile Include="VisualiserSelect.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Block.h" />
-    <ClInclude Include="BlockGenerator.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="DrumVisualiser.h" />
@@ -58,6 +55,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GridDisplay.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="InputField.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Leaderboard.h" />
     <ClInclude Include="MainMenu.h" />

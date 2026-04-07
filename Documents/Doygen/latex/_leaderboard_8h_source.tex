@@ -1,0 +1,114 @@
+\doxysection{Leaderboard.\+h}
+\hypertarget{_leaderboard_8h_source}{}\label{_leaderboard_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Leaderboard.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Leaderboard.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Globals.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ Pull\ database\ tables\ and\ fill\ each\ column\ with\ it's\ ID,\ Username\ and\ Score.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ Data\ to\ store:}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ Notes:}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ Missed\ notes\ (int)}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ Late\ notes\ (int)}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ Early\ notes\ (int)}}
+\DoxyCodeLine{00017\ \textcolor{comment}{}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ \ \ \ \ Scores:}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ Personal\ Best}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ Current\ Score}}
+\DoxyCodeLine{00021\ \textcolor{comment}{}}
+\DoxyCodeLine{00022\ \textcolor{comment}{}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{struct\ }LeaderboardData}
+\DoxyCodeLine{00029\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ sf::RectangleShape\ m\_headerShape;}
+\DoxyCodeLine{00031\ \ \ \ \ sf::Text\ m\_headerIDText;}
+\DoxyCodeLine{00032\ \ \ \ \ sf::Text\ m\_headerUsernameText;}
+\DoxyCodeLine{00033\ \ \ \ \ sf::Text\ m\_headerScoreText;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ sf::RectangleShape\ m\_userShape;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_id\ =\ -\/1;}
+\DoxyCodeLine{00039\ \ \ \ \ std::string\ m\_username\ =\ \textcolor{stringliteral}{"{}\ "{}};}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_score\ =\ -\/1;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ sf::Text\ m\_IDText;}
+\DoxyCodeLine{00043\ \ \ \ \ sf::Text\ m\_usernameText;}
+\DoxyCodeLine{00044\ \ \ \ \ sf::Text\ m\_scoreText;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ LeaderboardData(std::shared\_ptr<const\ sf::Font>\ font)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ :\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ m\_headerIDText(*font),}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ m\_headerUsernameText(*font),}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ m\_headerScoreText(*font),}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ m\_IDText(*font),}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ m\_usernameText(*font),}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ m\_scoreText(*font)}
+\DoxyCodeLine{00054\ \ \ \ \ \{}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{class\ }Leaderboard}
+\DoxyCodeLine{00060\ \{}
+\DoxyCodeLine{00061\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00062\ \ \ \ \ Leaderboard(std::shared\_ptr<const\ sf::Font>\ font);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ getSQLData(\textcolor{keywordtype}{int}\ t\_id,\ std::string\ t\_username,\ \textcolor{keywordtype}{int}\ t\_score);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ setupLeaderboard();}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ setupUI();}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ populateFromDatabase(\textcolor{keyword}{const}\ std::vector<USERDATA>\&\ t\_data);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ render(sf::RenderWindow\&\ t\_window);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ Text}}
+\DoxyCodeLine{00075\ \ \ \ \ std::shared\_ptr<const\ sf::Font>\ m\_font;}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ std::vector<LeaderboardData>\ m\_leaderboardVec;}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ Tab\ var}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_posX\ =\ paddingX;}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_poY\ =\ paddingY;}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_spacing\ =\ 40.0f;}
+\DoxyCodeLine{00083\ \ \ \ \ sf::Vector2f\ m\_buttonSize\ =\ \{\ 600.0f,\ 40.0f\ \};}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_difficultyTextSpacing\ =\ 200.0f;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//\ Text\ offsets}}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_offsetX\_ID\ =\ 10.0f;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_offsetX\_Username\ =\ 100.0f;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_offsetX\_Score\ =\ 400.0f;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_offsetY\_text\ =\ 8.0f;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_pageCount\ =\ 10;}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ UI}}
+\DoxyCodeLine{00095\ \ \ \ \ std::vector<sf::RectangleShape>\ m\_verticalLines;}
+\DoxyCodeLine{00096\ \ \ \ \ std::vector<sf::RectangleShape>\ m\_horizontalLines;}
+\DoxyCodeLine{00097\ \ \ \ \ sf::Vector2f\ m\_verticalLineSize\ =\ \{\ 4.0f,\ 450.0f\ \};}
+\DoxyCodeLine{00098\ \ \ \ \ sf::Vector2f\ m\_horizintalLineSize\ =\ \{\ 100.0f,\ 2.0f\ \};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Colours}}
+\DoxyCodeLine{00101\ \ \ \ \ sf::Color\ c\_headerShape\{\ 200,200,200,200\ \};}
+\DoxyCodeLine{00102\ \ \ \ \ sf::Color\ c\_userShapeEven\{\ 100,100,100,200\ \};}
+\DoxyCodeLine{00103\ \ \ \ \ sf::Color\ c\_userShapeOdd\{\ 150,150,150,200\ \};}
+\DoxyCodeLine{00104\ \ \ \ \ sf::Color\ c\_currentUserShape\{\ 200,100,100,200\ \};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \};}
+\DoxyCodeLine{00108\ }
+
+\end{DoxyCode}

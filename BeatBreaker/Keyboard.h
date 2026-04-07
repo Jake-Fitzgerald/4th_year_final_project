@@ -15,6 +15,13 @@
     (C C# D D# E F F# G G# A A# B)
 */
 
+/**
+ * Keyboard object that is used in the Gameplay class for 
+   - Collision detection (Input trigger, Sound trigger, Kill note trigger).
+   - Note visualisation.
+   - Sound for keys called and passed to the Sound Manager.
+*/
+
 
 struct Key
 {

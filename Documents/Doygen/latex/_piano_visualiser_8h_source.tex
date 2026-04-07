@@ -1,0 +1,103 @@
+\doxysection{Piano\+Visualiser.\+h}
+\hypertarget{_piano_visualiser_8h_source}{}\label{_piano_visualiser_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/PianoVisualiser.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/PianoVisualiser.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Globals.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}MIDIParse.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}SoundManager.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}CollisionManager.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00011\ \textcolor{comment}{*\ }}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ can\ be\ used\ both\ for\ displaying\ parsed\ midi\ data,}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ but\ also\ for\ live\ midi\ through\ a\ keyboard\ syncing\ with\ the\ piano\ keys\ turning\ red\ in\ the\ visual\ when\ pressed.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ We\ wil\ make\ one\ octave\ (C\ note\ to\ C\ note)\ then\ repeat\ that\ four\ more\ times}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ 52\ white\ keys,\ 36\ black\ keys,\ 88\ keys\ in\ total\ -\/>\ 5\ octaves\ of\ C\ to\ C,\ 12\ keys\ per\ octave,\ 5\ extra\ keys?}}
+\DoxyCodeLine{00017\ \textcolor{comment}{}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ Pattern\ w,b,w,b,w,w,b,w,b,w,b,w}}
+\DoxyCodeLine{00019\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_piano_key}{PianoKey}}}
+\DoxyCodeLine{00022\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ sf::RectangleShape\ shape;\ }
+\DoxyCodeLine{00024\ \ \ \ \ std::string\ noteName;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ b\_isSharpKey;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ b\_isPressed;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ sf::Color\ originalColour;\ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{class\ }PianoVisualiser}
+\DoxyCodeLine{00032\ \{}
+\DoxyCodeLine{00033\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ \ \ PianoVisualiser(\doxymbox{\hyperlink{class_sound_manager}{SoundManager}}\&\ t\_soundManager,\ \doxymbox{\hyperlink{class_collision_manager}{CollisionManager}}\&\ t\_collisionManager);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ setupPianoShapes();}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ setupWhiteKey(\textcolor{keywordtype}{int}\ t\_index,\ std::string\ t\_noteLetter,\ \textcolor{keywordtype}{int}\ t\_octave);}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ setupBlackKey(\textcolor{keywordtype}{int}\ t\_whiteKeyIndex,\ std::string\ t\_noteLetter,\ \textcolor{keywordtype}{int}\ t\_octave);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ setupPianoSounds();}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ keysTurnOn(\textcolor{keywordtype}{int}\ t\_KeyPos);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ keysTurnOff(\textcolor{keywordtype}{int}\ t\_KeyPos);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ renderKeys(sf::RenderWindow\&\ t\_window);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ handleClick(sf::Vector2f\ t\_mousePos);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ checkIfKeyClicked(sf::Vector2f\ t\_mousePos,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_piano_key}{PianoKey}}\&\ t\_key);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ Midi\ Input}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ noteOn(\textcolor{keyword}{const}\ std::string\&\ t\_noteName);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ noteOff(\textcolor{keyword}{const}\ std::string\&\ t\_noteName);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ Note\ Test\ (temp)}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ spawnTestNote();}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ updateNotes(\textcolor{keywordtype}{float}\ t\_deltaTime);}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ checkInputCollision();}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00059\ \ \ \ \ \doxymbox{\hyperlink{class_sound_manager}{SoundManager}}*\ m\_soundManager;}
+\DoxyCodeLine{00060\ \ \ \ \ \doxymbox{\hyperlink{class_collision_manager}{CollisionManager}}*\ m\_collisionManager;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ std::vector<PianoKey>\ m\_keys;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ sf::RectangleShape\ m\_inputCollider;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Piano\ Position}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{float}\ pianoPosX\ =\ paddingX;}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{float}\ pianoPosY\ =\ paddingY\ +\ 400.0f;}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Key\ sizes}}
+\DoxyCodeLine{00071\ \ \ \ \ sf::Vector2f\ blackKeySize\{\ 22.0f,\ 70.0f\ \};}
+\DoxyCodeLine{00072\ \ \ \ \ sf::Vector2f\ whiteKeySize\{\ 38.0f,\ 120.0f\ \};}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{float}\ whiteSpacing\ =\ 2.0f;}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{float}\ blackSpacing\ =\ 3.0f;}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ Octave\ stuff}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{int}\ keysPerOctave\ =\ 12;}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{int}\ octavesAmount\ =\ 7;}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//std::string\ noteLetters[12];}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TOTAL\_KEYS\_AMOUNT\ =\ 88;}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ UI}}
+\DoxyCodeLine{00086\ \ \ \ \ sf::RectangleShape\ m\_keyboardBase;}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{bool}\ b\_midiLiveMode\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ Note\ Test\ (temp)}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//FallingNote\ m\_testNote;}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_noteTestSpawnY\ =\ -\/100.0f;}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_noteSpeed\ =\ 100.0f;}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ b\_testNoteActive\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00096\ \};}
+\DoxyCodeLine{00097\ }
+
+\end{DoxyCode}

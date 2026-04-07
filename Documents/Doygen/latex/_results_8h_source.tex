@@ -1,0 +1,43 @@
+\doxysection{Results.\+h}
+\hypertarget{_results_8h_source}{}\label{_results_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Results.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Results.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <SFML//Graphics/RenderWindow.hpp>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <SFML/Graphics/RectangleShape.hpp>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Globals.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00007\ \textcolor{comment}{Displays\ the\ recorded\ data\ that\ was\ collected\ during\ the\ run.}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ -\/\ Total\ Depth,}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ -\/\ Total\ Time,}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ -\/\ Total\ Score,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ Score\ Calculation:\ }}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ What\ depth\ was\ reached,\ how\ many\ lives\ were\ lost\ (if\ none\ then\ give\ bonus\ points),\ how\ on\ beat\ you\ were\ (perfect\ hits)}}
+\DoxyCodeLine{00014\ \textcolor{comment}{}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ Grab\ the\ song's\ details\ }}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ -\/\ Song\ name}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ -\/\ Song\ difficulty}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ -\/\ Song\ length\ (pbTime\ -\/\ total\ s0ng\ time\ to\ calculate\ the\ percentage\ of\ the\ song\ completed)}}
+\DoxyCodeLine{00019\ \textcolor{comment}{}}
+\DoxyCodeLine{00020\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }Results}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ Results();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ setup();}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ setupButtons();}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ render(sf::RenderWindow\&\ t\_window);}
+\DoxyCodeLine{00031\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Current\ run}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_currentScore;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_pbScore;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \};}
+\DoxyCodeLine{00037\ }
+
+\end{DoxyCode}

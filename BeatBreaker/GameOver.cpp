@@ -5,7 +5,9 @@ GameOver::GameOver(std::shared_ptr<const sf::Font> font)
 	  m_scoreText(*font),
 	  m_scoreValueText(*font),
 	  m_pbScoreText(*font),
-	  m_pbScoreValueText(*font)
+	  m_pbScoreValueText(*font),
+	  m_saveServerField(font, m_serverFieldPos, m_fieldSize, m_characterSize),
+	  m_saveMidiField(font, m_midiFieldPos, m_fieldSize, m_characterSize)
 {
 }
 
@@ -71,6 +73,16 @@ void GameOver::setupText()
 	m_pbScoreValueText.setCharacterSize(30U);
 }
 
+void GameOver::setupServerField()
+{
+	
+}
+
+void GameOver::setupMidiField()
+{
+
+}
+
 
 
 void GameOver::setScore(int t_score)
@@ -109,4 +121,8 @@ void GameOver::render(sf::RenderWindow& t_window)
 	t_window.draw(m_scoreValueText);
 	t_window.draw(m_pbScoreText);
 	t_window.draw(m_pbScoreValueText);
+
+	// Fields
+	m_saveServerField.render(t_window);
+	m_saveMidiField.render(t_window);
 }

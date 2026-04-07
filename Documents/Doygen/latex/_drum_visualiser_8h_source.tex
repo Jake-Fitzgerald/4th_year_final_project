@@ -1,0 +1,142 @@
+\doxysection{Drum\+Visualiser.\+h}
+\hypertarget{_drum_visualiser_8h_source}{}\label{_drum_visualiser_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/DrumVisualiser.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/DrumVisualiser.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Globals.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}MIDIParse.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}SoundManager.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ List\ of\ drum\ parts:\ Kick,\ Snare,\ Hit\ hat,\ Cymbol\ 1,\ Floor\ Tom,\ TomTom\ 1,\ TomTom\ 2.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ Match\ the\ instruments\ labelled\ in\ the\ Midi\ with\ the\ corresponding\ sprite\ names.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ Colour\ a\ sprite\ when\ the\ sound\ of\ that\ piece\ is\ being\ played,\ then\ back\ to\ default\ when\ it's\ not.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \#When\ we\ click\ on\ a\ drum\ hitbox\ we\ print\ off\ the\ string\ that\ is\ associated\ with\ it\ -\/>\ "{}pieceName"{}.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ Easy\ way\ of\ checking\ which\ hitbox\ is\ which\ when\ we\ are\ setting\ up\ the\ positions.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ Play\ the\ different\ pieces\ based\ on\ the\ Midi\ Keyboard's\ drumpad\ buttons.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ sf::RectangleShape\ shape;}
+\DoxyCodeLine{00025\ \ \ \ \ std::string\ pieceName;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ b\_isPressed;}
+\DoxyCodeLine{00027\ \ \ \ \ sf::Color\ originalColour;}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{enum}\ DrumStatus}
+\DoxyCodeLine{00031\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ On,}
+\DoxyCodeLine{00033\ \ \ \ \ Off}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{class\ }DrumVisualiser}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00039\ \ \ \ \ DrumVisualiser(std::shared\_ptr<const\ sf::Font>\ font,\ \doxymbox{\hyperlink{class_sound_manager}{SoundManager}}\&\ t\_soundManager);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ setupDrums();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ setupDrumSprites();}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ setupDrumHitbox();}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ setupDrumSounds();}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ renderDrums(sf::RenderWindow\&\ t\_window);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ changeDrumColourOn(\textcolor{keywordtype}{int}\ t\_trackNumber);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ changeDrumColourOff(\textcolor{keywordtype}{int}\ t\_trackNumber);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ updateIntroAnim(\textcolor{keywordtype}{float}\ t\_deltaTime);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ handleClick(sf::Vector2f\ t\_mousePos);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ checkIfPieceClicked(sf::Vector2f\ t\_mousePos,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\&\ t\_piece);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ toggleHitboxVis();}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Midi\ Input}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ drumNoteOn(\textcolor{keywordtype}{int}\ t\_midiNote);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ drumNoteOff(\textcolor{keywordtype}{int}\ t\_midiNote);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00061\ \ \ \ \ \doxymbox{\hyperlink{class_sound_manager}{SoundManager}}*\ m\_soundManager;}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ std::vector<DrumPiece>\ m\_drums;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\ m\_kickPiece;}
+\DoxyCodeLine{00066\ \ \ \ \ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\ m\_snarePiece;}
+\DoxyCodeLine{00067\ \ \ \ \ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\ m\_Crash1Piece;}
+\DoxyCodeLine{00068\ \ \ \ \ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\ m\_Crash2Piece;}
+\DoxyCodeLine{00069\ \ \ \ \ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\ m\_FloorTomPiece;}
+\DoxyCodeLine{00070\ \ \ \ \ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\ m\_Tom1Piece;}
+\DoxyCodeLine{00071\ \ \ \ \ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\ m\_Tom2Piece;}
+\DoxyCodeLine{00072\ \ \ \ \ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\ m\_HiHatPiece;}
+\DoxyCodeLine{00073\ \ \ \ \ \doxymbox{\hyperlink{struct_drum_piece}{DrumPiece}}\ m\_clapPiece;}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Drum\ Sprites}}
+\DoxyCodeLine{00077\ \ \ \ \ sf::Texture\ m\_kickTexture;}
+\DoxyCodeLine{00078\ \ \ \ \ sf::Sprite\ m\_kickSprite;}
+\DoxyCodeLine{00079\ \ \ \ \ sf::Texture\ m\_snareTexture;}
+\DoxyCodeLine{00080\ \ \ \ \ sf::Sprite\ m\_snareSprite;}
+\DoxyCodeLine{00081\ \ \ \ \ sf::Texture\ m\_floorTomTexture;}
+\DoxyCodeLine{00082\ \ \ \ \ sf::Sprite\ m\_floorTomSprite;}
+\DoxyCodeLine{00083\ \ \ \ \ sf::Texture\ m\_TomTom1Texture;}
+\DoxyCodeLine{00084\ \ \ \ \ sf::Sprite\ m\_TomTom1Sprite;}
+\DoxyCodeLine{00085\ \ \ \ \ sf::Texture\ m\_TomTom2Texture;}
+\DoxyCodeLine{00086\ \ \ \ \ sf::Sprite\ m\_TomTom2Sprite;}
+\DoxyCodeLine{00087\ \ \ \ \ sf::Texture\ m\_crash1Texture;}
+\DoxyCodeLine{00088\ \ \ \ \ sf::Sprite\ m\_crash1Sprite;}
+\DoxyCodeLine{00089\ \ \ \ \ sf::Texture\ m\_crash2Texture;}
+\DoxyCodeLine{00090\ \ \ \ \ sf::Sprite\ m\_crash2Sprite;}
+\DoxyCodeLine{00091\ \ \ \ \ sf::Texture\ m\_hiHatTexture;}
+\DoxyCodeLine{00092\ \ \ \ \ sf::Sprite\ m\_hiHatSprite;}
+\DoxyCodeLine{00093\ \ \ \ \ sf::Texture\ m\_clapTexture;}
+\DoxyCodeLine{00094\ \ \ \ \ sf::Sprite\ m\_clapSprite;}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//\ Drum\ hitbox}}
+\DoxyCodeLine{00097\ \ \ \ \ sf::Vector2f\ m\_drumHitboxSize\ =\ \{\ 100.0f,\ 100.0f\ \};}
+\DoxyCodeLine{00098\ \ \ \ \ sf::Vector2f\ m\_kickHitboxSize\ =\ \{\ 200.0f,\ 200.0f\ \};}
+\DoxyCodeLine{00099\ \ \ \ \ sf::Color\ m\_drumHitboxColour\ =\ sf::Color(255,\ 50,\ 50,\ 100);}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{bool}\ b\_isHitboxVis\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ sf::Vector2f\ m\_kickHitboxPos\ =\ \{\ 440.0f,\ 430.0f\ \};}
+\DoxyCodeLine{00103\ \ \ \ \ sf::Vector2f\ m\_snareHitboxPos\ =\ \{\ 650.0f,\ 310.0f\ \};}
+\DoxyCodeLine{00104\ \ \ \ \ sf::Vector2f\ m\_floorTomHitboxPos\ =\ \{\ 330.0f,\ 300.0f\ \};}
+\DoxyCodeLine{00105\ \ \ \ \ sf::Vector2f\ m\_tom1HitboxPos\ =\ \{\ 420.0f,\ 220.0f\ \};}
+\DoxyCodeLine{00106\ \ \ \ \ sf::Vector2f\ m\_tom2HitboxPos\ =\ \{\ 580.0f,\ 220.0f\ \};}
+\DoxyCodeLine{00107\ \ \ \ \ sf::Vector2f\ m\_crash1HitboxPos\ =\ \{\ 250.0f,\ 125.0f\ \};}
+\DoxyCodeLine{00108\ \ \ \ \ sf::Vector2f\ m\_crash2HitboxPos\ =\ \{\ 700.0f,\ 80.0f\ \};}
+\DoxyCodeLine{00109\ \ \ \ \ sf::Vector2f\ m\_hiHatHitboxPos\ =\ \{\ 700.0f,\ 200.0f\ \};}
+\DoxyCodeLine{00110\ \ \ \ \ sf::Vector2f\ m\_clapHitboxPos\ =\ \{\ 80.0f,\ 300.0f\ \};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ std::vector<sf::Sprite*>\ m\_drumSprites;}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ Images\ are\ 1080\ by\ 720\ and\ the\ sprite's\ origins\ are\ halfed}}
+\DoxyCodeLine{00115\ \ \ \ \ sf::Vector2f\ m\_drumPositions\{\ 1080.0f\ /\ 2.0f,\ 720.0f\ /\ 2.0f\};\ }
+\DoxyCodeLine{00116\ \ \ \ \ sf::Color\ m\_noteOnColour\ =\ sf::Color::Green;}
+\DoxyCodeLine{00117\ \ \ \ \ sf::Color\ m\_noteOffColour\ =\ sf::Color::White;}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//\ Text}}
+\DoxyCodeLine{00120\ \ \ \ \ std::shared\_ptr<const\ sf::Font>\ m\_font;}
+\DoxyCodeLine{00121\ \ \ \ \ std::vector<sf::Text>\ m\_trackNameTexts;}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Drum\ intro\ animation}}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_introDelayAmount\ =\ 0.2f;}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_introTimer\ =\ 0.0f;}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_drumPieceIndexIntro\ =\ 0;}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_drumPieceDelayIntro\ =\ 0.04f;}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_drumPieceTimerIntro\ =\ 0.0f;}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{bool}\ b\_isIntroFinished\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ DrumStatus\ drumStatus\ =\ DrumStatus::Off;}
+\DoxyCodeLine{00135\ \};}
+\DoxyCodeLine{00136\ }
+
+\end{DoxyCode}

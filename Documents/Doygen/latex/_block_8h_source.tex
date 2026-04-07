@@ -1,0 +1,87 @@
+\doxysection{Block.\+h}
+\hypertarget{_block_8h_source}{}\label{_block_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Block.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Block.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <SFML/Audio.hpp>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Notes:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ 4\ colours:\ BLUE,\ PINK,\ GREEN,\ YELLOW}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ 2\ types:\ coloured\ (1\ hit),\ barriers\ (3\ hits\ +\ health\ drain)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ Use\ a\ damage\ amount\ to\ calculate\ when\ a\ block\ will\ break\ (1\ for\ coloured,\ 3\ for\ barrier)}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ States:\ }}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{comment}{//\ Placed,\ }}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{comment}{//\ Breaking\ (timer\ for\ removing\ collision,\ play\ dissapear\ anim,\ }}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{comment}{//\ Broken\ (waiting\ for\ timeline\ collision),}}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{comment}{//\ Falling}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{enum}\ BlockStates}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ Placed,}
+\DoxyCodeLine{00018\ \ \ \ \ Breaking,}
+\DoxyCodeLine{00019\ \ \ \ \ Broken,}
+\DoxyCodeLine{00020\ \ \ \ \ Falling}
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{enum}\ ColourStates}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ Blue,}
+\DoxyCodeLine{00026\ \ \ \ \ Red,}
+\DoxyCodeLine{00027\ \ \ \ \ Green,}
+\DoxyCodeLine{00028\ \ \ \ \ Yellow,}
+\DoxyCodeLine{00029\ \ \ \ \ Health,}
+\DoxyCodeLine{00030\ \ \ \ \ Barrier,}
+\DoxyCodeLine{00031\ \ \ \ \ Error}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{class\ }Block}
+\DoxyCodeLine{00035\ \{}
+\DoxyCodeLine{00036\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{00038\ \ \ \ \ Block();}
+\DoxyCodeLine{00039\ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ renderBlock(sf::RenderWindow\ \&t\_window);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ updateBlock(\textcolor{keywordtype}{float}\ t\_deltaTime);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ setupBlockRectangle();}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ setPosition(sf::Vector2f\ t\_position);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ setColour(ColourStates\ t\_colour);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ sf::Vector2f\ getPosition()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ \ \ \ \ sf::RectangleShape\&\ getColliderShape();}
+\DoxyCodeLine{00051\ \ \ \ \ sf::RectangleShape\&\ getHitboxShape();}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ BlockStates\ m\_currentBlockState\ =\ BlockStates::Placed;}
+\DoxyCodeLine{00054\ \ \ \ \ ColourStates\ m\_currentColourState\ =\ ColourStates::Blue;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Overall\ collision\ shape}}
+\DoxyCodeLine{00058\ \ \ \ \ sf::RectangleShape\ m\_colliderShape;}
+\DoxyCodeLine{00059\ \ \ \ \ sf::Vector2f\ m\_colliderSize\ =\ \{\ 50.0f,\ 50.0f\ \};}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Damage\ hitbox}}
+\DoxyCodeLine{00061\ \ \ \ \ sf::RectangleShape\ m\_hitboxShape;}
+\DoxyCodeLine{00062\ \ \ \ \ sf::Vector2f\ m\_hitboxSize\ =\ \{\ 50.0f,\ 10.0f\ \};}
+\DoxyCodeLine{00063\ \ \ \ \ sf::Vector2f\ m\_hitboxPos\ =\ \{\ 0.0f,\ 0.0f\ \};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Global\ position\ in\ the\ play\ area\ (not\ grid)}}
+\DoxyCodeLine{00066\ \ \ \ \ sf::Vector2f\ m\_currentPosition;}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Block\ colours\ (ref\ to\ fill\ in\ collider\ colours)}}
+\DoxyCodeLine{00069\ \ \ \ \ sf::Color\ BLUE\ =\ sf::Color::Blue;}
+\DoxyCodeLine{00070\ \ \ \ \ sf::Color\ PINK\ =\ sf::Color::Magenta;}
+\DoxyCodeLine{00071\ \ \ \ \ sf::Color\ GREEN\ =\ sf::Color::Green;}
+\DoxyCodeLine{00072\ \ \ \ \ sf::Color\ YELLOW\ =\ sf::Color::Yellow;}
+\DoxyCodeLine{00073\ \ \ \ \ sf::Color\ HEALTH\_COLOUR\ =\ sf::Color(200,\ 20,\ 200,\ 100);}
+\DoxyCodeLine{00074\ \ \ \ \ sf::Color\ BARRIER\_COLOUR\ =\ sf::Color(30,\ 30,\ 50);}
+\DoxyCodeLine{00075\ \ \ \ \ sf::Color\ ERROR\_COLOUR\ =\ sf::Color::White;}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ Colour\ vector}}
+\DoxyCodeLine{00078\ \ \ \ \ std::vector<sf::Color>\ colours\ =\ \{\ BLUE,\ PINK,\ GREEN,\ YELLOW,\ HEALTH\_COLOUR,\ BARRIER\_COLOUR,\ ERROR\_COLOUR\ \};}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00080\ \};}
+\DoxyCodeLine{00081\ }
+
+\end{DoxyCode}

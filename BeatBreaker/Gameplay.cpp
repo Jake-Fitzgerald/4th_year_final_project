@@ -360,6 +360,8 @@ void Gameplay::resetSession()
 	b_isPlaying = false;
 	m_spawnIndex = 0;
 	m_fallingNotes.clear();
+	b_isPaused = false;
+	b_isPracticePaused = false;
 
 	if (m_currentTrack != nullptr)
 	{

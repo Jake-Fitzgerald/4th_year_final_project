@@ -1,0 +1,50 @@
+\doxysection{Database.\+h}
+\hypertarget{_database_8h_source}{}\label{_database_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Database.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Database.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Globals.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <fstream>}\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <sql.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <sqlext.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#pragma\ comment(lib,\ "{}odbc32.lib"{})}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00014\ \textcolor{comment}{Notes:}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ }}
+\DoxyCodeLine{00016\ \textcolor{comment}{Another\ query\ call\ when\ pulling\ if\ we\ want\ the\ list\ to\ be\ ordered:}}
+\DoxyCodeLine{00017\ \textcolor{comment}{"{}SELECT\ id,\ username,\ score\ FROM\ users\ ORDER\ BY\ score\ DESC"{}}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{//struct\ USERDATA}}
+\DoxyCodeLine{00022\ \textcolor{comment}{//\{}}
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ \ int\ id\ =\ -\/1;}}
+\DoxyCodeLine{00024\ \textcolor{comment}{//\ \ std::string\ username\ =\ "{}\ "{};}}
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ \ int\ score\ =\ -\/1;}}
+\DoxyCodeLine{00026\ \textcolor{comment}{//\};}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_database}{Database}}}
+\DoxyCodeLine{00029\ \{}
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ sqlConnect(std::string\ t\_ODBCString);}
+\DoxyCodeLine{00032\ \ \ \ \ std::vector<USERDATA>\ getLeaderboardData();}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ submitScore(std::string\ t\_username,\ \textcolor{keywordtype}{int}\ t\_score);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ submitScoreFromFile(std::string\ t\_filePath);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ SQLCleanup(SQLHENV\&\ t\_handleEnvir,\ SQLHDBC\&\ t\_handleDbc,\ SQLHSTMT\&\ t\_handleStatement);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00040\ \ \ \ \ SQLHENV\ handleEnvir;}
+\DoxyCodeLine{00041\ \ \ \ \ SQLHDBC\ handleDbc;}
+\DoxyCodeLine{00042\ \ \ \ \ SQLHSTMT\ handleStatement;}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+
+\end{DoxyCode}
