@@ -65,11 +65,9 @@ private:
 	// Fields
 	sf::Vector2f m_serverFieldPos{ paddingX + 100.0f, paddingY + 100.0f };
 	sf::Vector2f m_midiFieldPos{ 100.0f, 200.0f };
-	sf::Vector2f m_fieldSize{ 500.0f, 100.0f };
-	int m_characterSize = 40;
+	sf::Vector2f m_fieldSize{ 500.0f, 50.0f };
+	int m_characterSize = 64;
 
-	// InputField(std::shared_ptr<const sf::Font> font, sf::Vector2f t_pos, sf::Vector2f t_size, int t_charSize);
-	//InputField m_saveServerField(&m_font, m_serverFieldPos, m_fieldSize, m_characterSize);
 	InputField m_saveServerField;
 	InputField m_saveMidiField;
 };

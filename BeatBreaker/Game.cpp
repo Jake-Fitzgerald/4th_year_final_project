@@ -143,10 +143,6 @@ void Game::processEvents()
 		{
 			processKeysPressed(newEvent);
 		}
-		if (newEvent->is<sf::Event::KeyPressed>())
-		{
-			processKeysRelease(newEvent);
-		}
 		if (newEvent->is<sf::Event::MouseButtonReleased>())
 		{
 			processMouseRelease(newEvent);
@@ -163,96 +159,112 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 	{
 		m_DELETEexitGame = true; 
 	}
-	// Return to Main Menu
-	if (sf::Keyboard::Key::Backspace == newKeypress->code)
+	if (sf::Keyboard::Key::F1 == newKeypress->code)
 	{
-		m_currentGameState = GameStates::MainMenuScene;
-	}
-	// Toggle Grid Display
-	if (sf::Keyboard::Key::G == newKeypress->code)
-	{
-		gridDisplay.toggleGridVisible();
-	}
-
-	// Drum Visualiser
-	if (m_currentGameState == GameStates::DrumVis)
-	{
-		// Hitbox visible
-		if (sf::Keyboard::Key::V == newKeypress->code)
+		if (b_isDebugActive == true)
 		{
-			drumVisualiser.toggleHitboxVis();
+			b_isDebugActive = false;
+		}
+		else
+		{
+			b_isDebugActive = true;
 		}
 	}
 
-	// MCI Midi playback
-	if (m_currentGameState == GameStates::MainMenuScene)
+	if (b_isDebugActive == true)
 	{
-		if (sf::Keyboard::Key::P == newKeypress->code)
+		// Return to Main Menu
+		if (sf::Keyboard::Key::Backspace == newKeypress->code)
 		{
-			playMidiMCI();
+			m_currentGameState = GameStates::MainMenuScene;
+		}
+		// Toggle Grid Display
+		if (sf::Keyboard::Key::G == newKeypress->code)
+		{
+			gridDisplay.toggleGridVisible();
 		}
 
-		if (sf::Keyboard::Key::S == newKeypress->code)
+		// Drum Visualiser
+		if (m_currentGameState == GameStates::DrumVis)
 		{
-			stopMidiMCI();
-		}
-	}
-
-	// SQL  
-	if (sf::Keyboard::Key::L == newKeypress->code)
-	{
-		std::cerr << " " << std::endl;
-		std::cerr << "========================" << std::endl;
-		std::cerr << "Connecting to the server" << std::endl;
-		std::cerr << "========================" << std::endl;
-		std::cerr << " " << std::endl;
-
-		if (m_database.sqlConnect(ODBCString) == true)
-		{
-			m_localLeaderboard = m_database.getLeaderboardData();
-			m_leaderboard.populateFromDatabase(m_localLeaderboard);
-
-			for (const USERDATA& entry : m_localLeaderboard)
+			// Hitbox visible
+			if (sf::Keyboard::Key::V == newKeypress->code)
 			{
-				std::cerr << entry.id << " " << entry.username << " " << entry.score << std::endl;
+				drumVisualiser.toggleHitboxVis();
+			}
+		}
+
+		// MCI Midi playback
+		if (m_currentGameState == GameStates::MainMenuScene)
+		{
+			if (sf::Keyboard::Key::P == newKeypress->code)
+			{
+				playMidiMCI();
+			}
+
+			if (sf::Keyboard::Key::S == newKeypress->code)
+			{
+				stopMidiMCI();
+			}
+		}
+
+		// SQL  
+		if (sf::Keyboard::Key::L == newKeypress->code)
+		{
+			std::cerr << " " << std::endl;
+			std::cerr << "========================" << std::endl;
+			std::cerr << "Connecting to the server" << std::endl;
+			std::cerr << "========================" << std::endl;
+			std::cerr << " " << std::endl;
+
+			if (m_database.sqlConnect(ODBCString) == true)
+			{
+				m_localLeaderboard = m_database.getLeaderboardData();
+				m_leaderboard.populateFromDatabase(m_localLeaderboard);
+
+				for (const USERDATA& entry : m_localLeaderboard)
+				{
+					std::cerr << entry.id << " " << entry.username << " " << entry.score << std::endl;
+				}
+			}
+		}
+		// Upload to database
+		if (sf::Keyboard::Key::K == newKeypress->code)
+		{
+
+			std::string m_playerName = "TestName";
+			int m_tempScore = 100;
+
+			if (m_database.sqlConnect(ODBCString) == true)
+			{
+				//m_database.submitScore(m_playerName, m_tempScore);
+				m_database.submitScoreFromFile(m_highscorePath);
+			}
+		}
+
+		// Gamplay
+		if (m_currentGameState == GameStates::GameplayScene)
+		{
+			if (sf::Keyboard::Key::P == newKeypress->code)
+			{
+				m_gameplay.startSong();
+			}
+
+			if (sf::Keyboard::Key::T == newKeypress->code)
+			{
+				bool triggerDisplay = m_gameplay.getTriggerDisplayFlag();
+				if (triggerDisplay == true)
+				{
+					m_gameplay.setTriggerDisplayFlag(!triggerDisplay);
+				}
+				else
+				{
+					m_gameplay.setTriggerDisplayFlag(!triggerDisplay);
+				}
 			}
 		}
 	}
-	// Upload to database
-	if (sf::Keyboard::Key::K == newKeypress->code)
-	{
-		
-		std::string m_playerName = "TestName";
-		int m_tempScore = 100;
 
-		if (m_database.sqlConnect(ODBCString) == true)
-		{
-			//m_database.submitScore(m_playerName, m_tempScore);
-			m_database.submitScoreFromFile(m_highscorePath);
-		}
-	}
-
-	// Gamplay
-	if (m_currentGameState == GameStates::GameplayScene)
-	{
-		if (sf::Keyboard::Key::P == newKeypress->code)
-		{
-			m_gameplay.startSong();
-		}
-
-		if (sf::Keyboard::Key::T == newKeypress->code)
-		{
-			bool triggerDisplay = m_gameplay.getTriggerDisplayFlag();
-			if (triggerDisplay == true)
-			{
-				m_gameplay.setTriggerDisplayFlag(!triggerDisplay);
-			}
-			else
-			{
-				m_gameplay.setTriggerDisplayFlag(!triggerDisplay);
-			}
-		}
-	}
 }
 
 void Game::processKeysPressed(const std::optional<sf::Event> t_event)
@@ -260,9 +272,6 @@ void Game::processKeysPressed(const std::optional<sf::Event> t_event)
 	const sf::Event::KeyPressed* newKeyPress = t_event->getIf<sf::Event::KeyPressed>();
 }
 
-void Game::processKeysRelease(const std::optional<sf::Event> t_event)
-{
-}
 
 void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 {
@@ -537,7 +546,7 @@ void Game::update(sf::Time t_deltaTime)
 	}
 	if (m_currentGameState == GameStates::ResultsScene)
 	{
-		//m_gameOver.update(dtConverted);
+		m_gameOver.update(dtConverted);
 
 	}
 }

@@ -22,7 +22,7 @@ InputField::InputField(std::shared_ptr<const sf::Font> font, sf::Vector2f t_pos,
 	m_placeholderText.setOutlineThickness(1.0f);
 	m_placeholderText.setPosition(m_inputText.getPosition());
 
-	m_cursorShape.setSize(sf::Vector2f{ 10.0f, 80.0f });
+	m_cursorShape.setSize(sf::Vector2f{ 10.0f, 40.0f });
 	m_cursorShape.setFillColor(sf::Color::White);
 }
 
@@ -46,7 +46,7 @@ void InputField::handleEvent(sf::Event& t_event)
 		}
 	}
 
-	if (b_isActive == true)
+	if (b_isActive == false)
 	{
 		return;
 	}
@@ -90,9 +90,19 @@ bool InputField::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topL
 
 void InputField::update(float t_deltaTime)
 {
+	std::cerr << "Is cursor visible: " << b_isActive << std::endl;
+
 	if (b_isActive != true)
 	{
+		b_isCursorVisible = false;
+		return;
+	}
 
+	m_cursorTimer += t_deltaTime;
+	if (m_cursorTimer >= m_cursorBlinkAmount)
+	{
+		m_cursorTimer = 0.0f;
+		b_isCursorVisible = !b_isCursorVisible;
 	}
 }
 
@@ -135,7 +145,7 @@ void InputField::render(sf::RenderWindow& t_window)
 		t_window.draw(m_inputText);
 	}
 
-	if (b_isActive == true)
+	if (b_isActive == true && b_isCursorVisible == true)
 	{
 		t_window.draw(m_cursorShape);
 	}

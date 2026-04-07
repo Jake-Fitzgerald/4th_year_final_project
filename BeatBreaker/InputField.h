@@ -36,7 +36,7 @@ private:
 	sf::Text m_inputText;
 	sf::Text m_placeholderText;
 
-	int m_maxLength = 32;
+	int m_maxLength = 100;
 	bool b_isActive = false;
 
 	sf::RectangleShape m_textBoxFrame;
@@ -51,7 +51,11 @@ private:
 
 	// Unicode
 	int u_backspace = 8;
-	int u_letterStart = 65;
-	int u_letterEnd = 90;
+	int u_letterStart = 32;
+	int u_letterEnd = 126;
+
+	float m_cursorTimer = 0.0f;
+	float m_cursorBlinkAmount = 0.4f;
+	bool b_isCursorVisible = false;
 };
 

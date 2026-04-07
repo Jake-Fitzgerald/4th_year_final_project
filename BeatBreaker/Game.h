@@ -102,7 +102,6 @@ private:
 	void processEvents();
 	void processKeys(const std::optional<sf::Event> t_event);
 	void processKeysPressed(const std::optional<sf::Event> t_event);
-	void processKeysRelease(const std::optional<sf::Event> t_event);
 	void processMouseRelease(const std::optional<sf::Event> t_event);
 	void checkKeyboardState();
 	void processKeyboard(float dtSeconds); // By frame
@@ -138,6 +137,7 @@ private:
 	sf::SoundBuffer m_DELETEsoundBuffer; 
 	sf::Sound m_DELETEsound{ m_DELETEsoundBuffer }; 
 	bool m_DELETEexitGame; 
+	bool b_isDebugActive = false;
 
 	// States
 	GameStates m_currentGameState = GameStates::ResultsScene;
