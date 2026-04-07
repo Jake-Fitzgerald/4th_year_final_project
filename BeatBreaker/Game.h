@@ -99,7 +99,6 @@ public:
 private:
 	static std::shared_ptr<const sf::Font> loadFont();
 
-
 	void processEvents();
 	void processKeys(const std::optional<sf::Event> t_event);
 	void processKeysPressed(const std::optional<sf::Event> t_event);

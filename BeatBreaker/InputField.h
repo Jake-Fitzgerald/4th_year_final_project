@@ -13,9 +13,11 @@ public:
 
 	void setupInputField();
 
+	void handleEvent(sf::Event& t_event);
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
 	void update(float t_deltaTime);
+	void updateBox();
 	void render(sf::RenderWindow& t_window);
 
 	void setPos(sf::Vector2f t_pos);
@@ -26,6 +28,7 @@ public:
 
 	std::string getString();
 	bool getIsActive();
+
 private:
 	std::string m_storedString = "";
 	std::string m_placeholderString = "Enter text...";
@@ -45,5 +48,10 @@ private:
 	sf::Color c_textColour = sf::Color::White;
 	sf::Color c_textPlaceholderColour = sf::Color(100, 100, 100, 200);
 	sf::Color c_textErrorColour = sf::Color::Red;
+
+	// Unicode
+	int u_backspace = 8;
+	int u_letterStart = 65;
+	int u_letterEnd = 90;
 };
 

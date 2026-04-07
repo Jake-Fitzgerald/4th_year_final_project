@@ -22,13 +22,55 @@ InputField::InputField(std::shared_ptr<const sf::Font> font, sf::Vector2f t_pos,
 	m_placeholderText.setOutlineThickness(1.0f);
 	m_placeholderText.setPosition(m_inputText.getPosition());
 
-	m_cursorShape.setSize(sf::Vector2f{ m_inputText.getPosition().x, m_inputText.getPosition().y + 20.0f });
+	m_cursorShape.setSize(sf::Vector2f{ 10.0f, 80.0f });
 	m_cursorShape.setFillColor(sf::Color::White);
 }
 
 void InputField::setupInputField()
 {
 	
+}
+
+void InputField::handleEvent(sf::Event& t_event)
+{
+	if (const auto* mousePressed = t_event.getIf<sf::Event::MouseButtonPressed>())
+	{
+		if (mousePressed->button == sf::Mouse::Button::Left)
+		{
+			float xPos = static_cast<float>(mousePressed->position.x);
+			float yPos = static_cast<float>(mousePressed->position.y);
+			sf::Vector2f mousePos{ xPos, yPos};
+
+			b_isActive = checkIfAreaClicked(mousePos, m_textBoxFrame.getPosition(), m_textBoxFrame.getSize());
+		    //m_textBoxFrame.setFillColor
+		}
+	}
+
+	if (b_isActive == true)
+	{
+		return;
+	}
+
+	if (const auto* textEntered = t_event.getIf<sf::Event::TextEntered>())
+	{
+		uint32_t unicode = textEntered->unicode;
+
+		if (unicode == u_backspace)
+		{
+			if (m_storedString.empty() != true)
+			{
+				m_storedString.pop_back();
+			}
+		}
+		else if (unicode >= u_letterStart && unicode <= u_letterEnd)
+		{
+			if (m_storedString.size() < m_maxLength)
+			{
+				m_storedString += static_cast<char>(unicode);
+			}
+		}
+	}
+	updateBox();
 }
 
 bool InputField::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size)
@@ -48,6 +90,36 @@ bool InputField::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topL
 
 void InputField::update(float t_deltaTime)
 {
+	if (b_isActive != true)
+	{
+
+	}
+}
+
+void InputField::updateBox()
+{
+	m_inputText.setString(m_storedString);
+
+	float boxRight = m_textBoxFrame.getPosition().x + m_textBoxFrame.getSize().x - 10.0f;
+	float textRight = m_inputText.getPosition().x + m_inputText.getLocalBounds().size.x;
+	
+	if (textRight > boxRight)
+	{
+		// outise of box bounds
+	}
+	else
+	{
+		m_inputText.setPosition({ m_textBoxFrame.getPosition().x + 10.0f, m_inputText.getPosition().y });
+
+	}
+
+	// Cursor
+	sf::Vector2f cursorPos =
+	{
+		m_inputText.getPosition().x + m_inputText.getLocalBounds().size.x + 2.0f,
+		m_inputText.getPosition().y
+	};
+	m_cursorShape.setPosition(cursorPos);
 }
 
 void InputField::render(sf::RenderWindow& t_window)
@@ -97,12 +169,13 @@ void InputField::setMaxLength(int t_maxLength)
 
 void InputField::setPlaceholderString(std::string t_placeholderString)
 {
-
+	m_placeholderString = t_placeholderString;
 }
 
 void InputField::clearString()
 {
 	m_storedString.clear();
+	updateBox();
 }
 
 std::string InputField::getString()

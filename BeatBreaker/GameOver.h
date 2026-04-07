@@ -32,6 +32,9 @@ public:
 
 	void saveScore();
 
+	void handleEvent(sf::Event& t_event);
+	void update(float t_deltatime);
+
 	void render(sf::RenderWindow& t_window);
 
 private:

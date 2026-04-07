@@ -151,6 +151,8 @@ void Game::processEvents()
 		{
 			processMouseRelease(newEvent);
 		}
+		sf::Event event = *newEvent;
+		m_gameOver.handleEvent(event);
 	}
 }
 
@@ -532,6 +534,11 @@ void Game::update(sf::Time t_deltaTime)
 			m_gameOver.setScore(m_gameplay.getScore());
 			m_currentGameState = GameStates::ResultsScene;
 		}
+	}
+	if (m_currentGameState == GameStates::ResultsScene)
+	{
+		//m_gameOver.update(dtConverted);
+
 	}
 }
 

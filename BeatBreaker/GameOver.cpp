@@ -9,13 +9,17 @@ GameOver::GameOver(std::shared_ptr<const sf::Font> font)
 	  m_saveServerField(font, m_serverFieldPos, m_fieldSize, m_characterSize),
 	  m_saveMidiField(font, m_midiFieldPos, m_fieldSize, m_characterSize)
 {
+	m_saveServerField.setPlaceholderString("Write to server...");
+	m_saveMidiField.setPlaceholderString("Write to midi...");
+
+	m_saveServerField.setMaxLength(32);
+	m_saveMidiField.setMaxLength(32);
 }
 
 void GameOver::setupGameOver()
 {
 	setupUIFrames();
 	setupText();
-	
 }
 
 void GameOver::setupUIFrames()
@@ -107,6 +111,18 @@ void GameOver::updatePBScore()
 
 void GameOver::saveScore()
 {
+}
+
+void GameOver::handleEvent(sf::Event& t_event)
+{
+	m_saveServerField.handleEvent(t_event);
+	m_saveMidiField.handleEvent(t_event);
+}
+
+void GameOver::update(float t_deltatime)
+{
+	m_saveServerField.update(t_deltatime);
+	m_saveMidiField.update(t_deltatime);
 }
 
 void GameOver::render(sf::RenderWindow& t_window)
