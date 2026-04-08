@@ -83,8 +83,8 @@ void GameOver::setupText()
 
 	// Song Name
 	m_songNameText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 0.0f });
-	m_songNameText.setString("Song Title");
-	m_songNameText.setFillColor(sf::Color::White);
+	m_songNameText.setString(m_songName);
+	m_songNameText.setFillColor(sf::Color(200, 250, 200, 220));
 	m_songNameText.setOutlineColor(sf::Color::Black);
 	m_songNameText.setOutlineThickness(2.0f);
 	m_songNameText.setCharacterSize(30U);

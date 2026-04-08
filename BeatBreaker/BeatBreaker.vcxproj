@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BG_Scroll.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="DrumVisualiser.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="VisualiserSelect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BG_Scroll.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="DrumVisualiser.h" />

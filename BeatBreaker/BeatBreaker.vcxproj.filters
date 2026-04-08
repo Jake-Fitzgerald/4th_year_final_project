@@ -156,6 +156,9 @@
     <ClCompile Include="InputField.cpp">
       <Filter>Utilites</Filter>
     </ClCompile>
+    <ClCompile Include="BG_Scroll.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Notes.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="InputField.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="BG_Scroll.h">
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

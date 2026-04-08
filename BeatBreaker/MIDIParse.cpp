@@ -132,7 +132,7 @@ bool MIDIParse::parseFile(std::string& t_fileName)
 				if (metaType == EventType::trackName) 
 				{
 					std::string trackName = readString(file, length);
-					std::cerr << "Track Name: " << trackName << std::endl;
+					//std::cerr << "Track Name: " << trackName << std::endl;
 
 					currentTrack.trackName = trackName;
 				}
@@ -220,7 +220,7 @@ bool MIDIParse::parseFile(std::string& t_fileName)
 		{
 			note.startTime = note.startTick * secondsPerTick;
 			note.endTime = note.endTick * secondsPerTick;
-			std::cerr << "Note: " << note.noteName << " startTick: " << note.startTick << " startTime: " << note.startTime << std::endl;
+			//std::cerr << "Note: " << note.noteName << " startTick: " << note.startTick << " startTime: " << note.startTime << std::endl;
 		}
 	}
 
@@ -249,10 +249,10 @@ void MIDIParse::parseHeader(std::ifstream& t_file)
 	std::cerr << "===== Header =====" << std::endl;
 	std::cerr << "==================" << std::endl;
 	m_headerLength = read_uint32(t_file); // should be 6
-	std::cerr << "Header Length: " << m_headerLength << std::endl;
+	//std::cerr << "Header Length: " << m_headerLength << std::endl;
 
 	m_midiFormat = read_uint16(t_file);
-	std::cerr << "Format: " << m_midiFormat << std::endl;
+	//std::cerr << "Format: " << m_midiFormat << std::endl;
 
 	m_numTracks = read_uint16(t_file);
 	std::cerr << "Number of tracks: " << m_numTracks << std::endl;
@@ -260,7 +260,7 @@ void MIDIParse::parseHeader(std::ifstream& t_file)
 	// Ticks per quarter (delta time ticks within a quarter note)
 	// delta time is the number of ticks since the last event, in this case the note.
 	m_ticksPerQuarter = read_uint16(t_file);
-	std::cerr << "Ticks per Quarter Note: " << m_ticksPerQuarter << std::endl;
+	//std::cerr << "Ticks per Quarter Note: " << m_ticksPerQuarter << std::endl;
 
 }
 
@@ -326,7 +326,7 @@ void MIDIParse::noteOff(std::ifstream& t_file, uint8_t firstDataByte)
 		activeNotes[note].noteName = pitchToNoteName(note);
 
 		currentTrack.midiNotes.push_back(activeNotes[note]);
-		std::cerr << "Note stored: " << activeNotes[note].noteName << std::endl;
+		//std::cerr << "Note stored: " << activeNotes[note].noteName << std::endl;
 		activeNotes.erase(note);
 	}
 }

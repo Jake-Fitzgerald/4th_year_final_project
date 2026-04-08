@@ -32,6 +32,7 @@
 // UI
 #include "HUD.h"
 #include "GridDisplay.h"
+#include "BG_Scroll.h"
 
 // Utilities
 #include "Globals.h"
@@ -153,6 +154,8 @@ private:
 
 	// UI
 	HUD m_hud;
+	BG_Scroll m_bgScroll_1;
+
 	// FPS
 	sf::Clock m_fpsClock;
 	float m_fps = 0.0f;

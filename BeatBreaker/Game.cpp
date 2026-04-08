@@ -23,6 +23,7 @@ Game::Game() :
 	m_DELETEexitGame{false},
 		m_jerseyFont(loadFont()),
 		m_hud(*m_jerseyFont),
+	    m_bgScroll_1(),
 	    m_gameplay(m_soundManager, m_jerseyFont),
 		m_options(m_jerseyFont, m_gameplay),
 		trackVisualiser(m_jerseyFont),
@@ -536,7 +537,11 @@ void Game::update(sf::Time t_deltaTime)
 	// Piano Note Test
 	pianoVisualiser.updateNotes(dtConverted);
 
-	// Gameplay
+	// Scenes
+	if (m_currentGameState == GameStates::MainMenuScene || m_currentGameState == GameStates::ResultsScene)
+	{
+		m_bgScroll_1.update(dtConverted);
+	}
 	if (m_currentGameState == GameStates::GameplayScene)
 	{
 		m_gameplay.update(dtConverted);
@@ -565,6 +570,7 @@ void Game::render()
 	// Main Menu
 	if (m_currentGameState == GameStates::MainMenuScene)
 	{
+		m_bgScroll_1.render(m_window);
 		m_mainMenu.render(m_window);
 	}
 
@@ -623,6 +629,7 @@ void Game::render()
 	// Leaderboard
 	if (m_currentGameState == GameStates::ResultsScene)
 	{
+		m_bgScroll_1.render(m_window);
 		m_gameOver.render(m_window);
 	}
 
@@ -1021,7 +1028,6 @@ void Game::stopMidiMCI()
 	mciSendString("stop mciMIDI", NULL, 0, NULL);
 	mciSendString("close mciMIDI", NULL, 0, NULL);
 }
-
 
 void Game::setupMidiParser()
 {
