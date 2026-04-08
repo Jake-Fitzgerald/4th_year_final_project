@@ -23,4 +23,13 @@ C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWr
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(272,23): warning C4244: 'initializing': conversion from 'uint32_t' to 'uint8_t', possible loss of data
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(459,23): warning C4018: '<': signed/unsigned mismatch
 C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\MidiWrite.cpp(461,27): warning C4018: '<': signed/unsigned mismatch
+  SongSelect.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'SongSelect.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+  Generating Code...
   BeatBreaker.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Debug\BeatBreaker.exe
