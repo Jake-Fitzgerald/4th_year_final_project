@@ -54,21 +54,24 @@ public:
 	void write_uint32(std::ofstream& t_file, uint32_t t_value);
 	void write_uint16(std::ofstream& t_file, uint16_t t_value);
 	void writeByte(std::ofstream& t_file, uint8_t t_value);
+	void writeByteToBuffer(uint8_t t_value);
 
 	void writeMicroSeconds(std::ofstream& t_file);
 
-	void calculateTrackLength();
+	//void calculateTrackLength();
 
 	void writeCC(std::ofstream& t_file);
 	void writeProgamChange(std::ofstream& t_file);
 
 	void writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint32_t t_deltatime);
+	void writeNoteOnToBuffer(uint8_t t_pitch, uint8_t t_velocity, uint32_t t_deltatime);
 	void writeNoteOff(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint32_t t_deltatime);
+	void writeNoteOffToBuffer(uint8_t t_pitch, uint8_t t_velocity, uint32_t t_deltatime);
 
 	void writeEndOfTrack(std::ofstream& t_file);
 	void writeVLQ(std::ofstream& t_file, uint32_t t_value);
+	void writeVLQToBuffer(uint32_t t_value);
 
-	void setupNotes();
 	void setupRecordedNotes(std::vector<MidiNote>& t_notes);
 
 private:
@@ -83,6 +86,7 @@ private:
 
 	double m_BPM = 120.0;
 
+	std::vector<uint8_t> m_trackBuffer;
 	int m_noteTrackLength = 0;
 
 	std::vector<MidiNote> m_recordedNotes;
