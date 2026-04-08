@@ -94,8 +94,8 @@ enum EventType : uint8_t
 	pan = 0x0A,
 	volume = 0x07,
 	regParamNum_MSB = 0x65,
-	regParamNum_LSB = 0x65,
-	dataEntry = 0x05,
+	regParamNum_LSB = 0x64, // 0x65
+	dataEntry = 0x06, // 0x05
 	systemExclusive = 0xF0,
 
 	vlqSize = 0x7F

@@ -38,6 +38,14 @@
 //	systemExclusive = 0xF0
 //};
 
+struct MidiEvent
+{
+	uint32_t tick;
+	bool b_isNoteOn;
+	uint8_t pitch;
+	uint8_t velocity;
+};
+
 class MidiWrite
 {
 public:

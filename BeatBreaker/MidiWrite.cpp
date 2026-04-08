@@ -85,6 +85,101 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
 {
     m_trackBuffer.clear();
 
+    // ------------------------------
+    std::vector<MidiEvent> noteEvents;
+    noteEvents.reserve(m_recordedNotes.size() * 2);
+
+    for (auto& note : m_recordedNotes)
+    {
+        noteEvents.push_back({ note.startTick, true, static_cast<uint8_t>(note.pitch), static_cast<uint8_t>(note.velocity) });
+        noteEvents.push_back({ note.endTick, false, static_cast<uint8_t>(note.pitch), static_cast<uint8_t>(note.velocity) });
+    }
+
+
+    for (int i = 0; i < noteEvents.size(); i++)
+    {
+        for (int j = 0; j < noteEvents.size() - 1; j++)
+        {
+            bool b_inWrongOrder = false;
+
+            if (noteEvents[j].tick > noteEvents[j + 1].tick)
+            {
+                b_inWrongOrder = true;
+            }
+            else if (noteEvents[j].tick == noteEvents[j + 1].tick)
+            {
+                // Note off must come before note on
+                if (noteEvents[j].b_isNoteOn == true && noteEvents[j + 1].b_isNoteOn == false)
+                {
+                    b_inWrongOrder = true;
+                }
+            }
+
+            if (b_inWrongOrder == true)
+            {
+                MidiEvent midiEventTemp = noteEvents[j];
+                noteEvents[j] = noteEvents[j + 1];
+                noteEvents[j + 1] = midiEventTemp;
+            }
+        }
+    }
+
+    // ------------------------------
+    // Write even to buffer
+    // ------------------------------
+
+    uint32_t previousTick = 0;
+
+    for (auto& event : noteEvents)
+    {
+        uint32_t delta = event.tick - previousTick;
+        previousTick = event.tick;
+
+        if (event.b_isNoteOn == true)
+        {
+            writeNoteOnToBuffer(event.pitch, event.velocity, delta);
+        }
+        else
+        {
+            writeNoteOffToBuffer(event.pitch, event.velocity, delta);
+        }
+    }
+
+    // ------------------------------
+    // Write track chunk
+    // ------------------------------
+
+    uint32_t noteDataSize = static_cast<uint32_t>(m_trackBuffer.size());
+
+    std::string trackString = "MTrk";
+    t_file.write(trackString.c_str(), 4);
+    // 11 + 54 + notes + 4
+    write_uint32(t_file, m_noteTrackNameLength + m_ccLength + noteDataSize + m_endOfTrackLength); 
+
+    writeByte(t_file, 0x00);
+    writeByte(t_file, EventType::metaEvent);
+    writeByte(t_file, EventType::trackName);
+
+    writeByte(t_file, 0x07); // Meta length
+    t_file.write("FL Keys", 7);
+
+    writeCC(t_file);
+
+    // Note buffer
+    for (uint8_t byte : m_trackBuffer)
+    {
+        writeByte(t_file, byte);
+    }
+
+    writeCC(t_file);
+
+    writeEndOfTrack(t_file);
+
+    std::cerr << "Completed writing midi file" << std::endl;
+
+    // ------------------------------
+    /*
+
     uint32_t previousTick = 0;
 
     for (auto& note : m_recordedNotes)
@@ -118,50 +213,6 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
     for (uint8_t byte : m_trackBuffer)
     {
         writeByte(t_file, byte);
-    }
-
-    writeCC(t_file);
-
-    writeEndOfTrack(t_file);
-
-    std::cerr << "Completed writing midi file" << std::endl;
-
-    // -----------------------------------
-    /*
-    std::string trackString = "MTrk";
-    t_file.write(trackString.c_str(), 4);
-
-    write_uint32(t_file, m_noteTrackLength); // Note Track Length
-
-    writeByte(t_file, 0x00);
-    writeByte(t_file, EventType::metaEvent);
-    writeByte(t_file, EventType::trackName);
-
-    writeByte(t_file, 0x07); // Meta length
-    t_file.write("FL Keys", 7);
-
-    // -------------------------------------------------------------
-    // CC for each note
-    //for (int i = 0; i < static_cast<int>(m_testNotes.size()); i++)
-    //{
-    //    writeCC(t_file);
-    //}
-    writeCC(t_file);
-
-    // -------------------------------------------------------------
-    // Notes
-
-    uint32_t previousTick = 0;
-
-    for (auto& note : m_recordedNotes)
-    {
-        uint32_t deltaOn = note.startTick - previousTick;
-        uint32_t deltaOff = note.endTick - note.startTick;
-
-        writeNoteOn(t_file, note.pitch, note.velocity, deltaOn);
-        writeNoteOff(t_file, note.pitch, note.velocity, deltaOff);
-
-        previousTick = note.endTick;
     }
 
     writeCC(t_file);
@@ -230,14 +281,6 @@ void MidiWrite::writeMicroSeconds(std::ofstream& t_file)
     std::cerr << "Tempo: " << m_BPM << ", BPM :" << microsecondsPerClick << " (microseconds)" << std::endl;
 }
 
-//void MidiWrite::calculateTrackLength()
-//{
-//    m_noteLength = static_cast<int>(m_recordedNotes.size()) * 8; // bug should be a buffer
-//
-//    m_noteTrackLength = m_noteTrackNameLength + m_ccLength + m_noteLength + m_endOfTrackLength;
-//    std::cerr << "Note Track Length: " << m_noteTrackLength << std::endl;
-//}
-
 void MidiWrite::writeCC(std::ofstream& t_file)
 {
     writeByte(t_file, 0x00);
@@ -289,7 +332,6 @@ void MidiWrite::writeProgamChange(std::ofstream& t_file)
 
 void MidiWrite::writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint32_t t_deltatime)
 {
-    //writeByte(t_file, t_deltatime);
     writeVLQ(t_file, t_deltatime);
     writeByte(t_file, EventType::noteOn);
     writeByte(t_file, t_pitch);
@@ -306,7 +348,6 @@ void MidiWrite::writeNoteOnToBuffer(uint8_t t_pitch, uint8_t t_velocity, uint32_
 
 void MidiWrite::writeNoteOff(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint32_t t_deltatime)
 {
-    //writeByte(t_file, t_deltatime);
     writeVLQ(t_file, t_deltatime);
     writeByte(t_file, EventType::noteOff);
     writeByte(t_file, t_pitch);
@@ -339,26 +380,20 @@ void MidiWrite::writeVLQ(std::ofstream& t_file, uint32_t t_value)
 
     do
     {
-        uint8_t chunk = t_value & vlqSize;
+        bytes[count++] = t_value & 0x7F;
         t_value = t_value / 128;
-
-        if (t_value == 0)
-        {
-            // The last byte
-        }
-        else
-        {
-            chunk = chunk | 0x80;
-        }
-
-        bytes[count++] = chunk;
-
     } while (t_value > 0);
 
     // Write reversed
     for (int i = count - 1; i >= 0; i--)
     {
-        writeByte(t_file, bytes[i]);
+        uint8_t byte = bytes[i];
+        if (i > 0)
+        {
+            byte = byte | 0x80;
+        }
+
+        writeByte(t_file,byte);
     }
 }
 
@@ -372,27 +407,33 @@ void MidiWrite::writeVLQToBuffer(uint32_t t_value)
 
     do
     {
-
-        uint8_t chunk = t_value & vlqSize;
+        bytes[count++] = t_value & 0x7F;
         t_value = t_value / 128;
 
-        if (t_value == 0)
-        {
-            // The last byte
-        }
-        else
-        {
-            chunk = chunk | 0x80;
-        }
+        //uint8_t chunk = t_value & vlqSize;
+        //t_value = t_value / 128;
 
-        bytes[count++] = chunk;
-
+        //if (t_value == 0)
+        //{
+        //    // The last byte
+        //}
+        //else
+        //{
+        //    bytes[count++] = t_value & 0x7F;
+        //    t_value = t_value / 128;
+        //}
     } while (t_value > 0);
 
     // Write reversed
     for (int i = count - 1; i >= 0; i--)
     {
-        writeByteToBuffer(bytes[i]);
+        uint8_t byte = bytes[i];
+        if (i > 0)
+        {
+            byte = byte | 0x80;
+        }
+
+        writeByteToBuffer(byte);
     }
 }
 
