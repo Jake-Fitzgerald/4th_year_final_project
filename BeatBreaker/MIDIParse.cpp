@@ -472,7 +472,7 @@ uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
 		// MSB is used as a continuation flag to know if there are more bytes
 		// to follow if it's a large number.
 		// 0x7F = 0111 1111 (the first number is the continuation bit)
-		const uint8_t dataBits = byte & 0x7F;
+		const uint8_t dataBits = byte & vlqSize;
 
 		// Shift existing value 7 bits to the left to make room for new bits
 		// Then OR in the new 7-bit value

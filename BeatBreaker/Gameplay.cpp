@@ -733,7 +733,7 @@ void Gameplay::setRecordingFlag(bool t_bool)
 
 bool Gameplay::getRecordingFlag()
 {
-	return false;
+	return b_isRecording;
 }
 
 bool Gameplay::getNoteOnColliderFlag()

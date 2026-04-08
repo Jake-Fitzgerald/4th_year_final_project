@@ -96,7 +96,9 @@ enum EventType : uint8_t
 	regParamNum_MSB = 0x65,
 	regParamNum_LSB = 0x65,
 	dataEntry = 0x05,
-	systemExclusive = 0xF0
+	systemExclusive = 0xF0,
+
+	vlqSize = 0x7F
 };
 
 class MIDIParse

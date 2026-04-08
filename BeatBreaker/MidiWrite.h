@@ -62,10 +62,11 @@ public:
 	void writeCC(std::ofstream& t_file);
 	void writeProgamChange(std::ofstream& t_file);
 
-	void writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint8_t t_deltatime);
-	void writeNoteOff(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint8_t t_deltatime);
+	void writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint32_t t_deltatime);
+	void writeNoteOff(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint32_t t_deltatime);
 
 	void writeEndOfTrack(std::ofstream& t_file);
+	void writeVLQ(std::ofstream& t_file, uint32_t t_value);
 
 	void setupNotes();
 	void setupRecordedNotes(std::vector<MidiNote>& t_notes);
