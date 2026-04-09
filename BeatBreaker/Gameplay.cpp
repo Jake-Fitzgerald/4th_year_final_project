@@ -139,113 +139,140 @@ void Gameplay::setupScoreText()
 void Gameplay::setupStatisticText()
 {
 	sf::Vector2f statisticTextPos{ m_statisticFrame.getPosition().x, m_statisticFrame.getPosition().y };
+	float xPos = statisticTextPos.x + 25.0f;
+	float yPos = statisticTextPos.y + 25.0f;
+	float valueDist = 20.0f;
+	float typeDist = 60.0f;
 
 	// Missed
-	m_missedNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 25.0f });
+	m_missedNotesText.setPosition(sf::Vector2f{ xPos, yPos });
 	m_missedNotesText.setString("Missed Notes: ");
 	m_missedNotesText.setFillColor(sf::Color::White);
 	m_missedNotesText.setOutlineColor(sf::Color::Black);
 	m_missedNotesText.setOutlineThickness(2.0f);
-	m_missedNotesText.setCharacterSize(30U);
+	m_missedNotesText.setCharacterSize(20U);
 	// Value
-	m_missedNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 50.0f });
+	m_missedNotesValueText.setPosition(sf::Vector2f{ xPos, yPos + valueDist });
 	m_missedNotesValueText.setString("???");
 	m_missedNotesValueText.setFillColor(sf::Color::White);
 	m_missedNotesValueText.setOutlineColor(sf::Color::Black);
 	m_missedNotesValueText.setOutlineThickness(2.0f);
-	m_missedNotesValueText.setCharacterSize(30U);
+	m_missedNotesValueText.setCharacterSize(20U);
+	yPos += typeDist;
 
 	// Early
-	m_earlyNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 100.0f });
+	m_earlyNotesText.setPosition(sf::Vector2f{ xPos, yPos });
 	m_earlyNotesText.setString("Early Notes: ");
 	m_earlyNotesText.setFillColor(sf::Color::White);
 	m_earlyNotesText.setOutlineColor(sf::Color::Black);
 	m_earlyNotesText.setOutlineThickness(2.0f);
-	m_earlyNotesText.setCharacterSize(30U);
+	m_earlyNotesText.setCharacterSize(20U);
 	// Value
-	m_earlyNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 125.0f });
+	m_earlyNotesValueText.setPosition(sf::Vector2f{ xPos, yPos + valueDist });
 	m_earlyNotesValueText.setString("???");
 	m_earlyNotesValueText.setFillColor(sf::Color::White);
 	m_earlyNotesValueText.setOutlineColor(sf::Color::Black);
 	m_earlyNotesValueText.setOutlineThickness(2.0f);
-	m_earlyNotesValueText.setCharacterSize(30U);
+	m_earlyNotesValueText.setCharacterSize(20U);
+	yPos += typeDist;
+
+	// Perfect
+	m_perfectNotesText.setPosition(sf::Vector2f{ xPos, yPos });
+	m_perfectNotesText.setString("Early Notes: ");
+	m_perfectNotesText.setFillColor(sf::Color::White);
+	m_perfectNotesText.setOutlineColor(sf::Color::Black);
+	m_perfectNotesText.setOutlineThickness(2.0f);
+	m_perfectNotesText.setCharacterSize(20U);
+	// Value
+	m_perfectNotesValueText.setPosition(sf::Vector2f{ xPos, yPos + valueDist });
+	m_perfectNotesValueText.setString("???");
+	m_perfectNotesValueText.setFillColor(sf::Color::White);
+	m_perfectNotesValueText.setOutlineColor(sf::Color::Black);
+	m_perfectNotesValueText.setOutlineThickness(2.0f);
+	m_perfectNotesValueText.setCharacterSize(20U);
+	yPos += typeDist;
 
 	// Late
-	m_lateNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 175.0f });
+	m_lateNotesText.setPosition(sf::Vector2f{ xPos, yPos });
 	m_lateNotesText.setString("Late Notes: ");
 	m_lateNotesText.setFillColor(sf::Color::White);
 	m_lateNotesText.setOutlineColor(sf::Color::Black);
 	m_lateNotesText.setOutlineThickness(2.0f);
-	m_lateNotesText.setCharacterSize(30U);
+	m_lateNotesText.setCharacterSize(20U);
 	// Value
-	m_lateNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 200.0f });
+	m_lateNotesValueText.setPosition(sf::Vector2f{ xPos, yPos + valueDist });
 	m_lateNotesValueText.setString("???");
 	m_lateNotesValueText.setFillColor(sf::Color::White);
 	m_lateNotesValueText.setOutlineColor(sf::Color::Black);
 	m_lateNotesValueText.setOutlineThickness(2.0f);
-	m_lateNotesValueText.setCharacterSize(30U);
+	m_lateNotesValueText.setCharacterSize(20U);
+	yPos += typeDist;
 
 	// Wrong
-	m_wrongNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 250.0f });
+	m_wrongNotesText.setPosition(sf::Vector2f{ xPos, yPos });
 	m_wrongNotesText.setString("Wrong Notes: ");
 	m_wrongNotesText.setFillColor(sf::Color::White);
 	m_wrongNotesText.setOutlineColor(sf::Color::Black);
 	m_wrongNotesText.setOutlineThickness(2.0f);
-	m_wrongNotesText.setCharacterSize(30U);
+	m_wrongNotesText.setCharacterSize(20U);
 	// Value
-	m_wrongNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 275.0f });
+	m_wrongNotesValueText.setPosition(sf::Vector2f{ xPos, yPos + valueDist });
 	m_wrongNotesValueText.setString("???");
 	m_wrongNotesValueText.setFillColor(sf::Color::White);
 	m_wrongNotesValueText.setOutlineColor(sf::Color::Black);
 	m_wrongNotesValueText.setOutlineThickness(2.0f);
-	m_wrongNotesValueText.setCharacterSize(30U);
+	m_wrongNotesValueText.setCharacterSize(20U);
+	yPos += typeDist;
 
 	// --------------------------------------------------------------------------------------------------------------
 
 	// Hit Percentage
-	m_hitpercentageText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 325.0f });
+	m_hitpercentageText.setPosition(sf::Vector2f{ xPos, yPos });
 	m_hitpercentageText.setString("Hit Percentage: %");
 	m_hitpercentageText.setFillColor(sf::Color::White);
 	m_hitpercentageText.setOutlineColor(sf::Color::Black);
 	m_hitpercentageText.setOutlineThickness(2.0f);
-	m_hitpercentageText.setCharacterSize(30U);
+	m_hitpercentageText.setCharacterSize(20U);
 	// Value
-	m_hitpercentageValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 350.0f });
+	m_hitpercentageValueText.setPosition(sf::Vector2f{ xPos, yPos + valueDist });
 	m_hitpercentageValueText.setString("??%");
 	m_hitpercentageValueText.setFillColor(sf::Color::White);
 	m_hitpercentageValueText.setOutlineColor(sf::Color::Black);
 	m_hitpercentageValueText.setOutlineThickness(2.0f);
-	m_hitpercentageValueText.setCharacterSize(30U);
+	m_hitpercentageValueText.setCharacterSize(20U);
+	yPos += typeDist;
 
 	// Hit Notes
-	m_hitNotesText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 375.0f });
+	m_hitNotesText.setPosition(sf::Vector2f{ xPos, yPos });
 	m_hitNotesText.setString("Hit Notes:");
 	m_hitNotesText.setFillColor(sf::Color::White);
 	m_hitNotesText.setOutlineColor(sf::Color::Black);
 	m_hitNotesText.setOutlineThickness(2.0f);
-	m_hitNotesText.setCharacterSize(30U);
+	m_hitNotesText.setCharacterSize(20U);
 	// Value
-	m_hitNotesValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 400.0f });
+	m_hitNotesValueText.setPosition(sf::Vector2f{ xPos, yPos + valueDist });
 	m_hitNotesValueText.setString("? / ?");
 	m_hitNotesValueText.setFillColor(sf::Color::White);
 	m_hitNotesValueText.setOutlineColor(sf::Color::Black);
 	m_hitNotesValueText.setOutlineThickness(2.0f);
-	m_hitNotesValueText.setCharacterSize(30U);
+	m_hitNotesValueText.setCharacterSize(20U);
+	yPos += typeDist;
 
 	// Average Notes Per Second
-	m_anpsText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 425.0f });
+	m_anpsText.setPosition(sf::Vector2f{ xPos, yPos });
 	m_anpsText.setString("Avg Notes Per Second:");
 	m_anpsText.setFillColor(sf::Color::White);
 	m_anpsText.setOutlineColor(sf::Color::Black);
 	m_anpsText.setOutlineThickness(2.0f);
-	m_anpsText.setCharacterSize(30U);
+	m_anpsText.setCharacterSize(20U);
 	// Value
-	m_anpsValueText.setPosition(sf::Vector2f{ statisticTextPos.x + 25.0f, statisticTextPos.y + 450.0f });
+	m_anpsValueText.setPosition(sf::Vector2f{ xPos, yPos + valueDist });
 	m_anpsValueText.setString("?");
 	m_anpsValueText.setFillColor(sf::Color::White);
 	m_anpsValueText.setOutlineColor(sf::Color::Black);
 	m_anpsValueText.setOutlineThickness(2.0f);
-	m_anpsValueText.setCharacterSize(30U);
+	m_anpsValueText.setCharacterSize(20U);
+	yPos += typeDist;
 }
 
 void Gameplay::setupStatistics()
@@ -372,10 +399,10 @@ void Gameplay::resetSession()
 	//m_songEndTime = 0.0f;
 	b_isSongFinished = false;
 	b_isPlaying = false;
-	m_spawnIndex = 0;
 	m_fallingNotes.clear();
 	b_isPaused = false;
 	b_isPracticePaused = false;
+	m_practiceWaitForNotes.clear();
 
 	if (m_currentTrack != nullptr)
 	{
@@ -430,6 +457,8 @@ void Gameplay::render(sf::RenderWindow& t_window)
 	t_window.draw(m_missedNotesValueText);
 	t_window.draw(m_earlyNotesText);
 	t_window.draw(m_earlyNotesValueText);
+	t_window.draw(m_perfectNotesText);
+	t_window.draw(m_perfectNotesValueText);
 	t_window.draw(m_lateNotesText);
 	t_window.draw(m_lateNotesValueText);
 	t_window.draw(m_wrongNotesText);
@@ -483,10 +512,16 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 		return;
 	}
 
-	//if (b_isPracticePaused == true)
-	//{
-	//	return;
-	//}
+	if (b_isRecording == true && b_isPracticePaused == false)
+	{
+		MidiNote note;
+		note.noteName = t_noteName;
+		note.pitch = t_pitch;
+		note.velocity = t_velocity;
+		note.startTime = m_playbackTime;
+
+		m_recordedNotes.push_back(note);
+	}
 
 	m_keyboard.noteOn(t_noteName);
 
@@ -515,9 +550,6 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 
 				m_fallingNotes[i].shape.setFillColor(c_lateNoteColour);
 				m_fallingNotes[i].b_isActive = false;
-
-				//b_isPracticePaused = false;
-				//m_practiceWaitForNotes.clear();
 
 				for (int j = 0; j < m_practiceWaitForNotes.size(); j++)
 				{
@@ -548,10 +580,6 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 				m_fallingNotes[i].shape.setFillColor(c_perfectNoteColour);
 				m_fallingNotes[i].b_isActive = false;
 
-				//b_isPracticePaused = false;
-				//m_practiceWaitForNotes.clear();
-
-
 				for (int j = 0; j < m_practiceWaitForNotes.size(); j++)
 				{
 					if (m_practiceWaitForNotes[j] == t_noteName)
@@ -580,10 +608,6 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 				m_fallingNotes[i].shape.setFillColor(c_earlyNoteColour);
 				m_fallingNotes[i].b_isActive = false;
 
-				//b_isPracticePaused = false;
-				//m_practiceWaitForNotes.clear();
-
-
 				for (int j = 0; j < m_practiceWaitForNotes.size(); j++)
 				{
 					if (m_practiceWaitForNotes[j] == t_noteName)
@@ -600,58 +624,11 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 			}
 		}
 	}
-
-	//if (b_isPracticeMode == false || t_noteName != practiceWaitForNote)
-	//{
-	//	std::cerr << "WRONG KEY: " << t_noteName << std::endl;
-	//	m_score -= m_scoreWrong;
-	//	updateScore();
-	//	m_wrongNotes++;
-	//	updateStatistics();
-	//}
-
-	//for (int i = 0; i < m_practiceWaitForNotes.size(); i++)
-	//{
-	//	if (m_practiceWaitForNotes[i] == t_noteName)
-	//	{
-	//		m_practiceWaitForNotes.erase(m_practiceWaitForNotes.begin() + i);
-	//	}
-	//}
-	//if (m_practiceWaitForNotes.empty())
-	//{
-	//	b_isPracticePaused = false;
-	//}
-
-	b_isWaitingForThisNote = false; 
-	for (auto& waitNote : m_practiceWaitForNotes)
-	{
-		if (waitNote == t_noteName)
-		{
-			b_isWaitingForThisNote = true;
-			break;
-		}
-	}
-
-	if (b_isPracticeMode == false || b_isWaitingForThisNote == false)
-	{
-		// wrong key
-	}
-
-	if (b_isRecording == true)
-	{
-		MidiNote note;
-		note.noteName = t_noteName;
-		note.pitch = t_pitch;
-		note.velocity = t_velocity;
-		note.startTime = m_playbackTime;
-
-		m_recordedNotes.push_back(note);
-	}
 }
 
 void Gameplay::noteOff(std::string& t_noteName, int t_pitch, int t_velocity)
 {
-	if (b_isPaused == true)
+	if (b_isPaused == true && b_isPracticePaused == true)
 	{
 		return;
 	}
@@ -675,7 +652,6 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 {
 	m_currentTrack = &t_track;
 	m_playbackTime = 0.0;
-	m_spawnIndex = 0;
 	m_fallingNotes.clear();
 
 	m_noteSpeed = t_BPM /** m_noteSpeedMultiplier*/;
