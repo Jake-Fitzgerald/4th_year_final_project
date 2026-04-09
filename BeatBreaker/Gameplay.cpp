@@ -278,7 +278,6 @@ void Gameplay::update(float t_deltaTime)
 
 		for (auto& note : m_fallingNotes)
 		{
-			//note.shape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
 			sf::Vector2f movement{ 0.0f, m_noteSpeed * t_deltaTime };
 			note.shape.move(movement);
 			note.earlyTrigger.move(movement);
@@ -287,8 +286,23 @@ void Gameplay::update(float t_deltaTime)
 
 			if (b_isPracticeMode && note.b_isActive && m_keyboard.checkSoundCollision(note.perfectTrigger))
 			{
-				b_isPracticePaused = true;
-				practiceWaitForNote = note.noteName;
+				//b_isPracticePaused = true;
+				//practiceWaitForNote = note.noteName;
+
+				if (b_isPracticePaused == false)
+				{
+					b_isPracticePaused = true;
+					m_practiceWaitForNotes.clear();
+
+					for (auto& nextNote : m_fallingNotes)
+					{
+						if (nextNote.b_isActive && m_keyboard.checkSoundCollision(nextNote.perfectTrigger))
+						{
+							m_practiceWaitForNotes.push_back(nextNote.noteName);
+						}
+					}
+				}
+
 				break;
 			}
 
@@ -469,10 +483,10 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 		return;
 	}
 
-	if (b_isPracticePaused == true)
-	{
-		return;
-	}
+	//if (b_isPracticePaused == true)
+	//{
+	//	return;
+	//}
 
 	m_keyboard.noteOn(t_noteName);
 
@@ -502,8 +516,22 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 				m_fallingNotes[i].shape.setFillColor(c_lateNoteColour);
 				m_fallingNotes[i].b_isActive = false;
 
-				b_isPracticePaused = false;
-				practiceWaitForNote = "";
+				//b_isPracticePaused = false;
+				//m_practiceWaitForNotes.clear();
+
+				for (int j = 0; j < m_practiceWaitForNotes.size(); j++)
+				{
+					if (m_practiceWaitForNotes[j] == t_noteName)
+					{
+						m_practiceWaitForNotes.erase(m_practiceWaitForNotes.begin() + j);
+						break;
+					}
+				}
+				if (m_practiceWaitForNotes.empty())
+				{
+					b_isPracticePaused = false;
+				}
+
 				return;
 			}
 			else if (m_keyboard.checkInputCollision(m_fallingNotes[i].perfectTrigger))
@@ -520,8 +548,22 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 				m_fallingNotes[i].shape.setFillColor(c_perfectNoteColour);
 				m_fallingNotes[i].b_isActive = false;
 
-				b_isPracticePaused = false;
-				practiceWaitForNote = "";
+				//b_isPracticePaused = false;
+				//m_practiceWaitForNotes.clear();
+
+
+				for (int j = 0; j < m_practiceWaitForNotes.size(); j++)
+				{
+					if (m_practiceWaitForNotes[j] == t_noteName)
+					{
+						m_practiceWaitForNotes.erase(m_practiceWaitForNotes.begin() + j);
+						break;
+					}
+				}
+				if (m_practiceWaitForNotes.empty())
+				{
+					b_isPracticePaused = false;
+				}
 				return;
 			}
 			if (m_keyboard.checkInputCollision(m_fallingNotes[i].earlyTrigger))
@@ -538,20 +580,61 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 				m_fallingNotes[i].shape.setFillColor(c_earlyNoteColour);
 				m_fallingNotes[i].b_isActive = false;
 
-				b_isPracticePaused = false;
-				practiceWaitForNote = "";
+				//b_isPracticePaused = false;
+				//m_practiceWaitForNotes.clear();
+
+
+				for (int j = 0; j < m_practiceWaitForNotes.size(); j++)
+				{
+					if (m_practiceWaitForNotes[j] == t_noteName)
+					{
+						m_practiceWaitForNotes.erase(m_practiceWaitForNotes.begin() + j);
+						break;
+					}
+				}
+				if (m_practiceWaitForNotes.empty())
+				{
+					b_isPracticePaused = false;
+				}
 				return;
 			}
 		}
 	}
 
-	if (b_isPracticeMode == false || t_noteName != practiceWaitForNote)
+	//if (b_isPracticeMode == false || t_noteName != practiceWaitForNote)
+	//{
+	//	std::cerr << "WRONG KEY: " << t_noteName << std::endl;
+	//	m_score -= m_scoreWrong;
+	//	updateScore();
+	//	m_wrongNotes++;
+	//	updateStatistics();
+	//}
+
+	//for (int i = 0; i < m_practiceWaitForNotes.size(); i++)
+	//{
+	//	if (m_practiceWaitForNotes[i] == t_noteName)
+	//	{
+	//		m_practiceWaitForNotes.erase(m_practiceWaitForNotes.begin() + i);
+	//	}
+	//}
+	//if (m_practiceWaitForNotes.empty())
+	//{
+	//	b_isPracticePaused = false;
+	//}
+
+	b_isWaitingForThisNote = false; 
+	for (auto& waitNote : m_practiceWaitForNotes)
 	{
-		std::cerr << "WRONG KEY: " << t_noteName << std::endl;
-		m_score -= m_scoreWrong;
-		updateScore();
-		m_wrongNotes++;
-		updateStatistics();
+		if (waitNote == t_noteName)
+		{
+			b_isWaitingForThisNote = true;
+			break;
+		}
+	}
+
+	if (b_isPracticeMode == false || b_isWaitingForThisNote == false)
+	{
+		// wrong key
 	}
 
 	if (b_isRecording == true)

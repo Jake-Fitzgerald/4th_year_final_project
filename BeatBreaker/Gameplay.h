@@ -222,7 +222,9 @@ private:
     bool b_isPreviewMode = false;
     bool b_isPracticeMode = false;
     bool b_isPracticePaused = false;
-    std::string practiceWaitForNote = "";
+    //std::string practiceWaitForNote = "";
+    std::vector<std::string> m_practiceWaitForNotes;
+    bool b_isWaitingForThisNote = false;
 
     bool b_displayTriggers = false;
 
