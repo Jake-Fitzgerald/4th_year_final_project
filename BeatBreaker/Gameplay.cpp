@@ -438,6 +438,21 @@ int Gameplay::getScore()
 	return m_score;
 }
 
+SessionStats Gameplay::getSessionStats()
+{
+	return SessionStats
+	{
+		m_score,
+		m_earlyNotes,
+		m_perfectNotes,
+		m_lateNotes,
+		m_missedNotes,
+		m_wrongNotes,
+		m_noteCountTotal,
+		m_currentNotesHit
+	};
+}
+
 void Gameplay::render(sf::RenderWindow& t_window)
 {
 	// UI

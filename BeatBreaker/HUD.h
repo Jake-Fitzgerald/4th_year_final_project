@@ -55,24 +55,10 @@ private:
 	sf::Text m_fpsText;
 	bool b_isFPSVisible;
 
-	// Beat Visualiser
-	// Left Quart Notes
-	//sf::RectangleShape m_beatMarkerLeftQuarter_1;
-	//sf::RectangleShape m_beatMarkerLeftQuarter_2;
-	//sf::RectangleShape m_beatMarkerLeftQuarter_3;
-	//std::vector<sf::RectangleShape> m_beatMarkersLeft;
-	//// Right Quarter Notes
-	//sf::RectangleShape m_beatMarkerRightQuarter_1;
-	//sf::RectangleShape m_beatMarkerRightQuarter_2;
-	//sf::RectangleShape m_beatMarkerRightQuarter_3;
-	//std::vector<sf::RectangleShape> m_beatMarkersRight;
-	//// Whole Note (Dead Centre)
-	//sf::RectangleShape m_beatMarkerWholeNote;
-
 	std::vector<sf::RectangleShape> m_beatMarkers;
 
 	sf::Vector2f m_beatMarkerSize = sf::Vector2f{ 10.0f, 30.0f };
-	sf::Vector2f m_beatMarkerLeftPos = sf::Vector2f{ 800.0f, 650.0f };
+	sf::Vector2f m_beatMarkerLeftPos = sf::Vector2f{ 800.0f, 625.0f };
 	sf::Vector2f m_beatMarkerRightPos = sf::Vector2f{ 1000.0f, 650.0f };
 
 	sf::Color c_beatMarkerClear = sf::Color(255, 255, 255, 50);
@@ -100,6 +86,7 @@ private:
 
 	sf::Texture m_returnTexture;
 	sf::Sprite m_returnSprite{ m_returnTexture };
+	sf::Text m_returnText;
 
 	// Midi Information
 	sf::Vector2f m_midiTextPos{ paddingX, paddingY + 660.0f };
@@ -118,6 +105,8 @@ private:
 
 	// UI Polish
 	sf::RectangleShape m_bottomBorderBar;
+	sf::RectangleShape m_keyboardStatus;
+	sf::RectangleShape m_HUDBorder;
 
 	// Midi Keyboard
 	sf::Text m_midiKeyboardText;

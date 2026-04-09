@@ -1,0 +1,77 @@
+\doxysection{Keyboard Class Reference}
+\hypertarget{class_keyboard}{}\label{class_keyboard}\index{Keyboard@{Keyboard}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_keyboard_a0dfea914149a98ec9d7e1ded9931dcec}\label{class_keyboard_a0dfea914149a98ec9d7e1ded9931dcec} 
+{\bfseries Keyboard} (\doxymbox{\hyperlink{class_sound_manager}{Sound\+Manager}} \&t\+\_\+sound\+Manager)
+\item 
+\Hypertarget{class_keyboard_ae905c03fd299f15110c9e8a0553fc6d9}\label{class_keyboard_ae905c03fd299f15110c9e8a0553fc6d9} 
+void {\bfseries setup\+Keys} ()
+\item 
+\Hypertarget{class_keyboard_aa0bbb472956166ba666a297f8333e68e}\label{class_keyboard_aa0bbb472956166ba666a297f8333e68e} 
+void {\bfseries setup\+Triggers} ()
+\item 
+\Hypertarget{class_keyboard_a394456a4def3c4d9336753641e8b7d27}\label{class_keyboard_a394456a4def3c4d9336753641e8b7d27} 
+void {\bfseries set\+Easy\+Input} ()
+\item 
+\Hypertarget{class_keyboard_ac9c3a7fe2aca2c099a919c601703ec30}\label{class_keyboard_ac9c3a7fe2aca2c099a919c601703ec30} 
+void {\bfseries setup\+Sounds} ()
+\item 
+\Hypertarget{class_keyboard_ac9f9e6a677181314afb5a99ff21ac65a}\label{class_keyboard_ac9f9e6a677181314afb5a99ff21ac65a} 
+void {\bfseries render} (sf::\+\+Render\+Window \&t\+\_\+window)
+\item 
+\Hypertarget{class_keyboard_a9377ad7135cb3fb11429f9ad5cd21093}\label{class_keyboard_a9377ad7135cb3fb11429f9ad5cd21093} 
+void {\bfseries handle\+Click} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_keyboard_a09a1407e9482031524f55d20147ee85b}\label{class_keyboard_a09a1407e9482031524f55d20147ee85b} 
+void {\bfseries handle\+Release} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_keyboard_a390de9100a03004bf3c902f2394f547e}\label{class_keyboard_a390de9100a03004bf3c902f2394f547e} 
+void {\bfseries note\+On} (const std::\+string \&t\+\_\+note\+Name)
+\item 
+\Hypertarget{class_keyboard_a8690e2757f71d2578670fa8b5ad7ca7a}\label{class_keyboard_a8690e2757f71d2578670fa8b5ad7ca7a} 
+void {\bfseries note\+Off} (const std::\+string \&t\+\_\+note\+Name)
+\item 
+\Hypertarget{class_keyboard_a7be2a8939ed79d9128da55b7ecec217e}\label{class_keyboard_a7be2a8939ed79d9128da55b7ecec217e} 
+void {\bfseries reset\+All\+Keys} ()
+\item 
+\Hypertarget{class_keyboard_adb195b7b13a94a484900a7f6d0b82769}\label{class_keyboard_adb195b7b13a94a484900a7f6d0b82769} 
+void {\bfseries setup\+White\+Key} (int t\+\_\+white\+Index, std::\+string t\+\_\+note\+Letter, int t\+\_\+octave)
+\item 
+\Hypertarget{class_keyboard_ae196420a2e6499f12e5ac13e3bfecd7f}\label{class_keyboard_ae196420a2e6499f12e5ac13e3bfecd7f} 
+void {\bfseries setup\+Black\+Key} (int t\+\_\+white\+Index, std::\+string t\+\_\+note\+Letter, int t\+\_\+octave)
+\item 
+\Hypertarget{class_keyboard_ac1ac096b28567dd805e385e1574acca4}\label{class_keyboard_ac1ac096b28567dd805e385e1574acca4} 
+void {\bfseries key\+Turn\+On} (int t\+\_\+index)
+\item 
+\Hypertarget{class_keyboard_a11efeed5459032d3a5f7a60c6ebb3e59}\label{class_keyboard_a11efeed5459032d3a5f7a60c6ebb3e59} 
+void {\bfseries key\+Turn\+Off} (int t\+\_\+index)
+\item 
+\Hypertarget{class_keyboard_a1e7e75064a30f46f09ce9e9f8405e952}\label{class_keyboard_a1e7e75064a30f46f09ce9e9f8405e952} 
+bool {\bfseries check\+If\+Key\+Clicked} (sf::\+\+Vector2f t\+\_\+mouse\+Pos, \doxymbox{\hyperlink{struct_key}{Key}} \&t\+\_\+key)
+\item 
+\Hypertarget{class_keyboard_a2779f178e0e3e43b844833d5825ff4c8}\label{class_keyboard_a2779f178e0e3e43b844833d5825ff4c8} 
+bool {\bfseries check\+Input\+Collision} (sf::\+\+Rectangle\+Shape \&t\+\_\+note\+Shape)
+\item 
+\Hypertarget{class_keyboard_abb0e3892e15430612b9382c679d5610d}\label{class_keyboard_abb0e3892e15430612b9382c679d5610d} 
+bool {\bfseries check\+Sound\+Collision} (sf::\+\+Rectangle\+Shape \&t\+\_\+note\+Shape)
+\item 
+\Hypertarget{class_keyboard_a5d6cf35b68d63e6f751c4df7ae55b416}\label{class_keyboard_a5d6cf35b68d63e6f751c4df7ae55b416} 
+float {\bfseries get\+Key\+PosX} (std::\+string \&t\+\_\+note\+Name)
+\item 
+\Hypertarget{class_keyboard_ab4c1a1339e3e61ad2f4d107a2f5337c3}\label{class_keyboard_ab4c1a1339e3e61ad2f4d107a2f5337c3} 
+float {\bfseries get\+Kill\+TriggerY} ()
+\item 
+\Hypertarget{class_keyboard_a1926b69978e4e83cdd17b008cfaa47ff}\label{class_keyboard_a1926b69978e4e83cdd17b008cfaa47ff} 
+float {\bfseries get\+Sound\+Note\+TriggerY} ()
+\item 
+\Hypertarget{class_keyboard_acfc938e9793fe640c10e6ed4a2c24418}\label{class_keyboard_acfc938e9793fe640c10e6ed4a2c24418} 
+int {\bfseries get\+Score} ()
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+jakef/\+\+Desktop/\+\+College/\+\+Project/\+4th\+\_\+year\+\_\+final\+\_\+project/\+\+Beat\+Breaker/\+Keyboard.\+h\item 
+C:\+/\+\+Users/\+jakef/\+\+Desktop/\+\+College/\+\+Project/\+4th\+\_\+year\+\_\+final\+\_\+project/\+\+Beat\+Breaker/\+Keyboard.\+cpp\end{DoxyCompactItemize}

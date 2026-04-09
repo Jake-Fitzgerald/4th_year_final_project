@@ -1,0 +1,113 @@
+\doxysection{Player.\+h}
+\hypertarget{_player_8h_source}{}\label{_player_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Player.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/Player.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <SFML//Graphics/RenderWindow.hpp>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <SFML/Graphics/RectangleShape.hpp>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Globals.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{enum}\ MovingDir}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ LEFT\_MOVE,}
+\DoxyCodeLine{00011\ \ \ \ \ RIGHT\_MOVE}
+\DoxyCodeLine{00012\ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{enum}\ BreakDir}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ LEFT,}
+\DoxyCodeLine{00017\ \ \ \ \ RIGHT,}
+\DoxyCodeLine{00018\ \ \ \ \ UP,}
+\DoxyCodeLine{00019\ \ \ \ \ DOWN}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{enum}\ States}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ Idle,}
+\DoxyCodeLine{00025\ \ \ \ \ Walk,}
+\DoxyCodeLine{00026\ \ \ \ \ Fall,}
+\DoxyCodeLine{00027\ \ \ \ \ Break,}
+\DoxyCodeLine{00028\ \ \ \ \ Jump,}
+\DoxyCodeLine{00029\ \ \ \ \ Death}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }Player}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00035\ \ \ \ \ Player();}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Setup}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ setupPlayer();}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Movement}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ moveLeft(\textcolor{keywordtype}{float}\ t\_deltatime);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ moveRight(\textcolor{keywordtype}{float}\ t\_deltatime);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ revertPosition();}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Pointing}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ pointUp();}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ pointDown();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ Collision}}
+\DoxyCodeLine{00050\ \ \ \ \ sf::FloatRect\ getHitbox()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00051\ \ \ \ \ sf::FloatRect\ getHurtbox()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00052\ \ \ \ \ sf::FloatRect\ getBreakHitbox()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00053\ \ \ \ \ sf::FloatRect\ getGroundHitbox()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ checkCollisionWithShapes(\textcolor{keyword}{const}\ std::vector<sf::RectangleShape>\&\ t\_shapes);}
+\DoxyCodeLine{00055\ \ \ \ \ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Speed}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ increaseSpeed(\textcolor{keywordtype}{float}\ t\_deltatime);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ decreaseSpeed(\textcolor{keywordtype}{float}\ t\_deltatime);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ Breaking}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ breaking(\textcolor{keyword}{const}\ sf::RectangleShape\&\ t\_block);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePlayer(\textcolor{keywordtype}{float}\ t\_deltatime);}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ renderPlayer(sf::RenderWindow\ \&t\_window);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ Setters\ and\ Getters}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ setSpawnPos(sf::Vector2f\ t\_position);}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ getCurrentHP();}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ setCurrentHP(\textcolor{keywordtype}{int}\ t\_hpAmount);}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ getCurrentSpeed();}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ setCurrentSpeed(\textcolor{keywordtype}{int}\ t\_speedAmount);}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Health}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_currentHP;}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_maxHP\ =\ 5;}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ Speed}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_currentMoveSpeed\ =\ 200.0f;}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_maxMoveSpeed\ =\ 200.0f;}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_currentFallSpeed;}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_maxFallSpeed;}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Directions}}
+\DoxyCodeLine{00086\ \ \ \ \ MovingDir\ m\_currentDirection\ =\ MovingDir::LEFT\_MOVE;}
+\DoxyCodeLine{00087\ \ \ \ \ BreakDir\ m\_currentBreakDirection\ =\ BreakDir::DOWN;\ \textcolor{comment}{//\ Face\ down\ on\ game\ start}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ sf::Vector2f\ m\_currentPos;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{bool}\ b\_isGrounded;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ Colliders}}
+\DoxyCodeLine{00094\ \ \ \ \ sf::RectangleShape\ m\_hitbox;}
+\DoxyCodeLine{00095\ \ \ \ \ sf::Vector2f\ m\_hitboxSize\{\ 80.0f,\ 80.0f\ \};}
+\DoxyCodeLine{00096\ \ \ \ \ sf::RectangleShape\ m\_hurtbox;}
+\DoxyCodeLine{00097\ \ \ \ \ sf::Vector2f\ m\_hurtboxSize\{\ 80.0f,\ 10.0f\ \};}
+\DoxyCodeLine{00098\ \ \ \ \ sf::RectangleShape\ m\_breakHitbox;}
+\DoxyCodeLine{00099\ \ \ \ \ sf::Vector2f\ m\_breakHitboxSize\{\ 50.0f,\ 50.0f\ \};}
+\DoxyCodeLine{00100\ \ \ \ \ sf::RectangleShape\ m\_groundHitbox;}
+\DoxyCodeLine{00101\ \ \ \ \ sf::Vector2f\ m\_groundHitboxSize\{\ 80.0f,\ 10.0f\ \};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ sf::Vector2f\ m\_previousPos;}
+\DoxyCodeLine{00104\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ }
+\DoxyCodeLine{00106\ \};}
+\DoxyCodeLine{00107\ }
+
+\end{DoxyCode}

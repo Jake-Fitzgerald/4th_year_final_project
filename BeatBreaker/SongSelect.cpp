@@ -3,7 +3,9 @@
 SongSelect::SongSelect(std::shared_ptr<const sf::Font> font) 
 						: m_font(font),
 						  m_beginText(*font),
-						  m_previewText(*font)
+						  m_previewText(*font),
+						  m_songListFrameText(*font),
+						  m_modeButtonsFrameText(*font)
 {
 	b_isSongChosen = false;
 }
@@ -129,7 +131,7 @@ void SongSelect::setupButtons()
 void SongSelect::setupBeginButton()
 {
 	// Position the Begin button below the last song row
-	float beginY = paddingY + m_pathsCount * m_spacing - 100.0f;
+	float beginY = paddingY + m_pathsCount * m_spacing - 150.0f;
 
 	m_beginButton.setSize(m_playButtonSize);
 	m_beginButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 100.0f});
@@ -152,7 +154,7 @@ void SongSelect::setupBeginButton()
 
 void SongSelect::setupPreviewButton()
 {
-	float beginY = paddingY + m_pathsCount * m_spacing - 100.0f;
+	float beginY = paddingY + m_pathsCount * m_spacing - 160.0f;
 
 	m_previewButton.setSize(m_playButtonSize);
 	m_previewButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 200.0f });
@@ -175,21 +177,51 @@ void SongSelect::setupPreviewButton()
 
 void SongSelect::setupUIFrames()
 {
-	m_songListFrame.setSize(sf::Vector2f{ m_buttonSize.x + 100.0f, m_buttonSize.y + 500.0f });
-	m_songListFrame.setPosition(sf::Vector2f{ m_posX - 25.0f, m_posY - 25.0f });
+	m_songListFrame.setSize(sf::Vector2f{ m_buttonSize.x + 100.0f, m_buttonSize.y + 475.0f });
+	m_songListFrame.setPosition(sf::Vector2f{ m_posX - 20.0f, m_posY - 25.0f });
 	m_songListFrame.setFillColor(c_frameColour);
 	m_songListFrame.setOutlineThickness(2.0f);
 	m_songListFrame.setOutlineColor(sf::Color::Blue);
+	// Text
+	m_songListFrameText.setString("Songs");
+	m_songListFrameText.setPosition(sf::Vector2f{ m_posX, m_posY - 75.0f });
+	m_songListFrameText.setFillColor(sf::Color::Blue);
+	m_songListFrameText.setOutlineColor(sf::Color::Black);
+	m_songListFrameText.setOutlineThickness(2.0f);
+	m_songListFrameText.setCharacterSize(40U);
+	// Frame Text 
+	m_songListTextFrame.setSize(sf::Vector2f{ 150.0f, 50.0f });
+	m_songListTextFrame.setPosition(sf::Vector2f{ m_posX - 20.0f, m_posY - 75.0f });
+	m_songListTextFrame.setFillColor(c_frameColour);
+	m_songListTextFrame.setOutlineThickness(3.0f);
+	m_songListTextFrame.setOutlineColor(sf::Color::Blue);
 
-	m_modeButtonsFrame.setSize(sf::Vector2f{ m_playButtonSize.x + 50.0f, m_playButtonSize.y + 150.0f });
+
+
+	m_modeButtonsFrame.setSize(sf::Vector2f{ m_playButtonSize.x + 50.0f, m_playButtonSize.y + 135.0f });
 	m_modeButtonsFrame.setPosition(sf::Vector2f{ m_beginButton.getPosition().x - 25.0f, m_beginButton.getPosition().y - 25.0f });
 	m_modeButtonsFrame.setFillColor(c_frameColour);
 	m_modeButtonsFrame.setOutlineThickness(2.0f);
 	m_modeButtonsFrame.setOutlineColor(sf::Color::Green);
+	// Text
+	m_modeButtonsFrameText.setString("Modes");
+	m_modeButtonsFrameText.setPosition(sf::Vector2f{ m_beginButton.getPosition().x, m_beginButton.getPosition().y - 75.0f });
+	m_modeButtonsFrameText.setFillColor(sf::Color::Green);
+	m_modeButtonsFrameText.setOutlineColor(sf::Color::Black);
+	m_modeButtonsFrameText.setOutlineThickness(2.0f);
+	m_modeButtonsFrameText.setCharacterSize(40U);
+	// Frame Text 
+	m_modeButtonsTextFrame.setSize(sf::Vector2f{ 150.0f, 50.0f });
+	m_modeButtonsTextFrame.setPosition(sf::Vector2f{ m_beginButton.getPosition().x - 25.0f, m_beginButton.getPosition().y - 75.0f });
+	m_modeButtonsTextFrame.setFillColor(c_frameColour);
+	m_modeButtonsTextFrame.setOutlineThickness(3.0f);
+	m_modeButtonsTextFrame.setOutlineColor(sf::Color::Green);
 }
 
 void SongSelect::render(sf::RenderWindow& t_window)
 {
+	t_window.draw(m_songListTextFrame);
+	t_window.draw(m_modeButtonsTextFrame);
 	t_window.draw(m_songListFrame);
 	t_window.draw(m_modeButtonsFrame);
 
@@ -208,8 +240,9 @@ void SongSelect::render(sf::RenderWindow& t_window)
 	t_window.draw(m_beginText);
 	t_window.draw(m_previewButton);
 	t_window.draw(m_previewText);
+	t_window.draw(m_songListFrameText);
+	t_window.draw(m_modeButtonsFrameText);
 }
-
 
 SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 {

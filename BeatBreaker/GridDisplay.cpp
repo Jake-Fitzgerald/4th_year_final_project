@@ -20,7 +20,6 @@ void GridDisplay::setupGrid()
     float startY = (SCREEN_HEIGHT - gridHeight) / 2.0f; //10
 
 
-
     // Vertical lines
     for (int i = 0; i <= columns; ++i)
     {
@@ -41,7 +40,7 @@ void GridDisplay::setupGrid()
         m_lineShapesHorizontal.push_back(line);
     }
 
-    b_isGridVisible = true;
+    b_isGridVisible = false;
 
     setupSprites();
 }

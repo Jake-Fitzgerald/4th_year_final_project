@@ -30,12 +30,14 @@ public:
 	void setupButtons();
 	void setSongName(std::string t_name);
 	
-	void setScore(int t_score);
 	void updateScore();
 	void updatePBScore();
 
 	void saveScore();
 	void setRecordedNotes(std::vector<MidiNote> t_notes);
+
+	void setupStatisticText();
+	void setSessionStats(SessionStats& t_stats);
 
 	void handleEvent(sf::Event& t_event);
 	void update(float t_deltatime);
@@ -65,10 +67,13 @@ private:
 	// UI
 	sf::RectangleShape m_scoreUIFrame;
 	sf::RectangleShape m_statisticUIFrame;
-	sf::Vector2f m_frameSize{ 300.0f, 400.0f };
+	sf::RectangleShape m_statisticFrameBorder;
+	sf::Vector2f m_frameScoreSize{ 300.0f, 400.0f };
+	sf::Vector2f m_frameStatsSize{ 500.0f, 400.0f };
 	sf::Vector2f m_frameTextSize{ 200.0f, 50.0f };
 	sf::Color c_scoreFrameColour = sf::Color(50, 200, 150, 100);
 	sf::Color c_statisticFrameColour = sf::Color(100, 100, 250, 100);
+	sf::Color c_statisticBorderColour = sf::Color(40, 40, 40, 170);
 
 	// Fields
 	sf::Vector2f m_serverFieldPos{ paddingX, paddingY + 525.0f };
@@ -91,6 +96,35 @@ private:
 	sf::Text m_saveMidiButtonText;
 	sf::RectangleShape m_saveServerButton;
 	sf::Text m_saveServerButtonText;
+
+	// Statistics
+	int m_earlyNotes = 0;
+	int m_perfectNotes = 0;
+	int m_lateNotes = 0;
+	int m_missedNotes = 0;
+	int m_wrongNotes = 0;
+
+	int m_noteCountTotal = 0;
+	int m_currentNotesHit = 0;
+
+	// Statistic Text
+	sf::Text m_missedNotesText;
+	sf::Text m_missedNotesValueText;
+	sf::Text m_earlyNotesText;
+	sf::Text m_earlyNotesValueText;
+	sf::Text m_perfectNotesText;
+	sf::Text m_perfectNotesValueText;
+	sf::Text m_lateNotesText;
+	sf::Text m_lateNotesValueText;
+	sf::Text m_wrongNotesText;
+	sf::Text m_wrongNotesValueText;
+
+	sf::Text m_hitpercentageText;
+	sf::Text m_hitpercentageValueText;
+	sf::Text m_hitNotesText;
+	sf::Text m_hitNotesValueText;
+	sf::Text m_anpsText; // Average Notes per second
+	sf::Text m_anpsValueText;
 
 };
 

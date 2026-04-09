@@ -1,0 +1,71 @@
+\doxysection{HUD Class Reference}
+\hypertarget{class_h_u_d}{}\label{class_h_u_d}\index{HUD@{HUD}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_h_u_d_a7f6eddcd4177b4d25b730271b0cef403}\label{class_h_u_d_a7f6eddcd4177b4d25b730271b0cef403} 
+{\bfseries HUD} (const sf::\+\+Font \&font)
+\item 
+\Hypertarget{class_h_u_d_a91620cdcd11e452de25ce41a5f652961}\label{class_h_u_d_a91620cdcd11e452de25ce41a5f652961} 
+void {\bfseries setup\+Beat\+Markers} ()
+\item 
+\Hypertarget{class_h_u_d_a1dd544385f4692fadbe7dbf8437b19c3}\label{class_h_u_d_a1dd544385f4692fadbe7dbf8437b19c3} 
+void {\bfseries setup\+Button\+Sprites} ()
+\item 
+\Hypertarget{class_h_u_d_a6660c264ae4c2cacb13072b7f681504b}\label{class_h_u_d_a6660c264ae4c2cacb13072b7f681504b} 
+void {\bfseries update\+FPSText} (float \&t\+\_\+fps\+Number)
+\item 
+\Hypertarget{class_h_u_d_a47f6081f609900853097d40b08deeb2f}\label{class_h_u_d_a47f6081f609900853097d40b08deeb2f} 
+void {\bfseries set\+FPSBool} ()
+\item 
+\Hypertarget{class_h_u_d_a7f355f82a91121758d07af7da2c1aaef}\label{class_h_u_d_a7f355f82a91121758d07af7da2c1aaef} 
+bool {\bfseries get\+FPSBool} ()
+\item 
+\Hypertarget{class_h_u_d_a455af09852a7a523caf275337d8c02c7}\label{class_h_u_d_a455af09852a7a523caf275337d8c02c7} 
+void {\bfseries draw\+HUD} (sf::\+\+Render\+Window \&t\+\_\+window)
+\item 
+\Hypertarget{class_h_u_d_ac4d1992ac1fbf1c9aba3b0c9f69385df}\label{class_h_u_d_ac4d1992ac1fbf1c9aba3b0c9f69385df} 
+void {\bfseries load\+Midi\+Data} (const std::\+vector$<$ \doxymbox{\hyperlink{struct_midi_track}{Midi\+Track}} $>$ \&t\+\_\+tracks, std::\+string t\+\_\+time\+Sig, double t\+\_\+bpm, std::\+string t\+\_\+midi\+File\+Name, int t\+\_\+nom, int t\+\_\+denom)
+\item 
+\Hypertarget{class_h_u_d_aea7d9f1ff340e7fe02cc33b0f853e00d}\label{class_h_u_d_aea7d9f1ff340e7fe02cc33b0f853e00d} 
+void {\bfseries update\+Midi\+Info} ()
+\item 
+\Hypertarget{class_h_u_d_a29dcdca507eb3430eefc2b5153150d0d}\label{class_h_u_d_a29dcdca507eb3430eefc2b5153150d0d} 
+std::\+string {\bfseries remove\+Path\+Data} (std::\+string t\+\_\+midi\+Path\+Name)
+\item 
+\Hypertarget{class_h_u_d_a0d5a82e47b778fc5e772422f5177c65e}\label{class_h_u_d_a0d5a82e47b778fc5e772422f5177c65e} 
+void {\bfseries mouse\+Click} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_h_u_d_a571c9f98ffd292fd4bee19ead5a93a7f}\label{class_h_u_d_a571c9f98ffd292fd4bee19ead5a93a7f} 
+bool {\bfseries return\+Click} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_h_u_d_a29d3a0ed43d8ca5c65fd2a60c0da64b8}\label{class_h_u_d_a29d3a0ed43d8ca5c65fd2a60c0da64b8} 
+bool {\bfseries play\+Click} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_h_u_d_a2c51ffa6347844761e854ce5255409b8}\label{class_h_u_d_a2c51ffa6347844761e854ce5255409b8} 
+bool {\bfseries pause\+Click} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_h_u_d_a8ed5ebe7419744887f19fa0e779dfd36}\label{class_h_u_d_a8ed5ebe7419744887f19fa0e779dfd36} 
+bool {\bfseries stop\+Click} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_h_u_d_ad5bf3ac08a41e47fbed4839e2ab0add0}\label{class_h_u_d_ad5bf3ac08a41e47fbed4839e2ab0add0} 
+bool {\bfseries skip\+To\+Start} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_h_u_d_afd8e98679e4c21d3bb47ea47bd8da10f}\label{class_h_u_d_afd8e98679e4c21d3bb47ea47bd8da10f} 
+bool {\bfseries skip\+To\+End} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_h_u_d_a7313f917582b3f6e2e7477f12fd647a5}\label{class_h_u_d_a7313f917582b3f6e2e7477f12fd647a5} 
+bool {\bfseries mute\+Click} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_h_u_d_ac35c9d8a4621797745128c4fa40e2caa}\label{class_h_u_d_ac35c9d8a4621797745128c4fa40e2caa} 
+bool {\bfseries check\+If\+Area\+Clicked} (sf::\+\+Vector2f t\+\_\+mouse\+Pos, sf::\+\+Vector2f t\+\_\+top\+Left, sf::\+\+Vector2f t\+\_\+size)
+\item 
+\Hypertarget{class_h_u_d_aa5779f4b4aaf457d36a83a7847e623fd}\label{class_h_u_d_aa5779f4b4aaf457d36a83a7847e623fd} 
+void {\bfseries update\+Midi\+Keyboard\+Connnection} (bool t\+\_\+connect\+Status)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+jakef/\+\+Desktop/\+\+College/\+\+Project/\+4th\+\_\+year\+\_\+final\+\_\+project/\+\+Beat\+Breaker/\+HUD.\+h\item 
+C:\+/\+\+Users/\+jakef/\+\+Desktop/\+\+College/\+\+Project/\+4th\+\_\+year\+\_\+final\+\_\+project/\+\+Beat\+Breaker/\+HUD.\+cpp\end{DoxyCompactItemize}

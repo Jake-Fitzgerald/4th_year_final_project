@@ -138,7 +138,11 @@ private:
 
 	// UI Background Frames
 	sf::RectangleShape m_songListFrame;
+	sf::RectangleShape m_songListTextFrame;
+	sf::Text m_songListFrameText;
 	sf::RectangleShape m_modeButtonsFrame;
+	sf::RectangleShape m_modeButtonsTextFrame;
+	sf::Text m_modeButtonsFrameText;
 	sf::Color c_frameColour = sf::Color(100, 100, 100, 100);
 };
 

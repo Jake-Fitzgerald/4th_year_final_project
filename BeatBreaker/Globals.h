@@ -27,6 +27,19 @@ struct USERDATA
 	int score = -1;
 };
 
+// Gameplay / Results
+struct SessionStats
+{
+    int m_score = 0;
+    int m_earlyNotes = 0;
+    int m_perfectNotes = 0;
+    int m_lateNotes = 0;
+    int m_missedNotes = 0;
+    int m_wrongNotes = 0;
+    int m_noteCountTotal = 0;
+    int m_currentNotesHit = 0;
+};
+
 //std::string ODBCString = "Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
 
 

@@ -84,7 +84,7 @@ public:
     void resetScore();
     void resetStatistics();
     int getScore();
-    int getStatistic();
+    SessionStats getSessionStats();
 
     void render(sf::RenderWindow& t_window);
 
@@ -191,7 +191,6 @@ private:
 
     int m_noteCountTotal = 0;
     int m_currentNotesHit = 0;
-
 
     // Statistic Text
     sf::Text m_missedNotesText;

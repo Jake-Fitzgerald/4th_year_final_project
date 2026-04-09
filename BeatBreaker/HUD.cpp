@@ -4,6 +4,7 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 								 m_midiFileNameText(font),
 								 m_midiTimeSigText(font),
 								 m_midiBPMText(font),
+								 m_returnText(font),
 								 m_playButtonSprite(m_playButtonTexture),
 								 m_pauseButtonSprite(m_pauseButtonTexture),
 								 m_skipEndButtonSprite(m_skipEndButtonTexture),
@@ -44,6 +45,13 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 	m_midiBPMText.setOutlineThickness(2.0f);
 	m_midiBPMText.setCharacterSize(20U);
 	m_midiBPMText.setString("BPM: ");
+	// Return Text
+	m_returnText.setPosition(sf::Vector2f{ buttonsLeftPos.x + 430.0f, buttonsLeftPos.y + 15.0f});
+	m_returnText.setFillColor(sf::Color::White);
+	m_returnText.setOutlineColor(sf::Color::Black);
+	m_returnText.setOutlineThickness(2.0f);
+	m_returnText.setCharacterSize(16U);
+	m_returnText.setString("RETURN");
 	
 	// UI Polish
 	m_bottomBorderBar.setPosition(m_midiTextPos);
@@ -51,6 +59,18 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 	m_bottomBorderBar.setOutlineColor(sf::Color::Black);
 	m_bottomBorderBar.setOutlineThickness(2.0f);
 	m_bottomBorderBar.setSize(sf::Vector2f{ 800.0f, 25.0f });
+	
+	m_keyboardStatus.setPosition(sf::Vector2f{ m_midiTextPos.x + 900.0f, m_midiTextPos.y });
+	m_keyboardStatus.setFillColor(sf::Color(75, 75, 75, 150));
+	m_keyboardStatus.setOutlineColor(sf::Color::Black);
+	m_keyboardStatus.setOutlineThickness(2.0f);
+	m_keyboardStatus.setSize(sf::Vector2f{ 150.0f, 25.0f }); //
+
+	m_HUDBorder.setPosition(sf::Vector2f{ 13.0f , m_midiTextPos.y - 65.0f});
+	m_HUDBorder.setFillColor(sf::Color(50, 50, 50, 50));
+	m_HUDBorder.setOutlineColor(sf::Color::Black);
+	m_HUDBorder.setOutlineThickness(2.0f);
+	m_HUDBorder.setSize(sf::Vector2f{ SCREEN_WIDTH - 30.0f, 95.0f });
 
 	// Beat Markers
 	setupBeatMarkers();
@@ -120,15 +140,15 @@ void HUD::setupButtonSprites()
 	m_pauseButtonSprite.setScale(sf::Vector2f(1.0f, 1.0f));
 	m_pauseButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 50.0f, buttonsLeftPos.y });
 
-	// Skip to End Button
-	if (!m_skipEndButtonTexture.loadFromFile("ASSETS\\IMAGES\\UI\\button_skip_to_end.png"))
-	{
-		// simple error message if previous call fails
-		std::cout << "problem loading skip to end button" << std::endl;
-	}
-	m_skipEndButtonSprite.setTexture(m_skipEndButtonTexture, true);
-	m_skipEndButtonSprite.setScale(sf::Vector2f(1.0f, 1.0f));
-	m_skipEndButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 100.0f, buttonsLeftPos.y });
+	//// Skip to End Button
+	//if (!m_skipEndButtonTexture.loadFromFile("ASSETS\\IMAGES\\UI\\button_skip_to_end.png"))
+	//{
+	//	// simple error message if previous call fails
+	//	std::cout << "problem loading skip to end button" << std::endl;
+	//}
+	//m_skipEndButtonSprite.setTexture(m_skipEndButtonTexture, true);
+	//m_skipEndButtonSprite.setScale(sf::Vector2f(1.0f, 1.0f));
+	//m_skipEndButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 100.0f, buttonsLeftPos.y });
 
 	// Skip to Start Button
 	if (!m_skipStartButtonTexture.loadFromFile("ASSETS\\IMAGES\\UI\\button_skip_to_start.png"))
@@ -138,7 +158,7 @@ void HUD::setupButtonSprites()
 	}
 	m_skipStartButtonSprite.setTexture(m_skipStartButtonTexture, true);
 	m_skipStartButtonSprite.setScale(sf::Vector2f(1.0f, 1.0f));
-	m_skipStartButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 150.0f, buttonsLeftPos.y });
+	m_skipStartButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 100.0f, buttonsLeftPos.y });
 
 	// Stop Button
 	if (!m_stopButtonTexture.loadFromFile("ASSETS\\IMAGES\\UI\\button_stop.png"))
@@ -148,7 +168,7 @@ void HUD::setupButtonSprites()
 	}
 	m_stopButtonSprite.setTexture(m_stopButtonTexture, true);
 	m_stopButtonSprite.setScale(sf::Vector2f(1.0f, 1.0f));
-	m_stopButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 200.0f, buttonsLeftPos.y });
+	m_stopButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 150.0f, buttonsLeftPos.y });
 
 	// Mute Button
 	if (!m_muteButtonTexture.loadFromFile("ASSETS\\IMAGES\\UI\\button_audio_on.png"))
@@ -158,7 +178,7 @@ void HUD::setupButtonSprites()
 	}
 	m_muteButtonSprite.setTexture(m_muteButtonTexture, true);
 	m_muteButtonSprite.setScale(sf::Vector2f(1.0f, 1.0f));
-	m_muteButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 250.0f, buttonsLeftPos.y });
+	m_muteButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 200.0f, buttonsLeftPos.y });
 
 	// Unmute Button
 	if (!m_unmuteButtonTexture.loadFromFile("ASSETS\\IMAGES\\UI\\button_audio_off.png"))
@@ -168,7 +188,7 @@ void HUD::setupButtonSprites()
 	}
 	m_unmuteButtonSprite.setTexture(m_unmuteButtonTexture, true);
 	m_unmuteButtonSprite.setScale(sf::Vector2f(1.0f, 1.0f));
-	m_unmuteButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 300.0f, buttonsLeftPos.y });
+	m_unmuteButtonSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 250.0f, buttonsLeftPos.y });
 
 	// Return Button
 	if (!m_returnTexture.loadFromFile("ASSETS\\IMAGES\\UI\\Return_Button.png"))
@@ -178,8 +198,8 @@ void HUD::setupButtonSprites()
 	}
 
 	m_returnSprite.setTexture(m_returnTexture, true);
-	m_returnSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 400.0f, buttonsLeftPos.y });
-	m_returnSprite.setScale(sf::Vector2f{ 0.5, 0.5 });
+	m_returnSprite.setPosition(sf::Vector2f{ buttonsLeftPos.x + 400.0f, buttonsLeftPos.y - 18.0f });
+	m_returnSprite.setScale(sf::Vector2f{ 0.7, 0.7 });
 }
 
 void HUD::updateFPSText(float & t_fpsNumber)
@@ -212,40 +232,31 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 		t_window.draw(m_fpsText);
 	}
 
+	// UI Polish  
+	t_window.draw(m_HUDBorder);
+	t_window.draw(m_bottomBorderBar);
+	t_window.draw(m_keyboardStatus);
+
 	// Buttons
 	t_window.draw(m_playButtonSprite);
 	t_window.draw(m_pauseButtonSprite);
-	t_window.draw(m_skipEndButtonSprite);
+	//t_window.draw(m_skipEndButtonSprite);
 	t_window.draw(m_skipStartButtonSprite);
 	t_window.draw(m_stopButtonSprite);
 	t_window.draw(m_muteButtonSprite);
 	t_window.draw(m_unmuteButtonSprite);
 	t_window.draw(m_returnSprite);
 	
-	// Beat Markers
-	/*
-	for (int i = 0; i < m_beatMarkersLeft.size(); i++)
-	{
-		t_window.draw(m_beatMarkersLeft[i]);
-	}
-	for (int i = 0; i < m_beatMarkersRight.size(); i++)
-	{
-		t_window.draw(m_beatMarkersRight[i]);
-	}
-	t_window.draw(m_beatMarkerWholeNote);
-	*/
-	for (int i = 0; i < m_beatMarkers.size(); i++)
-	{
-		t_window.draw(m_beatMarkers[i]);
-	}
+	//for (int i = 0; i < m_beatMarkers.size(); i++)
+	//{
+	//	t_window.draw(m_beatMarkers[i]);
+	//}
 
 	// Midi Info
 	t_window.draw(m_midiFileNameText);
 	t_window.draw(m_midiTimeSigText);
 	t_window.draw(m_midiBPMText);
-
-	// UI Polish
-	t_window.draw(m_bottomBorderBar);
+	t_window.draw(m_returnText);
 
 	// Midi Keyboard
 	t_window.draw(m_midiKeyboardText);
@@ -322,24 +333,7 @@ std::string HUD::removePathData(std::string t_midiPathName)
 
 void HUD::mouseClick(sf::Vector2f t_mousePos)
 {
-	//for (auto& button : m_buttons)
-	//{
-	//	// Reset colours if you click again
-	//	button.m_buttonShape.setFillColor(sf::Color::Blue);
 
-
-	//	sf::Vector2f topLeft = button.m_buttonShape.getPosition();
-	//	sf::Vector2f size = button.m_buttonShape.getSize();
-
-	//	if (checkIfAreaClicked(t_mousePos, topLeft, size) == true)
-	//	{
-	//		m_selectedPath = button.midiPath;
-	//		std::cerr << "Selected Path is: " << m_selectedPath << std::endl;
-
-	//		// Turn it red to show it has been clicked
-	//		button.m_buttonShape.setFillColor(sf::Color::Red);
-	//	}
-	//}
 }
 
 bool HUD::returnClick(sf::Vector2f t_mousePos)

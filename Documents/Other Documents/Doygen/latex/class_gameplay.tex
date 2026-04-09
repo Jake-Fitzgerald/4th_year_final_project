@@ -1,0 +1,132 @@
+\doxysection{Gameplay Class Reference}
+\hypertarget{class_gameplay}{}\label{class_gameplay}\index{Gameplay@{Gameplay}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_gameplay_a00b95d2d582a2eb2d5d812ae628ffaf2}\label{class_gameplay_a00b95d2d582a2eb2d5d812ae628ffaf2} 
+{\bfseries Gameplay} (\doxymbox{\hyperlink{class_sound_manager}{Sound\+Manager}} \&t\+\_\+sound\+Manager, std::\+shared\+\_\+ptr$<$ const sf::\+\+Font $>$ font)
+\item 
+\Hypertarget{class_gameplay_aa81b74444184da8cf47b2bfa47059662}\label{class_gameplay_aa81b74444184da8cf47b2bfa47059662} 
+void {\bfseries setup} ()
+\item 
+\Hypertarget{class_gameplay_a9bca993a8aab4e32568d57c880d52bab}\label{class_gameplay_a9bca993a8aab4e32568d57c880d52bab} 
+void {\bfseries setup\+Keyboard} ()
+\item 
+\Hypertarget{class_gameplay_a09837294ec7bcf6cd9cd83df46b9778b}\label{class_gameplay_a09837294ec7bcf6cd9cd83df46b9778b} 
+void {\bfseries setup\+UIFrames} ()
+\item 
+\Hypertarget{class_gameplay_a5f2a227bbf1d3966d0b1b2d5e9903152}\label{class_gameplay_a5f2a227bbf1d3966d0b1b2d5e9903152} 
+void {\bfseries setup\+Playback\+Text} ()
+\item 
+\Hypertarget{class_gameplay_a272a88998374a582a889758ae37526c7}\label{class_gameplay_a272a88998374a582a889758ae37526c7} 
+void {\bfseries setup\+Score\+Text} ()
+\item 
+\Hypertarget{class_gameplay_adfedae1d77e6259f6fe6e9cd1e19a210}\label{class_gameplay_adfedae1d77e6259f6fe6e9cd1e19a210} 
+void {\bfseries setup\+Statistic\+Text} ()
+\item 
+\Hypertarget{class_gameplay_adaa58362b24a34c7f644a83cf221719d}\label{class_gameplay_adaa58362b24a34c7f644a83cf221719d} 
+void {\bfseries setup\+Statistics} ()
+\item 
+\Hypertarget{class_gameplay_aa487b8f1286b8ca68257a1d7f4bd6b30}\label{class_gameplay_aa487b8f1286b8ca68257a1d7f4bd6b30} 
+void {\bfseries update} (float t\+\_\+delta\+Time)
+\item 
+\Hypertarget{class_gameplay_a9820103e7788657d1763585391bc6121}\label{class_gameplay_a9820103e7788657d1763585391bc6121} 
+void {\bfseries update\+Score} ()
+\item 
+\Hypertarget{class_gameplay_a661a021543332e1cb526e1e682aaa420}\label{class_gameplay_a661a021543332e1cb526e1e682aaa420} 
+void {\bfseries update\+Statistics} ()
+\item 
+\Hypertarget{class_gameplay_aab4933133ad4d86f1e967348c73748a4}\label{class_gameplay_aab4933133ad4d86f1e967348c73748a4} 
+void {\bfseries reset\+Session} ()
+\item 
+\Hypertarget{class_gameplay_a03c1e084c8a91199abdb8d08d87ffc49}\label{class_gameplay_a03c1e084c8a91199abdb8d08d87ffc49} 
+void {\bfseries reset\+Score} ()
+\item 
+\Hypertarget{class_gameplay_abae75a884bf32a28ec72c7a2a722257e}\label{class_gameplay_abae75a884bf32a28ec72c7a2a722257e} 
+void {\bfseries reset\+Statistics} ()
+\item 
+\Hypertarget{class_gameplay_a3bddee9348d4a99d308523d8613f74be}\label{class_gameplay_a3bddee9348d4a99d308523d8613f74be} 
+int {\bfseries get\+Score} ()
+\item 
+\Hypertarget{class_gameplay_a784c643949523ae57f653ef7cfdadd6a}\label{class_gameplay_a784c643949523ae57f653ef7cfdadd6a} 
+int {\bfseries get\+Statistic} ()
+\item 
+\Hypertarget{class_gameplay_a00a815c3b7352357c2f844f19087ebac}\label{class_gameplay_a00a815c3b7352357c2f844f19087ebac} 
+void {\bfseries render} (sf::\+\+Render\+Window \&t\+\_\+window)
+\item 
+\Hypertarget{class_gameplay_af3e543e232ab9d9e8515bf1ce7af63d8}\label{class_gameplay_af3e543e232ab9d9e8515bf1ce7af63d8} 
+void {\bfseries handle\+Click} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_gameplay_a34a242664816abec9ff06170b4704da8}\label{class_gameplay_a34a242664816abec9ff06170b4704da8} 
+void {\bfseries handle\+Release} (sf::\+\+Vector2f t\+\_\+mouse\+Pos)
+\item 
+\Hypertarget{class_gameplay_ad00acd7c1b2f6c89a5bf1ca88c424662}\label{class_gameplay_ad00acd7c1b2f6c89a5bf1ca88c424662} 
+void {\bfseries note\+On} (std::\+string \&t\+\_\+note\+Name, int t\+\_\+pitch, int t\+\_\+velocity)
+\item 
+\Hypertarget{class_gameplay_aed0a3510456cefa609562040111ea631}\label{class_gameplay_aed0a3510456cefa609562040111ea631} 
+void {\bfseries note\+Off} (std::\+string \&t\+\_\+note\+Name, int t\+\_\+pitch, int t\+\_\+velocity)
+\item 
+void \doxymbox{\hyperlink{class_gameplay_a6fb1c275572539cb1099d1cd977c180d}{load\+Track}} (\doxymbox{\hyperlink{struct_midi_track}{Midi\+Track}} \&t\+\_\+track, double t\+\_\+\+BPM)
+\item 
+\Hypertarget{class_gameplay_a5a976710be0eeec94449cd50279ecafb}\label{class_gameplay_a5a976710be0eeec94449cd50279ecafb} 
+void {\bfseries spawn\+Note} (\doxymbox{\hyperlink{struct_midi_note}{Midi\+Note}} \&t\+\_\+note)
+\item 
+\Hypertarget{class_gameplay_ac01607723dba598f9a78262f7527d0ea}\label{class_gameplay_ac01607723dba598f9a78262f7527d0ea} 
+void {\bfseries start\+Song} ()
+\item 
+\Hypertarget{class_gameplay_a9f1709543673e5c3d7582cee9cd0d021}\label{class_gameplay_a9f1709543673e5c3d7582cee9cd0d021} 
+void {\bfseries toggle\+Pause} ()
+\item 
+\Hypertarget{class_gameplay_a56674096f50bc0f9fd06ba53f1314aa7}\label{class_gameplay_a56674096f50bc0f9fd06ba53f1314aa7} 
+bool {\bfseries get\+Paused\+Flag} ()
+\item 
+\Hypertarget{class_gameplay_a52b9c41a99db7e6f23edf9bf87bb3220}\label{class_gameplay_a52b9c41a99db7e6f23edf9bf87bb3220} 
+void {\bfseries set\+Practice\+Mode\+Flag} (bool t\+\_\+bool)
+\item 
+\Hypertarget{class_gameplay_a990b954b58cdaf4e31f5ef980b13d20d}\label{class_gameplay_a990b954b58cdaf4e31f5ef980b13d20d} 
+bool {\bfseries get\+Practice\+Mode\+Flag} ()
+\item 
+\Hypertarget{class_gameplay_a5bf403b706a72805d50a5aa7e0d4d62f}\label{class_gameplay_a5bf403b706a72805d50a5aa7e0d4d62f} 
+void {\bfseries set\+Recording\+Flag} (bool t\+\_\+bool)
+\item 
+\Hypertarget{class_gameplay_a20110ee7a42b5b041cbc425d070b7d98}\label{class_gameplay_a20110ee7a42b5b041cbc425d070b7d98} 
+bool {\bfseries get\+Recording\+Flag} ()
+\item 
+\Hypertarget{class_gameplay_aca443e016fab927441b1df47d56dbf67}\label{class_gameplay_aca443e016fab927441b1df47d56dbf67} 
+bool {\bfseries get\+Note\+On\+Collider\+Flag} ()
+\item 
+\Hypertarget{class_gameplay_a287c4b887746b7c0efb8af90020b39eb}\label{class_gameplay_a287c4b887746b7c0efb8af90020b39eb} 
+void {\bfseries set\+Note\+On\+Collider\+Flag} (bool t\+\_\+bool)
+\item 
+\Hypertarget{class_gameplay_ad78dde195e8ad6087b206edbb485f83d}\label{class_gameplay_ad78dde195e8ad6087b206edbb485f83d} 
+bool {\bfseries get\+Easy\+Input\+Flag} ()
+\item 
+\Hypertarget{class_gameplay_a8423c7dfc209cb3f8148f321f7acdc59}\label{class_gameplay_a8423c7dfc209cb3f8148f321f7acdc59} 
+void {\bfseries set\+Easy\+Input\+Flag} (bool t\+\_\+bool)
+\item 
+\Hypertarget{class_gameplay_a64edc2a35dc2a7b2e5f409808ee78312}\label{class_gameplay_a64edc2a35dc2a7b2e5f409808ee78312} 
+bool {\bfseries get\+Trigger\+Display\+Flag} ()
+\item 
+\Hypertarget{class_gameplay_a2ef346064727b687980d8b2f89b36612}\label{class_gameplay_a2ef346064727b687980d8b2f89b36612} 
+void {\bfseries set\+Trigger\+Display\+Flag} (bool t\+\_\+bool)
+\item 
+\Hypertarget{class_gameplay_a7237c9e8e3ca261bd1bd86940b83c41e}\label{class_gameplay_a7237c9e8e3ca261bd1bd86940b83c41e} 
+bool {\bfseries get\+Song\+Finished\+Flag} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_gameplay_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_gameplay_a6fb1c275572539cb1099d1cd977c180d}\index{Gameplay@{Gameplay}!loadTrack@{loadTrack}}
+\index{loadTrack@{loadTrack}!Gameplay@{Gameplay}}
+\doxysubsubsection{\texorpdfstring{loadTrack()}{loadTrack()}}
+{\footnotesize\ttfamily \label{class_gameplay_a6fb1c275572539cb1099d1cd977c180d} 
+void Gameplay::\+load\+Track (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_midi_track}{Midi\+Track}} \&}]{t\+\_\+track}{, }\item[{double}]{t\+\_\+\+BPM}{}\end{DoxyParamCaption})}
+
+m\+\_\+note\+Speed\+Multiplier
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+jakef/\+\+Desktop/\+\+College/\+\+Project/\+4th\+\_\+year\+\_\+final\+\_\+project/\+\+Beat\+Breaker/\+Gameplay.\+h\item 
+C:\+/\+\+Users/\+jakef/\+\+Desktop/\+\+College/\+\+Project/\+4th\+\_\+year\+\_\+final\+\_\+project/\+\+Beat\+Breaker/\+Gameplay.\+cpp\end{DoxyCompactItemize}

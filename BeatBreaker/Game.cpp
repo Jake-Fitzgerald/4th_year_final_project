@@ -561,10 +561,11 @@ void Game::update(sf::Time t_deltaTime)
 
 		if (m_gameplay.getSongFinishedFlag() == true)
 		{
-			m_gameOver.setScore(m_gameplay.getScore());
+			m_gameOver.setupGameOver();
+			m_gameOver.setSessionStats(m_gameplay.getSessionStats());
 			m_gameOver.setRecordedNotes(m_gameplay.getRecordedNotes());
 			m_gameOver.setSongName(m_gameplay.getSongName());
-			m_gameOver.setupGameOver();
+			
 			m_currentGameState = GameStates::ResultsScene;
 		}
 	}

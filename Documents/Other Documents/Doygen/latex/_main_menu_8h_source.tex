@@ -1,0 +1,79 @@
+\doxysection{Main\+Menu.\+h}
+\hypertarget{_main_menu_8h_source}{}\label{_main_menu_8h_source}\index{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/MainMenu.h@{C:/Users/jakef/Desktop/College/Project/4th\_year\_final\_project/BeatBreaker/MainMenu.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <SFML/Audio.hpp>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Globals.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_menu_button_data}{MenuButtonData}}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ std::string\ m\_label\ =\ \textcolor{stringliteral}{"{}\ "{}};}
+\DoxyCodeLine{00011\ \ \ \ \ sf::Vector2f\ m\_position;}
+\DoxyCodeLine{00012\ \ \ \ \ sf::Color\ m\_colour;}
+\DoxyCodeLine{00013\ \};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{struct\ }MenuButton}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ sf::RectangleShape\ m\_buttonShape;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ sf::Text\ m\_buttonText;}
+\DoxyCodeLine{00020\ \ \ \ \ std::string\ m\_label\ =\ \textcolor{stringliteral}{"{}\ "{}};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ sf::Vector2f\ m\_position;}
+\DoxyCodeLine{00023\ \ \ \ \ sf::Color\ m\_colour;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ MenuButton(std::shared\_ptr<const\ sf::Font>\ font)}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ :\ m\_buttonText(*font)}
+\DoxyCodeLine{00027\ \ \ \ \ \{}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }MainMenu}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{00036\ \ \ \ \ MainMenu(std::shared\_ptr<const\ sf::Font>\ t\_font);}
+\DoxyCodeLine{00037\ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ setupMainMenu();}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ render(sf::RenderWindow\&\ t\_window);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Selection}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ MoveUp();}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ MoveDown();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ button\ we\ pressed\ as\ a\ number}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{int}\ MainMenuPressed();}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ std::string\ mouseClick(sf::Vector2f\ t\_mousePos);}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ checkIfAreaClicked(sf::Vector2f\ t\_mousePos,\ sf::Vector2f\ t\_topLeft,\ sf::Vector2f\ t\_size);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ setupBG();}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_menuSelection\ =\ -\/1;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ std::vector<MenuButton>\ m\_buttons;}
+\DoxyCodeLine{00057\ \ \ \ \ std::vector<MenuButtonData>\ m\_buttonData;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ Have\ an\ array\ later,\ but\ for\ now\ just\ have\ one\ button}}
+\DoxyCodeLine{00060\ \ \ \ \ sf::RectangleShape\ m\_buttonShape;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Text}}
+\DoxyCodeLine{00063\ \ \ \ \ std::shared\_ptr<const\ sf::Font>\ m\_font;}
+\DoxyCodeLine{00064\ \ \ \ \ sf::Text\ m\_titleText;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ sf::Vector2f\ m\_topLeftStart;}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_buttonSpacing\ =\ 100.0f;}
+\DoxyCodeLine{00068\ \ \ \ \ sf::Vector2f\ m\_buttonSize\ =\ \{\ 300.0f,\ 50.0f\ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ BG}}
+\DoxyCodeLine{00071\ \ \ \ \ sf::Texture\ m\_bgTexture;}
+\DoxyCodeLine{00072\ \ \ \ \ sf::Sprite\ m\_bgSprite;}
+\DoxyCodeLine{00073\ \};}
+
+\end{DoxyCode}
