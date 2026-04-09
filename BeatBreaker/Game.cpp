@@ -298,8 +298,6 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		if (clicked == "Record Midi")
 		{
 			setupMidiWrite();
-
-
 		}
 		if (clicked == "MIDI Parse")
 		{
@@ -396,11 +394,13 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		{
 			stopMidiMCI();
 			m_midiPath = m_songSelect.getMidiPathString();
+			m_soundManager.play("ui_cancel");
 		}
 		else if (clickResult == SongClickResult::PreviewClicked)
 		{
 			stopMidiMCI();
 			m_midiPath = m_songSelect.getPreviewPathString();
+			m_soundManager.play("ui_cancel");
 			playMidiMCI();
 		}
 		else if (clickResult == SongClickResult::BeginClicked)
@@ -421,6 +421,19 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;
+		}
+		else if (clickResult == SongClickResult::PreviewDemoClicked)
+		{
+			m_soundManager.play("ui_cancel");
+			if (m_gameplay.getPreviewModeFlag() == false)
+			{
+				m_gameplay.setPreviewModeFlag(true);
+				
+			}
+			else
+			{
+				m_gameplay.setPreviewModeFlag(false);
+			}
 		}
 
 		if (m_songSelect.returnClick(mouseWorldPos) == true)

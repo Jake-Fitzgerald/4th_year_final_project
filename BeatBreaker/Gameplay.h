@@ -106,6 +106,8 @@ public:
     bool getPracticeModeFlag();
     void setRecordingFlag(bool t_bool);
     bool getRecordingFlag();
+    void setPreviewModeFlag(bool t_bool);
+    bool getPreviewModeFlag();
 
     bool getNoteOnColliderFlag();
     void setNoteOnColliderFlag(bool t_bool);
@@ -196,8 +198,8 @@ private:
     sf::Text m_missedNotesValueText;
     sf::Text m_earlyNotesText;
     sf::Text m_earlyNotesValueText;
-    sf::Text m_perfectNotesText;                                                                                                     //TODO
-    sf::Text m_perfectNotesValueText;                                                                                                //TODO
+    sf::Text m_perfectNotesText;                                                                                                     
+    sf::Text m_perfectNotesValueText;                                                                                                
     sf::Text m_lateNotesText;
     sf::Text m_lateNotesValueText;
     sf::Text m_wrongNotesText;
@@ -219,9 +221,9 @@ private:
     bool b_easyInputMode = true;
 
     bool b_isPreviewMode = false;
+
     bool b_isPracticeMode = false;
     bool b_isPracticePaused = false;
-    //std::string practiceWaitForNote = "";
     std::vector<std::string> m_practiceWaitForNotes;
     bool b_isWaitingForThisNote = false;
 

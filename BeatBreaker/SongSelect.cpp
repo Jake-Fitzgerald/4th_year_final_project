@@ -1,6 +1,9 @@
 #include "SongSelect.h"
 
-SongSelect::SongSelect(std::shared_ptr<const sf::Font> font) : m_font(font), m_beginText(*font), m_previewText(*font)
+SongSelect::SongSelect(std::shared_ptr<const sf::Font> font) 
+						: m_font(font),
+						  m_beginText(*font),
+						  m_previewText(*font)
 {
 	b_isSongChosen = false;
 }
@@ -243,9 +246,9 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 			std::cerr << "Preview clicked for: " << button.midiPath << std::endl;
 			m_previewPath = button.midiPath;
 			return SongClickResult::PreviewClicked;
+
 		}
 	}
-
 
 	// Begin button
 	if (b_isSongChosen == true)
@@ -260,15 +263,21 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 		}
 	}
 
+	// Preview Mode
+	sf::Vector2f beginTopLeft = m_previewButton.getPosition();
+	sf::Vector2f beginSize = m_previewButton.getSize();
+
+	if (checkIfAreaClicked(t_mousePos, beginTopLeft, beginSize) == true)
+	{
+		return SongClickResult::PreviewDemoClicked;
+		//m_previewButton.setFillColor(sf::Color::Red);
+	}
+
 	return SongClickResult::None;
 }
 
 bool SongSelect::returnClick(sf::Vector2f t_mousePos)
 {
-	// Stop any alias if it's currently playing
-	//stopMidiMCIPreview();
-	
-
 	// Return Button
 	sf::Vector2f spriteTopLeft = m_returnSprite.getPosition();
 	sf::Vector2f spriteSize = sf::Vector2f{ m_returnSprite.getGlobalBounds().size.x, m_returnSprite.getGlobalBounds().size.y };

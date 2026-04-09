@@ -93,7 +93,9 @@ private:
     sf::RectangleShape m_killTrigger;
     sf::RectangleShape m_inputTrigger;
     sf::RectangleShape m_noteSoundTrigger;
-    float m_inputTriggerSizeY = 200.0f;
+    float m_inputEasySize = 200.0f;
+    float m_inputNormalSize = 20.0f;
+    float m_inputTriggerSizeY = m_inputNormalSize;
     int m_score = 0;
 };
 

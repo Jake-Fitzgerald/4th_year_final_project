@@ -178,7 +178,7 @@ void Gameplay::setupStatisticText()
 
 	// Perfect
 	m_perfectNotesText.setPosition(sf::Vector2f{ xPos, yPos });
-	m_perfectNotesText.setString("Early Notes: ");
+	m_perfectNotesText.setString("Perfect Notes: ");
 	m_perfectNotesText.setFillColor(sf::Color::White);
 	m_perfectNotesText.setOutlineColor(sf::Color::Black);
 	m_perfectNotesText.setOutlineThickness(2.0f);
@@ -228,7 +228,7 @@ void Gameplay::setupStatisticText()
 
 	// Hit Percentage
 	m_hitpercentageText.setPosition(sf::Vector2f{ xPos, yPos });
-	m_hitpercentageText.setString("Hit Percentage: %");
+	m_hitpercentageText.setString("Hit Percentage: ");
 	m_hitpercentageText.setFillColor(sf::Color::White);
 	m_hitpercentageText.setOutlineColor(sf::Color::Black);
 	m_hitpercentageText.setOutlineThickness(2.0f);
@@ -272,7 +272,6 @@ void Gameplay::setupStatisticText()
 	m_anpsValueText.setOutlineColor(sf::Color::Black);
 	m_anpsValueText.setOutlineThickness(2.0f);
 	m_anpsValueText.setCharacterSize(20U);
-	yPos += typeDist;
 }
 
 void Gameplay::setupStatistics()
@@ -313,9 +312,6 @@ void Gameplay::update(float t_deltaTime)
 
 			if (b_isPracticeMode && note.b_isActive && m_keyboard.checkSoundCollision(note.perfectTrigger))
 			{
-				//b_isPracticePaused = true;
-				//practiceWaitForNote = note.noteName;
-
 				if (b_isPracticePaused == false)
 				{
 					b_isPracticePaused = true;
@@ -333,7 +329,7 @@ void Gameplay::update(float t_deltaTime)
 				break;
 			}
 
-			if (b_playNotesNoInput == true)
+			if (b_playNotesNoInput == true && b_isPracticeMode == false)
 			{
 				// Play note when entering the input collider
 				if (note.b_isActive && m_keyboard.checkSoundCollision(note.perfectTrigger))
@@ -352,10 +348,13 @@ void Gameplay::update(float t_deltaTime)
 				if (m_fallingNotes[i].b_isActive == true)
 				{
 					std::cerr << "MISS: " << std::endl;
-					m_score -= m_scoreMiss;
-					updateScore();
-					m_missedNotes++;
-					updateStatistics();
+					if (b_isPreviewMode == false)
+					{
+						m_score -= m_scoreMiss;
+						updateScore();
+						m_missedNotes++;
+						updateStatistics();
+					}
 				}
 				else
 				{
@@ -403,6 +402,7 @@ void Gameplay::resetSession()
 	b_isPaused = false;
 	b_isPracticePaused = false;
 	m_practiceWaitForNotes.clear();
+	m_recordedNotes.clear();
 
 	if (m_currentTrack != nullptr)
 	{
@@ -512,7 +512,7 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 		return;
 	}
 
-	if (b_isRecording == true && b_isPracticePaused == false)
+	if (b_isRecording == true && b_isPracticePaused == false && b_isPreviewMode == false)
 	{
 		MidiNote note;
 		note.noteName = t_noteName;
@@ -537,16 +537,19 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 
 		if (b_nameMatches)
 		{
-			if (m_keyboard.checkInputCollision(m_fallingNotes[i].lateTrigger))
+			if (m_keyboard.checkInputCollision(m_fallingNotes[i].lateTrigger))						   // LATE
 			{
 				std::cerr << "LATE: " << t_noteName << std::endl;
-				// Score
-				m_score += m_scoreLate;
-				updateScore();
-				// Statistics
-				m_currentNotesHit++;
-				m_lateNotes++;
-				updateStatistics();
+				if (b_isPreviewMode == false)
+				{
+					// Score
+					m_score += m_scoreLate;
+					updateScore();
+					// Statistics
+					m_currentNotesHit++;
+					m_lateNotes++;
+					updateStatistics();
+				}
 
 				m_fallingNotes[i].shape.setFillColor(c_lateNoteColour);
 				m_fallingNotes[i].b_isActive = false;
@@ -566,16 +569,19 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 
 				return;
 			}
-			else if (m_keyboard.checkInputCollision(m_fallingNotes[i].perfectTrigger))
+			else if (m_keyboard.checkInputCollision(m_fallingNotes[i].perfectTrigger))						// PERFECT
 			{
 				std::cerr << "PERFECT: " << t_noteName << std::endl;
-				// Score
-				m_score += m_scorePerfect;
-				updateScore();
-				// Statistics
-				m_currentNotesHit++;
-				m_perfectNotes++;
-				updateStatistics();
+				if (b_isPreviewMode == false)
+				{
+					// Score
+					m_score += m_scorePerfect;
+					updateScore();
+					// Statistics
+					m_currentNotesHit++;
+					m_perfectNotes++;
+					updateStatistics();
+				}
 
 				m_fallingNotes[i].shape.setFillColor(c_perfectNoteColour);
 				m_fallingNotes[i].b_isActive = false;
@@ -594,16 +600,19 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 				}
 				return;
 			}
-			if (m_keyboard.checkInputCollision(m_fallingNotes[i].earlyTrigger))
+			else if (m_keyboard.checkInputCollision(m_fallingNotes[i].earlyTrigger))						       // EARLY
 			{
 				std::cerr << "EARLY: " << t_noteName << std::endl;
-				// Score
-				m_score += m_scoreEarly;
-				updateScore();
-				// Statistics
-				m_currentNotesHit++;
-				m_earlyNotes++;
-				updateStatistics();
+				if (b_isPreviewMode == false)
+				{
+					// Score
+					m_score += m_scoreEarly;
+					updateScore();
+					// Statistics
+					m_currentNotesHit++;
+					m_earlyNotes++;
+					updateStatistics();
+				}
 
 				m_fallingNotes[i].shape.setFillColor(c_earlyNoteColour);
 				m_fallingNotes[i].b_isActive = false;
@@ -628,14 +637,15 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 
 void Gameplay::noteOff(std::string& t_noteName, int t_pitch, int t_velocity)
 {
-	if (b_isPaused == true && b_isPracticePaused == true)
+	//if (b_isPaused == true && b_isPracticePaused == true)
+	if (b_isPaused == true || b_isPracticePaused == true)
 	{
 		return;
 	}
 
 	m_keyboard.noteOff(t_noteName);
 
-	if (b_isRecording == true)
+	if (b_isRecording == true && b_isPreviewMode == false)
 	{
 		for (int i = m_recordedNotes.size() - 1; i >= 0; i--)
 		{
@@ -653,6 +663,7 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 	m_currentTrack = &t_track;
 	m_playbackTime = 0.0;
 	m_fallingNotes.clear();
+	b_isSongFinished = false;
 
 	m_noteSpeed = t_BPM /** m_noteSpeedMultiplier*/;
 	std::cerr << "Note speed is: " << m_noteSpeed << std::endl;
@@ -793,6 +804,16 @@ void Gameplay::setRecordingFlag(bool t_bool)
 bool Gameplay::getRecordingFlag()
 {
 	return b_isRecording;
+}
+
+void Gameplay::setPreviewModeFlag(bool t_bool)
+{
+	b_isPreviewMode = t_bool;
+}
+
+bool Gameplay::getPreviewModeFlag()
+{
+	return b_isPreviewMode;
 }
 
 bool Gameplay::getNoteOnColliderFlag()
