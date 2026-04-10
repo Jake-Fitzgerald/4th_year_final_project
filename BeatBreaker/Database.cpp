@@ -275,7 +275,7 @@ bool Database::submitResult(std::string t_username, std::string t_songName, Sess
 
 int Database::getSongID(const std::string& t_songName)
 {
-	std::cerr << "[DB] Looking for song" << t_songName << std::endl;
+	std::cerr << "[DB] Looking for song: " << t_songName << std::endl;
 
 	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
 
@@ -284,6 +284,16 @@ int Database::getSongID(const std::string& t_songName)
 
 	if (returnExecCheck != SQL_SUCCESS && returnExecCheck != SQL_SUCCESS_WITH_INFO)
 	{
+		// Add this block to see the actual error
+		SQLCHAR sqlState[6];
+		SQLINTEGER nativeError;
+		SQLCHAR messageText[SQL_MAX_MESSAGE_LENGTH];
+		SQLSMALLINT textLength;
+
+		SQLGetDiagRecA(SQL_HANDLE_STMT, handleStatement, 1, sqlState, &nativeError, messageText, SQL_MAX_MESSAGE_LENGTH, &textLength);
+		std::cerr << "[DB] SQLState: " << sqlState << std::endl;
+		std::cerr << "[DB] Error: " << messageText << std::endl;
+
 		std::cerr << "[DB] Get song ID unsuccessful" << std::endl;
 		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement); // Free only this handle and not the connection
 		return -1;

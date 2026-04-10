@@ -48,6 +48,8 @@ public:
 
 private:
 	Database* m_database;
+	std::string ODBCString = "Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;";
+	bool b_isConnected = false;
 	SessionStats m_sessionStats;
 
 	int m_score = 0;

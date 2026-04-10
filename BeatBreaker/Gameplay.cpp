@@ -412,8 +412,8 @@ void Gameplay::updateStatistics()
 	{
 		float avgNotePerSec = static_cast<float>(m_currentNotesHit) / static_cast<float>(m_playbackTime);
 		m_anps = avgNotePerSec;
-		//m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
-		m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
+		m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
+		//m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
 	}
 }
 
@@ -703,15 +703,6 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 				updateStatistics();
 			}
 		}
-
-		// Wrong note and it's outside of what notes are in the song
-		//if (b_isPreviewMode == false)
-		//{
-		//	m_score -= m_scoreWrong * 2;
-		//	updateScore();
-		//	m_wrongNotes++;
-		//	updateStatistics();
-		//}
 	}
 }
 

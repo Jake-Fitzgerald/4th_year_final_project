@@ -1,0 +1,8 @@
+# Display Users
+SELECT r.id, u.username, s.song_name, r.score, r.early_notes, r.perfect_notes, r.late_notes, r.missed_notes, r.wrong_notes
+FROM results r
+JOIN users u ON r.user_id = u.id
+JOIN songs s ON r.song_id = s.id
+
+# Results
+SELECT * FROM results;

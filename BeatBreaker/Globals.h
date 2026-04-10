@@ -41,8 +41,8 @@ struct SessionStats
     float m_anps = 0.0f;
 };
 
-//std::string ODBCString = "Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
 
+//std::string ODBCString = "Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;";
 
 // --------------------------------------------------------------------------------------------
 

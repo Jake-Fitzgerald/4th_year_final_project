@@ -355,8 +355,8 @@ void GameOver::setSessionStats(SessionStats& t_stats)
 	}
 	m_hitpercentageValueText.setString(std::to_string(hitPercentage) + "%");
 
-	//m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
-	m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
+	m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
+	//m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
 
 	updatePBScore();
 }
@@ -406,7 +406,18 @@ void GameOver::handleEvent(sf::Event& t_event)
 					m_midiWrite.writeFile(m_songName);
 
 					// server upload
+	/*				if (!b_isConnected)
+					{
+						m_database->sqlConnect(ODBCString);
+					}
+
+					if (b_isConnected)
+					{
+						m_database->submitResult(username, m_songName, m_sessionStats, midiPath);
+					}*/
+					
 					m_database->submitResult(username, m_songName, m_sessionStats, midiPath);
+
 					m_saveServerField.clearString();
 				}
 			}

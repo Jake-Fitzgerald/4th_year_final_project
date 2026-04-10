@@ -102,6 +102,8 @@ Game::Game() :
 
 	// Gameplay
 	m_gameplay.setup();
+
+	m_database.sqlConnect(ODBCString);
 }
 
 Game::~Game()
@@ -208,7 +210,7 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 				stopMidiMCI();
 			}
 		}
-
+		/*
 		// SQL  
 		if (sf::Keyboard::Key::L == newKeypress->code)
 		{
@@ -242,6 +244,7 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 				m_database.submitScoreFromFile(m_highscorePath);
 			}
 		}
+		*/
 
 		// Gamplay
 		if (m_currentGameState == GameStates::GameplayScene)
@@ -415,9 +418,10 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			// Third track is the instrument track
 			m_gameplay.loadTrack(m_midiParser.getMidiTracks()[2], m_midiParser.getBPM());
 
-			std::filesystem::path path(m_selectedSong);
-			std::string fileName = path.filename().string();
-			m_gameplay.setSongName(fileName);
+			//std::filesystem::path path(m_selectedSong);
+			//std::string fileName = path.filename().string();
+			//m_gameplay.setSongName(fileName);
+			//m_gameplay.setSongName(fileName);
 
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;
