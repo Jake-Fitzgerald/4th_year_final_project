@@ -152,7 +152,6 @@ void GameOver::setupFieldButtons()
 
 void GameOver::setSongName(std::string t_name)
 {
-	std::cerr << "setSongName called with: " << t_name << std::endl;
 	m_songName = t_name;
 	m_songNameText.setString(m_songName);
 	m_saveMidiField.setPlaceholderString(m_songName);

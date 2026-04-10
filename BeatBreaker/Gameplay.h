@@ -188,6 +188,7 @@ private:
     int m_lateNotes = 0;
     int m_missedNotes = 0;
     int m_wrongNotes = 0;
+    std::vector<std::string> m_expectedNotes;
 
     int m_noteCountTotal = 0;
     int m_currentNotesHit = 0;

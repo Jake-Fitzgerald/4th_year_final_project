@@ -291,7 +291,6 @@ void Gameplay::update(float t_deltaTime)
 
 	if (b_isPaused == false && b_isPracticePaused == false)
 	{
-
 		m_playbackTime += t_deltaTime;
 		m_songTimeText.setString(std::to_string(m_playbackTime));
 
@@ -329,7 +328,7 @@ void Gameplay::update(float t_deltaTime)
 				break;
 			}
 
-			if (b_playNotesNoInput == true && b_isPracticeMode == false)
+			if (b_playNotesNoInput == true && b_isPracticeMode == false && b_isPreviewMode == true)
 			{
 				// Play note when entering the input collider
 				if (note.b_isActive && m_keyboard.checkSoundCollision(note.perfectTrigger))
@@ -337,6 +336,20 @@ void Gameplay::update(float t_deltaTime)
 					m_keyboard.noteOn(note.noteName);
 					note.b_isActive = false;
 				}
+			}
+		}
+
+		m_expectedNotes.clear();
+		for (auto& note : m_fallingNotes)
+		{
+			if (
+				note.b_isActive &&
+				m_keyboard.checkInputCollision(note.earlyTrigger) ||
+				m_keyboard.checkInputCollision(note.perfectTrigger) ||
+				m_keyboard.checkInputCollision(note.lateTrigger)
+				)
+			{
+				m_expectedNotes.push_back(note.noteName);
 			}
 		}
 
@@ -390,6 +403,10 @@ void Gameplay::updateStatistics()
 		float hitPercentage = (static_cast<float>(m_currentNotesHit) / static_cast<float>(m_noteCountTotal)) * 100.0f;
 		m_hitpercentageValueText.setString(std::to_string(static_cast<int>(hitPercentage)) + "%");
 	}
+	else
+	{
+		m_hitpercentageValueText.setString("0%");
+	}
 }
 
 void Gameplay::resetSession()
@@ -414,6 +431,7 @@ void Gameplay::resetSession()
 
 	resetScore();
 	resetStatistics();
+	updateStatistics();
 }
 
 void Gameplay::resetScore()
@@ -540,6 +558,26 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 
 	m_keyboard.noteOn(t_noteName);
 
+
+	// Wrong note + wrong note range in song
+	bool b_isNoteInSong = false;
+	for (int i = 0; i < m_fallingNotes.size(); i++)
+	{
+		if (m_fallingNotes[i].noteName == t_noteName)
+		{
+			b_isNoteInSong = true;
+			break;
+		}
+	}
+
+	if (b_isPreviewMode == false)
+	{
+		m_score -= m_scoreWrong * 2;
+		updateScore();
+		m_wrongNotes++;
+		updateStatistics();
+	}
+
 	for (int i = 0; i < m_fallingNotes.size(); i++)
 	{
 		if (m_fallingNotes[i].b_isActive == false)
@@ -548,7 +586,6 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 		}
 
 		bool b_nameMatches = m_fallingNotes[i].noteName == t_noteName;
-		//bool b_inHitZone = m_keyboard.checkInputCollision(m_fallingNotes[i].shape);
 
 		if (b_nameMatches)
 		{
@@ -646,7 +683,26 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 				}
 				return;
 			}
+
+			bool b_isExpected = std::find(m_expectedNotes.begin(), m_expectedNotes.end(), t_noteName) != m_expectedNotes.end();
+
+			if (!b_isExpected && b_isPreviewMode == false)
+			{
+				m_score -= m_scoreWrong;
+				updateScore();
+				m_wrongNotes++;
+				updateStatistics();
+			}
 		}
+
+		// Wrong note and it's outside of what notes are in the song
+		//if (b_isPreviewMode == false)
+		//{
+		//	m_score -= m_scoreWrong * 2;
+		//	updateScore();
+		//	m_wrongNotes++;
+		//	updateStatistics();
+		//}
 	}
 }
 
