@@ -567,22 +567,16 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 
 	m_keyboard.noteOn(t_noteName);
 
-
-	// Wrong note + wrong note range in song
 	bool b_isNoteInSong = false;
+	bool b_wasTriggered = false;
+
 	for (int i = 0; i < m_fallingNotes.size(); i++)
 	{
 		if (m_fallingNotes[i].noteName == t_noteName)
 		{
 			b_isNoteInSong = true;
-			break;
 		}
-	}
 
-
-
-	for (int i = 0; i < m_fallingNotes.size(); i++)
-	{
 		if (m_fallingNotes[i].b_isActive == false)
 		{
 			continue;
@@ -689,7 +683,6 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 
 			bool b_isExpected = std::find(m_expectedNotes.begin(), m_expectedNotes.end(), t_noteName) != m_expectedNotes.end();
 
-			// Wrong Notes
 			if (!b_isExpected && b_isPreviewMode == false)
 			{
 				m_score -= m_scoreWrong;
@@ -697,22 +690,14 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 				m_wrongNotes++;
 				updateStatistics();
 			}
-		}
-	}
-
-	bool b_isWithinSongRange = false;
-	for (int i = 0; i < m_fallingNotes.size(); i++)
-	{
-		if (m_fallingNotes[i].noteName == t_noteName)
-		{
-			b_isWithinSongRange = true;
+			// Stop looking for other notes that are the same value
 			break;
 		}
 	}
 
-	if (b_isNoteInSong == true && b_isPreviewMode == false)
+	if (b_isNoteInSong == false && b_isPreviewMode == false)
 	{
-		m_score -= m_scoreWrong * 2;
+		m_score -= m_scoreWrong;
 		updateScore();
 		m_wrongNotes++;
 		updateStatistics();

@@ -322,7 +322,6 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 			std::cerr << "Preview clicked for: " << button.midiPath << std::endl;
 			m_previewPath = button.midiPath;
 			return SongClickResult::PreviewClicked;
-
 		}
 	}
 
@@ -334,13 +333,6 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 
 		if (checkIfAreaClicked(t_mousePos, beginTopLeft, beginSize) == true)
 		{
-			//std::string customPath = m_loadMidiField.getString();
-			//if (!customPath.empty())
-			//{
-			//	m_selectedPath = "ASSETS\\AUDIO\\MUSIC\\" + customPath + ".mid";
-			//	m_selectedName = customPath; //might chnage this
-			//}
-
 			std::cerr << "Begin button with song: " << m_selectedPath << std::endl;
 			return SongClickResult::BeginClicked;
 		}
@@ -374,7 +366,25 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 		}
 	}
 
-		
+	// MCI
+	sf::Vector2f customMCITopLeft = m_loadCustomMCISprite.getPosition();
+	sf::Vector2f customMCISize = sf::Vector2f{
+												m_loadCustomMCISprite.getGlobalBounds().size.x,
+												m_loadCustomMCISprite.getGlobalBounds().size.y };
+
+	if (checkIfAreaClicked(t_mousePos, customMCITopLeft, customMCISize) == true)
+	{
+		std::cerr << "Preview clicked for: " << m_selectedPath << std::endl;
+		m_previewPath = m_selectedPath;
+		return SongClickResult::PreviewClicked;
+
+		std::string customMidi = m_loadMidiField.getString();
+		if (!customMidi.empty())
+		{
+
+		}
+	}
+
 
 	return SongClickResult::None;
 }
