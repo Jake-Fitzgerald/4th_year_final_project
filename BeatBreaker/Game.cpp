@@ -346,7 +346,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_currentGameState = MainMenuScene;
 		}
 	}
-	else if (m_currentGameState == GameStates::MidiFileSelectScene) // File Selection
+	else if (m_currentGameState == GameStates::MidiFileSelectScene) 
 	{
 		m_midiFileSelectScene.mouseClick(mouseWorldPos);
 
@@ -390,15 +390,15 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_currentGameState = GameStates::MainMenuScene;
 		}
 	}
-	else if (m_currentGameState == GameStates::PianoVis) // Piano Vis
+	else if (m_currentGameState == GameStates::PianoVis)
 	{
 		pianoVisualiser.handleClick(mouseWorldPos);
 	}
-	else if (m_currentGameState == GameStates::DrumVis) // Piano Vis
+	else if (m_currentGameState == GameStates::DrumVis) 
 	{
 		drumVisualiser.handleClick(mouseWorldPos);
 	}
-	else if (m_currentGameState == GameStates::SongSelectionScene) // Song Selection
+	else if (m_currentGameState == GameStates::SongSelectionScene) 
 	{
 		SongClickResult clickResult = m_songSelect.mouseClick(mouseWorldPos);
 
@@ -424,13 +424,16 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_midiParser.parseFile(m_selectedSong);
 			std::cerr << "Parsing song: " << m_selectedSong << std::endl;
 
+			auto& tracks = m_midiParser.getMidiTracks();
+			//std::cerr << "Midi has: " << tracks.size() << std::endl;
+			//if (tracks.size() < 3)
+			//{
+			//	std::cerr << "Midi has: " << tracks.size() << " tracks when we need 3" << std::endl;
+			//	return;
+			//}
+
 			// Third track is the instrument track
 			m_gameplay.loadTrack(m_midiParser.getMidiTracks()[2], m_midiParser.getBPM());
-
-			//std::filesystem::path path(m_selectedSong);
-			//std::string fileName = path.filename().string();
-			//m_gameplay.setSongName(fileName);
-			//m_gameplay.setSongName(fileName);
 
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;
@@ -447,6 +450,13 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			{
 				m_gameplay.setPreviewModeFlag(false);
 			}
+		}
+		else if (clickResult == SongClickResult::CustomLoadClicked)
+		{
+			stopMidiMCI();
+			m_midiPath = m_songSelect.getMidiPathString();
+			std::cerr << "Midi path loaded: " << m_midiPath << std::endl;
+			m_soundManager.play("ui_cancel");
 		}
 
 		if (m_songSelect.returnClick(mouseWorldPos) == true)
@@ -675,11 +685,10 @@ void Game::setupSprites()
 {
 	if (!m_DELETElogoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
 	{
-		// simple error message if previous call fails
 		std::cout << "problem loading logo" << std::endl;
 	}
 	
-	m_DELETElogoSprite.setTexture(m_DELETElogoTexture,true);// to reset the dimensions of texture
+	m_DELETElogoSprite.setTexture(m_DELETElogoTexture,true);
 	m_DELETElogoSprite.setPosition(sf::Vector2f{ 150.0f, 50.0f });
 }
 
@@ -714,22 +723,18 @@ bool Game::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, s
 
 void Game::setupSounds()
 {
-	// UI
 	m_soundManager.loadBuffer("ui_cancel", "ASSETS\\AUDIO\\SFX\\UI\\ui_cancel.wav", SoundType::SFX);
 	m_soundManager.loadBuffer("ui_confirm", "ASSETS\\AUDIO\\SFX\\UI\\ui_confirm.wav", SoundType::MUSIC); // Test sound types [temp]
 	m_soundManager.loadBuffer("difficulty_select", "ASSETS\\AUDIO\\SFX\\UI\\difficulty_select.wav", SoundType::SFX);
 	m_soundManager.loadBuffer("results_scene_load", "ASSETS\\AUDIO\\SFX\\UI\\results_scene_load.wav", SoundType::SFX);
 	m_soundManager.loadBuffer("start_game", "ASSETS\\AUDIO\\SFX\\UI\\start_game.wav", SoundType::SFX);
 
-	// Music
 	m_soundManager.loadBuffer("Test_MIDI_MUSIC", "ASSETS\\AUDIO\\MUSIC\\WAV\\Test_MIDI.wav", SoundType::MUSIC);
 
-	// Player
 	m_soundManager.loadBuffer("health_drain", "ASSETS\\AUDIO\\SFX\\PLAYER\\health_drain.wav", SoundType::SFX);
 	m_soundManager.loadBuffer("player_crushed", "ASSETS\\AUDIO\\SFX\\PLAYER\\player_crushed.wav", SoundType::SFX);
 	m_soundManager.loadBuffer("player_respawn", "ASSETS\\AUDIO\\SFX\\PLAYER\\player_respawn.wav", SoundType::SFX);
 
-	// Gameplay
 	m_soundManager.loadBuffer("block_break", "ASSETS\\AUDIO\\SFX\\GAMEPLAY\\block_break.wav", SoundType::SFX);
 	m_soundManager.loadBuffer("item_health", "ASSETS\\AUDIO\\SFX\\GAMEPLAY\\item_health.wav", SoundType::SFX);
 	m_soundManager.loadBuffer("item_life", "ASSETS\\AUDIO\\SFX\\GAMEPLAY\\item_life.wav", SoundType::SFX);
@@ -738,13 +743,10 @@ void Game::setupSounds()
 
 void Game::setupCustomIcon()
 {
-	// Custom Icon
 	if (!m_customIcon.loadFromFile("ASSETS\\IMAGES\\UI\\Icons\\CustomIcon.png"))
 	{
-		// simple error message if previous call fails
 		std::cout << "problem loading Custom Image Icon" << std::endl;
 	}
-
 	m_window.setIcon(m_customIcon);
 }
 
@@ -764,7 +766,6 @@ void Game::setupMidiInput()
 	{
 		std::cerr << "No MIDI keyboads connected" << std::endl;
 
-		// Update HUD's text
 		b_connectionStatus = false;
 		m_hud.updateMidiKeyboardConnnection(b_connectionStatus);
 	}
@@ -1024,7 +1025,6 @@ void Game::freeMidiHandler()
 	}
 }
 
-// Uses window's built in midi player
 void Game::playMidiMCI()
 {
 	std::cerr << "Playing MIDI File: " << m_midiPath << std::endl;

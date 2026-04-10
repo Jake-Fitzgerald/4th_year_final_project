@@ -6,7 +6,8 @@ SongSelect::SongSelect(std::shared_ptr<const sf::Font> font)
 						  m_previewText(*font),
 						  m_songListFrameText(*font),
 						  m_modeButtonsFrameText(*font),
-				          m_loadMidiField(font, m_loadMidiFieldPos, m_fieldSize, m_characterSize)
+				          m_loadMidiField(font, m_loadMidiFieldPos, m_fieldSize, m_characterSize),
+						  m_loadCustomMidiButtonText(*font)
 {
 	b_isSongChosen = false;
 }
@@ -24,6 +25,7 @@ void SongSelect::setupPathStrings()
 		{"Thousand Miles", "ASSETS\\AUDIO\\MUSIC\\ThousandMilesRiff.mid", SONGDIFFICULTIES::HARD},
 		//{"Full MCI Example [TEST]", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid", SONGDIFFICULTIES::UNKNOWN},
 		//{"Saved Midi", "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\custom.mid", SONGDIFFICULTIES::UNKNOWN},
+		{"Test Riff", "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\TestRiff.mid", SONGDIFFICULTIES::UNKNOWN},
 	};
 
 	m_pathsCount = m_pathVector.size();
@@ -116,8 +118,8 @@ void SongSelect::setupButtons()
 
 		button.m_musicNoteSprite.setTexture(*button.m_musicNoteTex, true);
 		button.m_musicNoteSprite.setPosition(sf::Vector2f{
-																button.m_buttonShape.getPosition().x + m_difficultyTextSpacing + 400.0f,
-																button.m_buttonShape.getPosition().y + 10.f });
+																button.m_buttonShape.getPosition().x + m_difficultyTextSpacing + 420.0f,
+																button.m_buttonShape.getPosition().y + 5.f });
 		button.m_musicNoteSprite.setScale(sf::Vector2f{ 0.6f, 0.6f });
 
 		button.midiPath = m_pathVector[i].path;
@@ -128,6 +130,7 @@ void SongSelect::setupButtons()
 	setupBeginButton();
 	setupPreviewButton();
 	setupUIFrames();
+	setupInputFieldButton();
 }
 
 void SongSelect::setupBeginButton()
@@ -184,14 +187,14 @@ void SongSelect::setupUIFrames()
 	m_songListFrame.setFillColor(c_frameColour);
 	m_songListFrame.setOutlineThickness(2.0f);
 	m_songListFrame.setOutlineColor(sf::Color::Blue);
-	// Text
+
 	m_songListFrameText.setString("Songs");
 	m_songListFrameText.setPosition(sf::Vector2f{ m_posX, m_posY - 75.0f });
 	m_songListFrameText.setFillColor(sf::Color::Blue);
 	m_songListFrameText.setOutlineColor(sf::Color::Black);
 	m_songListFrameText.setOutlineThickness(2.0f);
 	m_songListFrameText.setCharacterSize(40U);
-	// Frame Text 
+
 	m_songListTextFrame.setSize(sf::Vector2f{ 150.0f, 50.0f });
 	m_songListTextFrame.setPosition(sf::Vector2f{ m_posX - 20.0f, m_posY - 75.0f });
 	m_songListTextFrame.setFillColor(c_frameColour);
@@ -199,25 +202,56 @@ void SongSelect::setupUIFrames()
 	m_songListTextFrame.setOutlineColor(sf::Color::Blue);
 
 
-
 	m_modeButtonsFrame.setSize(sf::Vector2f{ m_playButtonSize.x + 50.0f, m_playButtonSize.y + 135.0f });
 	m_modeButtonsFrame.setPosition(sf::Vector2f{ m_beginButton.getPosition().x - 25.0f, m_beginButton.getPosition().y - 25.0f });
 	m_modeButtonsFrame.setFillColor(c_frameColour);
 	m_modeButtonsFrame.setOutlineThickness(2.0f);
 	m_modeButtonsFrame.setOutlineColor(sf::Color::Green);
-	// Text
+
 	m_modeButtonsFrameText.setString("Modes");
 	m_modeButtonsFrameText.setPosition(sf::Vector2f{ m_beginButton.getPosition().x, m_beginButton.getPosition().y - 75.0f });
 	m_modeButtonsFrameText.setFillColor(sf::Color::Green);
 	m_modeButtonsFrameText.setOutlineColor(sf::Color::Black);
 	m_modeButtonsFrameText.setOutlineThickness(2.0f);
 	m_modeButtonsFrameText.setCharacterSize(40U);
-	// Frame Text 
+	
 	m_modeButtonsTextFrame.setSize(sf::Vector2f{ 150.0f, 50.0f });
 	m_modeButtonsTextFrame.setPosition(sf::Vector2f{ m_beginButton.getPosition().x - 25.0f, m_beginButton.getPosition().y - 75.0f });
 	m_modeButtonsTextFrame.setFillColor(c_frameColour);
 	m_modeButtonsTextFrame.setOutlineThickness(3.0f);
 	m_modeButtonsTextFrame.setOutlineColor(sf::Color::Green);
+
+	m_songListBottomBorder.setSize(sf::Vector2f{ m_buttonSize.x + 60.0f, 4.0f });
+	m_songListBottomBorder.setPosition(sf::Vector2f{ m_posX , m_posY + 400.0f });
+	m_songListBottomBorder.setFillColor(sf::Color(0, 0, 250, 130));
+}
+
+void SongSelect::setupInputFieldButton()
+{
+	m_loadCustomMidiButton.setPosition({ m_loadMidiFieldPos.x + 450, m_loadMidiFieldPos.y });
+	m_loadCustomMidiButton.setSize(m_fieldButtonSize);
+	m_loadCustomMidiButton.setFillColor(c_inactiveColour);
+	m_loadCustomMidiButton.setOutlineColor(sf::Color::Black);
+	m_loadCustomMidiButton.setOutlineThickness(2.0f);
+	m_loadCustomMidiButtonText.setString("LOAD");
+	m_loadCustomMidiButtonText.setPosition({ m_loadCustomMidiButton.getPosition().x + 20.0f, m_loadCustomMidiButton.getPosition().y - 12.0f });
+	m_loadCustomMidiButtonText.setFillColor(sf::Color::White);
+	m_loadCustomMidiButtonText.setOutlineColor(sf::Color::Black);
+	m_loadCustomMidiButtonText.setOutlineThickness(2.0f);
+	m_loadCustomMidiButtonText.setCharacterSize(50U);
+
+	// Music Note
+	if (!m_loadCustomMCITex.loadFromFile("ASSETS\\IMAGES\\UI\\button_play.png"))
+	{
+		std::cerr << "problem loading MCI sprite for custom midi input field [Song Selection]" << std::endl;
+	}
+
+	m_loadCustomMCISprite.setTexture(m_loadCustomMCITex, true);
+	m_loadCustomMCISprite.setPosition(sf::Vector2f{
+															m_loadMidiFieldPos.x + m_difficultyTextSpacing + 420.0f,
+															m_loadMidiFieldPos.y + 5.f });
+	m_loadCustomMCISprite.setScale(sf::Vector2f{ 0.8f, 0.8f });
+	
 }
 
 void SongSelect::render(sf::RenderWindow& t_window)
@@ -226,6 +260,7 @@ void SongSelect::render(sf::RenderWindow& t_window)
 	t_window.draw(m_modeButtonsTextFrame);
 	t_window.draw(m_songListFrame);
 	t_window.draw(m_modeButtonsFrame);
+	t_window.draw(m_songListBottomBorder);
 
 	for (auto& button : m_buttons)
 	{
@@ -245,7 +280,10 @@ void SongSelect::render(sf::RenderWindow& t_window)
 	t_window.draw(m_songListFrameText);
 	t_window.draw(m_modeButtonsFrameText);
 
-	m_loadMidiField.render(t_window);
+	m_loadMidiField.render(t_window); 
+	t_window.draw(m_loadCustomMidiButton);
+	t_window.draw(m_loadCustomMidiButtonText);
+	t_window.draw(m_loadCustomMCISprite);
 }
 
 SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
@@ -296,12 +334,12 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 
 		if (checkIfAreaClicked(t_mousePos, beginTopLeft, beginSize) == true)
 		{
-			std::string customPath = m_loadMidiField.getString();
-			if (!customPath.empty())
-			{
-				m_selectedPath = "ASSETS\\AUDIO\\MUSIC\\" + customPath + ".mid";
-				m_selectedName = customPath; //might chnage this
-			}
+			//std::string customPath = m_loadMidiField.getString();
+			//if (!customPath.empty())
+			//{
+			//	m_selectedPath = "ASSETS\\AUDIO\\MUSIC\\" + customPath + ".mid";
+			//	m_selectedName = customPath; //might chnage this
+			//}
 
 			std::cerr << "Begin button with song: " << m_selectedPath << std::endl;
 			return SongClickResult::BeginClicked;
@@ -317,6 +355,26 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 		return SongClickResult::PreviewDemoClicked;
 		//m_previewButton.setFillColor(sf::Color::Red);
 	}
+
+
+	sf::Vector2f loadTopLeft = m_loadCustomMidiButton.getPosition();
+	sf::Vector2f loadSize = m_loadCustomMidiButton.getSize();
+
+	if (checkIfAreaClicked(t_mousePos, loadTopLeft, loadSize) == true)
+	{
+		std::string customMidi = m_loadMidiField.getString();
+		if (!customMidi.empty())
+		{
+			m_selectedPath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\" + customMidi + ".mid";
+			m_selectedName = customMidi; // Just reuse te same file name 
+			b_isSongChosen = true;
+
+			std::cerr << "Custom Midi loaded: " << customMidi << std::endl;
+			return SongClickResult::CustomLoadClicked;
+		}
+	}
+
+		
 
 	return SongClickResult::None;
 }

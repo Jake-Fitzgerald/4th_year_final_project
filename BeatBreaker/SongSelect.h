@@ -59,7 +59,8 @@ enum class SongClickResult
 	SongSelected,
 	PreviewClicked,
 	BeginClicked,
-	PreviewDemoClicked
+	PreviewDemoClicked,
+	CustomLoadClicked
 };
 
 struct SongPaths
@@ -79,6 +80,7 @@ public:
 	void setupBeginButton();
 	void setupPreviewButton();
 	void setupUIFrames();
+	void setupInputFieldButton();
 	
 	void render(sf::RenderWindow& t_window);
 
@@ -153,10 +155,23 @@ private:
 	sf::Text m_modeButtonsFrameText;
 	sf::Color c_frameColour = sf::Color(100, 100, 100, 100);
 
+	sf::RectangleShape m_songListBottomBorder;
+
+
 	sf::Vector2f m_loadMidiFieldPos{ paddingX, paddingY + 525.0f };
-	sf::Vector2f m_fieldSize{ 400.0f, 50.0f };
+	sf::Vector2f m_fieldSize{ 600.0f, 50.0f };
 	int m_characterSize = 40;
 	int m_maxLength = 20;
 	InputField m_loadMidiField;
+
+	sf::Vector2f m_fieldButtonSize{ 150.0f, 50.0f };
+	sf::Color c_inactiveColour = sf::Color(230, 200, 200, 240);
+	sf::Color c_activeColour = sf::Color(0, 250, 20, 240);
+
+	sf::RectangleShape m_loadCustomMidiButton;
+	sf::Text m_loadCustomMidiButtonText;
+
+	sf::Texture m_loadCustomMCITex;
+	sf::Sprite m_loadCustomMCISprite{ m_loadCustomMCITex };
 };
 
