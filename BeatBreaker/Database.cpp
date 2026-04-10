@@ -275,6 +275,8 @@ bool Database::submitResult(std::string t_username, std::string t_songName, Sess
 
 int Database::getSongID(const std::string& t_songName)
 {
+	std::cerr << "[DB] Looking for song" << t_songName << std::endl;
+
 	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
 
 	std::string query = "SELECT id FROM songs WHERE song_name = '" + t_songName + "'";

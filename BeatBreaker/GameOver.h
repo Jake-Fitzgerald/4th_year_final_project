@@ -39,6 +39,7 @@ public:
 
 	void setupStatisticText();
 	void setSessionStats(SessionStats& t_stats);
+	void resetSessionStats();
 
 	void handleEvent(sf::Event& t_event);
 	void update(float t_deltatime);
@@ -47,6 +48,7 @@ public:
 
 private:
 	Database* m_database;
+	SessionStats m_sessionStats;
 
 	int m_score = 0;
 	int m_pbScore = 0;

@@ -19,10 +19,10 @@ void SongSelect::setupPathStrings()
 		{"C Scale", "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid", SONGDIFFICULTIES::EASY},
 		{"Note Length", "ASSETS\\AUDIO\\MUSIC\\NoteLengthExample.mid", SONGDIFFICULTIES::EASY},
 		{"Major / Minor Chords", "ASSETS\\AUDIO\\MUSIC\\Major_and_Minor_Chords.mid", SONGDIFFICULTIES::MEDIUM},
-		{"Fast BPM", "ASSETS\\AUDIO\\MUSIC\\Fast_BPM.mid", SONGDIFFICULTIES::HARD},
+		//{"Fast BPM", "ASSETS\\AUDIO\\MUSIC\\Fast_BPM.mid", SONGDIFFICULTIES::HARD},
 		{"Thousand Miles", "ASSETS\\AUDIO\\MUSIC\\ThousandMilesRiff.mid", SONGDIFFICULTIES::HARD},
-		{"Full MCI Example [TEST]", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid", SONGDIFFICULTIES::UNKNOWN},
-		{"Saved Midi", "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\custom.mid", SONGDIFFICULTIES::UNKNOWN},
+		//{"Full MCI Example [TEST]", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid", SONGDIFFICULTIES::UNKNOWN},
+		//{"Saved Midi", "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\custom.mid", SONGDIFFICULTIES::UNKNOWN},
 	};
 
 	m_pathsCount = m_pathVector.size();
@@ -120,6 +120,7 @@ void SongSelect::setupButtons()
 		button.m_musicNoteSprite.setScale(sf::Vector2f{ 0.6f, 0.6f });
 
 		button.midiPath = m_pathVector[i].path;
+		button.songName = m_pathVector[i].name;
 		m_buttons.push_back(button);
 	}
 
@@ -260,6 +261,7 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 		if (checkIfAreaClicked(t_mousePos, topLeft, size) == true)
 		{
 			m_selectedPath = button.midiPath;
+			m_selectedName = button.songName;
 			std::cerr << "Selected [SONG] Path is: " << m_selectedPath << std::endl;
 			b_isSongChosen = true;
 
@@ -343,6 +345,11 @@ bool SongSelect::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topL
 std::string SongSelect::getMidiPathString()
 {
 	return m_selectedPath;
+}
+
+std::string SongSelect::getSongName()
+{
+	return m_selectedName;
 }
 
 std::string SongSelect::getPreviewPathString()

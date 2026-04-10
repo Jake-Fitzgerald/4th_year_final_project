@@ -55,9 +55,11 @@ INSERT INTO users (username) VALUES ('Seanie');
 -----------------------------
 -- Insert Songs
 -----------------------------
-INSERT INTO songs (song_name) VALUES ('Song 1');
-INSERT INTO songs (song_name) VALUES ('Song 2');
-INSERT INTO songs (song_name) VALUES ('Song 3');
+INSERT INTO songs (song_name) VALUES ('Debug Gameplay');
+INSERT INTO songs (song_name) VALUES ('C Scale');
+INSERT INTO songs (song_name) VALUES ('Note Length');
+INSERT INTO songs (song_name) VALUES ('Major / Minor Chords');
+INSERT INTO songs (song_name) VALUES ('Thousand Miles');
 
 
 -----------------------------

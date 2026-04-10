@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
 #include <windows.h>
+#include "InputField.h"
 
 /*
 Notes:
@@ -22,7 +23,9 @@ struct SongButton
 	sf::Text m_difficultyText; 
 	sf::Text m_pbScoreText;
 	sf::Text m_pbScore;
+
 	std::string midiPath = " ";
+	std::string songName = " ";
 
 	// Music Note
 	//sf::Texture m_musicNoteTex;
@@ -84,6 +87,7 @@ public:
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
 	std::string getMidiPathString();
+	std::string getSongName();
 	std::string getPreviewPathString();
 
 	std::string DifficultyToString(SONGDIFFICULTIES t_difficulty);
@@ -92,6 +96,7 @@ private:
 	std::vector<SongButton> m_buttons;
 	std::shared_ptr<const sf::Font> m_font;
 	std::string m_selectedPath = "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid"; // Default midi file
+	std::string m_selectedName = " ";
 	std::string m_previewPath = " ";
 
 	sf::RectangleShape m_returnButton;

@@ -32,6 +32,8 @@ GameOver::GameOver(std::shared_ptr<const sf::Font> font, Database& t_database)
 	  // Database
 	  m_database(&t_database)
 {
+	resetSessionStats();
+
 	m_saveServerField.setPlaceholderString("Write to server...");
 	m_saveMidiField.setPlaceholderString("Write to midi...");
 
@@ -325,6 +327,8 @@ void GameOver::setupStatisticText()
 
 void GameOver::setSessionStats(SessionStats& t_stats)
 {
+	m_sessionStats = t_stats;
+
 	m_score = t_stats.m_score;
 	m_earlyNotes = t_stats.m_earlyNotes;
 	m_perfectNotes = t_stats.m_perfectNotes;
@@ -357,6 +361,19 @@ void GameOver::setSessionStats(SessionStats& t_stats)
 	updatePBScore();
 }
 
+void GameOver::resetSessionStats()
+{
+	m_score = 0;
+	m_earlyNotes = 0;
+	m_perfectNotes = 0;
+	m_lateNotes = 0;
+	m_missedNotes = 0;
+	m_wrongNotes = 0;
+	m_noteCountTotal = 0;
+	m_currentNotesHit = 0;
+	m_anps = 0.0f;
+}
+
 void GameOver::handleEvent(sf::Event& t_event)
 {
 	m_saveServerField.handleEvent(t_event);
@@ -379,17 +396,20 @@ void GameOver::handleEvent(sf::Event& t_event)
 					m_saveMidiField.clearString();
 				}
 			}
-
+			
 			if (m_saveServerField.checkIfAreaClicked(mousePos, m_saveServerButton.getPosition(), m_saveServerButton.getSize()))
 			{
-				std::string fileName = m_saveServerField.getString();
-				if (!fileName.empty())
+				std::string username = m_saveServerField.getString();
+				if (!username.empty())
 				{
+					std::string midiPath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\" + m_songName + ".mid";
+					m_midiWrite.writeFile(m_songName);
+
 					// server upload
+					m_database->submitResult(username, m_songName, m_sessionStats, midiPath);
 					m_saveServerField.clearString();
 				}
 			}
-				
 
 		}
 	}

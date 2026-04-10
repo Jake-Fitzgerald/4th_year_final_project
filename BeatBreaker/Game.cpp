@@ -564,7 +564,8 @@ void Game::update(sf::Time t_deltaTime)
 			m_gameOver.setupGameOver();
 			m_gameOver.setSessionStats(m_gameplay.getSessionStats());
 			m_gameOver.setRecordedNotes(m_gameplay.getRecordedNotes());
-			m_gameOver.setSongName(m_gameplay.getSongName());
+			//m_gameOver.setSongName(m_gameplay.getSongName());
+			m_gameOver.setSongName(m_songSelect.getSongName());
 			
 			m_currentGameState = GameStates::ResultsScene;
 		}
