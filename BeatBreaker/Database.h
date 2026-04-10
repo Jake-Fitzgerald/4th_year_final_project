@@ -18,13 +18,6 @@ Another query call when pulling if we want the list to be ordered:
 
 */
 
-//struct USERDATA
-//{
-//	int id = -1;
-//	std::string username = " ";
-//	int score = -1;
-//};
-
 class Database
 {
 public:
@@ -34,7 +27,7 @@ public:
 	bool submitScore(std::string t_username, int t_score);
 	bool submitScoreFromFile(std::string t_filePath);
 
-	bool submitResult(std::string t_username, std::string t_songName, SessionStats& t_stats);
+	bool submitResult(std::string t_username, std::string t_songName, SessionStats& t_stats, std::string t_fileMidiPath);
 
 	int getSongID(const std::string& t_songName);
 	int getUserID(const std::string& t_username);

@@ -190,9 +190,87 @@ bool Database::submitScoreFromFile(std::string t_filePath)
 	return true;
 }
 
-bool Database::submitResult(std::string t_username, std::string t_songName, SessionStats& t_stats)
+bool Database::submitResult(std::string t_username, std::string t_songName, SessionStats& t_stats, std::string t_fileMidiPath)
 {
-	return false;
+	// IDs
+	int songID = getSongID(t_songName);
+	if (songID == -1)
+	{
+		std::cerr << "[DB] Song ID wasn't found and can't submit" << std::endl;
+		return false;
+	}
+
+	int userID = getUserID(t_username);
+	if (userID == -1)
+	{
+		std::cerr << "[DB] User ID wasn't found and can't submit" << std::endl;
+		return false;
+	}
+
+	std::vector<char> midiBuffer;
+	if (uploadMIDI(t_fileMidiPath, midiBuffer) == false)
+	{
+		std::cerr << "[DB] Midi can't be read and can't submit" << std::endl;
+		return false;
+	}
+
+	// Inseet
+	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
+
+	std::string insertQuery = "INSERT INTO results (user_id, song_id, score, early_notes, perfect_notes, late_notes, missed_notes, wrong_notes, midi_file) "
+							  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+	//SQLRETURN returnExecCheck = SQLExecDirectA(handleStatement, (SQLCHAR*)insertQuery.c_str(), SQL_NTS);
+
+	// SQLPrepareA -> Send to databse and see if it's correct but don't push it
+	SQLRETURN returnExecCheck = SQLPrepareA(handleStatement, (SQLCHAR*)insertQuery.c_str(), SQL_NTS);
+	if (returnExecCheck != SQL_SUCCESS && returnExecCheck != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "[DB] Insert results unsuccessful" << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement); // Free only this handle and not the connection
+		return false;
+	}
+
+	// Bind
+	SQLLEN midiSize = midiBuffer.size();
+
+	//SQLRETURN SQL_API SQLBindParameter(
+	//	SQLHSTMT           hstmt,
+	//	SQLUSMALLINT       ipar,
+	//	SQLSMALLINT        fParamType,
+	//	SQLSMALLINT        fCType,
+	//	SQLSMALLINT        fSqlType,
+	//	SQLULEN            cbColDef,
+	//	SQLSMALLINT        ibScale,
+	//	SQLPOINTER         rgbValue,
+	//	SQLLEN             cbValueMax,
+	//	SQLLEN * pcbValue);
+
+	SQLBindParameter(handleStatement, 1, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &userID, 0, NULL);
+	SQLBindParameter(handleStatement, 2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &songID, 0, NULL);
+
+	SQLBindParameter(handleStatement, 3, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &t_stats.m_score, 0, NULL);
+	SQLBindParameter(handleStatement, 4, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &t_stats.m_earlyNotes, 0, NULL);
+	SQLBindParameter(handleStatement, 5, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &t_stats.m_perfectNotes, 0, NULL);
+	SQLBindParameter(handleStatement, 6, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &t_stats.m_lateNotes, 0, NULL);
+	SQLBindParameter(handleStatement, 7, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &t_stats.m_missedNotes, 0, NULL);
+	SQLBindParameter(handleStatement, 8, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 0, 0, &t_stats.m_wrongNotes, 0, NULL);
+
+	SQLBindParameter(handleStatement, 9, SQL_PARAM_INPUT, SQL_C_BINARY, SQL_VARBINARY, midiSize, 0, midiBuffer.data(), midiSize, &midiSize);
+
+	// Push
+	//returnExecCheck = SQLExecDirectA
+	returnExecCheck = SQLExecute(handleStatement);
+	if (returnExecCheck != SQL_SUCCESS && returnExecCheck != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "[DB] Insert results unsuccessful after binding" << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement); 
+		return false;
+	}
+
+	std::cerr << "[DB] Insert results successful after binding" << std::endl;
+	SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+	return true;
 }
 
 int Database::getSongID(const std::string& t_songName)
