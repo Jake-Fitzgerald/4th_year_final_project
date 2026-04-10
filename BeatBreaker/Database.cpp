@@ -195,6 +195,36 @@ bool Database::submitResult(std::string t_username, std::string t_songName, Sess
 	return false;
 }
 
+int Database::getSongID(std::string& t_songName)
+{
+	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
+
+	std::string query = "SELECT id FROM songs WHERE song_name = '" + t_songName + "'";
+	SQLRETURN returnExecCheck = SQLExecDirectA(handleStatement, (SQLCHAR*)query.c_str(), SQL_NTS);
+
+	if (returnExecCheck != SQL_SUCCESS && returnExecCheck != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "[DB] Get song ID unsuccessful" << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement); // Free only this handle and not the connection
+		return -1;
+	}
+
+	int songId = -1;
+	SQLBindCol(handleStatement, 1, SQL_C_LONG, &songId, sizeof(songId), NULL);
+
+	if (SQLFetch(handleStatement) == SQL_SUCCESS)
+	{
+		std::cerr << "[DB] Found a song id: " << songId << " for song: " << t_songName << std::endl;
+	}
+	else
+	{
+		std::cerr << "[DB] Song not found: " << t_songName << std::endl;
+	}
+
+	SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+	return songId;
+}
+
 bool Database::uploadMIDI(std::string& t_filePath, std::vector<char>& t_outputBuffer)
 {
 	std::ifstream file(t_filePath, std::ifstream::in | std::ios::binary);
