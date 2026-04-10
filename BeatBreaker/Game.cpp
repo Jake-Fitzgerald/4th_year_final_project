@@ -150,8 +150,17 @@ void Game::processEvents()
 		{
 			processMouseRelease(newEvent);
 		}
-		sf::Event event = *newEvent;
-		m_gameOver.handleEvent(event);
+
+		if (m_currentGameState == ResultsScene)
+		{
+			sf::Event event = *newEvent;
+			m_gameOver.handleEvent(event);
+		}
+		if (m_currentGameState == SongSelectionScene)
+		{
+			sf::Event event = *newEvent;
+			m_songSelect.handleEvent(event);
+		}
 	}
 }
 
@@ -577,7 +586,10 @@ void Game::update(sf::Time t_deltaTime)
 	if (m_currentGameState == GameStates::ResultsScene)
 	{
 		m_gameOver.update(dtConverted);
-
+	}
+	if (m_currentGameState == GameStates::SongSelectionScene)
+	{
+		m_songSelect.update(dtConverted);
 	}
 }
 

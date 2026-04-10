@@ -161,7 +161,7 @@ private:
 	float m_fps = 0.0f;
 	int m_frameCount = 0;
 	// BG
-	const sf::Color BG_COLOUR{ 60, 30, 80, 50 };
+	const sf::Color BG_COLOUR{ 100, 150, 200, 80 };
 
 	// Options
 	Options m_options;

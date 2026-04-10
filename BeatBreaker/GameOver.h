@@ -67,8 +67,6 @@ private:
 	sf::Text m_pbScoreText;
 	sf::Text m_pbScoreValueText;
 
-	// Statistic Text
-
 	sf::Text m_songNameText;
 
 	// UI
@@ -104,7 +102,6 @@ private:
 	sf::RectangleShape m_saveServerButton;
 	sf::Text m_saveServerButtonText;
 
-	// Statistics
 	int m_earlyNotes = 0;
 	int m_perfectNotes = 0;
 	int m_lateNotes = 0;
@@ -115,7 +112,6 @@ private:
 	int m_currentNotesHit = 0;
 	float m_anps = 0.0f;
 
-	// Statistic Text
 	sf::Text m_missedNotesText;
 	sf::Text m_missedNotesValueText;
 	sf::Text m_earlyNotesText;
@@ -131,7 +127,7 @@ private:
 	sf::Text m_hitpercentageValueText;
 	sf::Text m_hitNotesText;
 	sf::Text m_hitNotesValueText;
-	sf::Text m_anpsText; // Average Notes per second
+	sf::Text m_anpsText; 
 	sf::Text m_anpsValueText;
 
 };

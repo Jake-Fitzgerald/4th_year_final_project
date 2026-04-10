@@ -86,6 +86,9 @@ public:
 	bool returnClick(sf::Vector2f t_mousePos);
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
+	void handleEvent(sf::Event& t_event);
+	void update(float t_deltaTime);
+
 	std::string getMidiPathString();
 	std::string getSongName();
 	std::string getPreviewPathString();
@@ -149,5 +152,11 @@ private:
 	sf::RectangleShape m_modeButtonsTextFrame;
 	sf::Text m_modeButtonsFrameText;
 	sf::Color c_frameColour = sf::Color(100, 100, 100, 100);
+
+	sf::Vector2f m_loadMidiFieldPos{ paddingX, paddingY + 525.0f };
+	sf::Vector2f m_fieldSize{ 400.0f, 50.0f };
+	int m_characterSize = 40;
+	int m_maxLength = 20;
+	InputField m_loadMidiField;
 };
 

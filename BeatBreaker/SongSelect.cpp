@@ -5,7 +5,8 @@ SongSelect::SongSelect(std::shared_ptr<const sf::Font> font)
 						  m_beginText(*font),
 						  m_previewText(*font),
 						  m_songListFrameText(*font),
-						  m_modeButtonsFrameText(*font)
+						  m_modeButtonsFrameText(*font),
+				          m_loadMidiField(font, m_loadMidiFieldPos, m_fieldSize, m_characterSize)
 {
 	b_isSongChosen = false;
 }
@@ -243,6 +244,8 @@ void SongSelect::render(sf::RenderWindow& t_window)
 	t_window.draw(m_previewText);
 	t_window.draw(m_songListFrameText);
 	t_window.draw(m_modeButtonsFrameText);
+
+	m_loadMidiField.render(t_window);
 }
 
 SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
@@ -293,6 +296,13 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 
 		if (checkIfAreaClicked(t_mousePos, beginTopLeft, beginSize) == true)
 		{
+			std::string customPath = m_loadMidiField.getString();
+			if (!customPath.empty())
+			{
+				m_selectedPath = "ASSETS\\AUDIO\\MUSIC\\" + customPath + ".mid";
+				m_selectedName = customPath; //might chnage this
+			}
+
 			std::cerr << "Begin button with song: " << m_selectedPath << std::endl;
 			return SongClickResult::BeginClicked;
 		}
@@ -340,6 +350,16 @@ bool SongSelect::checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topL
 	{
 		return false;
 	}
+}
+
+void SongSelect::handleEvent(sf::Event& t_event)
+{
+	m_loadMidiField.handleEvent(t_event);
+}
+
+void SongSelect::update(float t_deltaTime)
+{
+	m_loadMidiField.update(t_deltaTime);
 }
 
 std::string SongSelect::getMidiPathString()
