@@ -34,7 +34,7 @@ Game::Game() :
 	    m_songSelect(m_jerseyFont),
 	    m_leaderboard(m_jerseyFont),
 		m_mainMenu(m_jerseyFont),
-	    m_gameOver(m_jerseyFont)
+	    m_gameOver(m_jerseyFont, m_database)
 		//m_keyboard(m_soundManager),
 		
 {

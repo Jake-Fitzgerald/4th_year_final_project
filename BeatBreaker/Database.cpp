@@ -195,7 +195,7 @@ bool Database::submitResult(std::string t_username, std::string t_songName, Sess
 	return false;
 }
 
-int Database::getSongID(std::string& t_songName)
+int Database::getSongID(const std::string& t_songName)
 {
 	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
 
@@ -209,12 +209,12 @@ int Database::getSongID(std::string& t_songName)
 		return -1;
 	}
 
-	int songId = -1;
-	SQLBindCol(handleStatement, 1, SQL_C_LONG, &songId, sizeof(songId), NULL);
+	int songID = -1;
+	SQLBindCol(handleStatement, 1, SQL_C_LONG, &songID, sizeof(songID), NULL);
 
 	if (SQLFetch(handleStatement) == SQL_SUCCESS)
 	{
-		std::cerr << "[DB] Found a song id: " << songId << " for song: " << t_songName << std::endl;
+		std::cerr << "[DB] Found a song id: " << songID << " for song: " << t_songName << std::endl;
 	}
 	else
 	{
@@ -222,7 +222,56 @@ int Database::getSongID(std::string& t_songName)
 	}
 
 	SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
-	return songId;
+	return songID;
+}
+
+int Database::getUserID(const std::string& t_username)
+{
+	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
+
+	std::string query = "SELECT id FROM users WHERE username = '" + t_username + "'";
+	SQLRETURN returnExecCheck = SQLExecDirectA(handleStatement, (SQLCHAR*)query.c_str(), SQL_NTS);
+
+	if (returnExecCheck != SQL_SUCCESS && returnExecCheck != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "[DB] Get user ID unsuccessful" << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement); // Free only this handle and not the connection
+		return -1;
+	}
+
+	int userID = -1;
+	SQLBindCol(handleStatement, 1, SQL_C_LONG, &userID, sizeof(userID), NULL);
+
+	if (SQLFetch(handleStatement) == SQL_SUCCESS)
+	{
+		std::cerr << "[DB] Found a user id: " << userID << " for user: " << t_username << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+		return userID;
+	}
+	else
+	{
+		std::cerr << "[DB] User not found so insert: " << t_username << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+		SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
+
+		// Insert
+		std::string insertQuery = "INSERT INTO users (username) VALUES ('" + t_username + "')";
+		SQLExecDirectA(handleStatement, (SQLCHAR*)insertQuery.c_str(), SQL_NTS);
+
+		// Get
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+		SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
+		std::string selectQuery = "SELECT TOP 1 id FROM users ORDER BY id DESC";
+		SQLExecDirectA(handleStatement, (SQLCHAR*)selectQuery.c_str(), SQL_NTS);
+
+		SQLBindCol(handleStatement, 1, SQL_C_LONG, &userID, sizeof(userID), NULL);
+		SQLFetch(handleStatement);
+
+		std::cerr << "Inserted user with ID of: " << userID << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+		return userID;
+	}
+	//return userID;
 }
 
 bool Database::uploadMIDI(std::string& t_filePath, std::vector<char>& t_outputBuffer)

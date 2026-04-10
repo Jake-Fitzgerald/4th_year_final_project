@@ -1,6 +1,6 @@
 #include "GameOver.h"
 
-GameOver::GameOver(std::shared_ptr<const sf::Font> font) 
+GameOver::GameOver(std::shared_ptr<const sf::Font> font, Database& t_database)
 	: m_titleText(*font),
 	  m_scoreText(*font),
 	  m_scoreValueText(*font),
@@ -28,7 +28,9 @@ GameOver::GameOver(std::shared_ptr<const sf::Font> font)
 	  m_hitNotesText(*font),
 	  m_hitNotesValueText(*font),
 	  m_anpsText(*font),
-	  m_anpsValueText(*font)
+	  m_anpsValueText(*font),
+	  // Database
+	  m_database(&t_database)
 {
 	m_saveServerField.setPlaceholderString("Write to server...");
 	m_saveMidiField.setPlaceholderString("Write to midi...");
@@ -350,7 +352,7 @@ void GameOver::setSessionStats(SessionStats& t_stats)
 	m_hitpercentageValueText.setString(std::to_string(hitPercentage) + "%");
 
 	//m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
-	m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100).substr(0, 4));
+	m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
 
 	updatePBScore();
 }

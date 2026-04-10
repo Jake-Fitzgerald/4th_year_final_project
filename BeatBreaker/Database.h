@@ -36,7 +36,10 @@ public:
 
 	bool submitResult(std::string t_username, std::string t_songName, SessionStats& t_stats);
 
-	bool uploadMIDI(std::string& t_filePath, std::vector<uint8_t>& t_outputBuffer);
+	int getSongID(const std::string& t_songName);
+	int getUserID(const std::string& t_username);
+
+	bool uploadMIDI(std::string& t_filePath, std::vector<char>& t_outputBuffer);
 
 	void SQLCleanup(SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement);
 

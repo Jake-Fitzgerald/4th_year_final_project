@@ -5,6 +5,7 @@
 #include <iostream>
 #include "InputField.h"
 #include "MidiWrite.h"
+#include "Database.h"
 
 /*
 	TODO:
@@ -19,7 +20,7 @@
 class GameOver
 {
 public:
-	GameOver(std::shared_ptr<const sf::Font> font);
+	GameOver(std::shared_ptr<const sf::Font> font, Database& t_database);
 
 	void setupGameOver();
 	void setupUIFrames();
@@ -45,6 +46,8 @@ public:
 	void render(sf::RenderWindow& t_window);
 
 private:
+	Database* m_database;
+
 	int m_score = 0;
 	int m_pbScore = 0;
 
