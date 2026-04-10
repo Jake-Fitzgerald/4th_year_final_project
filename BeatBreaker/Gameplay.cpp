@@ -407,6 +407,14 @@ void Gameplay::updateStatistics()
 	{
 		m_hitpercentageValueText.setString("0%");
 	}
+
+	if (m_playbackTime > 0)
+	{
+		float avgNotePerSec = static_cast<float>(m_currentNotesHit) / static_cast<float>(m_playbackTime);
+		m_anps = avgNotePerSec;
+		//m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
+		m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
+	}
 }
 
 void Gameplay::resetSession()
@@ -467,7 +475,8 @@ SessionStats Gameplay::getSessionStats()
 		m_missedNotes,
 		m_wrongNotes,
 		m_noteCountTotal,
-		m_currentNotesHit
+		m_currentNotesHit,
+		m_anps
 	};
 }
 

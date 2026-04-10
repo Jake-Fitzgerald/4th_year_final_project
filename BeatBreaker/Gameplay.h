@@ -192,6 +192,7 @@ private:
 
     int m_noteCountTotal = 0;
     int m_currentNotesHit = 0;
+    float m_anps = 0.0f;
 
     // Statistic Text
     sf::Text m_missedNotesText;

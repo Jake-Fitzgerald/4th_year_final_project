@@ -38,6 +38,7 @@ struct SessionStats
     int m_wrongNotes = 0;
     int m_noteCountTotal = 0;
     int m_currentNotesHit = 0;
+    float m_anps = 0.0f;
 };
 
 //std::string ODBCString = "Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"

@@ -38,7 +38,8 @@ CREATE TABLE results (
 	perfect_notes INT,
 	late_notes INT,
 	missed_notes INT,
-	wrong_notes INT
+	wrong_notes INT,
+	midi_file VARBINARY(MAX)
 );
 
 -----------------------------

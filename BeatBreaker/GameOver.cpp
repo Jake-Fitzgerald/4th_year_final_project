@@ -331,6 +331,7 @@ void GameOver::setSessionStats(SessionStats& t_stats)
 	m_wrongNotes = t_stats.m_wrongNotes;
 	m_noteCountTotal = t_stats.m_noteCountTotal;
 	m_currentNotesHit = t_stats.m_currentNotesHit;
+	m_anps = t_stats.m_anps;
 
 	m_scoreValueText.setString(std::to_string(m_score));
 	m_earlyNotesValueText.setString(std::to_string(m_earlyNotes));
@@ -347,6 +348,9 @@ void GameOver::setSessionStats(SessionStats& t_stats)
 		hitPercentage = (m_currentNotesHit * 100) / m_noteCountTotal;
 	}
 	m_hitpercentageValueText.setString(std::to_string(hitPercentage) + "%");
+
+	//m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
+	m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100).substr(0, 4));
 
 	updatePBScore();
 }

@@ -190,6 +190,43 @@ bool Database::submitScoreFromFile(std::string t_filePath)
 	return true;
 }
 
+bool Database::submitResult(std::string t_username, std::string t_songName, SessionStats& t_stats)
+{
+	return false;
+}
+
+bool Database::uploadMIDI(std::string& t_filePath, std::vector<char>& t_outputBuffer)
+{
+	std::ifstream file(t_filePath, std::ifstream::in | std::ios::binary);
+
+	if (!file.is_open())
+	{
+		std::cerr << "[DB] Couldn't open the file path at: " << t_filePath << std::endl;
+		return false;
+	}
+
+	// File size
+	file.seekg(0, std::ios::end);
+	std::streamsize fileSize = file.tellg();
+	file.seekg(0, std::ios::beg);
+
+	t_outputBuffer.resize(fileSize);
+	file.read(t_outputBuffer.data(), fileSize);
+
+	if (file)
+	{
+		std::cerr << "[DB] Midi read successful: " << fileSize << std::endl;
+	}
+	else
+	{
+		std::cerr << "[DB] Midi read unsuccessful: " << std::endl;
+		return false;
+	}
+
+	file.close();
+	return true;
+}
+
 void Database::SQLCleanup(SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement)
 {
 	SQLFreeHandle(SQL_HANDLE_STMT, t_handleStatement);
