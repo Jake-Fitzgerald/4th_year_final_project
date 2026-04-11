@@ -21,10 +21,9 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 	m_fpsText.setOutlineThickness(2.0f);
 	m_fpsText.setCharacterSize(20U);
 	m_fpsText.setString("???");
-	b_isFPSVisible = true;
+	b_isFPSVisible = false;
 
 	// Midi Info
-	b_isFPSVisible = true;
 	m_midiFileNameText.setPosition(m_midiTextPos);
 	m_midiFileNameText.setFillColor(sf::Color::White);
 	m_midiFileNameText.setOutlineColor(sf::Color::Black);

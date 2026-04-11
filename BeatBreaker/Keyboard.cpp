@@ -10,7 +10,6 @@ void Keyboard::setupKeys()
     m_keys.clear();
     int whiteIndex = 0;
 
-    // Two full octaves: C3 to B4
     for (int octave = 3; octave <= 4; octave++)
     {
         setupWhiteKey(whiteIndex++, "C", octave);
@@ -27,7 +26,6 @@ void Keyboard::setupKeys()
         setupWhiteKey(whiteIndex++, "B", octave);
     }
 
-    // Final C5
     setupWhiteKey(whiteIndex++, "C", 5);
 
     m_baseWidth = (whiteIndex) * (m_whiteKeySize.x + m_whiteSpacing) - m_whiteSpacing;
@@ -57,14 +55,24 @@ void Keyboard::setupTriggers()
     m_noteSoundTrigger.setFillColor(c_noteSoundTriggerColour);
 }
 
-void Keyboard::setEasyInput()
+
+void Keyboard::setEasyInputFlag(bool t_bool)
 {
-    //m_inputTrigger
+    b_easyInput = t_bool;
 
-    //if (b_EasyInput == true)
-    //{
+    if (b_easyInput == true)
+    {
+        m_inputTriggerSizeY = m_inputEasySize;
+    }
+    else
+    {
+        m_inputTriggerSizeY = m_inputNormalSize;
+    }
+}
 
-    //}
+bool Keyboard::getEasyInputFlag()
+{
+    return b_easyInput;
 }
 
 void Keyboard::setupWhiteKey(int t_whiteIndex, std::string t_noteLetter, int t_octave)

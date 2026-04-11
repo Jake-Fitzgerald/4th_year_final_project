@@ -12,7 +12,7 @@ void VisualiserSelect::setupButtonsVisSelect()
 		VisButton button(m_font);
 
 		button.m_buttonShape.setSize(m_buttonSize);
-		button.m_buttonShape.setPosition(sf::Vector2f{ paddingX , paddingY + i * m_spacing });
+		button.m_buttonShape.setPosition(sf::Vector2f{ paddingX + 400.0f, paddingY + 200.0f + (i * m_spacing) });
 		button.m_buttonShape.setFillColor(sf::Color::Blue);
 		button.m_buttonShape.setOutlineThickness(2.0f);
 		button.m_buttonShape.setOutlineColor(sf::Color::Black);
@@ -28,9 +28,9 @@ void VisualiserSelect::setupButtonsVisSelect()
 			button.m_buttonText.setString("Drum Visualiser");
 		}
 		
-		button.m_buttonText.setCharacterSize(20);
+		button.m_buttonText.setCharacterSize(40);
 		button.m_buttonText.setFillColor(sf::Color::White);
-		button.m_buttonText.setPosition(sf::Vector2f{ button.m_buttonShape.getPosition().x + 10.f, button.m_buttonShape.getPosition().y + 10.f });
+		button.m_buttonText.setPosition(sf::Vector2f{ button.m_buttonShape.getPosition().x + 80.f, button.m_buttonShape.getPosition().y + 10.f });
 
 		m_buttons.push_back(button);
 	}

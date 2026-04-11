@@ -25,13 +25,10 @@ public:
 	void setupGameOver();
 	void setupUIFrames();
 	void setupText();
-	void setupServerField();
-	void setupMidiField();
 	void setupFieldButtons();
 	void setupTextures();
 	void setSongName(std::string t_name);
 
-	
 	void updateScore();
 	void updatePBScore();
 
@@ -46,6 +43,9 @@ public:
 	void update(float t_deltatime);
 
 	void render(sf::RenderWindow& t_window);
+
+	void calculateRank();
+	void setRank(float t_rankAmount);
 
 private:
 	Database* m_database;
@@ -72,17 +72,18 @@ private:
 
 	// UI
 	sf::RectangleShape m_scoreUIFrame;
+	sf::RectangleShape m_scoreFrameBorder;
 	sf::RectangleShape m_statisticUIFrame;
 	sf::RectangleShape m_statisticFrameBorder;
 	sf::Vector2f m_frameScoreSize{ 300.0f, 400.0f };
 	sf::Vector2f m_frameStatsSize{ 500.0f, 400.0f };
 	sf::Vector2f m_frameTextSize{ 200.0f, 50.0f };
 	sf::Color c_scoreFrameColour = sf::Color(50, 200, 150, 100);
+	sf::Color c_scoreBorderColour = sf::Color(40, 40, 40, 170);
 	sf::Color c_statisticFrameColour = sf::Color(100, 100, 250, 100);
 	sf::Color c_statisticBorderColour = sf::Color(40, 40, 40, 170);
 	sf::RectangleShape m_titleFrame;
 
-	// Fields
 	sf::Vector2f m_serverFieldPos{ paddingX + 25.0f, paddingY + 525.0f };
 	sf::Vector2f m_midiFieldPos{ paddingX + 650.0f, paddingY + 525.0f };
 	sf::Vector2f m_fieldSize{ 400.0f, 50.0f };
@@ -136,5 +137,8 @@ private:
 	sf::Sprite m_serverSprite{ m_serverTex };
 	sf::Texture m_midiTex;
 	sf::Sprite m_midiSprite{ m_midiTex };
+
+	sf::Text m_rankText;
+	sf::Text m_rankValueText;
 };
 

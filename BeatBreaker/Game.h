@@ -106,7 +106,7 @@ private:
 	void processKeysPressed(const std::optional<sf::Event> t_event);
 	void processMouseRelease(const std::optional<sf::Event> t_event);
 	void checkKeyboardState();
-	void processKeyboard(float dtSeconds); // By frame
+	void processKeyboard(float dtSeconds); 
 	void update(sf::Time t_deltaTime);
 	void render();
 	
@@ -118,19 +118,15 @@ private:
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
 	void changeMidiPath(std::string t_pathName);
-	void changeGameState();
 
-	// Midi Input
 	void setupMidiInput();
 	void freeMidiHandler();
 
-	// MCI Midi Playback
 	void playMidiMCI();
 	void stopMidiMCI();
 
 
 	sf::RenderWindow m_window; 
-	//sf::Font m_jerseyFont;
 	std::shared_ptr<const sf::Font> m_jerseyFont;
 	
 	sf::Texture m_DELETElogoTexture;

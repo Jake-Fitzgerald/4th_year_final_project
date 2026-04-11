@@ -30,7 +30,7 @@ void PianoVisualiser::setupPianoShapes()
     setupWhiteKey(keyIndex++, "C", 6);
 
     // UI
-    m_keyboardBase.setFillColor(sf::Color::Black);
+    m_keyboardBase.setFillColor(sf::Color(10,10,10,200));
 
     float firstKeyPosX = m_keys.at(0).shape.getPosition().x;
     float firstKeyPosY = m_keys.at(0).shape.getPosition().y;
@@ -39,24 +39,18 @@ void PianoVisualiser::setupPianoShapes()
     float lastKeyPosX = m_keys.at(keyVecSize).shape.getPosition().x;
     float lastKeyPosY = m_keys.at(keyVecSize).shape.getPosition().y;
 
-
-    m_keyboardBase.setPosition(sf::Vector2f{ firstKeyPosX, firstKeyPosY });
+    m_keyboardBase.setPosition(sf::Vector2f{ firstKeyPosX - 25.0f, firstKeyPosY - 25.0f});
 
     sf::Vector2f firstKey = sf::Vector2f{ firstKeyPosX, firstKeyPosY };
     sf::Vector2f lastKey = sf::Vector2f{ lastKeyPosX, lastKeyPosY };
 
-    m_keyboardBase.setSize(sf::Vector2f{ firstKey.x, lastKey.y });
+    float keyboardWidth = lastKey.x - firstKey.x;
+    m_keyboardBase.setSize(sf::Vector2f{ keyboardWidth + (38.0f + 50.0f), 150.0f });
 
-    // Set each key as a collidable
     for (int i = 0; i < m_keys.size(); i++)
     {
         m_collisionManager->addCollidable(m_keys[i].shape, "Keys");
     }
-
-    // Sits just above the keys, same width as the full keyboard
-    m_inputCollider.setSize(sf::Vector2f{ m_keys.back().shape.getPosition().x - m_keys.front().shape.getPosition().x + whiteKeySize.x, 40.0f });
-    m_inputCollider.setPosition(sf::Vector2f{ m_keys.front().shape.getPosition().x, pianoPosY - 40.0f });
-    m_inputCollider.setFillColor(sf::Color(0, 255, 0, 100));
 }
 
 void PianoVisualiser::setupWhiteKey(int t_index, std::string t_noteLetter, int t_octave)
@@ -123,7 +117,6 @@ void PianoVisualiser::setupPianoSounds()
 
 void PianoVisualiser::keysTurnOn(int t_KeyPos)
 {
-    // Get the midi data's key position and change the colour to red
     if (t_KeyPos >= 0 && t_KeyPos < m_keys.size())
     {
         m_keys[t_KeyPos].b_isPressed = true;
@@ -143,10 +136,8 @@ void PianoVisualiser::keysTurnOff(int t_KeyPos)
 
 void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
 {
-    // UI
     t_window.draw(m_keyboardBase);
 
-    // White keys first
     for (int i = 0; i < m_keys.size(); i++)
     {
         if (m_keys[i].b_isSharpKey == false)
@@ -155,7 +146,6 @@ void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
         }
     }
 
-    // Black keys on top of the white ones
     for (int i = 0; i < m_keys.size(); i++)
     {
         if (m_keys[i].b_isSharpKey == true)
@@ -163,14 +153,6 @@ void PianoVisualiser::renderKeys(sf::RenderWindow& t_window)
             t_window.draw(m_keys[i].shape);
         }
     }
-
-    t_window.draw(m_inputCollider);
-
-    if (b_testNoteActive == true)
-    {
-        //t_window.draw(m_testNote.noteShape);;
-    }
-   
 }
 
 void PianoVisualiser::handleClick(sf::Vector2f t_mousePos)
@@ -236,24 +218,6 @@ void PianoVisualiser::noteOn(const std::string& t_noteName)
         {
             keysTurnOn(i);
             m_soundManager->play(t_noteName);
-
-            // Collision Test
-            //if (checkInputCollision() == true)
-            //{
-            //    if (m_testNote.targetNoteName == t_noteName)
-            //    {
-            //        std::cerr << "HIT! : " << t_noteName << std::endl;
-            //        b_testNoteActive = false; 
-            //    }
-            //    else
-            //    {
-            //        std::cerr << "WRONG KEY!" << std::endl;
-            //    }
-            //}
-            //else
-            //{
-            //    std::cerr << "MISS! No note in hit zone" << std::endl;
-            //}
         }
     }
 }
@@ -270,56 +234,12 @@ void PianoVisualiser::noteOff(const std::string& t_noteName)
     }
 }
 
-void PianoVisualiser::spawnTestNote()
-{
-    for (int i = 0; i < m_keys.size(); i++)
-    {
-        //// Base note 
-        //if (m_keys[i].noteName == "C4")
-        //{
-        //    m_testNote.noteShape.setSize(sf::Vector2f{ m_keys[i].shape.getSize().x, 20.0f });
-        //    m_testNote.noteShape.setFillColor(sf::Color::Cyan);
-        //    m_testNote.noteShape.setPosition(sf::Vector2f{ m_keys[i].shape.getPosition().x, m_noteTestSpawnY });
-        //    m_testNote.targetNoteName = "C4";
-        //    b_testNoteActive = true;
-        //    return;
-        //}
-
-        // Early
-
-
-        // Late
-    }
-}
-
 void PianoVisualiser::updateNotes(float t_deltaTime)
 {
     if (b_testNoteActive == false)
     {
         return;
     }
-
-    //m_testNote.noteShape.move(sf::Vector2f{ 0.0f, m_noteSpeed * t_deltaTime });
-
-    //// Check collision against the Keys layer
-    //if (m_collisionManager->checkCollision(m_testNote.noteShape.getGlobalBounds(), "Keys"))
-    //{
-    //    std::cerr << "Test note hit: " << m_testNote.targetNoteName << std::endl;
-    //    noteOn(m_testNote.targetNoteName);
-    //    b_testNoteActive = false;
-    //}
-
-    // Delete the note when it goes offscreen
 }
 
-//bool PianoVisualiser::checkInputCollision()
-//{
-//    if (b_testNoteActive == false)
-//    {
-//        return false;
-//    }
-//
-//    // Check if the falling note overlaps the hit zone
-//    return m_testNote.noteShape.getGlobalBounds().findIntersection(m_inputCollider.getGlobalBounds()).has_value();
-//}
 

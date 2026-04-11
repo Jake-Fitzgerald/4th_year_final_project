@@ -356,7 +356,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_currentGameState = GameStates::MainMenuScene;
 		}
 	}
-	else if (m_currentGameState == GameStates::VisualiserSelectScene) // Visualiser Selection
+	else if (m_currentGameState == GameStates::VisualiserSelectScene) 
 	{
 		int buttonSelected = m_visSelect.mouseClick(mouseWorldPos);
 
@@ -556,7 +556,12 @@ void Game::update(sf::Time t_deltaTime)
 	pianoVisualiser.updateNotes(dtConverted);
 
 	// Scenes
-	if (m_currentGameState == GameStates::MainMenuScene || m_currentGameState == GameStates::ResultsScene)
+	if (m_currentGameState == GameStates::MainMenuScene || 
+		m_currentGameState == GameStates::ResultsScene || 
+		m_currentGameState == GameStates::MidiFileSelectScene ||
+		m_currentGameState == GameStates::VisualiserSelectScene ||
+		m_currentGameState == GameStates::PianoVis ||
+		m_currentGameState == GameStates::DrumVis)
 	{
 		m_bgScroll_1.update(dtConverted);
 	}
@@ -569,7 +574,6 @@ void Game::update(sf::Time t_deltaTime)
 			m_gameOver.setupGameOver();
 			m_gameOver.setSessionStats(m_gameplay.getSessionStats());
 			m_gameOver.setRecordedNotes(m_gameplay.getRecordedNotes());
-			//m_gameOver.setSongName(m_gameplay.getSongName());
 			m_gameOver.setSongName(m_songSelect.getSongName());
 			
 			m_currentGameState = GameStates::ResultsScene;
@@ -607,15 +611,16 @@ void Game::render()
 		m_options.renderOptions(m_window);
 	}
 
-	// ----- Selection Scenes -----
 	// Midi File Select
 	if (m_currentGameState == GameStates::MidiFileSelectScene)
 	{
+		m_bgScroll_1.render(m_window);
 		m_midiFileSelectScene.render(m_window);
 	}
 	// Visualiser Select
 	if (m_currentGameState == GameStates::VisualiserSelectScene)
 	{
+		m_bgScroll_1.render(m_window);
 		m_visSelect.renderVisSelect(m_window);
 	}
 	// Song Select
@@ -628,19 +633,18 @@ void Game::render()
 	// Track Visualiser
 	if (m_currentGameState == GameStates::TrackVis)
 	{
-		// visualiser shapes
 		trackVisualiser.renderTrackVis(m_window);
 	}
 	// Piano Visualiser
 	if (m_currentGameState == GameStates::PianoVis)
 	{
-		// visualiser shapes
+		m_bgScroll_1.render(m_window);
 		pianoVisualiser.renderKeys(m_window);
 	}
 	// Drum Visualiser
 	if (m_currentGameState == GameStates::DrumVis)
 	{
-		// visualiser shapes
+		m_bgScroll_1.render(m_window);
 		drumVisualiser.renderDrums(m_window);
 	}
 
@@ -656,7 +660,6 @@ void Game::render()
 		m_gameOver.render(m_window);
 	}
 
-	// UI
 	m_hud.drawHUD(m_window);
 	gridDisplay.renderGrid(m_window);
 	

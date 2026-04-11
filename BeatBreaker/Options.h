@@ -43,8 +43,6 @@ public:
 	bool handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager &t_soundManager);
 	void muteSound(SoundManager& t_soundManager);
 
-	void getSoundTypes();
-
 	void savePreferences();
 	void loadPreferences(SoundManager& t_soundManager);
 
@@ -71,7 +69,6 @@ private:
 	sf::RectangleShape m_saveButton;
 	sf::RectangleShape m_loadButton;
 
-	// Positions
 	sf::Vector2f m_screenCentre = SCREEN_CENTRE;
 	sf::Vector2f m_optionsPos = sf::Vector2f{ m_screenCentre.x - 100.0f, m_screenCentre.y - 300.0f };
 	sf::Vector2f m_musicPos = sf::Vector2f{ m_screenCentre.x - 100.0f, m_screenCentre.y - 100.0f };
@@ -87,26 +84,24 @@ private:
 	sf::Vector2f m_buttonSmallScale = sf::Vector2f{ 100.0f, 50.0f };
 	sf::Vector2f m_buttonTestScale = sf::Vector2f{ 50.0f, 50.0f };
 
-	// Keep track of the sound types (assume they are already at full volume)
 	float m_currentMusicVolume = 100.0f;
 	float m_currentSFXVolume = 100.0f;
 
-	// Textures/Sprites
-	// Music Note
+
 	sf::Texture m_musicNoteTex;
 	sf::Sprite m_musicNoteSprite{ m_musicNoteTex };
-	// SFX Note 
+
 	sf::Texture m_sfxNoteTex;
 	sf::Sprite m_sfxNoteSprite{ m_sfxNoteTex };
-	// Background
+
 	sf::Texture m_bgTex;
 	sf::Sprite m_bgSprite{ m_bgTex };
 
-	// Midi Options
+
 	std::vector<OptionButton> m_buttons;
 	bool b_playNotesNoInput = false;
 
-	// UI Background Frames
+
 	sf::RectangleShape m_soundOptionsFrame;
 	sf::RectangleShape m_soundTextFrame;
 	sf::RectangleShape m_midiOptionsFrame;
@@ -121,6 +116,6 @@ private:
 	sf::Text m_soundFrameText;
 
 	Gameplay* m_gameplay;
-	//Keyboard* m_keyboard;
+	Keyboard* m_keyboard;
 };
 

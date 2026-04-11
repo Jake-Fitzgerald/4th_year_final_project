@@ -29,8 +29,11 @@ GameOver::GameOver(std::shared_ptr<const sf::Font> font, Database& t_database)
 	  m_hitNotesValueText(*font),
 	  m_anpsText(*font),
 	  m_anpsValueText(*font),
+	  m_rankText(*font),
+	  m_rankValueText(*font),
 	  // Database
 	  m_database(&t_database)
+
 {
 	resetSessionStats();
 
@@ -59,6 +62,10 @@ void GameOver::setupUIFrames()
 	m_scoreUIFrame.setOutlineThickness(4.0f);
 	m_scoreUIFrame.setOutlineColor(sf::Color::Black);
 
+	m_scoreFrameBorder.setSize(sf::Vector2f{ 260.0f, 5.0f });
+	m_scoreFrameBorder.setPosition(sf::Vector2f{ m_scoreUIFrame.getPosition().x + 20.0f, m_scoreUIFrame.getPosition().y + 250.0f });
+	m_scoreFrameBorder.setFillColor(c_scoreBorderColour);
+
 	m_statisticUIFrame.setSize(m_frameStatsSize);
 	m_statisticUIFrame.setPosition(sf::Vector2f{ paddingX + 500.0f, paddingY + 100.0f });
 	m_statisticUIFrame.setFillColor(c_statisticFrameColour);
@@ -70,7 +77,7 @@ void GameOver::setupUIFrames()
 	m_statisticFrameBorder.setFillColor(c_statisticBorderColour);
 
 	m_titleFrame.setSize(sf::Vector2f{ SCREEN_WIDTH - 120.0f, 50.0f });
-	m_titleFrame.setPosition(sf::Vector2f{ paddingX, m_titleText.getPosition().y + 20.0f});
+	m_titleFrame.setPosition(sf::Vector2f{ paddingX, m_titleText.getPosition().y + 19.0f});
 	m_titleFrame.setFillColor(sf::Color(70, 80, 100, 130));
 }
 
@@ -91,7 +98,7 @@ void GameOver::setupText()
 	m_scoreText.setOutlineColor(sf::Color::Black);
 	m_scoreText.setOutlineThickness(2.0f);
 	m_scoreText.setCharacterSize(30U);
-	// Value
+
 	m_scoreValueText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 50.0f });
 	m_scoreValueText.setString("0");
 	m_scoreValueText.setFillColor(sf::Color::White);
@@ -105,7 +112,7 @@ void GameOver::setupText()
 	m_pbScoreText.setOutlineColor(sf::Color::Black);
 	m_pbScoreText.setOutlineThickness(2.0f);
 	m_pbScoreText.setCharacterSize(30U);
-	// Value
+
 	m_pbScoreValueText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 125.0f });
 	m_pbScoreValueText.setString("0");
 	m_pbScoreValueText.setFillColor(sf::Color::White);
@@ -113,13 +120,27 @@ void GameOver::setupText()
 	m_pbScoreValueText.setOutlineThickness(2.0f);
 	m_pbScoreValueText.setCharacterSize(30U);
 
-	// Song Name
+
 	m_songNameText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 0.0f });
 	m_songNameText.setString(m_songName);
 	m_songNameText.setFillColor(sf::Color(200, 250, 200, 220));
 	m_songNameText.setOutlineColor(sf::Color::Black);
 	m_songNameText.setOutlineThickness(2.0f);
-	m_songNameText.setCharacterSize(30U);
+	m_songNameText.setCharacterSize(40U);
+
+	m_rankText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 275.0f });
+	m_rankText.setString("Rank: ");
+	m_rankText.setFillColor(sf::Color::White);
+	m_rankText.setOutlineColor(sf::Color::Black);
+	m_rankText.setOutlineThickness(2.0f);
+	m_rankText.setCharacterSize(30U);
+
+	m_rankValueText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 300.0f });
+	m_rankValueText.setString("UNKNOWN");
+	m_rankValueText.setFillColor(sf::Color::White);
+	m_rankValueText.setOutlineColor(sf::Color::Black);
+	m_rankValueText.setOutlineThickness(2.0f);
+	m_rankValueText.setCharacterSize(60U);
 }
 
 void GameOver::setupFieldButtons()
@@ -375,6 +396,7 @@ void GameOver::setSessionStats(SessionStats& t_stats)
 	//m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
 
 	updatePBScore();
+	calculateRank();
 }
 
 void GameOver::resetSessionStats()
@@ -452,6 +474,7 @@ void GameOver::render(sf::RenderWindow& t_window)
 {
 	// UI
 	t_window.draw(m_scoreUIFrame);
+	t_window.draw(m_scoreFrameBorder);
 	t_window.draw(m_statisticUIFrame);
 	t_window.draw(m_statisticFrameBorder); 
 	t_window.draw(m_titleFrame);
@@ -494,4 +517,83 @@ void GameOver::render(sf::RenderWindow& t_window)
 
 	t_window.draw(m_serverSprite);
 	t_window.draw(m_midiSprite);
+
+	t_window.draw(m_rankText);
+	t_window.draw(m_rankValueText);
+}
+
+void GameOver::calculateRank()
+{
+	std::cerr << " " << std::endl;
+
+	float hitAccuracy = 0.0f;
+	if (m_noteCountTotal > 0)
+	{
+		hitAccuracy = (static_cast<float>(m_currentNotesHit) / static_cast<float>(m_noteCountTotal)) * 100;
+		std::cerr << "[RANK] Hit Accuracy: " << hitAccuracy << std::endl;
+	}
+
+	float timingAccuracy = 0.0f;
+	int hitNotes = m_earlyNotes + m_perfectNotes + m_lateNotes;
+	if (hitNotes > 0)
+	{
+		timingAccuracy = (static_cast<float>(m_perfectNotes) / static_cast<float>(hitNotes)) * 100;
+		std::cerr << "[RANK] Timing Accuracy: " << timingAccuracy << std::endl;
+	}
+
+	float penaltyAmount = 0.0f;
+	int wrongNotesPenalty = m_noteCountTotal + m_wrongNotes;
+	if (m_wrongNotes > 0)
+	{
+		float wrongNotesTotal = static_cast<float>(m_noteCountTotal) + static_cast<float>(m_wrongNotes);
+		float wrongAmount = (static_cast<float>(m_wrongNotes) / wrongNotesTotal) * 100;
+		penaltyAmount = 100.0f - wrongAmount;
+		std::cerr << "[RANK] Penalty Amount: " << penaltyAmount << std::endl;
+	}
+	else
+	{
+		penaltyAmount = 100.0f;
+	}
+
+	float maxScore = (100.0f * 50.0f) + (100.0f * 25.0f) + (100.0f * 10.0f);
+	float rankScore = (hitAccuracy * 50.0f) + (timingAccuracy * 25.0f) + (penaltyAmount * 10.0f);
+	float finalScore = (rankScore / maxScore) * 100.0f;
+	std::cerr << "[RANK] Rank Score: " << rankScore << " / " << maxScore << std::endl;
+	std::cerr << "[RANK] Final Score: " << finalScore << std::endl;
+
+	setRank(finalScore);
+}
+
+void GameOver::setRank(float t_rankAmount)
+{
+	if (t_rankAmount >= 90.0f)
+	{
+		m_rankValueText.setString("S");
+		m_rankValueText.setFillColor(sf::Color(255,250,0,255));
+	}
+	else if (t_rankAmount >= 80.0f)
+	{
+		m_rankValueText.setString("A");
+		m_rankValueText.setFillColor(sf::Color(20, 255, 10, 255));
+	}
+	else if (t_rankAmount >= 60.0f)
+	{
+		m_rankValueText.setString("B");
+		m_rankValueText.setFillColor(sf::Color(0, 20, 255, 255));
+	}
+	else if (t_rankAmount >= 40.0f)
+	{
+		m_rankValueText.setString("C");
+		m_rankValueText.setFillColor(sf::Color(205, 245, 10, 255));
+	}
+	else if (t_rankAmount >= 20.0f)
+	{
+		m_rankValueText.setString("D");
+		m_rankValueText.setFillColor(sf::Color(255, 125, 0, 255));
+	}
+	else
+	{ 
+		m_rankValueText.setString("E");
+		m_rankValueText.setFillColor(sf::Color(250, 10, 30, 255));
+	}
 }

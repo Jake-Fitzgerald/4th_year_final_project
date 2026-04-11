@@ -131,7 +131,7 @@ void Options::setupMidiOptions()
 
 	m_buttons.push_back(colTriggerBool);
 
-	// Input Trigger Size
+
 	OptionButton colTriggerSize(m_font);
 
 	colTriggerSize.m_buttonShape.setSize(colTriggerSize.m_buttonSize);
@@ -147,7 +147,7 @@ void Options::setupMidiOptions()
 
 	m_buttons.push_back(colTriggerSize);
 
-	// Input Trigger Size
+
 	OptionButton practiceModeBool(m_font);
 
 	practiceModeBool.m_buttonShape.setSize(practiceModeBool.m_buttonSize);
@@ -185,8 +185,6 @@ void Options::setupUIFrames()
 	m_soundTextFrame.setOutlineThickness(2.0f);
 	m_soundTextFrame.setOutlineColor(sf::Color::Blue);
 
-	// ---------------------------------------------------------------------------------------------------------------------------------
-
 	m_midiOptionsFrame.setSize(m_frameSize);
 	m_midiOptionsFrame.setPosition(sf::Vector2f{ m_buttons[0].m_buttonPos1.x - 25.0f, m_buttons[0].m_buttonPos1.y - 25.0f });
 	m_midiOptionsFrame.setFillColor(c_frameColour);
@@ -206,15 +204,11 @@ void Options::setupUIFrames()
 	m_midiTextFrame.setOutlineThickness(2.0f);
 	m_midiTextFrame.setOutlineColor(sf::Color::Green);
 
-	// ---------------------------------------------------------------------------------------------------------------------------------
-
 	m_saveOptionsFrame.setSize(sf::Vector2f{ 400.0f, 75.0f });
 	m_saveOptionsFrame.setPosition(sf::Vector2f{ m_saveButton.getPosition().x - 25.0f, m_saveButton.getPosition().y - 15.0f});
 	m_saveOptionsFrame.setFillColor(c_frameColour);
 	m_saveOptionsFrame.setOutlineThickness(2.0f);
 	m_saveOptionsFrame.setOutlineColor(sf::Color::Magenta);
-
-	// ---------------------------------------------------------------------------------------------------------------------------------
 
 	m_titleFrame.setSize(sf::Vector2f{ SCREEN_WIDTH - 120.0f, 50.0f });
 	m_titleFrame.setPosition(sf::Vector2f{ paddingX,  m_OptionsText.getPosition().y + 8.0f});
@@ -223,10 +217,8 @@ void Options::setupUIFrames()
 
 void Options::renderOptions(sf::RenderWindow& t_window)
 {
-	// Background
 	t_window.draw(m_bgSprite);
 
-	// UI Frames
 	t_window.draw(m_soundOptionsFrame);
 	t_window.draw(m_soundTextFrame);
 	t_window.draw(m_midiOptionsFrame);
@@ -234,7 +226,6 @@ void Options::renderOptions(sf::RenderWindow& t_window)
 	t_window.draw(m_saveOptionsFrame); 
 	t_window.draw(m_titleFrame);
 
-	// BUTTONS
 	t_window.draw(m_musicButton);
 	t_window.draw(m_musicTestButton);
 	t_window.draw(m_sfxButton);
@@ -244,26 +235,22 @@ void Options::renderOptions(sf::RenderWindow& t_window)
 	t_window.draw(m_saveButton);
 	t_window.draw(m_loadButton);
 
-	// TEXTS
-	// Title
 	t_window.draw(m_OptionsText);
-	// Audio
+
 	t_window.draw(m_musicText);
 	t_window.draw(m_sfxText);
-	// Utilities
+
 	t_window.draw(m_fpsText);
 	t_window.draw(m_returnText);
 	t_window.draw(m_saveText);
 	t_window.draw(m_loadText);
-	// Frame Texts
+
 	t_window.draw(m_midiFrameText);
 	t_window.draw(m_soundFrameText);
 
-	// Sprites
 	t_window.draw(m_musicNoteSprite);
 	t_window.draw(m_sfxNoteSprite);
 
-	// Midi Options
 	for (auto& button : m_buttons)
 	{
 		t_window.draw(button.m_buttonShape);
@@ -353,8 +340,8 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	else if (m_buttons[1].m_buttonShape.getGlobalBounds().contains(t_mousePos))
 	{
 		t_soundManager.play("ui_confirm");
-		bool currentFlag = m_gameplay->getEasyInputFlag();
-		m_gameplay->setEasyInputFlag(!currentFlag);
+		bool currentFlag = m_keyboard->getEasyInputFlag();
+		m_keyboard->setEasyInputFlag(!currentFlag);
 		changeButtonColours();
 	}
 	// Practice
@@ -383,12 +370,6 @@ void Options::muteSound(SoundManager& t_soundManager)
 	}
 
 	t_soundManager.setTypeVolume(SoundType::MUSIC, m_currentMusicVolume);
-}
-
-void Options::getSoundTypes()
-{
-	// to do
-	// get the sound manager again?
 }
 
 void Options::savePreferences()

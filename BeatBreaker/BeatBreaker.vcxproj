@@ -64,7 +64,6 @@
     <ClInclude Include="MidiFileSelect.h" />
     <ClInclude Include="MIDIParse.h" />
     <ClInclude Include="MidiWrite.h" />
-    <ClInclude Include="Notes.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="PianoVisualiser.h" />
     <ClInclude Include="Results.h" />

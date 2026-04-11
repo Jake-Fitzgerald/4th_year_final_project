@@ -38,8 +38,8 @@ private:
 	// Button 
 	float m_posX = paddingX;
 	float m_poY = paddingY;
-	float m_spacing = 60.0f;
-	sf::Vector2f m_buttonSize = { 200.0f, 40.0f };
+	float m_spacing = 120.0f;
+	sf::Vector2f m_buttonSize = { 400.0f, 80.0f };
 
 	std::shared_ptr<const sf::Font> m_font;
 	std::vector<sf::Text> m_buttonTexts;

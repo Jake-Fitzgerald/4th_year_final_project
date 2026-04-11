@@ -39,7 +39,8 @@ public:
 
     void setupKeys();
     void setupTriggers();
-    void setEasyInput();
+    void setEasyInputFlag(bool t_bool);
+    bool getEasyInputFlag();
     void setupSounds();
 
     void render(sf::RenderWindow& t_window);
@@ -97,5 +98,6 @@ private:
     float m_inputNormalSize = 20.0f;
     float m_inputTriggerSizeY = m_inputNormalSize;
     int m_score = 0;
+    bool b_easyInput = false;
 };
 

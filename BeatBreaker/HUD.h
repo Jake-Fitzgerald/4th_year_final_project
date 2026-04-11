@@ -4,26 +4,11 @@
 #include <iostream>
 #include "MIDIParse.h"
 
-/*
-Notes:
-	- FPS counter at the top right corner
-
-	Music Visuals
-	- Beat Markers
-		- Quarter Notes (1, 2, 3, ...)
-		- Full Note	    (..., ..., ..., 4)
-		The quarter note amounts should change depending on the time signature from the MIDI data
-		(test with 4/4 for now)
-	- This is changed dynamically whenever a Midi file is parsed to it will adjust if the time signature is different than 4/4.
-		- Create new rectangles based on the time signature and store them in a vector of sf::rectangles
-*/
-
 class HUD
 {
 public:
 	HUD(const sf::Font& font);
 
-	// Beat Markers
 	void setupBeatMarkers();
 	void setupButtonSprites();
 
@@ -53,7 +38,7 @@ private:
 	// FPS
 	float m_fpsNumber;
 	sf::Text m_fpsText;
-	bool b_isFPSVisible;
+	bool b_isFPSVisible = false;
 
 	std::vector<sf::RectangleShape> m_beatMarkers;
 
@@ -65,7 +50,6 @@ private:
 	sf::Color c_beatMarkerSet = sf::Color(255, 0, 0, 150);
 	sf::Color c_beatMarkerSetWholeNote = sf::Color(0, 255, 0, 200);
 
-	// Buttons 
 	sf::Texture m_playButtonTexture;
 	sf::Sprite m_playButtonSprite;
 	sf::Texture m_pauseButtonTexture;
