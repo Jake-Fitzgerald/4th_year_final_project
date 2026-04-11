@@ -17,10 +17,12 @@ void SongSelect::setupPathStrings()
 {
 	m_pathVector =
 	{
-		{"Debug Gameplay", "ASSETS\\AUDIO\\MUSIC\\Debug Gameplay.mid", SONGDIFFICULTIES::EASY},
+		/*{"Debug Gameplay", "ASSETS\\AUDIO\\MUSIC\\Debug Gameplay.mid", SONGDIFFICULTIES::EASY},*/
 		{"C Scale", "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid", SONGDIFFICULTIES::EASY},
-		{"Note Length", "ASSETS\\AUDIO\\MUSIC\\NoteLengthExample.mid", SONGDIFFICULTIES::EASY},
+		{"Ode To Joy", "ASSETS\\AUDIO\\MUSIC\\OdeToJoy.mid", SONGDIFFICULTIES::EASY},
+		/*{"Note Length", "ASSETS\\AUDIO\\MUSIC\\NoteLengthExample.mid", SONGDIFFICULTIES::EASY},*/
 		{"Major / Minor Chords", "ASSETS\\AUDIO\\MUSIC\\Major_and_Minor_Chords.mid", SONGDIFFICULTIES::MEDIUM},
+		{"The Scientist", "ASSETS\\AUDIO\\MUSIC\\TheScientist.mid", SONGDIFFICULTIES::MEDIUM},
 		//{"Fast BPM", "ASSETS\\AUDIO\\MUSIC\\Fast_BPM.mid", SONGDIFFICULTIES::HARD},
 		{"Thousand Miles", "ASSETS\\AUDIO\\MUSIC\\ThousandMilesRiff.mid", SONGDIFFICULTIES::HARD},
 		//{"Full MCI Example [TEST]", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid", SONGDIFFICULTIES::UNKNOWN},
@@ -140,7 +142,7 @@ void SongSelect::setupBeginButton()
 
 	m_beginButton.setSize(m_playButtonSize);
 	m_beginButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 100.0f});
-	m_beginButton.setFillColor(sf::Color(100, 100, 100));
+	m_beginButton.setFillColor(c_buttonInactive);
 	m_beginButton.setOutlineThickness(2.0f);
 	m_beginButton.setOutlineColor(sf::Color::Black);
 
@@ -163,7 +165,7 @@ void SongSelect::setupPreviewButton()
 
 	m_previewButton.setSize(m_playButtonSize);
 	m_previewButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 200.0f });
-	m_previewButton.setFillColor(sf::Color(100, 100, 100));
+	m_previewButton.setFillColor(c_buttonInactive);
 	m_previewButton.setOutlineThickness(2.0f);
 	m_previewButton.setOutlineColor(sf::Color::Black);
 
@@ -345,7 +347,6 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 	if (checkIfAreaClicked(t_mousePos, beginTopLeft, beginSize) == true)
 	{
 		return SongClickResult::PreviewDemoClicked;
-		//m_previewButton.setFillColor(sf::Color::Red);
 	}
 
 
@@ -358,7 +359,7 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 		if (!customMidi.empty())
 		{
 			m_selectedPath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\" + customMidi + ".mid";
-			m_selectedName = customMidi; // Just reuse te same file name 
+			m_selectedName = customMidi; 
 			b_isSongChosen = true;
 
 			std::cerr << "Custom Midi loaded: " << customMidi << std::endl;
@@ -381,7 +382,7 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 		std::string customMidi = m_loadMidiField.getString();
 		if (!customMidi.empty())
 		{
-
+			std::cerr << "You must load a midi first!" << std::endl;
 		}
 	}
 
@@ -465,6 +466,20 @@ std::string SongSelect::DifficultyToString(SONGDIFFICULTIES t_difficulty)
 		{
 			return "Unknown";
 		}
+	}
+}
+
+void SongSelect::togglePreviewColour(bool t_bool)
+{
+	bool clickResult = t_bool;
+
+	if (clickResult == true)
+	{
+		m_previewButton.setFillColor(c_buttonActive);
+	}
+	else
+	{
+		m_previewButton.setFillColor(c_buttonInactive);
 	}
 }
 

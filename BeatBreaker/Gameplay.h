@@ -210,8 +210,10 @@ private:
     sf::Text m_hitpercentageValueText;
     sf::Text m_hitNotesText;
     sf::Text m_hitNotesValueText;
-    sf::Text m_anpsText; // Average Notes per second
+    sf::Text m_anpsText;
     sf::Text m_anpsValueText;
+
+    sf::Text m_previewModeText;
 
     // Bools
     bool b_isPlaying = false;

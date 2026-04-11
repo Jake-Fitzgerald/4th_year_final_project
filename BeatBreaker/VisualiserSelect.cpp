@@ -2,7 +2,6 @@
 
 VisualiserSelect::VisualiserSelect(std::shared_ptr<const sf::Font> font) : m_font(font)
 {
-
 }
 
 void VisualiserSelect::setupButtonsVisSelect()
@@ -21,13 +20,10 @@ void VisualiserSelect::setupButtonsVisSelect()
 		button.m_buttonText.setFont(*m_font);
 		if (i == 0)
 		{
-			button.m_buttonText.setString("Track Visualiser");
-		}
-		else if (i == 1)
-		{
+
 			button.m_buttonText.setString("Piano Visualiser");
 		}
-		else
+		else if (i == 1)
 		{
 			button.m_buttonText.setString("Drum Visualiser");
 		}
@@ -71,7 +67,6 @@ int VisualiserSelect::mouseClick(sf::Vector2f t_mousePos)
 	{
 		VisButton& button = m_buttons[i];
 
-		// Reset colours if you click again
 		button.m_buttonShape.setFillColor(sf::Color::Blue);
 
 
@@ -80,7 +75,6 @@ int VisualiserSelect::mouseClick(sf::Vector2f t_mousePos)
 
 		if (checkIfAreaClicked(t_mousePos, topLeft, size) == true)
 		{
-			// Turn it red to show it has been clicked
 			button.m_buttonShape.setFillColor(sf::Color::Red);
 
 			return static_cast<int>(i);
@@ -93,7 +87,6 @@ int VisualiserSelect::mouseClick(sf::Vector2f t_mousePos)
 
 bool VisualiserSelect::returnClick(sf::Vector2f t_mousePos)
 {
-	// Return Button
 	sf::Vector2f spriteTopLeft = m_returnSprite.getPosition();
 	sf::Vector2f spriteSize = sf::Vector2f{ m_returnSprite.getGlobalBounds().size.x, m_returnSprite.getGlobalBounds().size.y };
 

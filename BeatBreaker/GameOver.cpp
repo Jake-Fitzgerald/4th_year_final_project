@@ -48,6 +48,7 @@ void GameOver::setupGameOver()
 	setupUIFrames();
 	setupText();
 	setupStatisticText();
+	setupTextures();
 }
 
 void GameOver::setupUIFrames()
@@ -67,6 +68,10 @@ void GameOver::setupUIFrames()
 	m_statisticFrameBorder.setSize(sf::Vector2f{ 5.0f, 325.0f });
 	m_statisticFrameBorder.setPosition(sf::Vector2f{ m_statisticUIFrame.getPosition().x + 205.0f, m_statisticUIFrame.getPosition().y + 30.0f });
 	m_statisticFrameBorder.setFillColor(c_statisticBorderColour);
+
+	m_titleFrame.setSize(sf::Vector2f{ SCREEN_WIDTH - 120.0f, 50.0f });
+	m_titleFrame.setPosition(sf::Vector2f{ paddingX, m_titleText.getPosition().y + 20.0f});
+	m_titleFrame.setFillColor(sf::Color(70, 80, 100, 130));
 }
 
 void GameOver::setupText()
@@ -117,16 +122,6 @@ void GameOver::setupText()
 	m_songNameText.setCharacterSize(30U);
 }
 
-void GameOver::setupServerField()
-{
-	
-}
-
-void GameOver::setupMidiField()
-{
-
-}
-
 void GameOver::setupFieldButtons()
 {
 	m_saveServerButton.setPosition({ m_serverFieldPos.x + 400, m_serverFieldPos.y });
@@ -152,6 +147,27 @@ void GameOver::setupFieldButtons()
 	m_saveMidiButtonText.setOutlineColor(sf::Color::Black);
 	m_saveMidiButtonText.setOutlineThickness(2.0f);
 	m_saveMidiButtonText.setCharacterSize(50U);
+}
+
+void GameOver::setupTextures()
+{
+	if (!m_serverTex.loadFromFile("ASSETS\\IMAGES\\UI\\Icons\\ServerIcon.png"))
+	{
+		std::cerr << "problem loading Server Icon [Song Selection]" << std::endl;
+	}
+
+	m_serverSprite.setTexture(m_serverTex, true);
+	m_serverSprite.setPosition(sf::Vector2f{ m_serverFieldPos.x - 60.0f, m_serverFieldPos.y });
+	m_serverSprite.setScale(sf::Vector2f{ .4,.4 });
+
+	if (!m_midiTex.loadFromFile("ASSETS\\IMAGES\\UI\\Icons\\CustomIcon.png"))
+	{
+		std::cerr << "problem loading Midi Icon [Song Selection]" << std::endl;
+	}
+
+	m_midiSprite.setTexture(m_midiTex, true);
+	m_midiSprite.setPosition(sf::Vector2f{ m_midiFieldPos.x - 60.0f, m_midiFieldPos.y });
+	m_midiSprite.setScale(sf::Vector2f{ .4,.4 });
 }
 
 void GameOver::setSongName(std::string t_name)
@@ -437,7 +453,8 @@ void GameOver::render(sf::RenderWindow& t_window)
 	// UI
 	t_window.draw(m_scoreUIFrame);
 	t_window.draw(m_statisticUIFrame);
-	t_window.draw(m_statisticFrameBorder);
+	t_window.draw(m_statisticFrameBorder); 
+	t_window.draw(m_titleFrame);
 
 	// Text
 	t_window.draw(m_titleText);
@@ -474,4 +491,7 @@ void GameOver::render(sf::RenderWindow& t_window)
 	t_window.draw(m_saveServerButton);
 	t_window.draw(m_saveMidiButtonText);
 	t_window.draw(m_saveServerButtonText);
+
+	t_window.draw(m_serverSprite);
+	t_window.draw(m_midiSprite);
 }

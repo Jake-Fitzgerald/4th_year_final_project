@@ -219,8 +219,6 @@ void Options::setupUIFrames()
 	m_titleFrame.setSize(sf::Vector2f{ SCREEN_WIDTH - 120.0f, 50.0f });
 	m_titleFrame.setPosition(sf::Vector2f{ paddingX,  m_OptionsText.getPosition().y + 8.0f});
 	m_titleFrame.setFillColor(c_frameColour);
-	//m_titleFrame.setOutlineThickness(4.0f);
-	//m_titleFrame.setOutlineColor(sf::Color::Black);
 }
 
 void Options::renderOptions(sf::RenderWindow& t_window)

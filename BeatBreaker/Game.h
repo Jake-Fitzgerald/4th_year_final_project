@@ -142,11 +142,12 @@ private:
 	bool b_isDebugActive = false;
 
 	// States
-	GameStates m_currentGameState = GameStates::MainMenuScene;
+	GameStates m_currentGameState = GameStates::ResultsScene;
 
 	// MIDI
 	MIDIParse m_midiParser;
 	void setupMidiParser();
+	void updateHUDMidi();
 	std::string m_midiPath = "ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid";
 	MidiWrite m_midiWrite;
 	std::string m_midiWritePath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\";

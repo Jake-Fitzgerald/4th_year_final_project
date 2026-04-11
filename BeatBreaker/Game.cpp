@@ -85,10 +85,6 @@ Game::Game() :
 	gridDisplay.setupGrid();
 	gridDisplay.setupSprites();
 
-	// Custom Icon
-	setupCustomIcon();
-
-
 	// Midi Input
 	setupMidiInput();
 
@@ -104,6 +100,9 @@ Game::Game() :
 	m_gameplay.setup();
 
 	m_database.sqlConnect(ODBCString);
+
+	// Custom Icon
+	setupCustomIcon();
 }
 
 Game::~Game()
@@ -368,14 +367,10 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			switch (buttonSelected)
 			{
 			case 0:
-				m_currentGameState = GameStates::TrackVis;
-				m_soundManager.play("ui_confirm");
-				break;
-			case 1:
 				m_currentGameState = GameStates::PianoVis;
 				m_soundManager.play("ui_confirm");
 				break;
-			case 2:
+			case 1:
 				m_currentGameState = GameStates::DrumVis;
 				m_soundManager.play("ui_confirm");
 				break;
@@ -423,16 +418,8 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 
 			m_midiParser.parseFile(m_selectedSong);
 			std::cerr << "Parsing song: " << m_selectedSong << std::endl;
+			updateHUDMidi();
 
-			auto& tracks = m_midiParser.getMidiTracks();
-			//std::cerr << "Midi has: " << tracks.size() << std::endl;
-			//if (tracks.size() < 3)
-			//{
-			//	std::cerr << "Midi has: " << tracks.size() << " tracks when we need 3" << std::endl;
-			//	return;
-			//}
-
-			// Third track is the instrument track
 			m_gameplay.loadTrack(m_midiParser.getMidiTracks()[2], m_midiParser.getBPM());
 
 			m_soundManager.play("start_game");
@@ -444,11 +431,12 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			if (m_gameplay.getPreviewModeFlag() == false)
 			{
 				m_gameplay.setPreviewModeFlag(true);
-				
+				m_songSelect.togglePreviewColour(true);
 			}
 			else
 			{
 				m_gameplay.setPreviewModeFlag(false);
+				m_songSelect.togglePreviewColour(false);
 			}
 		}
 		else if (clickResult == SongClickResult::CustomLoadClicked)
@@ -472,39 +460,33 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		m_gameplay.handleRelease(mouseWorldPos);
 	}
 	
-	// HUD
-	// Play
+
 	if (m_hud.playClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Play button clicked" << std::endl;
 		m_gameplay.startSong();
 		m_soundManager.play("ui_cancel");
 	}
-	// Pause
 	if (m_hud.pauseClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Pause button clicked" << std::endl;
 		m_gameplay.togglePause();
 	}
-	// Stop
 	if (m_hud.stopClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Stop button clicked" << std::endl;
 		m_gameplay.resetSession();
 	}
-	// Skip to Start
 	if (m_hud.skipToStart(mouseWorldPos) == true)
 	{
 		std::cerr << "Skip to start button clicked" << std::endl;
 		m_gameplay.resetSession();
 		m_gameplay.startSong();
 	}
-	// Skip to End
 	if (m_hud.skipToEnd(mouseWorldPos) == true)
 	{
 		std::cerr << "Skip to end button clicked" << std::endl;
 	}
-	// Mute
 	if (m_hud.muteClick(mouseWorldPos) == true)
 	{
 		std::cerr << "Mute button clicked" << std::endl; 
@@ -1065,12 +1047,17 @@ void Game::setupMidiParser()
 	m_midiPath = m_midiFileSelectScene.getMidiPathString();
 	m_midiParser.parseFile(m_midiPath);
 	
-	m_hud.loadMidiData( m_midiParser.getMidiTracks(),
-						m_midiParser.getTimeSignature(),
-						m_midiParser.getBPM(),
-						m_midiParser.getMidiFileName(),
-						m_midiParser.getNominator(),
-						m_midiParser.getDenominator() );
+	updateHUDMidi();
+}
+
+void Game::updateHUDMidi()
+{
+	m_hud.loadMidiData(m_midiParser.getMidiTracks(),
+		m_midiParser.getTimeSignature(),
+		m_midiParser.getBPM(),
+		m_midiParser.getMidiFileName(),
+		m_midiParser.getNominator(),
+		m_midiParser.getDenominator());
 }
 
 void Game::setupMidiWrite()

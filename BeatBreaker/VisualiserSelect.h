@@ -44,7 +44,7 @@ private:
 	std::shared_ptr<const sf::Font> m_font;
 	std::vector<sf::Text> m_buttonTexts;
 
-	int m_visualiserCounts = 3;
+	int m_visualiserCounts = 2;
 
 	sf::RectangleShape m_returnButton;
 	sf::Texture m_returnTexture;

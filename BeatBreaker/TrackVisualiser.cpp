@@ -150,10 +150,7 @@ void TrackVisualiser::renderTrackVis(sf::RenderWindow& t_window)
 
 void TrackVisualiser::update(float t_deltaTime)
 {
-    if (b_isSongPlaying == true)
-    {
 
-    }
 }
 
 void TrackVisualiser::loadMidiTracks(const std::vector<MidiTrack>& t_tracks, int t_ticksPerQuarter, double t_bpm)

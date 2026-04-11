@@ -97,6 +97,8 @@ public:
 
 	std::string DifficultyToString(SONGDIFFICULTIES t_difficulty);
 
+	void togglePreviewColour(bool t_bool);
+
 private:
 	std::vector<SongButton> m_buttons;
 	std::shared_ptr<const sf::Font> m_font;
@@ -145,6 +147,8 @@ private:
 	sf::Color c_Medium = sf::Color::Yellow;
 	sf::Color c_Hard = sf::Color::Red;
 	sf::Color c_Unknown = sf::Color::White;
+	sf::Color c_buttonActive = sf::Color(200,0,20,100);
+	sf::Color c_buttonInactive = sf::Color(100, 100, 100, 100);
 
 	// UI Background Frames
 	sf::RectangleShape m_songListFrame;
@@ -156,7 +160,6 @@ private:
 	sf::Color c_frameColour = sf::Color(100, 100, 100, 100);
 
 	sf::RectangleShape m_songListBottomBorder;
-
 
 	sf::Vector2f m_loadMidiFieldPos{ paddingX, paddingY + 525.0f };
 	sf::Vector2f m_fieldSize{ 600.0f, 50.0f };

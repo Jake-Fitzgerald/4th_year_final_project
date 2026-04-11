@@ -30,7 +30,8 @@ Gameplay::Gameplay(SoundManager& t_soundManager, std::shared_ptr<const sf::Font>
 	  m_anpsValueText(*font),
 	  // Playback
 	  m_songTimeText(*font),
-	  m_songEndTimeText(*font)
+	  m_songEndTimeText(*font),
+	  m_previewModeText(*font)
 {
 
 }
@@ -42,11 +43,9 @@ void Gameplay::setup()
 	setupKeyboard();
 	setupUIFrames();
 
-	// Text
 	setupScoreText();
 	setupStatisticText();
 
-	// Update Text
 	updateScore();
 }
 
@@ -134,6 +133,14 @@ void Gameplay::setupScoreText()
 	m_pbScoreValueText.setOutlineColor(sf::Color::Black);
 	m_pbScoreValueText.setOutlineThickness(2.0f);
 	m_pbScoreValueText.setCharacterSize(30U);
+
+
+	m_previewModeText.setPosition(sf::Vector2f{ scoreTextPos.x + 30.0f, scoreTextPos.y + 200.0f });
+	m_previewModeText.setString("PREVIEW MODE");
+	m_previewModeText.setFillColor(sf::Color::Green);
+	m_previewModeText.setOutlineColor(sf::Color::Black);
+	m_previewModeText.setOutlineThickness(2.0f);
+	m_previewModeText.setCharacterSize(40U);
 }
 
 void Gameplay::setupStatisticText()
@@ -445,6 +452,9 @@ void Gameplay::resetSession()
 void Gameplay::resetScore()
 {
 	m_score = 0;
+	m_currentScoreValueText.setString(std::to_string(m_score));
+
+	//m_pbScoreValueText.setString(std::to_string(...));
 }
 
 void Gameplay::resetStatistics()
@@ -484,34 +494,42 @@ void Gameplay::render(sf::RenderWindow& t_window)
 {
 	// UI
 	t_window.draw(m_scoreFrame);
-	t_window.draw(m_statisticFrame);
-	t_window.draw(m_scoreFrameText);
-	t_window.draw(m_statisticFrameText);
+	
+	if (b_isPreviewMode == false)
+	{
+		t_window.draw(m_statisticFrame);
+		t_window.draw(m_scoreFrameText);
+		t_window.draw(m_statisticFrameText);
 
-	// Score Text
-	t_window.draw(m_currentScoreText);
-	t_window.draw(m_currentScoreValueText);
-	t_window.draw(m_pbScoreText);
-	t_window.draw(m_pbScoreValueText);
+		// Score Text
+		t_window.draw(m_currentScoreText);
+		t_window.draw(m_currentScoreValueText);
+		t_window.draw(m_pbScoreText);
+		t_window.draw(m_pbScoreValueText);
 
-	// Statistic Text 1
-	t_window.draw(m_missedNotesText);
-	t_window.draw(m_missedNotesValueText);
-	t_window.draw(m_earlyNotesText);
-	t_window.draw(m_earlyNotesValueText);
-	t_window.draw(m_perfectNotesText);
-	t_window.draw(m_perfectNotesValueText);
-	t_window.draw(m_lateNotesText);
-	t_window.draw(m_lateNotesValueText);
-	t_window.draw(m_wrongNotesText);
-	t_window.draw(m_wrongNotesValueText);
-	// Statistic Text 2
-	t_window.draw(m_hitpercentageText);
-	t_window.draw(m_hitpercentageValueText);
-	t_window.draw(m_hitNotesText);
-	t_window.draw(m_hitNotesValueText);
-	t_window.draw(m_anpsText);
-	t_window.draw(m_anpsValueText);
+		// Statistic Text 1
+		t_window.draw(m_missedNotesText);
+		t_window.draw(m_missedNotesValueText);
+		t_window.draw(m_earlyNotesText);
+		t_window.draw(m_earlyNotesValueText);
+		t_window.draw(m_perfectNotesText);
+		t_window.draw(m_perfectNotesValueText);
+		t_window.draw(m_lateNotesText);
+		t_window.draw(m_lateNotesValueText);
+		t_window.draw(m_wrongNotesText);
+		t_window.draw(m_wrongNotesValueText);
+		// Statistic Text 2
+		t_window.draw(m_hitpercentageText);
+		t_window.draw(m_hitpercentageValueText);
+		t_window.draw(m_hitNotesText);
+		t_window.draw(m_hitNotesValueText);
+		t_window.draw(m_anpsText);
+		t_window.draw(m_anpsValueText);
+	}
+	else
+	{
+		t_window.draw(m_previewModeText);
+	}
 
 	for (auto& note : m_fallingNotes)
 	{
@@ -762,11 +780,12 @@ void Gameplay::spawnNote(MidiNote& t_note)
 {
 	float keyPosX = m_keyboard.getKeyPosX(t_note.noteName);
 	float timeToHit = t_note.startTime - m_playbackTime;
-	float noteSpawnY = -(timeToHit * m_noteSpeed);
-
+	
 	// Note length
 	float noteDuration = t_note.endTime - t_note.startTime;
 	float noteHeight = noteDuration * m_noteSpeed;
+
+	float noteSpawnY = -(timeToHit * m_noteSpeed) - noteHeight;
 
 	bool b_isSharp = false;
 	for (char c : t_note.noteName)

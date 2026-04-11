@@ -39,7 +39,6 @@ public:
 	DrumVisualiser(std::shared_ptr<const sf::Font> font, SoundManager& t_soundManager);
 	void setupDrums();
 	void setupDrumSprites();
-	void setupDrumHitbox();
 	void setupDrumSounds();
 
 	void renderDrums(sf::RenderWindow& t_window);
@@ -72,8 +71,6 @@ private:
 	DrumPiece m_HiHatPiece;
 	DrumPiece m_clapPiece;
 
-
-	// Drum Sprites
 	sf::Texture m_kickTexture;
 	sf::Sprite m_kickSprite;
 	sf::Texture m_snareTexture;
@@ -93,11 +90,10 @@ private:
 	sf::Texture m_clapTexture;
 	sf::Sprite m_clapSprite;
 
-	// Drum hitbox
 	sf::Vector2f m_drumHitboxSize = { 100.0f, 100.0f };
 	sf::Vector2f m_kickHitboxSize = { 200.0f, 200.0f };
 	sf::Color m_drumHitboxColour = sf::Color(255, 50, 50, 100);
-	bool b_isHitboxVis = true;
+	bool b_isHitboxVis = false;
 
 	sf::Vector2f m_kickHitboxPos = { 440.0f, 430.0f };
 	sf::Vector2f m_snareHitboxPos = { 650.0f, 310.0f };
@@ -111,17 +107,13 @@ private:
 
 	std::vector<sf::Sprite*> m_drumSprites;
 
-	// Images are 1080 by 720 and the sprite's origins are halfed
 	sf::Vector2f m_drumPositions{ 1080.0f / 2.0f, 720.0f / 2.0f}; 
 	sf::Color m_noteOnColour = sf::Color::Green;
 	sf::Color m_noteOffColour = sf::Color::White;
 
-	// Text
 	std::shared_ptr<const sf::Font> m_font;
 	std::vector<sf::Text> m_trackNameTexts;
 
-
-	// Drum intro animation
 	float m_introDelayAmount = 0.2f;
 	float m_introTimer = 0.0f;
 

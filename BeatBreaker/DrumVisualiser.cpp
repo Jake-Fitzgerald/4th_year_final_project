@@ -21,74 +21,61 @@ void DrumVisualiser::setupDrums()
 {
 	setupDrumSprites();
 	setupDrumSounds();
-
-	setupDrumHitbox();
 	
-	// Kick
 	m_kickPiece.shape.setFillColor(m_drumHitboxColour);
 	m_kickPiece.shape.setPosition(m_kickHitboxPos);
 	m_kickPiece.shape.setSize(m_kickHitboxSize);
 	m_kickPiece.b_isPressed = false;
 	m_kickPiece.pieceName = "Kick";
-	//m_kickPiece.originalColour = sf::Color::White;
 
-	// Snare
 	m_snarePiece.shape.setFillColor(m_drumHitboxColour);
 	m_snarePiece.shape.setPosition(m_snareHitboxPos);
 	m_snarePiece.shape.setSize(m_drumHitboxSize);
 	m_snarePiece.b_isPressed = false;
 	m_snarePiece.pieceName = "Snare";
 	
-	// Crash 1
 	m_Crash1Piece.shape.setFillColor(m_drumHitboxColour);
 	m_Crash1Piece.shape.setPosition(m_crash1HitboxPos);
 	m_Crash1Piece.shape.setSize(m_drumHitboxSize);
 	m_Crash1Piece.b_isPressed = false;
 	m_Crash1Piece.pieceName = "Crash1";
 
-	// Crash 2
 	m_Crash2Piece.shape.setFillColor(m_drumHitboxColour);
 	m_Crash2Piece.shape.setPosition(m_crash2HitboxPos);
 	m_Crash2Piece.shape.setSize(m_drumHitboxSize);
 	m_Crash2Piece.b_isPressed = false;
 	m_Crash2Piece.pieceName = "Crash2";
 
-	// Floor Tom
 	m_FloorTomPiece.shape.setFillColor(m_drumHitboxColour);
 	m_FloorTomPiece.shape.setPosition(m_floorTomHitboxPos);
 	m_FloorTomPiece.shape.setSize(m_drumHitboxSize);
 	m_FloorTomPiece.b_isPressed = false;
 	m_FloorTomPiece.pieceName = "FloorTom";
 
-	// Tom 1
 	m_Tom1Piece.shape.setFillColor(m_drumHitboxColour);
 	m_Tom1Piece.shape.setPosition(m_tom1HitboxPos);
 	m_Tom1Piece.shape.setSize(m_drumHitboxSize);
 	m_Tom1Piece.b_isPressed = false;
 	m_Tom1Piece.pieceName = "Tom1";
 
-	// Tom 2
 	m_Tom2Piece.shape.setFillColor(m_drumHitboxColour);
 	m_Tom2Piece.shape.setPosition(m_tom2HitboxPos);
 	m_Tom2Piece.shape.setSize(m_drumHitboxSize);
 	m_Tom2Piece.b_isPressed = false;
 	m_Tom2Piece.pieceName = "Tom2";
 
-	// Hi Hat
 	m_HiHatPiece.shape.setFillColor(m_drumHitboxColour);
 	m_HiHatPiece.shape.setPosition(m_hiHatHitboxPos);
 	m_HiHatPiece.shape.setSize(m_drumHitboxSize);
 	m_HiHatPiece.b_isPressed = false;
 	m_HiHatPiece.pieceName = "HiHat";
 
-	// Clap
 	m_clapPiece.shape.setFillColor(m_drumHitboxColour);
 	m_clapPiece.shape.setPosition(m_clapHitboxPos);
 	m_clapPiece.shape.setSize(m_drumHitboxSize);
 	m_clapPiece.b_isPressed = false;
 	m_clapPiece.pieceName = "Clap";
 
-	// Pushed back in order of how it's drawn
 	m_drums.push_back(m_Tom1Piece);
 	m_drums.push_back(m_Tom2Piece);
 	m_drums.push_back(m_snarePiece);
@@ -202,92 +189,48 @@ void DrumVisualiser::setupDrumSprites()
 	}
 }
 
-void DrumVisualiser::setupDrumHitbox()
-{
-
-	
-}
-
 void DrumVisualiser::setupDrumSounds()
 {
-	std::cerr << "///////////////// " << std::endl;
-	std::cerr << "Drum Sound Load" << std::endl;
-	std::cerr << "///////////////// " << std::endl;
-
-	// Kick
 	std::string kickPath = "ASSETS\\AUDIO\\Drums\\Kick.WAV";
-	std::cerr << "[DRUM] WAV loading: " << kickPath << std::endl;
 	m_soundManager->loadBuffer("Kick", kickPath, SoundType::MUSIC);
 
-	// Snare
 	std::string snarePath = "ASSETS\\AUDIO\\Drums\\Snare.WAV";
-	std::cerr << "[DRUM] WAV loading: " << snarePath << std::endl;
 	m_soundManager->loadBuffer("Snare", snarePath, SoundType::MUSIC);
 
-	// Crash 1
 	std::string crash1Path = "ASSETS\\AUDIO\\Drums\\Crash1.WAV";
-	std::cerr << "[DRUM] WAV loading: " << crash1Path << std::endl;
 	m_soundManager->loadBuffer("Crash1", crash1Path, SoundType::MUSIC);
 
-	// Crash 2
 	std::string crash2Path = "ASSETS\\AUDIO\\Drums\\Crash2.WAV";
-	std::cerr << "[DRUM] WAV loading: " << crash2Path << std::endl;
 	m_soundManager->loadBuffer("Crash2", crash2Path, SoundType::MUSIC);
 
-	// Floor Tom
 	std::string floorTomPath = "ASSETS\\AUDIO\\Drums\\FloorTom.WAV";
-	std::cerr << "[DRUM] WAV loading: " << floorTomPath << std::endl;
 	m_soundManager->loadBuffer("FloorTom", floorTomPath, SoundType::MUSIC);
 
-	// Tom 1
 	std::string tom1Path = "ASSETS\\AUDIO\\Drums\\Tom1.WAV";
-	std::cerr << "[DRUM] WAV loading: " << tom1Path << std::endl;
 	m_soundManager->loadBuffer("Tom1", tom1Path, SoundType::MUSIC);
 
-	// Tom 2
 	std::string tom2Path = "ASSETS\\AUDIO\\Drums\\Tom2.WAV";
-	std::cerr << "[DRUM] WAV loading: " << tom2Path << std::endl;
 	m_soundManager->loadBuffer("Tom2", tom2Path, SoundType::MUSIC);
 
-	// Hi Hat
 	std::string hiHatPath = "ASSETS\\AUDIO\\Drums\\HiHat.WAV";
-	std::cerr << "[DRUM] WAV loading: " << hiHatPath << std::endl;
 	m_soundManager->loadBuffer("HiHat", hiHatPath, SoundType::MUSIC);
 
-	// Clap
 	std::string clapPath = "ASSETS\\AUDIO\\Drums\\Clap.WAV";
-	std::cerr << "[DRUM] WAV loading: " << clapPath << std::endl;
 	m_soundManager->loadBuffer("Clap", clapPath, SoundType::MUSIC);
-
-	std::cerr << " " << std::endl;
-	std::cerr << " " << std::endl;
 }
 
 void DrumVisualiser::renderDrums(sf::RenderWindow& t_window)
 {
-	// Render pieces from back to front so they overlap like in the photoshop file
-	//t_window.draw(m_TomTom1Sprite);
-	//t_window.draw(m_TomTom2Sprite);
-	//t_window.draw(m_snareSprite);
-	//t_window.draw(m_floorTomSprite);
-	//t_window.draw(m_hitHatSprite);
-	//t_window.draw(m_crash1Sprite);
-	//t_window.draw(m_crash2Sprite);
-	//t_window.draw(m_kickSprite);
-	//t_window.draw(m_clapSprite);
-
 	for (int i = 0; i < m_drumSprites.size(); i++)
 	{
 		t_window.draw(*m_drumSprites[i]);
 	}
 
-	// Hitbox
 	if (b_isHitboxVis == true)
 	{
 		for (int i = 0; i < m_drums.size(); i++)
 		{
 			t_window.draw(m_drums[i].shape);
-			//std::cerr << "Piece: " << m_drums[i].pieceName << std::endl;
 		}
 	}
 

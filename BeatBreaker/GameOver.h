@@ -28,8 +28,9 @@ public:
 	void setupServerField();
 	void setupMidiField();
 	void setupFieldButtons();
-	void setupButtons();
+	void setupTextures();
 	void setSongName(std::string t_name);
+
 	
 	void updateScore();
 	void updatePBScore();
@@ -79,9 +80,10 @@ private:
 	sf::Color c_scoreFrameColour = sf::Color(50, 200, 150, 100);
 	sf::Color c_statisticFrameColour = sf::Color(100, 100, 250, 100);
 	sf::Color c_statisticBorderColour = sf::Color(40, 40, 40, 170);
+	sf::RectangleShape m_titleFrame;
 
 	// Fields
-	sf::Vector2f m_serverFieldPos{ paddingX, paddingY + 525.0f };
+	sf::Vector2f m_serverFieldPos{ paddingX + 25.0f, paddingY + 525.0f };
 	sf::Vector2f m_midiFieldPos{ paddingX + 650.0f, paddingY + 525.0f };
 	sf::Vector2f m_fieldSize{ 400.0f, 50.0f };
 	int m_characterSize = 40;
@@ -130,5 +132,9 @@ private:
 	sf::Text m_anpsText; 
 	sf::Text m_anpsValueText;
 
+	sf::Texture m_serverTex;
+	sf::Sprite m_serverSprite{ m_serverTex };
+	sf::Texture m_midiTex;
+	sf::Sprite m_midiSprite{ m_midiTex };
 };
 

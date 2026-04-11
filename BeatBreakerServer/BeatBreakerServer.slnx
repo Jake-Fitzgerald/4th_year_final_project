@@ -1,7 +1,0 @@
-<Solution>
-  <Configurations>
-    <Platform Name="x64" />
-    <Platform Name="x86" />
-  </Configurations>
-  <Project Path="BeatBreakerServer.vcxproj" Id="f887055c-52c3-491b-971f-d0a81c2725b1" />
-</Solution>
