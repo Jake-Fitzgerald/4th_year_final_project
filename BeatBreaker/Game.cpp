@@ -384,6 +384,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			updateHUDMidi();
 
 			m_gameplay.loadTrack(m_midiParser.getMidiTracks()[2], m_midiParser.getBPM());
+			m_gameplay.loadGhostTrack(m_ghostParse.getMidiTracks()[2], m_ghostParse.getBPM());
 
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;
@@ -411,25 +412,39 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		}
 		else if (clickResult == SongClickResult::GhostClicked)
 		{
-			stopMidiMCI();
-
 			m_soundManager.play("ui_cancel");
+
 			if (m_gameplay.getGhostModeFlag() == false)
 			{
-				m_gameplay.setGhostModeFlag(true);
-				m_songSelect.toggleGhostColour(true);
+				std::string ghostPath = m_ghostMidiPath;
+
+				if (std::filesystem::exists(ghostPath))
+				{
+					m_ghostParse.parseFile(ghostPath);
+
+					if (!m_ghostParse.getMidiTracks().empty())
+					{
+						m_gameplay.setGhostModeFlag(true);
+						m_songSelect.toggleGhostColour(true);
+						std::cerr << "Ghost midi tracks found: " << ghostPath << std::endl;
+					}
+					else
+					{
+						std::cerr << "Ghost midi not tracks: " << ghostPath << std::endl;
+					}
+				}
+				else
+				{
+					std::cerr << "No downloaded midi at: " << ghostPath << std::endl;
+				}
 			}
 			else
 			{
 				m_gameplay.setGhostModeFlag(false);
 				m_songSelect.toggleGhostColour(false);
+				std::cerr << "Ghost mode disabled: " << m_midiPath << std::endl;
 			}
-
-			//m_midiPath = m_songSelect.getMidiPathString();
-
-			// Check if m_ghostMidiPath has a downloadedMidi.mid in it
-			// Send it to Gameplay scene
-			std::cerr << "Ghost path loaded: " << m_midiPath << std::endl;
+			
 			m_soundManager.play("ui_cancel");
 		}
 
@@ -1064,3 +1079,4 @@ void Game::setupMidiWrite()
 	std::string m_tempName = "temp"; 
 	m_midiWrite.writeFile(m_tempName);
 }
+

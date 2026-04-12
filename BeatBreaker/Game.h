@@ -149,7 +149,9 @@ private:
 	std::string m_midiWritePath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\";
 	void setupMidiWrite();
 	// Ghost
-	std::string m_ghostMidiPath = "ASSETS\\AUDIO\\MUSIC\\DownloadedMidi\\";
+	MIDIParse m_ghostParse;
+	std::string m_ghostMidiPath = "ASSETS\\AUDIO\\MUSIC\\DownloadedMidi\\downloadedMidi.mid";
+	
 
 	// UI
 	HUD m_hud;

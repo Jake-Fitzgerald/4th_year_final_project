@@ -96,8 +96,10 @@ public:
 
     // Note Generation
     void loadTrack(MidiTrack& t_track, double t_BPM);
+    void loadGhostTrack(MidiTrack& t_track, double t_BPM);
     void spawnNote(MidiNote& t_note);
-    // Ghost Generation
+    void spawnGhostNote(MidiNote& t_note);
+
 
     // Playback
     void startSong();
@@ -142,7 +144,7 @@ private:
     bool b_isRecording = true;
 
     // Ghost Midi
-    std::vector<MidiNote> m_ghostNotes;
+    std::vector<FallingNote> m_ghostNotes;
     bool b_isGhostMode = false;
 
     // Playback Text
@@ -157,10 +159,11 @@ private:
     sf::Vector2f m_sharpNoteSize{ 20.0f, 100.0f };
 
     // Note Colours
-    sf::Color c_activeNoteColour = sf::Color::Blue;
-    sf::Color c_lateNoteColour = sf::Color::Red;
-    sf::Color c_earlyNoteColour = sf::Color::Yellow;
-    sf::Color c_perfectNoteColour = sf::Color::Green;
+    sf::Color c_activeNoteColour = sf::Color(20,20,240, 220);
+    sf::Color c_lateNoteColour = sf::Color(240, 20, 20, 220);
+    sf::Color c_earlyNoteColour = sf::Color(240, 250, 20, 220);
+    sf::Color c_perfectNoteColour = sf::Color(20, 240, 20, 220);
+    sf::Color c_ghostNoteColour = sf::Color(240, 240, 240, 150);
     // Trigger Colours
     sf::Color c_earlyTriggerColour = sf::Color(255, 255, 50, 150);
     sf::Color c_perfectTriggerColour = sf::Color(50, 255, 50, 150);
@@ -221,6 +224,7 @@ private:
     sf::Text m_anpsValueText;
 
     sf::Text m_previewModeText;
+    sf::Text m_ghostModeText;
 
     // Bools
     bool b_isPlaying = false;

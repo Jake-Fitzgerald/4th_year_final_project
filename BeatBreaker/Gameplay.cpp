@@ -31,7 +31,8 @@ Gameplay::Gameplay(SoundManager& t_soundManager, std::shared_ptr<const sf::Font>
 	  // Playback
 	  m_songTimeText(*font),
 	  m_songEndTimeText(*font),
-	  m_previewModeText(*font)
+	  m_previewModeText(*font),
+	  m_ghostModeText(*font)
 {
 
 }
@@ -141,6 +142,13 @@ void Gameplay::setupScoreText()
 	m_previewModeText.setOutlineColor(sf::Color::Black);
 	m_previewModeText.setOutlineThickness(2.0f);
 	m_previewModeText.setCharacterSize(40U);
+
+	m_ghostModeText.setPosition(sf::Vector2f{ scoreTextPos.x + 30.0f, scoreTextPos.y + 300.0f });
+	m_ghostModeText.setString("GHOST MODE");
+	m_ghostModeText.setFillColor(sf::Color::Magenta);
+	m_ghostModeText.setOutlineColor(sf::Color::Black);
+	m_ghostModeText.setOutlineThickness(2.0f);
+	m_ghostModeText.setCharacterSize(40U);
 }
 
 void Gameplay::setupStatisticText()
@@ -331,7 +339,6 @@ void Gameplay::update(float t_deltaTime)
 						}
 					}
 				}
-
 				break;
 			}
 
@@ -380,8 +387,25 @@ void Gameplay::update(float t_deltaTime)
 				{
 					m_keyboard.noteOff(m_fallingNotes[i].noteName);
 				}
-				//std::cerr << "MISS: " << m_fallingNotes[i].noteName << std::endl;
 				m_fallingNotes.erase(m_fallingNotes.begin() + i);
+			}
+		}
+
+		// Ghost
+		if (b_isGhostMode == true)
+		{
+			for (auto& ghostNote : m_ghostNotes)
+			{
+				sf::Vector2f movement{ 0.0f, m_noteSpeed * t_deltaTime };
+				ghostNote.shape.move(movement);
+			}
+		}
+
+		for (int i = static_cast<int>(m_ghostNotes.size()) - 1; i >= 0; i--)
+		{
+			if (m_ghostNotes[i].shape.getPosition().y > m_keyboard.getKillTriggerY())
+			{
+				m_ghostNotes.erase(m_ghostNotes.begin() + i);
 			}
 		}
 	}
@@ -431,6 +455,7 @@ void Gameplay::resetSession()
 	b_isSongFinished = false;
 	b_isPlaying = false;
 	m_fallingNotes.clear();
+	m_ghostNotes.clear();
 	b_isPaused = false;
 	b_isPracticePaused = false;
 	m_practiceWaitForNotes.clear();
@@ -492,7 +517,6 @@ SessionStats Gameplay::getSessionStats()
 
 void Gameplay::render(sf::RenderWindow& t_window)
 {
-	// UI
 	t_window.draw(m_scoreFrame);
 	
 	if (b_isPreviewMode == false)
@@ -534,6 +558,16 @@ void Gameplay::render(sf::RenderWindow& t_window)
 	for (auto& note : m_fallingNotes)
 	{
 		t_window.draw(note.shape);
+	}
+
+	if (b_isGhostMode == true)
+	{
+		for (auto& ghostNote : m_ghostNotes)
+		{
+			t_window.draw(ghostNote.shape);
+		}
+
+		t_window.draw(m_ghostModeText);
 	}
 
 	m_keyboard.render(t_window);
@@ -760,7 +794,6 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 		MidiNote finalNote = t_track.midiNotes.back();
 
 		double soundTriggerY = static_cast<double>(m_keyboard.getSoundNoteTriggerY());
-		//double screenCrossTime = soundTriggerY / m_noteSpeed;
 		double travelTime = soundTriggerY / m_noteSpeed;
 
 		m_songEndTime = finalNote.endTime + travelTime /*+ m_songEndWaitTime*/;
@@ -774,6 +807,43 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 
 	setupStatistics();
 	setupPlaybackText();
+}
+
+void Gameplay::loadGhostTrack(MidiTrack& t_track, double t_BPM)						// FIX THIS
+{
+	m_ghostNotes.clear();
+
+	if (t_track.midiNotes.empty())
+	{
+		std::cerr << "Ghost track is empty" << std::endl;
+		return;
+	}
+
+
+	double ghostStartOffset = t_track.midiNotes.front().startTime;
+
+	for (auto ghostNote : t_track.midiNotes)
+	{
+		ghostNote.startTime -= ghostStartOffset;
+		ghostNote.endTime -= ghostStartOffset;
+
+		spawnGhostNote(ghostNote);
+	}
+
+	//// Calculate the bpm
+	//float fallingNoteSpeed = m_noteSpeed;
+	//m_noteSpeed = static_cast<float>(t_BPM);
+
+	//for (auto ghostNote : t_track.midiNotes)
+	//{
+	//	spawnGhostNote(ghostNote);
+	//}
+	
+
+	//m_noteSpeed = fallingNoteSpeed;
+
+	std::cerr << "Ghost notes loaded with size: " << m_ghostNotes.size() << std::endl;
+	std::cerr << "Ghost BPM: " << t_BPM << std::endl;
 }
 
 void Gameplay::spawnNote(MidiNote& t_note)
@@ -816,9 +886,6 @@ void Gameplay::spawnNote(MidiNote& t_note)
 
 	// --------------------------------------------------------------------------------
 	// Triggers
-	
-	
-	//float triggerHeight = 40.0f;
 	float triggerHeight = noteHeight / 3.0f;
 	float noteWidth = m_flatNoteSize.x - 15.0f;
 
@@ -847,7 +914,54 @@ void Gameplay::spawnNote(MidiNote& t_note)
 	currentNote.lateTrigger.setPosition(sf::Vector2f{ notePos.x, noteBottomLeft.y - triggerHeight * 2});
 
 	m_fallingNotes.push_back(currentNote);
-	//std::cerr << "Spawned note: " << t_note.noteName << " at x =" << keyPosX << " y =" << noteSpawnY << std::endl;
+}
+
+void Gameplay::spawnGhostNote(MidiNote& t_note)
+{
+	float keyPosX = m_keyboard.getKeyPosX(t_note.noteName);
+	float timeToHit = t_note.startTime - m_playbackTime;
+
+	// Note length
+	float noteDuration = t_note.endTime - t_note.startTime;
+	float noteHeight = noteDuration * m_noteSpeed;
+
+	float noteSpawnY = -(timeToHit * m_noteSpeed) - noteHeight;
+
+	std::cerr << "Ghost note: " << t_note.noteName
+		<< " startTime: " << t_note.startTime
+		<< " timeToHit: " << timeToHit
+		<< " noteHeight: " << noteHeight
+		<< " spawnY: " << noteSpawnY
+		<< " speed: " << m_noteSpeed << std::endl;
+
+	bool b_isSharp = false;
+	for (char c : t_note.noteName)
+	{
+		if (c == '#')
+		{
+			b_isSharp = true;
+		}
+	}
+
+	FallingNote ghostNote;
+
+	ghostNote.noteName = t_note.noteName;
+	ghostNote.b_isActive = true;
+
+	if (b_isSharp == true)
+	{
+		ghostNote.shape.setSize(sf::Vector2f{ m_sharpNoteSize.x, noteHeight });
+	}
+	else
+	{
+		ghostNote.shape.setSize(sf::Vector2f{ m_flatNoteSize.x, noteHeight });
+	}
+	ghostNote.shape.setFillColor(c_ghostNoteColour);
+	ghostNote.shape.setPosition(sf::Vector2f{ keyPosX, noteSpawnY });
+	ghostNote.shape.setOutlineColor(sf::Color::White);
+	ghostNote.shape.setOutlineThickness(5.0f);
+
+	m_ghostNotes.push_back(ghostNote);
 }
 
 void Gameplay::startSong()
