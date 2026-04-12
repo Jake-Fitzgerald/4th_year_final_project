@@ -606,13 +606,15 @@ void Gameplay::noteOn(std::string& t_noteName, int t_pitch, int t_velocity)
 		return;
 	}
 
-	if (b_isRecording == true && b_isPracticePaused == false && b_isPreviewMode == false)
+	if (b_isRecording == true && b_isPlaying == true && b_isPracticePaused == false && b_isPreviewMode == false)
 	{
 		MidiNote note;
 		note.noteName = t_noteName;
 		note.pitch = t_pitch;
 		note.velocity = t_velocity;
 		note.startTime = m_playbackTime;
+
+		std::cerr << "Recording note: " << t_noteName << " at playbackTime: " << m_playbackTime << std::endl;
 
 		m_recordedNotes.push_back(note);
 	}
@@ -766,7 +768,7 @@ void Gameplay::noteOff(std::string& t_noteName, int t_pitch, int t_velocity)
 
 	m_keyboard.noteOff(t_noteName);
 
-	if (b_isRecording == true && b_isPreviewMode == false)
+	if (b_isRecording == true && b_isPlaying == true && b_isPracticePaused == false && b_isPreviewMode == false)
 	{
 		for (int i = m_recordedNotes.size() - 1; i >= 0; i--)
 		{
@@ -820,27 +822,10 @@ void Gameplay::loadGhostTrack(MidiTrack& t_track, double t_BPM)						// FIX THIS
 	}
 
 
-	double ghostStartOffset = t_track.midiNotes.front().startTime;
-
 	for (auto ghostNote : t_track.midiNotes)
 	{
-		ghostNote.startTime -= ghostStartOffset;
-		ghostNote.endTime -= ghostStartOffset;
-
 		spawnGhostNote(ghostNote);
 	}
-
-	//// Calculate the bpm
-	//float fallingNoteSpeed = m_noteSpeed;
-	//m_noteSpeed = static_cast<float>(t_BPM);
-
-	//for (auto ghostNote : t_track.midiNotes)
-	//{
-	//	spawnGhostNote(ghostNote);
-	//}
-	
-
-	//m_noteSpeed = fallingNoteSpeed;
 
 	std::cerr << "Ghost notes loaded with size: " << m_ghostNotes.size() << std::endl;
 	std::cerr << "Ghost BPM: " << t_BPM << std::endl;

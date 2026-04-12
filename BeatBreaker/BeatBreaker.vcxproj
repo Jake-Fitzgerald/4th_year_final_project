@@ -38,6 +38,7 @@
     <ClCompile Include="MidiWrite.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="PianoVisualiser.cpp" />
+    <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="SongSelect.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TrackVisualiser.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="MidiWrite.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="PianoVisualiser.h" />
+    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="SongSelect.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TrackVisualiser.h" />

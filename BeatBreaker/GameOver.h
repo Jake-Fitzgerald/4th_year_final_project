@@ -6,6 +6,7 @@
 #include "InputField.h"
 #include "MidiWrite.h"
 #include "Database.h"
+#include "ScoreManager.h"
 
 /*
 	TODO:
@@ -20,7 +21,7 @@
 class GameOver
 {
 public:
-	GameOver(std::shared_ptr<const sf::Font> font, Database& t_database);
+	GameOver(std::shared_ptr<const sf::Font> font, Database& t_database, ScoreManager& t_scoreManager);
 
 	void setupGameOver();
 	void setupUIFrames();
@@ -33,6 +34,7 @@ public:
 	void updatePBScore();
 
 	void saveScore();
+	void setBPM(double t_BPM);
 	void setRecordedNotes(std::vector<MidiNote> t_notes);
 
 	void setupStatisticText();
@@ -49,12 +51,14 @@ public:
 
 private:
 	Database* m_database;
+	ScoreManager* m_scoreManager;
 	std::string ODBCString = "Driver={ODBC Driver 18 for SQL Server};Server=beatbreakerserversql.database.windows.net,1433;Database=beatbreakerSQL;Uid=JakeAdmin;Pwd=ToyMachine7;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;";
 	bool b_isConnected = false;
 	SessionStats m_sessionStats;
 
 	int m_score = 0;
 	int m_pbScore = 0;
+	double m_BPM = 120.0;
 
 	sf::Text m_titleText; 
 	sf::Vector2f m_screenCentre = SCREEN_CENTRE;

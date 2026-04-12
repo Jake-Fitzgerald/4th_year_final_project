@@ -1,6 +1,6 @@
 #include "SongSelect.h"
 
-SongSelect::SongSelect(std::shared_ptr<const sf::Font> font) 
+SongSelect::SongSelect(std::shared_ptr<const sf::Font> font, ScoreManager& t_scoreManager)
 						: m_font(font),
 						  m_beginText(*font),
 						  m_previewText(*font),
@@ -8,7 +8,8 @@ SongSelect::SongSelect(std::shared_ptr<const sf::Font> font)
 						  m_songListFrameText(*font),
 						  m_modeButtonsFrameText(*font),
 				          m_loadMidiField(font, m_loadMidiFieldPos, m_fieldSize, m_characterSize),
-						  m_loadCustomMidiButtonText(*font)
+						  m_loadCustomMidiButtonText(*font),
+						  m_scoreManager(&t_scoreManager)
 {
 	b_isSongChosen = false;
 }
@@ -229,7 +230,7 @@ void SongSelect::setupUIFrames()
 	m_songListTextFrame.setOutlineColor(sf::Color::Blue);
 
 
-	m_modeButtonsFrame.setSize(sf::Vector2f{ m_playButtonSize.x + 50.0f, m_playButtonSize.y + 135.0f });
+	m_modeButtonsFrame.setSize(sf::Vector2f{ m_playButtonSize.x + 50.0f, m_playButtonSize.y + 235.0f });
 	m_modeButtonsFrame.setPosition(sf::Vector2f{ m_beginButton.getPosition().x - 25.0f, m_beginButton.getPosition().y - 25.0f });
 	m_modeButtonsFrame.setFillColor(c_frameColour);
 	m_modeButtonsFrame.setOutlineThickness(2.0f);

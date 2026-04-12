@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include <windows.h>
 #include "InputField.h"
+#include "ScoreManager.h"
 
 /*
 Notes:
@@ -74,7 +75,7 @@ struct SongPaths
 class SongSelect
 {
 public:
-	SongSelect(std::shared_ptr<const sf::Font> font);
+	SongSelect(std::shared_ptr<const sf::Font> font, ScoreManager& t_scoreManager);
 
 	void setupPathStrings();
 	void setupButtons();
@@ -103,6 +104,8 @@ public:
 	void toggleGhostColour(bool t_bool);
 
 private:
+	ScoreManager* m_scoreManager;
+
 	std::vector<SongButton> m_buttons;
 	std::shared_ptr<const sf::Font> m_font;
 	std::string m_selectedPath = "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid"; // Default midi file

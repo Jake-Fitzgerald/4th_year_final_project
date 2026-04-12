@@ -1,6 +1,6 @@
 #include "GameOver.h"
 
-GameOver::GameOver(std::shared_ptr<const sf::Font> font, Database& t_database)
+GameOver::GameOver(std::shared_ptr<const sf::Font> font, Database& t_database, ScoreManager& t_scoreManager)
 	: m_titleText(*font),
 	  m_scoreText(*font),
 	  m_scoreValueText(*font),
@@ -32,7 +32,8 @@ GameOver::GameOver(std::shared_ptr<const sf::Font> font, Database& t_database)
 	  m_rankText(*font),
 	  m_rankValueText(*font),
 	  // Database
-	  m_database(&t_database)
+	  m_database(&t_database),
+	  m_scoreManager(&t_scoreManager)
 
 {
 	resetSessionStats();
@@ -216,8 +217,14 @@ void GameOver::saveScore()
 {
 }
 
+void GameOver::setBPM(double t_BPM)
+{
+	m_BPM = t_BPM;
+}
+
 void GameOver::setRecordedNotes(std::vector<MidiNote> t_notes)
 {
+	m_midiWrite.setBPM(m_BPM);
 	m_midiWrite.setupRecordedNotes(t_notes);
 }
 

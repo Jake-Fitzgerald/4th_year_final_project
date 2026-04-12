@@ -142,11 +142,6 @@ public:
 
 	std::string pitchToNoteName(int t_pitch);
 
-	// Save the parsed data
-	void saveToFile();
-	// Load the parsed data
-	void LoadFromFile();
-
 private:
 	// Header Data
 	uint32_t m_headerLength = -1; // should be 6

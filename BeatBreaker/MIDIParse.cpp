@@ -150,6 +150,9 @@ bool MIDIParse::parseFile(std::string& t_fileName)
 				else if (metaType == tempo && length == 3)
 				{
 					parseTempo(file);
+
+					std::cerr << "Parsed BPM: " << m_BPM << std::endl;
+					std::cerr << "Parsed ticksPerQuarter: " << m_ticksPerQuarter << std::endl;
 				}
 				else
 				{
@@ -161,6 +164,10 @@ bool MIDIParse::parseFile(std::string& t_fileName)
 			{
 				// Keep only the upper 4 bits (message type) and ignore lower 4 bits (channel)
 				uint8_t messageType = status& EventType::messageTypeMask;
+
+				std::cerr << "Message type: " << std::hex << (int)messageType
+					<< " status: " << (int)status
+					<< " currentTick: " << std::dec << currentTick << std::endl;
 
 				if (messageType == EventType::noteOff)
 				{
@@ -299,8 +306,6 @@ void MIDIParse::parseTempo(std::ifstream& t_file)
 
 void MIDIParse::noteOff(std::ifstream& t_file, uint8_t firstDataByte)
 {
-	//std::cerr << "Note Off" << std::endl;
-
 	// Read the 2 data bytes
 	// Note key (0 - 127), Velocity (0 - 127)
 	uint8_t note;
@@ -325,8 +330,11 @@ void MIDIParse::noteOff(std::ifstream& t_file, uint8_t firstDataByte)
 		activeNotes[note].endTick = currentTick;
 		activeNotes[note].noteName = pitchToNoteName(note);
 
+		std::cerr << "Stored note: " << activeNotes[note].noteName
+			<< " startTick: " << activeNotes[note].startTick
+			<< " endTick: " << activeNotes[note].endTick << std::endl;
+
 		currentTrack.midiNotes.push_back(activeNotes[note]);
-		//std::cerr << "Note stored: " << activeNotes[note].noteName << std::endl;
 		activeNotes.erase(note);
 	}
 }
@@ -468,6 +476,8 @@ uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
 	{
 		byte = readByte(t_file);
 
+		std::cerr << "VLQ byte: " << std::hex << (int)byte << std::dec << std::endl;
+
 		// Mask out the most significant bit (MSB) to get the 7 data bits
 		// MSB is used as a continuation flag to know if there are more bytes
 		// to follow if it's a large number.
@@ -481,6 +491,7 @@ uint32_t MIDIParse::readVLQ(std::ifstream& t_file)
 	// Loop continues while MSB is set (byte & 0x80 != 0)
 	// MSB == 1 means there is another byte in the VLQ
 
+	std::cerr << "VLQ result: " << value << std::endl;
 	return value;
 }
 

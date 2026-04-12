@@ -67,7 +67,7 @@ private:
 	std::string m_DrumVisPath = "ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid";
 	std::string m_PianoVisPath = "ASSETS\\AUDIO\\MUSIC\\Kick_and_Clap_2_track.mid";
 
-	std::string m_SavedCustomMidiPath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\temp.midi";
+	std::string m_SavedCustomMidiPath = "ASSETS\\AUDIO\\MUSIC\\DownloadedMidi\\downloadedMidi.mid";
 
 	std::vector<Paths> m_pathVector;
 };

@@ -15,6 +15,7 @@
 // Components
 #include "SoundManager.h"
 #include "CollisionManager.h"
+#include "ScoreManager.h"
 
 // Scenes
 #include "MainMenu.h"
@@ -174,6 +175,8 @@ private:
 	SoundType m_soundType;
 
 	CollisionManager m_collisionManager;
+
+	ScoreManager m_scoreManager;
 
 	// ----- Visualisers -----
 	// Track Visualiser

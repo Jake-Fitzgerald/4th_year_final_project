@@ -31,10 +31,10 @@ Game::Game() :
 		m_midiFileSelectScene(m_jerseyFont),
 		m_visSelect(m_jerseyFont),
 		pianoVisualiser(m_soundManager, m_collisionManager),
-	    m_songSelect(m_jerseyFont),
+	    m_songSelect(m_jerseyFont, m_scoreManager),
 	    m_leaderboard(m_jerseyFont, m_database, m_soundManager),
 		m_mainMenu(m_jerseyFont),
-	    m_gameOver(m_jerseyFont, m_database)
+	    m_gameOver(m_jerseyFont, m_database, m_scoreManager)
 		
 {
 	setupSprites(); // load texture
@@ -384,7 +384,12 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			updateHUDMidi();
 
 			m_gameplay.loadTrack(m_midiParser.getMidiTracks()[2], m_midiParser.getBPM());
-			m_gameplay.loadGhostTrack(m_ghostParse.getMidiTracks()[2], m_ghostParse.getBPM());
+
+			if (m_gameplay.getGhostModeFlag() == true)
+			{
+				m_gameplay.loadGhostTrack(m_ghostParse.getMidiTracks()[2], m_ghostParse.getBPM());
+			}
+			
 
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;
@@ -420,6 +425,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 
 				if (std::filesystem::exists(ghostPath))
 				{
+					std::cerr << "Loading ghost from: " << ghostPath << std::endl;
 					m_ghostParse.parseFile(ghostPath);
 
 					if (!m_ghostParse.getMidiTracks().empty())
@@ -582,6 +588,7 @@ void Game::update(sf::Time t_deltaTime)
 		{
 			m_gameOver.setupGameOver();
 			m_gameOver.setSessionStats(m_gameplay.getSessionStats());
+			m_gameOver.setBPM(m_midiParser.getBPM()); // Set it the same BPM
 			m_gameOver.setRecordedNotes(m_gameplay.getRecordedNotes());
 			m_gameOver.setSongName(m_songSelect.getSongName());
 			

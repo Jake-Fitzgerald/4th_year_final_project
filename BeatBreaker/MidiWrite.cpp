@@ -85,12 +85,18 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
 {
     m_trackBuffer.clear();
 
+    writeCCToBuffer();
+
     // ------------------------------
     std::vector<MidiEvent> noteEvents;
     noteEvents.reserve(m_recordedNotes.size() * 2);
 
     for (auto& note : m_recordedNotes)
     {
+        std::cerr << "Adding to events - pitch: " << (int)note.pitch
+            << " startTick: " << note.startTick
+            << " endTick: " << note.endTick << std::endl;
+
         noteEvents.push_back({ note.startTick, true, static_cast<uint8_t>(note.pitch), static_cast<uint8_t>(note.velocity) });
         noteEvents.push_back({ note.endTick, false, static_cast<uint8_t>(note.pitch), static_cast<uint8_t>(note.velocity) });
     }
@@ -145,6 +151,8 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
         }
     }
 
+    writeCCToBuffer();
+
     // ------------------------------
     // Write track chunk
     // ------------------------------
@@ -154,7 +162,8 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
     std::string trackString = "MTrk";
     t_file.write(trackString.c_str(), 4);
     // 11 + 54 + notes + 4
-    write_uint32(t_file, m_noteTrackNameLength + m_ccLength + noteDataSize + m_endOfTrackLength); 
+    //write_uint32(t_file, m_noteTrackNameLength + m_ccLength + noteDataSize + m_endOfTrackLength); 
+    write_uint32(t_file, m_noteTrackNameLength + noteDataSize + m_endOfTrackLength);
 
     writeByte(t_file, 0x00);
     writeByte(t_file, EventType::metaEvent);
@@ -163,7 +172,7 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
     writeByte(t_file, 0x07); // Meta length
     t_file.write("FL Keys", 7);
 
-    writeCC(t_file);
+    //writeCC(t_file);
 
     // Note buffer
     for (uint8_t byte : m_trackBuffer)
@@ -171,56 +180,11 @@ void MidiWrite::writeNoteTrack(std::ofstream& t_file)
         writeByte(t_file, byte);
     }
 
-    writeCC(t_file);
+    //writeCC(t_file);
 
     writeEndOfTrack(t_file);
 
     std::cerr << "Completed writing midi file" << std::endl;
-
-    // ------------------------------
-    /*
-
-    uint32_t previousTick = 0;
-
-    for (auto& note : m_recordedNotes)
-    {
-        uint32_t deltaOn = note.startTick - previousTick;
-        uint32_t deltaOff = note.endTick - note.startTick;
-
-        writeNoteOnToBuffer(note.pitch, note.velocity, deltaOn);
-        writeNoteOffToBuffer(note.pitch, note.velocity, deltaOff);
-
-        previousTick = note.endTick;
-        //previousTick = note.startTick;
-    }
-
-    uint32_t noteDataSize = static_cast<uint32_t>(m_trackBuffer.size());
-
-    std::string trackString = "MTrk";
-    t_file.write(trackString.c_str(), 4);
-    write_uint32(t_file, m_noteTrackLength + m_ccLength + noteDataSize + m_endOfTrackLength);
-
-    writeByte(t_file, 0x00);
-    writeByte(t_file, EventType::metaEvent);
-    writeByte(t_file, EventType::trackName);
-
-    writeByte(t_file, 0x07); // Meta length
-    t_file.write("FL Keys", 7);
-
-    writeCC(t_file);
-
-    // Buffer -> every byte write to the file
-    for (uint8_t byte : m_trackBuffer)
-    {
-        writeByte(t_file, byte);
-    }
-
-    writeCC(t_file);
-
-    writeEndOfTrack(t_file);
-
-    std::cerr << "Completed writing midi file" << std::endl;
-    */
 }
 
 void MidiWrite::write_uint32(std::ofstream& t_file, uint32_t t_value)
@@ -322,12 +286,54 @@ void MidiWrite::writeCC(std::ofstream& t_file)
     writeProgamChange(t_file);
 }
 
+void MidiWrite::writeCCToBuffer()
+{
+writeByteToBuffer(0x00);
+    writeByteToBuffer(EventType::controlChange);
+    writeByteToBuffer(EventType::pan);
+    writeByteToBuffer(0x40);
+
+    writeByteToBuffer(0x00);
+    writeByteToBuffer(EventType::controlChange);
+    writeByteToBuffer(EventType::volume);
+    writeByteToBuffer(0x64);
+
+    writeByteToBuffer(0x00);
+    writeByteToBuffer(EventType::pitchBend);
+    writeByteToBuffer(0x00);
+    writeByteToBuffer(0x40);
+
+    writeByteToBuffer(0x00);
+    writeByteToBuffer(EventType::controlChange);
+    writeByteToBuffer(EventType::regParamNum_MSB);
+    writeByteToBuffer(0x00);
+
+    writeByteToBuffer(0x00);
+    writeByteToBuffer(EventType::controlChange);
+    writeByteToBuffer(EventType::regParamNum_LSB);
+    writeByteToBuffer(0x00);
+
+    writeByteToBuffer(0x00);
+    writeByteToBuffer(EventType::controlChange);
+    writeByteToBuffer(EventType::dataEntry);
+    writeByteToBuffer(0x0C);
+
+    writeProgramChangeToBuffer();
+}
+
 void MidiWrite::writeProgamChange(std::ofstream& t_file)
 {
     writeByte(t_file, 0x00);
     writeByte(t_file, EventType::programChange);
     writeByte(t_file, 0x00); // Instrument
     m_ccCounter += 3;
+}
+
+void MidiWrite::writeProgramChangeToBuffer()
+{
+    writeByteToBuffer(0x00);
+    writeByteToBuffer(EventType::programChange);
+    writeByteToBuffer(0x00);
 }
 
 void MidiWrite::writeNoteOn(std::ofstream& t_file, uint8_t t_pitch, uint8_t t_velocity, uint32_t t_deltatime)
@@ -443,16 +449,17 @@ void MidiWrite::setupRecordedNotes(std::vector<MidiNote>& t_notes)
 
     double ticksPerSecond = (m_BPM / 60.0f) * m_quarterNoteLength;
 
+    std::cerr << "BPM: " << m_BPM << " ticksPerSecond: " << ticksPerSecond << std::endl;
+
     for (auto& note : m_recordedNotes)
     {
         note.startTick = static_cast<uint32_t>(note.startTime * ticksPerSecond);
         note.endTick = static_cast<uint32_t>(note.endTime * ticksPerSecond);
 
+
         std::cerr << note.noteName
-            << "Start time: " << note.startTime
-            << "End time: " << note.endTime
-            << "Start tick: " << note.startTick
-            << "End tick: " << note.endTick
+            << " startTime: " << note.startTime
+            << " -> startTick: " << note.startTick
             << std::endl;
     }
 
@@ -468,4 +475,9 @@ void MidiWrite::setupRecordedNotes(std::vector<MidiNote>& t_notes)
             }
         }
     }
+}
+
+void MidiWrite::setBPM(double t_BPM)
+{
+    m_BPM = t_BPM;
 }
