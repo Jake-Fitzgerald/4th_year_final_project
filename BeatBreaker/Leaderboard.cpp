@@ -10,11 +10,6 @@ Leaderboard::Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_datab
 
 }
 
-void Leaderboard::getSQLData(int t_id, std::string t_username, int t_score)
-{
-
-}
-
 void Leaderboard::setupLeaderboard()
 {
 	LeaderboardData userdata(m_font);
@@ -88,55 +83,55 @@ void Leaderboard::setupUI()
 	m_songNameText.setOutlineColor(sf::Color::Black);
 	m_songNameText.setOutlineThickness(2.0f);
 	m_songNameText.setString("Song name");
-	m_songNameText.setPosition(sf::Vector2f{ paddingX + 150.0f, paddingY + 60.0f });
+	m_songNameText.setPosition(sf::Vector2f{ paddingX + 700.0f, paddingY + 100.0f });
 
 	m_previousButton.setSize(sf::Vector2f{ 100.0f, 40.0f });
-	m_previousButton.setPosition(sf::Vector2f{ paddingX + 300.0f, paddingY + 60.0f });
+	m_previousButton.setPosition(sf::Vector2f{ paddingX + 700.0f, paddingY + 160.0f });
 	m_previousButton.setFillColor(sf::Color(c_navButtonColour));
 	m_previousButton.setOutlineColor(sf::Color::Black);
 	m_previousButton.setOutlineThickness(2.0f);
 	m_previousText.setString("<");
 	m_previousText.setCharacterSize(60U);
-	m_previousText.setPosition(sf::Vector2f{ paddingX + 330.0f, paddingY + 40.0f });
+	m_previousText.setPosition(sf::Vector2f{ paddingX + 730.0f, paddingY + 140.0f });
 	m_previousText.setFillColor(sf::Color::Blue);
 	m_previousText.setOutlineColor(sf::Color::Black);
 	m_previousText.setOutlineThickness(2.0f);
 
 	m_nextButton.setSize(sf::Vector2f{ 100.0f, 40.0f });
-	m_nextButton.setPosition(sf::Vector2f{ paddingX + 400.0f, paddingY + 60.0f });
+	m_nextButton.setPosition(sf::Vector2f{ paddingX + 800.0f, paddingY + 160.0f });
 	m_nextButton.setFillColor(sf::Color(c_navButtonColour));
 	m_nextButton.setOutlineColor(sf::Color::Black);
 	m_nextButton.setOutlineThickness(2.0f);
 	m_nextText.setString(">");
 	m_nextText.setCharacterSize(60U);
-	m_nextText.setPosition(sf::Vector2f{ paddingX + 430.0f, paddingY + 40.0f });
+	m_nextText.setPosition(sf::Vector2f{ paddingX + 830.0f, paddingY + 140.0f });
 	m_nextText.setFillColor(sf::Color::Blue);
 	m_nextText.setOutlineColor(sf::Color::Black);
 	m_nextText.setOutlineThickness(2.0f);
 
-	//sf::RectangleShape idLine;
-	//idLine.setSize(m_verticalLineSize);
-	//idLine.setPosition(sf::Vector2f{ paddingX , paddingY });
-	//idLine.setFillColor(sf::Color::Black);
-	//m_verticalLines.push_back(idLine);
-	//
-	//sf::RectangleShape usernameLine;
-	//usernameLine.setSize(m_verticalLineSize);
-	//usernameLine.setPosition(sf::Vector2f{ m_offsetX_Username , paddingY });
-	//usernameLine.setFillColor(sf::Color::Black);
-	//m_verticalLines.push_back(usernameLine);
+	sf::RectangleShape idLine;
+	idLine.setSize(m_verticalLineSize);
+	idLine.setPosition(sf::Vector2f{ paddingX , paddingY });
+	idLine.setFillColor(sf::Color::Black);
+	m_verticalLines.push_back(idLine);
+	
+	sf::RectangleShape usernameLine;
+	usernameLine.setSize(m_verticalLineSize);
+	usernameLine.setPosition(sf::Vector2f{ m_offsetX_Username , paddingY });
+	usernameLine.setFillColor(sf::Color::Black);
+	m_verticalLines.push_back(usernameLine);
 
-	//sf::RectangleShape scoreLine;
-	//scoreLine.setSize(m_verticalLineSize);
-	//scoreLine.setPosition(sf::Vector2f{ m_offsetX_Score , paddingY });
-	//scoreLine.setFillColor(sf::Color::Black);
-	//m_verticalLines.push_back(scoreLine);
+	sf::RectangleShape scoreLine;
+	scoreLine.setSize(m_verticalLineSize);
+	scoreLine.setPosition(sf::Vector2f{ m_offsetX_Score , paddingY });
+	scoreLine.setFillColor(sf::Color::Black);
+	m_verticalLines.push_back(scoreLine);
 
-	//sf::RectangleShape rightHandLine;
-	//rightHandLine.setSize(m_verticalLineSize);
-	//rightHandLine.setPosition(sf::Vector2f{ m_offsetX_Score + 240.0f , paddingY });
-	//rightHandLine.setFillColor(sf::Color::Black);
-	//m_verticalLines.push_back(rightHandLine);
+	sf::RectangleShape rightHandLine;
+	rightHandLine.setSize(m_verticalLineSize);
+	rightHandLine.setPosition(sf::Vector2f{ m_offsetX_Score + 240.0f , paddingY });
+	rightHandLine.setFillColor(sf::Color::Black);
+	m_verticalLines.push_back(rightHandLine);
 }
 
 void Leaderboard::fetchSongs()
@@ -189,35 +184,69 @@ void Leaderboard::populateFromDatabase(const std::vector<USERDATA>& t_data)
 		m_leaderboardVec[i + 1].m_username = t_data[i].username;
 		m_leaderboardVec[i + 1].m_score = t_data[i].score;
 
-		m_leaderboardVec[i + 1].m_IDText.setString(std::to_string(t_data[i].id));
+		m_leaderboardVec[i + 1].m_IDText.setString(std::to_string(i + 1));
 		m_leaderboardVec[i + 1].m_usernameText.setString(t_data[i].username);
 		m_leaderboardVec[i + 1].m_scoreText.setString(std::to_string(t_data[i].score));
 
-		// Alternate row colours
-		sf::Color rowColor = (i % 2 == 0) ? c_userShapeEven : c_userShapeOdd;
+		sf::Color rowColor;
+		if (i % 2 == 0)
+		{
+			rowColor = c_userShapeEven;
+		}
+		else
+		{
+			rowColor = c_userShapeOdd;
+		}
 		m_leaderboardVec[i + 1].m_userShape.setFillColor(rowColor);
 	}
 }
 
 void Leaderboard::handleClick(sf::Vector2f t_mousePos)
 {
+	if (m_songs.empty())
+	{
+		std::cerr << "[Leaderboard] No songs loaded" << std::endl;
+		return;
+	}
+
+	// Wrapping
+	if (m_previousButton.getGlobalBounds().contains(t_mousePos))
+	{
+		m_currentSongIndex--;
+		if (m_currentSongIndex < 0)
+		{
+			m_currentSongIndex = static_cast<int>(m_songs.size() - 1);
+		}
+		fetchSongsForCurrentSong();
+	}
+
+
+	// Wrapping
+	if (m_nextButton.getGlobalBounds().contains(t_mousePos))
+	{
+		m_currentSongIndex++;
+		if (m_currentSongIndex >= static_cast<int>(m_songs.size()))
+		{
+			m_currentSongIndex = 0;
+		}
+		fetchSongsForCurrentSong();
+	}
 }
 
 void Leaderboard::render(sf::RenderWindow& t_window)
 {
 	for (auto& LeaderboardData : m_leaderboardVec)
 	{
-		// Header
-		//t_window.draw(LeaderboardData.m_headerShape);
-		//t_window.draw(LeaderboardData.m_headerIDText);
-		//t_window.draw(LeaderboardData.m_headerUsernameText);
-		//t_window.draw(LeaderboardData.m_headerScoreText);
+		t_window.draw(LeaderboardData.m_headerShape);
+		t_window.draw(LeaderboardData.m_headerIDText);
+		t_window.draw(LeaderboardData.m_headerUsernameText);
+		t_window.draw(LeaderboardData.m_headerScoreText);
 
-		//// User tabs
-		//t_window.draw(LeaderboardData.m_userShape);
-		//t_window.draw(LeaderboardData.m_IDText);
-		//t_window.draw(LeaderboardData.m_usernameText);
-		//t_window.draw(LeaderboardData.m_scoreText);
+		// User tabs
+		t_window.draw(LeaderboardData.m_userShape);
+		t_window.draw(LeaderboardData.m_IDText);
+		t_window.draw(LeaderboardData.m_usernameText);
+		t_window.draw(LeaderboardData.m_scoreText);
 
 	}
 

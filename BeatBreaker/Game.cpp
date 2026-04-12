@@ -269,10 +269,6 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			m_currentGameState = GameStates::MidiFileSelectScene;
 			m_soundManager.play("ui_confirm");
 		}
-		if (clicked == "Record Midi")
-		{
-			setupMidiWrite();
-		}
 		if (clicked == "MIDI Parse")
 		{
 			m_midiParser.resetTrack();
@@ -291,6 +287,10 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		}
 		if (clicked == "Leaderboard")
 		{
+			if (m_database.getConnectionStatus() == true)
+			{
+				m_leaderboard.fetchSongs();
+			}
 			m_currentGameState = GameStates::LeaderboardScene;
 			m_soundManager.play("ui_confirm");
 		}
@@ -418,9 +418,12 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	}
 	else if (m_currentGameState == GameStates::GameplayScene)
 	{
-		// Debugging with mouse
 		m_gameplay.handleClick(mouseWorldPos);
 		m_gameplay.handleRelease(mouseWorldPos);
+	}
+	else if (m_currentGameState == GameStates::LeaderboardScene)
+	{
+		m_leaderboard.handleClick(mouseWorldPos);
 	}
 	
 
