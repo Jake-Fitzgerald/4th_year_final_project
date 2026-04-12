@@ -22,6 +22,9 @@ class Database
 {
 public:
 	bool sqlConnect(std::string t_ODBCString);
+
+	std::vector<SONGDATA> getAllSongs();
+	std::vector<USERDATA> getLeaderboardBySong(int t_songID);
 	std::vector<USERDATA> getLeaderboardData();
 
 	bool submitScore(std::string t_username, int t_score);

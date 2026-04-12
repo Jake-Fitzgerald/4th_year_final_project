@@ -6,3 +6,6 @@ JOIN songs s ON r.song_id = s.id
 
 # Results
 SELECT * FROM results;
+
+# Songs
+SELECTid, song_name FROM songs

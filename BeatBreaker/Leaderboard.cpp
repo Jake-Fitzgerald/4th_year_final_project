@@ -1,6 +1,6 @@
 #include "Leaderboard.h"
 
-Leaderboard::Leaderboard(std::shared_ptr<const sf::Font> font) : m_font(font)
+Leaderboard::Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database) : m_font(font), m_database(&t_database)
 {
 
 }

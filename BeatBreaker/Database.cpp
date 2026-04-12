@@ -41,6 +41,44 @@ bool Database::sqlConnect(std::string t_ODBCString)
 	}
 }
 
+std::vector<SONGDATA> Database::getAllSongs()
+{
+	std::vector<SONGDATA> songsVec;
+
+	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
+
+	SQLRETURN returnState = SQLExecDirectA(handleStatement, (SQLCHAR*)"SELECTid, song_name FROM songs", SQL_NTS);
+
+	if (returnState != SQL_SUCCESS && returnState != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "[DB] Get songs FAILED" << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+		return songsVec;
+	}
+
+	int id;
+	char songName[50];
+	SQLBindCol(handleStatement, 1, SQL_C_LONG, &id, sizeof(id), NULL);
+	SQLBindCol(handleStatement, 2, SQL_C_CHAR, &songName, sizeof(songName), NULL);
+
+	while (SQLFetch(handleStatement) == SQL_SUCCESS)
+	{
+		SONGDATA song;
+		song.id = id;
+		song.songName = std::string(songName);
+		songsVec.push_back(song);
+	}
+
+	SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+
+	return songsVec;
+}
+
+std::vector<USERDATA> Database::getLeaderboardBySong(int t_songID)
+{
+	return std::vector<USERDATA>();
+}
+
 std::vector<USERDATA> Database::getLeaderboardData()
 {
 	std::vector<USERDATA> leaderboardVec;

@@ -32,10 +32,9 @@ Game::Game() :
 		m_visSelect(m_jerseyFont),
 		pianoVisualiser(m_soundManager, m_collisionManager),
 	    m_songSelect(m_jerseyFont),
-	    m_leaderboard(m_jerseyFont),
+	    m_leaderboard(m_jerseyFont, m_database),
 		m_mainMenu(m_jerseyFont),
 	    m_gameOver(m_jerseyFont, m_database)
-		//m_keyboard(m_soundManager),
 		
 {
 	setupSprites(); // load texture
@@ -88,9 +87,7 @@ Game::Game() :
 	// Midi Input
 	setupMidiInput();
 
-	// Leaderboard / Results
 	m_leaderboard.setupLeaderboard();
-	m_leaderboard.populateFromDatabase(m_localLeaderboard);
 	m_gameOver.setupGameOver();
 
 	// Main Menu

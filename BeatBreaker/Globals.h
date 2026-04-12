@@ -26,6 +26,11 @@ struct USERDATA
 	std::string username = " ";
 	int score = -1;
 };
+struct SONGDATA
+{
+    int id;
+    std::string songName;
+};
 
 // Gameplay / Results
 struct SessionStats

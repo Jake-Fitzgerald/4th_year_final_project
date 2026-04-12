@@ -4,25 +4,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
-
-
-/*
-	Pull database tables and fill each column with it's ID, Username and Score.
-
-	Data to store:
-		Notes:
-		- Missed notes (int)
-		- Late notes (int)
-		- Early notes (int)
-
-		Scores:
-		- Personal Best
-		- Current Score
-
-
-
-*/
-
+#include "Database.h"
 
 
 struct LeaderboardData
@@ -31,7 +13,6 @@ struct LeaderboardData
 	sf::Text m_headerIDText;
 	sf::Text m_headerUsernameText;
 	sf::Text m_headerScoreText;
-
 
 	sf::RectangleShape m_userShape;
 
@@ -59,7 +40,7 @@ struct LeaderboardData
 class Leaderboard
 {
 public:
-	Leaderboard(std::shared_ptr<const sf::Font> font);
+	Leaderboard(std::shared_ptr<const sf::Font> font, Database t_database);
 
 	void getSQLData(int t_id, std::string t_username, int t_score);
 
@@ -71,7 +52,7 @@ public:
 	void render(sf::RenderWindow& t_window);
 
 private:
-	// Text
+	Database* m_database;
 	std::shared_ptr<const sf::Font> m_font;
 
 	std::vector<LeaderboardData> m_leaderboardVec;
