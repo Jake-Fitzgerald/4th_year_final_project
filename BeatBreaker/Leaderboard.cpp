@@ -70,6 +70,26 @@ void Leaderboard::setupLeaderboard()
 		rowData.m_scoreText.setFillColor(sf::Color::White);
 		rowData.m_scoreText.setPosition(sf::Vector2f{ rowData.m_userShape.getPosition().x + m_offsetX_Score, rowData.m_userShape.getPosition().y + m_offsetY_text });
 
+		// Midi
+		rowData.m_downloadButton.setSize(sf::Vector2f{ 60.0f, 30.0f });
+		rowData.m_downloadButton.setFillColor(c_songTitleFrameColour);
+		rowData.m_downloadButton.setOutlineColor(c_songTitleFrameColourOutline);
+		rowData.m_downloadButton.setOutlineThickness(2.0f);
+		rowData.m_downloadButton.setPosition(sf::Vector2f{
+															paddingX + m_buttonSize.x + 10.0f,
+															paddingY + (i + 1) * m_spacing + 5.0f 
+														});
+
+		rowData.m_downloadText.setCharacterSize(20U);
+		rowData.m_downloadText.setString("Midi");
+		rowData.m_downloadText.setFillColor(sf::Color::White);
+		rowData.m_downloadText.setOutlineColor(sf::Color::Black);
+		rowData.m_downloadText.setOutlineThickness(2.0f);
+		rowData.m_downloadText.setPosition(sf::Vector2f{
+															rowData.m_downloadButton.getPosition().x + 13.0f,
+															rowData.m_downloadButton.getPosition().y + 3.0f
+														});
+
 		m_leaderboardVec.push_back(rowData);
 	}
 
@@ -78,7 +98,7 @@ void Leaderboard::setupLeaderboard()
 
 void Leaderboard::setupUI()
 {
-	m_songNameText.setCharacterSize(30U);
+	m_songNameText.setCharacterSize(40U);
 	m_songNameText.setFillColor(sf::Color::White);
 	m_songNameText.setOutlineColor(sf::Color::Black);
 	m_songNameText.setOutlineThickness(2.0f);
@@ -108,6 +128,17 @@ void Leaderboard::setupUI()
 	m_nextText.setFillColor(sf::Color::Blue);
 	m_nextText.setOutlineColor(sf::Color::Black);
 	m_nextText.setOutlineThickness(2.0f);
+
+	// UI Frames
+	m_songTitleFrame.setPosition(sf::Vector2f{ m_songNameText.getPosition().x - 5.0f, m_songNameText.getPosition().y + 10.0f });
+	m_songTitleFrame.setFillColor(c_songTitleFrameColour);
+	m_songTitleFrame.setSize(sf::Vector2f{ 225.0f, 40.0f });
+
+	m_songFrame.setPosition(sf::Vector2f{ m_songNameText.getPosition().x - 10.0f, m_songNameText.getPosition().y - 10.0f });
+	m_songFrame.setFillColor(c_songFrameColour);
+	m_songFrame.setSize(sf::Vector2f{ 240.0f, 120.0f });
+	m_songFrame.setOutlineColor(sf::Color(c_songFrameColourOutline));
+	m_songFrame.setOutlineThickness(2.0f);
 
 	sf::RectangleShape idLine;
 	idLine.setSize(m_verticalLineSize);
@@ -165,7 +196,6 @@ void Leaderboard::fetchSongsForCurrentSong()
 
 void Leaderboard::populateFromDatabase(const std::vector<USERDATA>& t_data)
 {
-
 	int count = -1;
 
 	if (t_data.size() < m_pageCount)
@@ -248,6 +278,9 @@ void Leaderboard::render(sf::RenderWindow& t_window)
 		t_window.draw(LeaderboardData.m_usernameText);
 		t_window.draw(LeaderboardData.m_scoreText);
 
+		// Midi
+		t_window.draw(LeaderboardData.m_downloadButton);
+		t_window.draw(LeaderboardData.m_downloadText);
 	}
 
 	// UI
@@ -260,6 +293,9 @@ void Leaderboard::render(sf::RenderWindow& t_window)
 	{
 		t_window.draw(m_horizontalLines[i]);
 	}
+
+	t_window.draw(m_songFrame);
+	t_window.draw(m_songTitleFrame);
 
 	t_window.draw(m_previousButton);
 	t_window.draw(m_nextButton);

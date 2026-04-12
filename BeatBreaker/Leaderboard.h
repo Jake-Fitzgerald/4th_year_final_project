@@ -24,6 +24,11 @@ struct LeaderboardData
 	sf::Text m_usernameText;
 	sf::Text m_scoreText;
 
+	// Midi
+	int m_resultID = -1;
+	sf::RectangleShape m_downloadButton;
+	sf::Text m_downloadText;
+
 	LeaderboardData(std::shared_ptr<const sf::Font> font)
 		: 
 		m_headerIDText(*font),
@@ -31,7 +36,8 @@ struct LeaderboardData
 		m_headerScoreText(*font),
 		m_IDText(*font),
 		m_usernameText(*font),
-		m_scoreText(*font)
+		m_scoreText(*font),
+		m_downloadText(*font)
 	{
 
 	}
@@ -42,7 +48,7 @@ class Leaderboard
 public:
 	Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database);
 
-	void getSQLData(int t_id, std::string t_username, int t_score);
+	//void getSQLData(int t_id, std::string t_username, int t_score);
 
 	void setupLeaderboard();
 	void setupUI();
@@ -86,11 +92,15 @@ private:
 
 	int m_pageCount = 10;
 
+	std::string m_downloadPath = "ASSETS\\AUDIO\\MUSIC\\DownloadedMidi";
+
 	// UI
 	std::vector<sf::RectangleShape> m_verticalLines;
 	std::vector<sf::RectangleShape> m_horizontalLines;
-	sf::Vector2f m_verticalLineSize = { 4.0f, 450.0f };
+	sf::Vector2f m_verticalLineSize = { 4.0f, 442.0f };
 	sf::Vector2f m_horizintalLineSize = { 100.0f, 2.0f };
+	sf::RectangleShape m_songFrame;
+	sf::RectangleShape m_songTitleFrame;
 
 	// Colours
 	sf::Color c_headerShape{ 200,200,200,200 };
@@ -98,6 +108,11 @@ private:
 	sf::Color c_userShapeOdd{ 150,150,150,200 };
 	sf::Color c_currentUserShape{ 200,100,100,200 };
 	sf::Color c_navButtonColour{ 50,100,150,220 };
+
+	sf::Color c_songFrameColour{ 100,100,180,150 };
+	sf::Color c_songFrameColourOutline{ 50,50,60,200 };
+	sf::Color c_songTitleFrameColour{ 80,100,60,140 };
+	sf::Color c_songTitleFrameColourOutline{ 50,50,60,220 };
 
 
 };

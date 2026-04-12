@@ -506,7 +506,6 @@ void Game::update(sf::Time t_deltaTime)
 
 	// FPS
 	m_frameCount++;
-	// Update FPS every 1 second
 	if (m_fpsClock.getElapsedTime().asSeconds() >= 1.0f)
 	{
 		m_fps = m_frameCount / m_fpsClock.getElapsedTime().asSeconds();
@@ -531,7 +530,9 @@ void Game::update(sf::Time t_deltaTime)
 		m_currentGameState == GameStates::MidiFileSelectScene ||
 		m_currentGameState == GameStates::VisualiserSelectScene ||
 		m_currentGameState == GameStates::PianoVis ||
-		m_currentGameState == GameStates::DrumVis)
+		m_currentGameState == GameStates::DrumVis ||
+		m_currentGameState == GameStates::LeaderboardScene
+		)
 	{
 		m_bgScroll_1.update(dtConverted);
 	}
@@ -621,6 +622,7 @@ void Game::render()
 	// Leaderboard
 	if (m_currentGameState == GameStates::LeaderboardScene)
 	{
+		m_bgScroll_1.render(m_window);
 		m_leaderboard.render(m_window);
 	}
 	// Leaderboard
@@ -1036,6 +1038,6 @@ void Game::updateHUDMidi()
 void Game::setupMidiWrite()
 {
 	std::cerr << "Midi Write" << std::endl;
-	std::string m_tempName = "temp"; // [DEBUGGING]
+	std::string m_tempName = "temp"; 
 	m_midiWrite.writeFile(m_tempName);
 }

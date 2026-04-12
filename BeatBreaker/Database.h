@@ -36,6 +36,7 @@ public:
 	int getUserID(const std::string& t_username);
 
 	bool uploadMIDI(std::string& t_filePath, std::vector<char>& t_outputBuffer);
+	bool downloadMIDI(int t_resultID, std::string& t_outputPath);
 
 	void SQLCleanup(/*SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement*/);
 

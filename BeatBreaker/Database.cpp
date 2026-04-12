@@ -23,9 +23,6 @@ bool Database::sqlConnect(std::string t_ODBCString)
 
 	SQLAllocHandle(SQL_HANDLE_DBC, handleEnvir, &handleDbc);
 
-	// Connect with the token
-	//std::wstring ODBCTokenW(ODBCToken.begin(), ODBCToken.end());
-
 	SQLRETURN returnDriverCheck = SQLDriverConnectA(handleDbc, NULL, (SQLCHAR*)t_ODBCString.c_str(), SQL_NTS, NULL, 0, NULL, SQL_DRIVER_NOPROMPT);
 	if (returnDriverCheck != SQL_SUCCESS && returnDriverCheck != SQL_SUCCESS_WITH_INFO)
 	{
@@ -465,6 +462,84 @@ bool Database::uploadMIDI(std::string& t_filePath, std::vector<char>& t_outputBu
 	}
 
 	file.close();
+	return true;
+}
+
+bool Database::downloadMIDI(int t_resultID, std::string& t_outputPath)
+{
+	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
+
+	std::string query = "SELECT midi_file FROM results WHERE id = " + std::to_string(t_resultID);
+	SQLRETURN returnExecCheck = SQLExecDirectA(handleStatement, (SQLCHAR*)query.c_str(), SQL_NTS);
+
+	if (returnExecCheck != SQL_SUCCESS && returnExecCheck != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "[DB] Download midi unsuccessful" << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement); 
+		return false;
+	}
+
+	// Get in chunks
+	if (SQLFetch(handleStatement) != SQL_SUCCESS)
+	{
+		std::cerr << "[DB] Download midi - no data found for that id" << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+		return false;
+	}
+
+	//std::vector<char> buffer;
+	//char chunk[4096];
+	char buffer[524288]; // 1024 * 512
+	SQLLEN bytesRead = 0;
+	SQLGetData(handleStatement, 1, SQL_C_BINARY, buffer, sizeof(buffer), &bytesRead);
+
+	if (bytesRead == SQL_NULL_DATA << bytesRead <= 0)
+	{
+		std::cerr << "[DB] Download midi file has no data in it for: " << t_resultID << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+		return false;
+	}
+	SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+
+	std::ofstream outputFile(t_outputPath, std::ios::binary);
+	if (!outputFile.is_open())
+	{
+		std::cerr << "[DB] Download midi couldn't open path: " << t_outputPath << std::endl;
+		return false;
+	}
+
+	outputFile.write(buffer, bytesRead);
+	outputFile.close();
+
+	std::cerr << "[DB] Download midi success!" << std::endl;
+
+	/*while (true)
+	{
+		SQLRETURN fetchReturn = 
+
+		if (fetchReturn == SQL_NO_DATA)
+		{
+			break;
+		}
+
+		if (fetchReturn != SQL_SUCCESS && fetchReturn != SQL_SUCCESS_WITH_INFO)
+		{
+			std::cerr << "[DB] Download midi - couldn't grab sqlGetData" << std::endl;
+			
+			return false;
+		}
+
+		SQLLEN bytesInThisChunk = 0;
+		if (bytesRead > (SQLLEN)sizeof(chunk))
+		{
+			bytesInThisChunk = sizeof(chunk);
+		}
+		else
+		{
+			bytesRead = bytesInThisChunk;
+		}
+	}*/
+
 	return true;
 }
 

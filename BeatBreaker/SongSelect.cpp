@@ -27,7 +27,7 @@ void SongSelect::setupPathStrings()
 		{"Thousand Miles", "ASSETS\\AUDIO\\MUSIC\\ThousandMilesRiff.mid", SONGDIFFICULTIES::HARD},
 		//{"Full MCI Example [TEST]", "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid", SONGDIFFICULTIES::UNKNOWN},
 		//{"Saved Midi", "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\custom.mid", SONGDIFFICULTIES::UNKNOWN},
-		{"Test Riff", "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\TestRiff.mid", SONGDIFFICULTIES::UNKNOWN},
+		//{"Test Riff", "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\TestRiff.mid", SONGDIFFICULTIES::UNKNOWN},
 	};
 
 	m_pathsCount = m_pathVector.size();

@@ -6,7 +6,7 @@ C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-i
       C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
       see declaration of 'sf::Exception'
   
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Leaderboard.cpp(171,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Leaderboard.cpp(254,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Leaderboard.cpp(259,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Leaderboard.cpp(201,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Leaderboard.cpp(287,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Leaderboard.cpp(292,20): warning C4018: '<': signed/unsigned mismatch
   BeatBreaker.vcxproj -> C:\Users\jakef\Desktop\College\Project\4th_year_final_project\BeatBreaker\Debug\BeatBreaker.exe
