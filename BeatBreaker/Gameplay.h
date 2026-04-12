@@ -221,7 +221,7 @@ private:
     bool b_isSongFinished = false;
     
     bool b_playNotesNoInput = true;
-    bool b_easyInputMode = true;
+    bool b_easyInputMode = false;
 
     bool b_isPreviewMode = false;
 

@@ -22,7 +22,7 @@ Game::Game() :
 	m_window{ sf::VideoMode{ sf::Vector2u{SCREEN_WIDTH, SCREEN_HEIGHT}, 32U }, "Beat Breaker" },
 	m_DELETEexitGame{false},
 		m_jerseyFont(loadFont()),
-		m_hud(*m_jerseyFont),
+		m_hud(*m_jerseyFont, m_database),
 	    m_bgScroll_1(),
 	    m_gameplay(m_soundManager, m_jerseyFont),
 		m_options(m_jerseyFont, m_gameplay),
@@ -100,6 +100,7 @@ Game::Game() :
 	m_gameplay.setup();
 
 	m_database.sqlConnect(ODBCString);
+	m_hud.updateServerConnection(m_database.getConnectionStatus());
 
 	// Custom Icon
 	setupCustomIcon();
@@ -218,41 +219,6 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 				stopMidiMCI();
 			}
 		}
-		/*
-		// SQL  
-		if (sf::Keyboard::Key::L == newKeypress->code)
-		{
-			std::cerr << " " << std::endl;
-			std::cerr << "========================" << std::endl;
-			std::cerr << "Connecting to the server" << std::endl;
-			std::cerr << "========================" << std::endl;
-			std::cerr << " " << std::endl;
-
-			if (m_database.sqlConnect(ODBCString) == true)
-			{
-				m_localLeaderboard = m_database.getLeaderboardData();
-				m_leaderboard.populateFromDatabase(m_localLeaderboard);
-
-				for (const USERDATA& entry : m_localLeaderboard)
-				{
-					std::cerr << entry.id << " " << entry.username << " " << entry.score << std::endl;
-				}
-			}
-		}
-		// Upload to database
-		if (sf::Keyboard::Key::K == newKeypress->code)
-		{
-
-			std::string m_playerName = "TestName";
-			int m_tempScore = 100;
-
-			if (m_database.sqlConnect(ODBCString) == true)
-			{
-				//m_database.submitScore(m_playerName, m_tempScore);
-				m_database.submitScoreFromFile(m_highscorePath);
-			}
-		}
-		*/
 
 		// Gamplay
 		if (m_currentGameState == GameStates::GameplayScene)
@@ -530,6 +496,10 @@ void Game::update(sf::Time t_deltaTime)
 	if (m_DELETEexitGame)
 	{
 		freeMidiHandler();
+		if (m_database.getConnectionStatus() == true)
+		{
+			m_database.SQLCleanup();
+		}
 
 		m_window.close();
 	}

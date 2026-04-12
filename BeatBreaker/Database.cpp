@@ -3,7 +3,11 @@
 
 bool Database::sqlConnect(std::string t_ODBCString)
 {
-
+	std::cerr << "" << std::endl;
+	std::cerr << "" << std::endl;
+	std::cerr << "=======================" << std::endl;
+	std::cerr << "Connecting to server..." << std::endl;
+	std::cerr << "=======================" << std::endl;
 
 	// Setup environment
 	SQLRETURN returnAllocCheck;
@@ -25,18 +29,16 @@ bool Database::sqlConnect(std::string t_ODBCString)
 	SQLRETURN returnDriverCheck = SQLDriverConnectA(handleDbc, NULL, (SQLCHAR*)t_ODBCString.c_str(), SQL_NTS, NULL, 0, NULL, SQL_DRIVER_NOPROMPT);
 	if (returnDriverCheck != SQL_SUCCESS && returnDriverCheck != SQL_SUCCESS_WITH_INFO)
 	{
-		std::cerr << "Driver connection failed" << std::endl;
+		std::cerr << "-> Driver connection FAILED" << std::endl;
+		b_isConnected = false;
 		return false;
 	}
 	else
 	{
-		std::cerr << "Driver connection SUCCESS!" << std::endl;
+		std::cerr << "-> Driver connection SUCCESS!" << std::endl;
+		b_isConnected = true;
 		return true;
 	}
-
-	// ---------------------------------------------------------------------------------------------------------------------------------------------------
-	
-
 }
 
 std::vector<USERDATA> Database::getLeaderboardData()
@@ -117,7 +119,7 @@ std::vector<USERDATA> Database::getLeaderboardData()
 		std::cerr << "Fetch failed" << std::endl;;
 	}
 
-	SQLCleanup(handleEnvir, handleDbc, handleStatement);
+	SQLCleanup(/*handleEnvir, handleDbc, handleStatement*/);
 
 	return leaderboardVec;
 }
@@ -133,12 +135,12 @@ bool Database::submitScore(std::string t_username, int t_score)
 	if (returnExecCheck != SQL_SUCCESS && returnExecCheck != SQL_SUCCESS_WITH_INFO)
 	{
 		std::cerr << "Submit score failed" << std::endl;
-		SQLCleanup(handleEnvir, handleDbc, handleStatement);
+		SQLCleanup(/*handleEnvir, handleDbc, handleStatement*/);
 		return false;
 	}
 
 	std::cerr << "Submit score SUCCESS!" << std::endl;
-	SQLCleanup(handleEnvir, handleDbc, handleStatement);
+	SQLCleanup(/*handleEnvir, handleDbc, handleStatement*/);
 	return true;
 }
 
@@ -186,7 +188,7 @@ bool Database::submitScoreFromFile(std::string t_filePath)
 
 	file.close();
 
-	SQLCleanup(handleEnvir, handleDbc, handleStatement);
+	SQLCleanup(/*handleEnvir, handleDbc, handleStatement*/);
 	return true;
 }
 
@@ -396,10 +398,16 @@ bool Database::uploadMIDI(std::string& t_filePath, std::vector<char>& t_outputBu
 	return true;
 }
 
-void Database::SQLCleanup(SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement)
+void Database::SQLCleanup(/*SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement*/)
 {
-	SQLFreeHandle(SQL_HANDLE_STMT, t_handleStatement);
-	SQLDisconnect(t_handleDbc);
-	SQLFreeHandle(SQL_HANDLE_DBC, t_handleDbc);
-	SQLFreeHandle(SQL_HANDLE_ENV, t_handleEnvir);
+	SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+	SQLDisconnect(handleDbc);
+	SQLFreeHandle(SQL_HANDLE_DBC, handleDbc);
+	SQLFreeHandle(SQL_HANDLE_ENV, handleEnvir);
+	bool b_isConnected = false;
+}
+
+bool Database::getConnectionStatus()
+{
+	return b_isConnected;
 }

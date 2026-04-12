@@ -138,7 +138,7 @@ private:
 	bool b_isDebugActive = false;
 
 	// States
-	GameStates m_currentGameState = GameStates::ResultsScene;
+	GameStates m_currentGameState = GameStates::MainMenuScene;
 
 	// MIDI
 	MIDIParse m_midiParser;

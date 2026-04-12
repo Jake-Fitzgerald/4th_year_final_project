@@ -68,6 +68,9 @@ void Keyboard::setEasyInputFlag(bool t_bool)
     {
         m_inputTriggerSizeY = m_inputNormalSize;
     }
+
+    m_inputTrigger.setSize(sf::Vector2f{ m_baseWidth, m_inputTriggerSizeY });
+    setupTriggers();
 }
 
 bool Keyboard::getEasyInputFlag()
@@ -154,9 +157,13 @@ void Keyboard::render(sf::RenderWindow& t_window)
         }
     }
 
-    t_window.draw(m_killTrigger);
-    t_window.draw(m_inputTrigger);
-    t_window.draw(m_noteSoundTrigger);
+    if (b_isDebug == true)
+    {
+        t_window.draw(m_killTrigger);
+        t_window.draw(m_inputTrigger);
+        t_window.draw(m_noteSoundTrigger);
+    }
+
 }
 
 void Keyboard::handleClick(sf::Vector2f t_mousePos)
@@ -233,6 +240,11 @@ float Keyboard::getSoundNoteTriggerY()
 int Keyboard::getScore()
 {
     return m_score;
+}
+
+void Keyboard::setDebug(bool t_bool)
+{
+    b_isDebug = t_bool;
 }
 
 

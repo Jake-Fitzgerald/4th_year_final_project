@@ -69,6 +69,8 @@ public:
 
     int getScore();
 
+    void setDebug(bool t_bool);
+
 private:
     SoundManager* m_soundManager;
 
@@ -90,7 +92,6 @@ private:
     sf::Color c_inputTriggerColour = sf::Color(0, 255, 0, 100);
     sf::Color c_noteSoundTriggerColour = sf::Color(0, 0, 255, 100);
 
-    // Collision
     sf::RectangleShape m_killTrigger;
     sf::RectangleShape m_inputTrigger;
     sf::RectangleShape m_noteSoundTrigger;
@@ -99,5 +100,7 @@ private:
     float m_inputTriggerSizeY = m_inputNormalSize;
     int m_score = 0;
     bool b_easyInput = false;
+
+    bool b_isDebug = false;
 };
 

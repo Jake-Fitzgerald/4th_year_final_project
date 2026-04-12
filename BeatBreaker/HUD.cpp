@@ -1,6 +1,6 @@
 #include "HUD.h"
 
-HUD::HUD(const sf::Font& font) : m_fpsText(font),
+HUD::HUD(const sf::Font& font, Database t_database) : m_fpsText(font),
 								 m_midiFileNameText(font),
 								 m_midiTimeSigText(font),
 								 m_midiBPMText(font),
@@ -12,7 +12,9 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 								 m_stopButtonSprite(m_stopButtonTexture),
 								 m_muteButtonSprite(m_muteButtonTexture),
 								 m_unmuteButtonSprite(m_unmuteButtonTexture),
-	                             m_midiKeyboardText(font)
+	                             m_midiKeyboardText(font),
+								 m_databaseText(font),
+								 m_database(&t_database)
 {
 	// FPS
 	m_fpsText.setPosition(sf::Vector2f{ SCREEN_CENTRE.x + 600.0f, SCREEN_CENTRE.y - 350.0f });
@@ -59,11 +61,17 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 	m_bottomBorderBar.setOutlineThickness(2.0f);
 	m_bottomBorderBar.setSize(sf::Vector2f{ 800.0f, 25.0f });
 	
-	m_keyboardStatus.setPosition(sf::Vector2f{ m_midiTextPos.x + 900.0f, m_midiTextPos.y });
+	m_keyboardStatus.setPosition(sf::Vector2f{ m_midiTextPos.x + 825.0f, m_midiTextPos.y });
 	m_keyboardStatus.setFillColor(sf::Color(75, 75, 75, 150));
 	m_keyboardStatus.setOutlineColor(sf::Color::Black);
 	m_keyboardStatus.setOutlineThickness(2.0f);
-	m_keyboardStatus.setSize(sf::Vector2f{ 150.0f, 25.0f }); //
+	m_keyboardStatus.setSize(sf::Vector2f{ 150.0f, 25.0f }); 
+
+	m_serverStatusFrame.setPosition(sf::Vector2f{ m_midiTextPos.x + 1000.0f, m_midiTextPos.y });
+	m_serverStatusFrame.setFillColor(sf::Color(75, 75, 75, 150));
+	m_serverStatusFrame.setOutlineColor(sf::Color::Black);
+	m_serverStatusFrame.setOutlineThickness(2.0f);
+	m_serverStatusFrame.setSize(sf::Vector2f{ 125.0f, 25.0f });
 
 	m_HUDBorder.setPosition(sf::Vector2f{ 13.0f , m_midiTextPos.y - 65.0f});
 	m_HUDBorder.setFillColor(sf::Color(50, 50, 50, 50));
@@ -77,12 +85,19 @@ HUD::HUD(const sf::Font& font) : m_fpsText(font),
 	setupButtonSprites();
 
 	// Midi Keyboard Text
-	m_midiKeyboardText.setPosition(sf::Vector2f{ m_midiTextPos.x + 900.0f, m_midiTextPos.y });
+	m_midiKeyboardText.setPosition(sf::Vector2f{ m_midiTextPos.x + 825.0f, m_midiTextPos.y });
 	m_midiKeyboardText.setFillColor(sf::Color::White);
 	m_midiKeyboardText.setOutlineColor(sf::Color::Black);
 	m_midiKeyboardText.setOutlineThickness(2.0f);
 	m_midiKeyboardText.setCharacterSize(20U);
 	m_midiKeyboardText.setString("Midi Keyboard: OFF");
+
+	m_databaseText.setPosition(sf::Vector2f{ m_midiTextPos.x + 1000.0f, m_midiTextPos.y });
+	m_databaseText.setFillColor(sf::Color::White);
+	m_databaseText.setOutlineColor(sf::Color::Black);
+	m_databaseText.setOutlineThickness(2.0f);
+	m_databaseText.setCharacterSize(20U);
+	m_databaseText.setString("Server: OFF");
 }
 
 void HUD::setupBeatMarkers()
@@ -227,11 +242,11 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 	t_window.draw(m_HUDBorder);
 	t_window.draw(m_bottomBorderBar);
 	t_window.draw(m_keyboardStatus);
+	t_window.draw(m_serverStatusFrame);
 
 	// Buttons
 	t_window.draw(m_playButtonSprite);
 	t_window.draw(m_pauseButtonSprite);
-	//t_window.draw(m_skipEndButtonSprite);
 	t_window.draw(m_skipStartButtonSprite);
 	t_window.draw(m_stopButtonSprite);
 	t_window.draw(m_muteButtonSprite);
@@ -251,6 +266,8 @@ void HUD::drawHUD(sf::RenderWindow &t_window)
 
 	// Midi Keyboard
 	t_window.draw(m_midiKeyboardText);
+
+	t_window.draw(m_databaseText);
 }
 
 void HUD::loadMidiData(const std::vector<MidiTrack>& t_tracks, std::string t_timeSig, double t_bpm, std::string t_midiFileName, int t_nom, int t_denom)
@@ -465,5 +482,19 @@ void HUD::updateMidiKeyboardConnnection(bool t_connectStatus)
 	else
 	{
 		m_midiKeyboardText.setString("Midi Keyboard: OFF");
+	}
+}
+
+void HUD::updateServerConnection(bool t_connectStatus)
+{
+	b_isDatabaseConnected = t_connectStatus;
+
+	if (b_isDatabaseConnected == true)
+	{
+		m_databaseText.setString("Server: ON");
+	}
+	else
+	{
+		m_databaseText.setString("Server: OFF");
 	}
 }

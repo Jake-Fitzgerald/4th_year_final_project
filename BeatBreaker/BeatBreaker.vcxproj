@@ -39,7 +39,6 @@
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="PianoVisualiser.cpp" />
     <ClCompile Include="Results.cpp" />
-    <ClCompile Include="Score.cpp" />
     <ClCompile Include="SongSelect.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TrackVisualiser.cpp" />
@@ -67,7 +66,6 @@
     <ClInclude Include="Options.h" />
     <ClInclude Include="PianoVisualiser.h" />
     <ClInclude Include="Results.h" />
-    <ClInclude Include="Score.h" />
     <ClInclude Include="SongSelect.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TrackVisualiser.h" />

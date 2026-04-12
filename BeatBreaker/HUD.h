@@ -3,11 +3,12 @@
 #include "Globals.h"
 #include <iostream>
 #include "MIDIParse.h"
+#include "Database.h"
 
 class HUD
 {
 public:
-	HUD(const sf::Font& font);
+	HUD(const sf::Font& font, Database t_database);
 
 	void setupBeatMarkers();
 	void setupButtonSprites();
@@ -33,8 +34,11 @@ public:
 	bool checkIfAreaClicked(sf::Vector2f t_mousePos, sf::Vector2f t_topLeft, sf::Vector2f t_size);
 
 	void updateMidiKeyboardConnnection(bool t_connectStatus);
+	void updateServerConnection(bool t_connectStatus);
 
 private:
+	Database* m_database;
+
 	// FPS
 	float m_fpsNumber;
 	sf::Text m_fpsText;
@@ -90,11 +94,14 @@ private:
 	// UI Polish
 	sf::RectangleShape m_bottomBorderBar;
 	sf::RectangleShape m_keyboardStatus;
+	sf::RectangleShape m_serverStatusFrame;
 	sf::RectangleShape m_HUDBorder;
 
 	// Midi Keyboard
 	sf::Text m_midiKeyboardText;
 	bool b_isMidiKeyboardConnected = false;
-	
+
+	sf::Text m_databaseText;
+	bool b_isDatabaseConnected = false;
 };
 

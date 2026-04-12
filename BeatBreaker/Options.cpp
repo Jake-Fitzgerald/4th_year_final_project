@@ -136,7 +136,7 @@ void Options::setupMidiOptions()
 
 	colTriggerSize.m_buttonShape.setSize(colTriggerSize.m_buttonSize);
 	colTriggerSize.m_buttonShape.setPosition(colTriggerSize.m_buttonPos2);
-	colTriggerSize.m_buttonShape.setFillColor(colTriggerSize.c_enabledColour);
+	colTriggerSize.m_buttonShape.setFillColor(colTriggerSize.c_disabledColour);
 	colTriggerSize.m_buttonShape.setOutlineThickness(2.0f);
 	colTriggerSize.m_buttonShape.setOutlineColor(sf::Color::Black);
 
@@ -340,8 +340,8 @@ bool Options::handleMouseClick(sf::Vector2f t_mousePos, HUD& t_hud, SoundManager
 	else if (m_buttons[1].m_buttonShape.getGlobalBounds().contains(t_mousePos))
 	{
 		t_soundManager.play("ui_confirm");
-		bool currentFlag = m_keyboard->getEasyInputFlag();
-		m_keyboard->setEasyInputFlag(!currentFlag);
+		bool currentFlag = m_gameplay->getEasyInputFlag();
+		m_gameplay->setEasyInputFlag(!currentFlag);
 		changeButtonColours();
 	}
 	// Practice

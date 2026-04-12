@@ -34,11 +34,15 @@ public:
 
 	bool uploadMIDI(std::string& t_filePath, std::vector<char>& t_outputBuffer);
 
-	void SQLCleanup(SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement);
+	void SQLCleanup(/*SQLHENV& t_handleEnvir, SQLHDBC& t_handleDbc, SQLHSTMT& t_handleStatement*/);
+
+	bool getConnectionStatus();
 
 private:
 	SQLHENV handleEnvir;
 	SQLHDBC handleDbc;
 	SQLHSTMT handleStatement;
+
+	bool b_isConnected = false;
 };
 

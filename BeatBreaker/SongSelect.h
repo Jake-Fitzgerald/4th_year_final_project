@@ -130,17 +130,6 @@ private:
 	sf::Text m_previewText;
 	sf::Vector2f m_playButtonSize{ 200.0f, 50.0f };
 
-	// File Paths
-	// EASY
-	std::string m_cScale = "ASSETS\\AUDIO\\MUSIC\\C_Scale.mid";
-
-	// MEDIUM
-	std::string m_majorAndMinorChords = "ASSETS\\AUDIO\\MUSIC\\Major_and_Minor_Chords.mid";
-
-	// HARD 
-	std::string m_hardSong = "ASSETS\\AUDIO\\MUSIC\\Full_MIDI_Range.mid"; // temp since it has too many instruments
-	std::string m_thousandMiles = "ASSETS\\AUDIO\\MUSIC\\ThousandMilesRiff.mid";
-
 	std::vector<SongPaths> m_pathVector;
 
 	sf::Color c_Easy = sf::Color::Green;

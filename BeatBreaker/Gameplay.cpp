@@ -922,6 +922,7 @@ bool Gameplay::getEasyInputFlag()
 void Gameplay::setEasyInputFlag(bool t_bool)
 {
 	b_easyInputMode = t_bool;
+	m_keyboard.setEasyInputFlag(b_easyInputMode);
 }
 
 bool Gameplay::getTriggerDisplayFlag()
@@ -932,6 +933,7 @@ bool Gameplay::getTriggerDisplayFlag()
 void Gameplay::setTriggerDisplayFlag(bool t_bool)
 {
 	b_displayTriggers = t_bool;
+	m_keyboard.setDebug(b_displayTriggers);
 }
 
 bool Gameplay::getSongFinishedFlag()
