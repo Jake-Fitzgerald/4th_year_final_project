@@ -32,7 +32,7 @@ Game::Game() :
 		m_visSelect(m_jerseyFont),
 		pianoVisualiser(m_soundManager, m_collisionManager),
 	    m_songSelect(m_jerseyFont),
-	    m_leaderboard(m_jerseyFont, m_database),
+	    m_leaderboard(m_jerseyFont, m_database, m_soundManager),
 		m_mainMenu(m_jerseyFont),
 	    m_gameOver(m_jerseyFont, m_database)
 		

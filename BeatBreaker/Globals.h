@@ -22,7 +22,8 @@ const float paddingY = 10.0f;
 // SQL
 struct USERDATA
 {
-	int id = -1;
+	int id = -1; // User's ID
+    int resultID = -1; // Result row ID
 	std::string username = " ";
 	int score = -1;
 };

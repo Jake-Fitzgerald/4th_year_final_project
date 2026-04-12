@@ -1,11 +1,13 @@
 #include "Leaderboard.h"
 
-Leaderboard::Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database) 
+Leaderboard::Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database, SoundManager& t_soundManager) 
 	: m_font(font),
 	m_database(&t_database),
+	m_soundManager(&t_soundManager),
 	m_previousText(*font),
 	m_nextText(*font),
 	m_songNameText(*font)
+	
 {
 
 }
@@ -211,6 +213,7 @@ void Leaderboard::populateFromDatabase(const std::vector<USERDATA>& t_data)
 	{
 		// index 0 is the header so we add 1
 		m_leaderboardVec[i + 1].m_id = t_data[i].id;
+		m_leaderboardVec[i + 1].m_resultID = t_data[i].resultID;
 		m_leaderboardVec[i + 1].m_username = t_data[i].username;
 		m_leaderboardVec[i + 1].m_score = t_data[i].score;
 
@@ -248,6 +251,7 @@ void Leaderboard::handleClick(sf::Vector2f t_mousePos)
 			m_currentSongIndex = static_cast<int>(m_songs.size() - 1);
 		}
 		fetchSongsForCurrentSong();
+		m_soundManager->play("ui_cancel");
 	}
 
 
@@ -260,6 +264,25 @@ void Leaderboard::handleClick(sf::Vector2f t_mousePos)
 			m_currentSongIndex = 0;
 		}
 		fetchSongsForCurrentSong();
+		m_soundManager->play("ui_cancel");
+	}
+
+	// Midi
+	for (int i = 0; i < static_cast<int>(m_leaderboardVec.size()); i++)
+	{
+		if (m_leaderboardVec[i].m_resultID == -1)
+		{
+			continue;
+		}
+
+		if (m_leaderboardVec[i].m_downloadButton.getGlobalBounds().contains(t_mousePos))
+		{
+			std::string fileName = m_downloadPath + "downloadedMidi.mid";
+
+			m_database->downloadMIDI(m_leaderboardVec[i].m_resultID, fileName);
+
+			m_soundManager->play("ui_cancel");
+		}
 	}
 }
 

@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
 #include "Database.h"
+#include "SoundManager.h"
 
 
 struct LeaderboardData
@@ -46,7 +47,7 @@ struct LeaderboardData
 class Leaderboard
 {
 public:
-	Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database);
+	Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database, SoundManager& t_soundManager);
 
 	//void getSQLData(int t_id, std::string t_username, int t_score);
 
@@ -64,6 +65,7 @@ public:
 
 private:
 	Database* m_database;
+	SoundManager* m_soundManager;
 	std::shared_ptr<const sf::Font> m_font;
 
 	std::vector<SONGDATA> m_songs;

@@ -1,6 +1,5 @@
 #include "Database.h"
 
-
 bool Database::sqlConnect(std::string t_ODBCString)
 {
 	std::cerr << "" << std::endl;
@@ -76,7 +75,7 @@ std::vector<USERDATA> Database::getLeaderboardBySong(int t_songID)
 
 	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
 
-	std::string query = "SELECT TOP 10 users.username, results.score "
+	std::string query = "SELECT TOP 10 results.id, users.id, users.username, results.score "
 						"FROM results "
 						"JOIN users ON results.user_id = users.id "
 						"WHERE results.song_id = " + std::to_string(t_songID) +
@@ -91,14 +90,20 @@ std::vector<USERDATA> Database::getLeaderboardBySong(int t_songID)
 		return resultsVec;
 	}
 
+	int resultID;
+	int userID;
 	char username[50];
 	int score;
-	SQLBindCol(handleStatement, 1, SQL_C_CHAR, username, sizeof(username), NULL);
-	SQLBindCol(handleStatement, 2, SQL_C_LONG, &score, sizeof(score), NULL);
+	SQLBindCol(handleStatement, 1, SQL_C_LONG, &resultID, sizeof(resultID), NULL);
+	SQLBindCol(handleStatement, 2, SQL_C_LONG, &userID, sizeof(userID), NULL);
+	SQLBindCol(handleStatement, 3, SQL_C_CHAR, username, sizeof(username), NULL);
+	SQLBindCol(handleStatement, 4, SQL_C_LONG, &score, sizeof(score), NULL);
 
 	while (SQLFetch(handleStatement) == SQL_SUCCESS)
 	{
 		USERDATA user;
+		user.resultID = resultID; // Result row ID, NOT the user's ID
+		user.id = userID;
 		user.username = std::string(username);
 		user.score = score;
 		resultsVec.push_back(user);
@@ -493,7 +498,7 @@ bool Database::downloadMIDI(int t_resultID, std::string& t_outputPath)
 	SQLLEN bytesRead = 0;
 	SQLGetData(handleStatement, 1, SQL_C_BINARY, buffer, sizeof(buffer), &bytesRead);
 
-	if (bytesRead == SQL_NULL_DATA << bytesRead <= 0)
+	if (bytesRead == SQL_NULL_DATA || bytesRead <= 0)
 	{
 		std::cerr << "[DB] Download midi file has no data in it for: " << t_resultID << std::endl;
 		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
@@ -512,33 +517,6 @@ bool Database::downloadMIDI(int t_resultID, std::string& t_outputPath)
 	outputFile.close();
 
 	std::cerr << "[DB] Download midi success!" << std::endl;
-
-	/*while (true)
-	{
-		SQLRETURN fetchReturn = 
-
-		if (fetchReturn == SQL_NO_DATA)
-		{
-			break;
-		}
-
-		if (fetchReturn != SQL_SUCCESS && fetchReturn != SQL_SUCCESS_WITH_INFO)
-		{
-			std::cerr << "[DB] Download midi - couldn't grab sqlGetData" << std::endl;
-			
-			return false;
-		}
-
-		SQLLEN bytesInThisChunk = 0;
-		if (bytesRead > (SQLLEN)sizeof(chunk))
-		{
-			bytesInThisChunk = sizeof(chunk);
-		}
-		else
-		{
-			bytesRead = bytesInThisChunk;
-		}
-	}*/
 
 	return true;
 }
