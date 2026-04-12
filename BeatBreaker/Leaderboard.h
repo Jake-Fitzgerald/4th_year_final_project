@@ -49,8 +49,6 @@ class Leaderboard
 public:
 	Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database, SoundManager& t_soundManager);
 
-	//void getSQLData(int t_id, std::string t_username, int t_score);
-
 	void setupLeaderboard();
 	void setupUI();
 
@@ -94,7 +92,7 @@ private:
 
 	int m_pageCount = 10;
 
-	std::string m_downloadPath = "ASSETS\\AUDIO\\MUSIC\\DownloadedMidi";
+	std::string m_downloadPath = "ASSETS\\AUDIO\\MUSIC\\DownloadedMidi\\";
 
 	// UI
 	std::vector<sf::RectangleShape> m_verticalLines;

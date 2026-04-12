@@ -148,6 +148,8 @@ private:
 	MidiWrite m_midiWrite;
 	std::string m_midiWritePath = "ASSETS\\AUDIO\\MUSIC\\SavedMidi\\";
 	void setupMidiWrite();
+	// Ghost
+	std::string m_ghostMidiPath = "ASSETS\\AUDIO\\MUSIC\\DownloadedMidi\\";
 
 	// UI
 	HUD m_hud;
@@ -209,7 +211,6 @@ private:
 
 	// Gameplay
 	Gameplay m_gameplay;
-	//Keyboard m_keyboard;
 };
 
 #pragma warning( pop ) 

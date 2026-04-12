@@ -904,6 +904,16 @@ bool Gameplay::getPreviewModeFlag()
 	return b_isPreviewMode;
 }
 
+void Gameplay::setGhostModeFlag(bool t_bool)
+{
+	b_isGhostMode = t_bool;
+}
+
+bool Gameplay::getGhostModeFlag()
+{
+	return b_isGhostMode;
+}
+
 bool Gameplay::getNoteOnColliderFlag()
 {
 	return b_playNotesNoInput;

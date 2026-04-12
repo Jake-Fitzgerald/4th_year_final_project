@@ -60,7 +60,8 @@ enum class SongClickResult
 	PreviewClicked,
 	BeginClicked,
 	PreviewDemoClicked,
-	CustomLoadClicked
+	CustomLoadClicked,
+	GhostClicked
 };
 
 struct SongPaths
@@ -79,6 +80,7 @@ public:
 	void setupButtons();
 	void setupBeginButton();
 	void setupPreviewButton();
+	void setupGhostButton();
 	void setupUIFrames();
 	void setupInputFieldButton();
 	
@@ -98,6 +100,7 @@ public:
 	std::string DifficultyToString(SONGDIFFICULTIES t_difficulty);
 
 	void togglePreviewColour(bool t_bool);
+	void toggleGhostColour(bool t_bool);
 
 private:
 	std::vector<SongButton> m_buttons;
@@ -129,6 +132,10 @@ private:
 	sf::RectangleShape m_previewButton;
 	sf::Text m_previewText;
 	sf::Vector2f m_playButtonSize{ 200.0f, 50.0f };
+	// Ghost button
+	sf::RectangleShape m_ghostButton;
+	sf::Text m_ghostext;
+	sf::Vector2f m_ghostButtonSize{ 200.0f, 50.0f };
 
 	std::vector<SongPaths> m_pathVector;
 

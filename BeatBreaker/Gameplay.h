@@ -97,6 +97,7 @@ public:
     // Note Generation
     void loadTrack(MidiTrack& t_track, double t_BPM);
     void spawnNote(MidiNote& t_note);
+    // Ghost Generation
 
     // Playback
     void startSong();
@@ -108,6 +109,8 @@ public:
     bool getRecordingFlag();
     void setPreviewModeFlag(bool t_bool);
     bool getPreviewModeFlag();
+    void setGhostModeFlag(bool t_bool);
+    bool getGhostModeFlag();
 
     bool getNoteOnColliderFlag();
     void setNoteOnColliderFlag(bool t_bool);
@@ -137,6 +140,10 @@ private:
     std::vector<MidiNote> m_recordedNotes;
     std::string m_songName = "";
     bool b_isRecording = true;
+
+    // Ghost Midi
+    std::vector<MidiNote> m_ghostNotes;
+    bool b_isGhostMode = false;
 
     // Playback Text
     sf::Vector2f m_playbackTextPos{ paddingX + 25.0f, paddingY + 400.0f };

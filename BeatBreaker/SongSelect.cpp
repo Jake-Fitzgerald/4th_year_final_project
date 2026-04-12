@@ -4,6 +4,7 @@ SongSelect::SongSelect(std::shared_ptr<const sf::Font> font)
 						: m_font(font),
 						  m_beginText(*font),
 						  m_previewText(*font),
+						  m_ghostext(*font),
 						  m_songListFrameText(*font),
 						  m_modeButtonsFrameText(*font),
 				          m_loadMidiField(font, m_loadMidiFieldPos, m_fieldSize, m_characterSize),
@@ -131,6 +132,7 @@ void SongSelect::setupButtons()
 
 	setupBeginButton();
 	setupPreviewButton();
+	setupGhostButton();
 	setupUIFrames();
 	setupInputFieldButton();
 }
@@ -179,6 +181,29 @@ void SongSelect::setupPreviewButton()
 		{
 				m_previewButton.getPosition().x + (m_previewButton.getSize().x - textBounds.size.x) / 2.0f,
 				m_previewButton.getPosition().y + (m_previewButton.getSize().y - textBounds.size.y) / 2.0f - textBounds.position.y
+		});
+}
+
+void SongSelect::setupGhostButton()
+{
+	float beginY = paddingY + m_pathsCount * m_spacing - 160.0f;
+
+	m_ghostButton.setSize(m_ghostButtonSize);
+	m_ghostButton.setPosition(sf::Vector2f{ paddingX + 900.0f, beginY + 300.0f });
+	m_ghostButton.setFillColor(c_buttonInactive);
+	m_ghostButton.setOutlineThickness(2.0f);
+	m_ghostButton.setOutlineColor(sf::Color::Black);
+
+	m_ghostext.setFont(*m_font);
+	m_ghostext.setString("Ghost");
+	m_ghostext.setCharacterSize(30);
+	m_ghostext.setFillColor(sf::Color::White);
+
+	sf::FloatRect textBounds = m_ghostext.getLocalBounds();
+	m_ghostext.setPosition(sf::Vector2f
+		{
+				m_ghostButton.getPosition().x + (m_ghostButton.getSize().x - textBounds.size.x) / 2.0f,
+				m_ghostButton.getPosition().y + (m_ghostButton.getSize().y - textBounds.size.y) / 2.0f - textBounds.position.y
 		});
 }
 
@@ -281,6 +306,8 @@ void SongSelect::render(sf::RenderWindow& t_window)
 	t_window.draw(m_previewText);
 	t_window.draw(m_songListFrameText);
 	t_window.draw(m_modeButtonsFrameText);
+	t_window.draw(m_ghostButton);
+	t_window.draw(m_ghostext);
 
 	m_loadMidiField.render(t_window); 
 	t_window.draw(m_loadCustomMidiButton);
@@ -349,7 +376,16 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 		return SongClickResult::PreviewDemoClicked;
 	}
 
+	// Ghost Mode
+	sf::Vector2f ghostTopLeft = m_ghostButton.getPosition();
+	sf::Vector2f ghostSize = m_ghostButton.getSize();
 
+	if (checkIfAreaClicked(t_mousePos, ghostTopLeft, ghostSize) == true)
+	{
+		return SongClickResult::GhostClicked;
+	}
+
+	// Custom
 	sf::Vector2f loadTopLeft = m_loadCustomMidiButton.getPosition();
 	sf::Vector2f loadSize = m_loadCustomMidiButton.getSize();
 
@@ -385,7 +421,6 @@ SongClickResult SongSelect::mouseClick(sf::Vector2f t_mousePos)
 			std::cerr << "You must load a midi first!" << std::endl;
 		}
 	}
-
 
 	return SongClickResult::None;
 }
@@ -480,6 +515,20 @@ void SongSelect::togglePreviewColour(bool t_bool)
 	else
 	{
 		m_previewButton.setFillColor(c_buttonInactive);
+	}
+}
+
+void SongSelect::toggleGhostColour(bool t_bool)
+{
+	bool clickResult = t_bool;
+
+	if (clickResult == true)
+	{
+		m_ghostButton.setFillColor(c_buttonActive);
+	}
+	else
+	{
+		m_ghostButton.setFillColor(c_buttonInactive);
 	}
 }
 

@@ -409,6 +409,29 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 			std::cerr << "Midi path loaded: " << m_midiPath << std::endl;
 			m_soundManager.play("ui_cancel");
 		}
+		else if (clickResult == SongClickResult::GhostClicked)
+		{
+			stopMidiMCI();
+
+			m_soundManager.play("ui_cancel");
+			if (m_gameplay.getGhostModeFlag() == false)
+			{
+				m_gameplay.setGhostModeFlag(true);
+				m_songSelect.toggleGhostColour(true);
+			}
+			else
+			{
+				m_gameplay.setGhostModeFlag(false);
+				m_songSelect.toggleGhostColour(false);
+			}
+
+			//m_midiPath = m_songSelect.getMidiPathString();
+
+			// Check if m_ghostMidiPath has a downloadedMidi.mid in it
+			// Send it to Gameplay scene
+			std::cerr << "Ghost path loaded: " << m_midiPath << std::endl;
+			m_soundManager.play("ui_cancel");
+		}
 
 		if (m_songSelect.returnClick(mouseWorldPos) == true)
 		{
