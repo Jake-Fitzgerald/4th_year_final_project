@@ -516,6 +516,7 @@ bool Database::downloadMIDI(int t_resultID, std::string& t_outputPath)
 	outputFile.write(buffer, bytesRead);
 	outputFile.close();
 
+	std::cerr << "[DB] Downloaded " << bytesRead << " bytes to: " << t_outputPath << std::endl;
 	std::cerr << "[DB] Download midi success!" << std::endl;
 
 	return true;

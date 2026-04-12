@@ -229,6 +229,8 @@ void MidiWrite::writeByteToBuffer(uint8_t t_value)
 
 void MidiWrite::writeMicroSeconds(std::ofstream& t_file)
 {
+    std::cerr << "writeMicroSeconds using BPM: " << m_BPM << std::endl;
+
     uint32_t microsecondsPerClick = 60000000.0 / m_BPM;
 
     uint8_t firstByte = (microsecondsPerClick >> 16);

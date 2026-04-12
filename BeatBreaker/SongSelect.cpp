@@ -533,4 +533,20 @@ void SongSelect::toggleGhostColour(bool t_bool)
 	}
 }
 
+void SongSelect::updatePDScores()
+{
+	for (int i = 0; i < m_buttons.size(); i++)
+	{
+		int pb = m_scoreManager->getPB(m_buttons[i].songName);
+		if (pb > 0)
+		{
+			m_buttons[i].m_pbScore.setString(std::to_string(pb));
+		}
+		else
+		{
+			m_buttons[i].m_pbScore.setString("0");
+		}
+	}
+}
+
 

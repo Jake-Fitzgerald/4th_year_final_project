@@ -811,9 +811,14 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 	setupPlaybackText();
 }
 
-void Gameplay::loadGhostTrack(MidiTrack& t_track, double t_BPM)						// FIX THIS
+void Gameplay::loadGhostTrack(MidiTrack& t_track, double t_BPM)						
 {
 	m_ghostNotes.clear();
+
+	std::cerr << "loadGhostTrack - m_playbackTime: " << m_playbackTime
+		<< " m_noteSpeed: " << m_noteSpeed << std::endl;
+
+
 
 	if (t_track.midiNotes.empty())
 	{
@@ -821,9 +826,13 @@ void Gameplay::loadGhostTrack(MidiTrack& t_track, double t_BPM)						// FIX THIS
 		return;
 	}
 
+	double travelTime = static_cast<double>(m_keyboard.getSoundNoteTriggerY()) / m_noteSpeed;
+	std::cerr << "Ghost travelTime offset: " << travelTime << std::endl;
 
 	for (auto ghostNote : t_track.midiNotes)
 	{
+		ghostNote.startTime -= travelTime;
+		ghostNote.endTime -= travelTime;
 		spawnGhostNote(ghostNote);
 	}
 
@@ -897,6 +906,14 @@ void Gameplay::spawnNote(MidiNote& t_note)
 	currentNote.lateTrigger.setSize(triggerSize);
 	currentNote.lateTrigger.setFillColor(c_lateTriggerColour);
 	currentNote.lateTrigger.setPosition(sf::Vector2f{ notePos.x, noteBottomLeft.y - triggerHeight * 2});
+
+	float keyboardY = m_keyboard.getSoundNoteTriggerY();
+	std::cerr << "Note: " << t_note.noteName
+		<< " startTime: " << t_note.startTime
+		<< " spawnY: " << noteSpawnY
+		<< " keyboardY: " << keyboardY
+		<< " travelTime: " << keyboardY / m_noteSpeed
+		<< " difference: " << t_note.startTime - (keyboardY / m_noteSpeed) << std::endl;
 
 	m_fallingNotes.push_back(currentNote);
 }

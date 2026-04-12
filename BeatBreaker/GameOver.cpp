@@ -78,7 +78,7 @@ void GameOver::setupUIFrames()
 	m_statisticFrameBorder.setFillColor(c_statisticBorderColour);
 
 	m_titleFrame.setSize(sf::Vector2f{ SCREEN_WIDTH - 120.0f, 50.0f });
-	m_titleFrame.setPosition(sf::Vector2f{ paddingX, m_titleText.getPosition().y + 19.0f});
+	m_titleFrame.setPosition(sf::Vector2f{ paddingX, m_titleText.getPosition().y + 18.0f});
 	m_titleFrame.setFillColor(sf::Color(70, 80, 100, 130));
 }
 
@@ -93,14 +93,14 @@ void GameOver::setupText()
 
 	sf::Vector2f scoreTextPos{ m_scoreUIFrame.getPosition().x, m_scoreUIFrame.getPosition().y };
 
-	m_scoreText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 25.0f });
+	m_scoreText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 30.0f });
 	m_scoreText.setString("Score: ");
 	m_scoreText.setFillColor(sf::Color::White);
 	m_scoreText.setOutlineColor(sf::Color::Black);
 	m_scoreText.setOutlineThickness(2.0f);
 	m_scoreText.setCharacterSize(30U);
 
-	m_scoreValueText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 50.0f });
+	m_scoreValueText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 55.0f });
 	m_scoreValueText.setString("0");
 	m_scoreValueText.setFillColor(sf::Color::White);
 	m_scoreValueText.setOutlineColor(sf::Color::Black);
@@ -122,7 +122,7 @@ void GameOver::setupText()
 	m_pbScoreValueText.setCharacterSize(30U);
 
 
-	m_songNameText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 0.0f });
+	m_songNameText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y - 5.0f });
 	m_songNameText.setString(m_songName);
 	m_songNameText.setFillColor(sf::Color(200, 250, 200, 220));
 	m_songNameText.setOutlineColor(sf::Color::Black);
@@ -197,6 +197,10 @@ void GameOver::setSongName(std::string t_name)
 	m_songName = t_name;
 	m_songNameText.setString(m_songName);
 	m_saveMidiField.setPlaceholderString(m_songName);
+
+	// Load pb for this song
+	m_pbScore = m_scoreManager->getPB(m_songName);
+	m_pbScoreValueText.setString(std::to_string(m_pbScore));
 }
 
 void GameOver::updateScore()
@@ -206,11 +210,10 @@ void GameOver::updateScore()
 
 void GameOver::updatePBScore()
 {
-	if (m_score > m_pbScore)
-	{
-		m_pbScore = m_score;
-		m_pbScoreValueText.setString(std::to_string(m_pbScore));
-	}
+	m_scoreManager->updatePB(m_songName, m_score);
+
+	m_pbScore = m_scoreManager->getPB(m_songName);
+	m_pbScoreValueText.setString(std::to_string(m_pbScore));
 }
 
 void GameOver::saveScore()

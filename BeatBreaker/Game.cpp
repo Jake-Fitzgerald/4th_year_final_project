@@ -101,6 +101,8 @@ Game::Game() :
 
 	// Custom Icon
 	setupCustomIcon();
+
+	m_scoreManager.loadScores();
 }
 
 Game::~Game()
@@ -259,6 +261,7 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 		if (clicked == "Start")
 		{
 			stopMidiMCI();
+			m_songSelect.updatePDScores();
 			m_currentGameState = GameStates::SongSelectionScene;
 			m_gameplay.resetSession();
 			std::cout << "Start button clicked!" << std::endl;
@@ -517,7 +520,6 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 	bool buttonFound = false;
 }
 
-
 void Game::checkKeyboardState()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
@@ -525,12 +527,6 @@ void Game::checkKeyboardState()
 		m_DELETEexitGame = true; 
 	}
 }
-
-void Game::processKeyboard(float dtSeconds)
-{
-
-}
-
 
 void Game::update(sf::Time t_deltaTime)
 {

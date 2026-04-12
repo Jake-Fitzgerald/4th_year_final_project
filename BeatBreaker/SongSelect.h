@@ -103,6 +103,8 @@ public:
 	void togglePreviewColour(bool t_bool);
 	void toggleGhostColour(bool t_bool);
 
+	void updatePDScores();
+
 private:
 	ScoreManager* m_scoreManager;
 

@@ -90,5 +90,35 @@ int ScoreManager::getPB(std::string& t_songName)
 
 bool ScoreManager::updatePB(std::string t_songName, int t_score)
 {
+	// Check if this song already has saved data
+	for (int i = 0; i < m_scoreVec.size(); i++)
+	{
+		if (m_scoreVec[i].songName == t_songName)
+		{
+			if (t_score > m_scoreVec[i].score)
+			{
+				m_scoreVec[i].score = t_score;
+				saveScores();
+
+				std::cerr << "[Score Manager] New personal best for: " << t_songName  << ": " << t_score << std::endl;
+				return true;
+			}
+			std::cerr << "[Score Manager] Didn't beat personal best" << std::endl;
+			return false;
+		}
+	}
+
+	// No saved data for this song os make one
+	SongScore newEntry;
+	newEntry.songName = t_songName;
+	newEntry.score = t_score;
+
+	m_scoreVec.push_back(newEntry);
+
+	saveScores();
+
+	std::cerr << "[Score Manager] Score for: " << t_songName << " - " << t_score << std::endl;
+
+
 	return false;
 }

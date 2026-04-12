@@ -277,6 +277,8 @@ void Leaderboard::handleClick(sf::Vector2f t_mousePos)
 
 		if (m_leaderboardVec[i].m_downloadButton.getGlobalBounds().contains(t_mousePos))
 		{
+			std::cerr << "[Leaderboard] Downloading result ID: " << m_leaderboardVec[i].m_resultID << std::endl;
+
 			std::string fileName = m_downloadPath + "downloadedMidi.mid";
 
 			m_database->downloadMIDI(m_leaderboardVec[i].m_resultID, fileName);
