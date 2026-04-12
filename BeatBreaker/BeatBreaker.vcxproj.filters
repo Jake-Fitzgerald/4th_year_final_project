@@ -132,9 +132,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Results.cpp">
-      <Filter>Source Files\Database</Filter>
-    </ClCompile>
     <ClCompile Include="Leaderboard.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
@@ -208,9 +205,6 @@
     </ClInclude>
     <ClInclude Include="Globals.h">
       <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Results.h">
-      <Filter>Header Files\Database</Filter>
     </ClInclude>
     <ClInclude Include="Leaderboard.h">
       <Filter>Header Files\Database</Filter>

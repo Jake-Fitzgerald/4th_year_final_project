@@ -40,14 +40,19 @@ struct LeaderboardData
 class Leaderboard
 {
 public:
-	Leaderboard(std::shared_ptr<const sf::Font> font, Database t_database);
+	Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database);
 
 	void getSQLData(int t_id, std::string t_username, int t_score);
 
 	void setupLeaderboard();
 	void setupUI();
 
+	void fetchSongs();
+	void fetchSongsForCurrentSong();
+
 	void populateFromDatabase(const std::vector<USERDATA>& t_data);
+
+	void handleClick(sf::Vector2f t_mousePos);
 
 	void render(sf::RenderWindow& t_window);
 
@@ -55,7 +60,16 @@ private:
 	Database* m_database;
 	std::shared_ptr<const sf::Font> m_font;
 
+	std::vector<SONGDATA> m_songs;
+	int m_currentSongIndex = 0;
+
 	std::vector<LeaderboardData> m_leaderboardVec;
+
+	sf::RectangleShape m_previousButton;
+	sf::RectangleShape m_nextButton;
+	sf::Text m_previousText;
+	sf::Text m_nextText;
+	sf::Text m_songNameText;
 
 	// Tab var
 	float m_posX = paddingX;
@@ -83,6 +97,7 @@ private:
 	sf::Color c_userShapeEven{ 100,100,100,200 };
 	sf::Color c_userShapeOdd{ 150,150,150,200 };
 	sf::Color c_currentUserShape{ 200,100,100,200 };
+	sf::Color c_navButtonColour{ 50,100,150,220 };
 
 
 };

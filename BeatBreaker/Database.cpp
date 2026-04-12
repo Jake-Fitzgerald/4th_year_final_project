@@ -47,7 +47,7 @@ std::vector<SONGDATA> Database::getAllSongs()
 
 	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
 
-	SQLRETURN returnState = SQLExecDirectA(handleStatement, (SQLCHAR*)"SELECTid, song_name FROM songs", SQL_NTS);
+	SQLRETURN returnState = SQLExecDirectA(handleStatement, (SQLCHAR*)"SELECT id, song_name FROM songs", SQL_NTS);
 
 	if (returnState != SQL_SUCCESS && returnState != SQL_SUCCESS_WITH_INFO)
 	{
@@ -59,7 +59,7 @@ std::vector<SONGDATA> Database::getAllSongs()
 	int id;
 	char songName[50];
 	SQLBindCol(handleStatement, 1, SQL_C_LONG, &id, sizeof(id), NULL);
-	SQLBindCol(handleStatement, 2, SQL_C_CHAR, &songName, sizeof(songName), NULL);
+	SQLBindCol(handleStatement, 2, SQL_C_CHAR, songName, sizeof(songName), NULL);
 
 	while (SQLFetch(handleStatement) == SQL_SUCCESS)
 	{
@@ -70,13 +70,45 @@ std::vector<SONGDATA> Database::getAllSongs()
 	}
 
 	SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
-
 	return songsVec;
 }
 
 std::vector<USERDATA> Database::getLeaderboardBySong(int t_songID)
 {
-	return std::vector<USERDATA>();
+	std::vector<USERDATA> resultsVec;
+
+	SQLAllocHandle(SQL_HANDLE_STMT, handleDbc, &handleStatement);
+
+	std::string query = "SELECT TOP 10 users.username, results.score "
+						"FROM results "
+						"JOIN users ON results.user_id = users.id "
+						"WHERE results.song_id = " + std::to_string(t_songID) +
+						" ORDER BY results.score DESC";
+
+	SQLRETURN returnState = SQLExecDirectA(handleStatement, (SQLCHAR*)query.c_str(), SQL_NTS);
+
+	if (returnState != SQL_SUCCESS && returnState != SQL_SUCCESS_WITH_INFO)
+	{
+		std::cerr << "[DB] Get leaderboard by song FAILED" << std::endl;
+		SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+		return resultsVec;
+	}
+
+	char username[50];
+	int score;
+	SQLBindCol(handleStatement, 1, SQL_C_CHAR, username, sizeof(username), NULL);
+	SQLBindCol(handleStatement, 2, SQL_C_LONG, &score, sizeof(score), NULL);
+
+	while (SQLFetch(handleStatement) == SQL_SUCCESS)
+	{
+		USERDATA user;
+		user.username = std::string(username);
+		user.score = score;
+		resultsVec.push_back(user);
+	}
+
+	SQLFreeHandle(SQL_HANDLE_STMT, handleStatement);
+	return resultsVec;
 }
 
 std::vector<USERDATA> Database::getLeaderboardData()

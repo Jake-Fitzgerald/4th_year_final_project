@@ -1,6 +1,11 @@
 #include "Leaderboard.h"
 
-Leaderboard::Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database) : m_font(font), m_database(&t_database)
+Leaderboard::Leaderboard(std::shared_ptr<const sf::Font> font, Database& t_database) 
+	: m_font(font),
+	m_database(&t_database),
+	m_previousText(*font),
+	m_nextText(*font),
+	m_songNameText(*font)
 {
 
 }
@@ -78,29 +83,89 @@ void Leaderboard::setupLeaderboard()
 
 void Leaderboard::setupUI()
 {
-	sf::RectangleShape idLine;
-	idLine.setSize(m_verticalLineSize);
-	idLine.setPosition(sf::Vector2f{ paddingX , paddingY });
-	idLine.setFillColor(sf::Color::Black);
-	m_verticalLines.push_back(idLine);
-	
-	sf::RectangleShape usernameLine;
-	usernameLine.setSize(m_verticalLineSize);
-	usernameLine.setPosition(sf::Vector2f{ m_offsetX_Username , paddingY });
-	usernameLine.setFillColor(sf::Color::Black);
-	m_verticalLines.push_back(usernameLine);
+	m_songNameText.setCharacterSize(30U);
+	m_songNameText.setFillColor(sf::Color::White);
+	m_songNameText.setOutlineColor(sf::Color::Black);
+	m_songNameText.setOutlineThickness(2.0f);
+	m_songNameText.setString("Song name");
+	m_songNameText.setPosition(sf::Vector2f{ paddingX + 150.0f, paddingY + 60.0f });
 
-	sf::RectangleShape scoreLine;
-	scoreLine.setSize(m_verticalLineSize);
-	scoreLine.setPosition(sf::Vector2f{ m_offsetX_Score , paddingY });
-	scoreLine.setFillColor(sf::Color::Black);
-	m_verticalLines.push_back(scoreLine);
+	m_previousButton.setSize(sf::Vector2f{ 100.0f, 40.0f });
+	m_previousButton.setPosition(sf::Vector2f{ paddingX + 300.0f, paddingY + 60.0f });
+	m_previousButton.setFillColor(sf::Color(c_navButtonColour));
+	m_previousButton.setOutlineColor(sf::Color::Black);
+	m_previousButton.setOutlineThickness(2.0f);
+	m_previousText.setString("<");
+	m_previousText.setCharacterSize(60U);
+	m_previousText.setPosition(sf::Vector2f{ paddingX + 330.0f, paddingY + 40.0f });
+	m_previousText.setFillColor(sf::Color::Blue);
+	m_previousText.setOutlineColor(sf::Color::Black);
+	m_previousText.setOutlineThickness(2.0f);
 
-	sf::RectangleShape rightHandLine;
-	rightHandLine.setSize(m_verticalLineSize);
-	rightHandLine.setPosition(sf::Vector2f{ m_offsetX_Score + 240.0f , paddingY });
-	rightHandLine.setFillColor(sf::Color::Black);
-	m_verticalLines.push_back(rightHandLine);
+	m_nextButton.setSize(sf::Vector2f{ 100.0f, 40.0f });
+	m_nextButton.setPosition(sf::Vector2f{ paddingX + 400.0f, paddingY + 60.0f });
+	m_nextButton.setFillColor(sf::Color(c_navButtonColour));
+	m_nextButton.setOutlineColor(sf::Color::Black);
+	m_nextButton.setOutlineThickness(2.0f);
+	m_nextText.setString(">");
+	m_nextText.setCharacterSize(60U);
+	m_nextText.setPosition(sf::Vector2f{ paddingX + 430.0f, paddingY + 40.0f });
+	m_nextText.setFillColor(sf::Color::Blue);
+	m_nextText.setOutlineColor(sf::Color::Black);
+	m_nextText.setOutlineThickness(2.0f);
+
+	//sf::RectangleShape idLine;
+	//idLine.setSize(m_verticalLineSize);
+	//idLine.setPosition(sf::Vector2f{ paddingX , paddingY });
+	//idLine.setFillColor(sf::Color::Black);
+	//m_verticalLines.push_back(idLine);
+	//
+	//sf::RectangleShape usernameLine;
+	//usernameLine.setSize(m_verticalLineSize);
+	//usernameLine.setPosition(sf::Vector2f{ m_offsetX_Username , paddingY });
+	//usernameLine.setFillColor(sf::Color::Black);
+	//m_verticalLines.push_back(usernameLine);
+
+	//sf::RectangleShape scoreLine;
+	//scoreLine.setSize(m_verticalLineSize);
+	//scoreLine.setPosition(sf::Vector2f{ m_offsetX_Score , paddingY });
+	//scoreLine.setFillColor(sf::Color::Black);
+	//m_verticalLines.push_back(scoreLine);
+
+	//sf::RectangleShape rightHandLine;
+	//rightHandLine.setSize(m_verticalLineSize);
+	//rightHandLine.setPosition(sf::Vector2f{ m_offsetX_Score + 240.0f , paddingY });
+	//rightHandLine.setFillColor(sf::Color::Black);
+	//m_verticalLines.push_back(rightHandLine);
+}
+
+void Leaderboard::fetchSongs()
+{
+	m_songs = m_database->getAllSongs();
+
+	if (m_songs.empty())
+	{
+		std::cerr << "[Leaderboard] Songs not found" << std::endl;
+	}
+
+	m_currentSongIndex = 0;
+	fetchSongsForCurrentSong();
+}
+
+void Leaderboard::fetchSongsForCurrentSong()
+{
+	// Extra check again incase we call this again else whee
+	if (m_songs.empty())
+	{
+		std::cerr << "[Leaderboard] Songs not found" << std::endl;
+		return;
+	}
+
+	SONGDATA currentSong = m_songs[m_currentSongIndex];
+	m_songNameText.setString(currentSong.songName);
+
+	std::vector<USERDATA> userData = m_database->getLeaderboardBySong(currentSong.id);
+	populateFromDatabase(userData);
 }
 
 void Leaderboard::populateFromDatabase(const std::vector<USERDATA>& t_data)
@@ -134,21 +199,26 @@ void Leaderboard::populateFromDatabase(const std::vector<USERDATA>& t_data)
 	}
 }
 
+void Leaderboard::handleClick(sf::Vector2f t_mousePos)
+{
+}
+
 void Leaderboard::render(sf::RenderWindow& t_window)
 {
 	for (auto& LeaderboardData : m_leaderboardVec)
 	{
 		// Header
-		t_window.draw(LeaderboardData.m_headerShape);
-		t_window.draw(LeaderboardData.m_headerIDText);
-		t_window.draw(LeaderboardData.m_headerUsernameText);
-		t_window.draw(LeaderboardData.m_headerScoreText);
+		//t_window.draw(LeaderboardData.m_headerShape);
+		//t_window.draw(LeaderboardData.m_headerIDText);
+		//t_window.draw(LeaderboardData.m_headerUsernameText);
+		//t_window.draw(LeaderboardData.m_headerScoreText);
 
-		// User tabs
-		t_window.draw(LeaderboardData.m_userShape);
-		t_window.draw(LeaderboardData.m_IDText);
-		t_window.draw(LeaderboardData.m_usernameText);
-		t_window.draw(LeaderboardData.m_scoreText);
+		//// User tabs
+		//t_window.draw(LeaderboardData.m_userShape);
+		//t_window.draw(LeaderboardData.m_IDText);
+		//t_window.draw(LeaderboardData.m_usernameText);
+		//t_window.draw(LeaderboardData.m_scoreText);
+
 	}
 
 	// UI
@@ -161,4 +231,10 @@ void Leaderboard::render(sf::RenderWindow& t_window)
 	{
 		t_window.draw(m_horizontalLines[i]);
 	}
+
+	t_window.draw(m_previousButton);
+	t_window.draw(m_nextButton);
+	t_window.draw(m_previousText);
+	t_window.draw(m_nextText);
+	t_window.draw(m_songNameText);
 }
