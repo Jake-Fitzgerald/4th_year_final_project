@@ -402,8 +402,8 @@ void GameOver::setSessionStats(SessionStats& t_stats)
 	}
 	m_hitpercentageValueText.setString(std::to_string(hitPercentage) + "%");
 
-	m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
-	//m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
+	//m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
+	m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
 
 	updatePBScore();
 	calculateRank();

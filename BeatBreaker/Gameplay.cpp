@@ -443,8 +443,8 @@ void Gameplay::updateStatistics()
 	{
 		float avgNotePerSec = static_cast<float>(m_currentNotesHit) / static_cast<float>(m_playbackTime);
 		m_anps = avgNotePerSec;
-		m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
-		//m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
+		//m_anpsValueText.setString(std::to_string(static_cast<int>(m_anps)));
+		m_anpsValueText.setString(std::to_string(std::roundf(m_anps * 100) / 100));
 	}
 }
 
@@ -814,11 +814,6 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 void Gameplay::loadGhostTrack(MidiTrack& t_track, double t_BPM)						
 {
 	m_ghostNotes.clear();
-
-	std::cerr << "loadGhostTrack - m_playbackTime: " << m_playbackTime
-		<< " m_noteSpeed: " << m_noteSpeed << std::endl;
-
-
 
 	if (t_track.midiNotes.empty())
 	{

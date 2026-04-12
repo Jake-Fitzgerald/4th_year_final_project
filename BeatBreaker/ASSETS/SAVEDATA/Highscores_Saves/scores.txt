@@ -1,1 +1,3 @@
 =5550
+Thousand Miles=1530
+C Scale=3250
