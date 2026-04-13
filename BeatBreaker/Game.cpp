@@ -393,6 +393,9 @@ void Game::processMouseRelease(const std::optional<sf::Event> t_event)
 				m_gameplay.loadGhostTrack(m_ghostParse.getMidiTracks()[2], m_ghostParse.getBPM());
 			}
 			
+			std::string songName = m_songSelect.getSongName();
+			m_gameplay.setSongName(songName);
+			m_gameOver.setSongName(songName);
 
 			m_soundManager.play("start_game");
 			m_currentGameState = GameStates::GameplayScene;

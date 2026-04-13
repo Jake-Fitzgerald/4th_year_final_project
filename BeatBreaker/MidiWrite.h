@@ -36,8 +36,6 @@ public:
 
 	void writeMicroSeconds(std::ofstream& t_file);
 
-	//void calculateTrackLength();
-
 	void writeCC(std::ofstream& t_file);
 	void writeCCToBuffer();
 	void writeProgamChange(std::ofstream& t_file);

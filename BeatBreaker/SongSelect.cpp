@@ -97,6 +97,17 @@ void SongSelect::setupButtons()
 
 		// Personal Best Score Text (temp)
 		button.m_pbScoreText.setFont(*m_font);
+
+		//int pb = m_scoreManager->getPB(m_buttons[i].songName);
+		//if (pb > 0)
+		//{
+		//	button.m_pbScore.setString(std::to_string(pb));
+		//}
+		//else
+		//{
+		//	button.m_pbScore.setString("0");
+		//}
+
 		button.m_pbScoreText.setString("PB Score: ");
 		button.m_pbScoreText.setCharacterSize(20);
 		button.m_pbScoreText.setFillColor(sf::Color::White);

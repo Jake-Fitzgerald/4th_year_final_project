@@ -18,12 +18,6 @@ void ScoreManager::loadScores()
 	std::string currentLine;
 	while (std::getline(file, currentLine))
 	{
-		// Skip blank lines
-		//if (line.empty())
-		//{
-		//	continue;
-		//}
-
 		int pos = -1;
 
 		for (int i = 0; i < currentLine.length(); i++)
