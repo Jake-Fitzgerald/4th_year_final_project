@@ -1,3 +1,5 @@
 Thousand Miles=1530
 C Scale=3250
 Ode To Joy=1625
+Major / Minor Chords=1715
+TestRiff=210

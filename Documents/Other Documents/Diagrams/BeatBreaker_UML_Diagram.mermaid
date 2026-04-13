@@ -1,0 +1,151 @@
+classDiagram
+    class Game {
+        +processEvents()
+        +update()
+        +render()
+        -GameStates m_currentGameState
+        -MIDIParse m_midiParser
+        -MidiWrite m_midiWrite
+        -MIDIParse m_ghostParse
+    }
+
+
+    class SongSelect {
+        +mouseClick() SongClickResult
+        +getMidiPathString()
+    }
+
+    class Gameplay {
+        +update()
+        +noteOn()
+        +noteOff()
+        +loadTrack()
+        +loadGhostTrack()
+        +getSessionStats() SessionStats
+        +getRecordedNotes() MidiNote[]
+        -int m_score
+        -double m_playbackTime
+        -vector~FallingNote~ m_fallingNotes
+        -vector~MidiNote~ m_recordedNotes
+    }
+
+    class GameOver {
+        +setSessionStats()
+        +saveMidiFile()
+        +saveDataToServer()
+        +calculateRank()
+        -int m_score
+        -int m_pbScore
+        -SessionStats m_sessionStats
+    }
+
+    class Leaderboard {
+        +fetchSongs()
+        +fetchSongsForCurrentSong()
+        +populateFromDatabase()
+        -int m_currentSongIndex
+    }
+
+    class MIDIParse {
+        +parseFile()
+        +parseHeader()
+        +parseTimeSig()
+        +parseTempo()
+        +noteOn()
+        +noteOff()
+        -vector~MidiTrack~ midiTracks
+    }
+
+    class MidiWrite {
+        +writeFile()
+        +calculateThirdTrackSize()
+        +setupRecordedNotes()
+        -vector~MidiNote~ m_recordedNotes
+    }
+
+    class Database {
+        +sqlConnect()
+        +getAllSongs() SONGDATA[]
+        +getLeaderboardBySong() USERDATA[]
+        +submitResult()
+        +uploadMIDI()
+        +downloadMIDI()
+        -bool b_isConnected
+    }
+
+    class CollisionManager {
+        +checkCollision() bool
+        -map~string m_layeredCollidables
+    }
+
+    class SoundManager {
+        +play()
+        +stop()
+        +setupSounds()
+    }
+
+    class ScoreManager {
+        +saveScore()
+        +loadScore()
+        +getPBScore() int
+    }
+
+    class MidiTrack {
+        +string trackName
+        +vector~MidiNote~ midiNotes
+    }
+
+    class MidiNote {
+        +int pitch
+        +int velocity
+        +string noteName
+        +uint32_t startTick
+        +uint32_t endTick
+        +double startTime
+        +double endTime
+        +bool b_hasPlayed
+    }
+
+    class FallingNote {
+        +RectangleShape shape
+        +RectangleShape earlyTrigger
+        +RectangleShape lateTrigger
+        +RectangleShape perfectTrigger
+        +string noteName
+        +bool b_isActive
+    }
+
+    class SessionStats {
+        +int earlyNotes
+        +int perfectNotes
+        +int lateNotes
+        +int missedNotes
+        +int wrongNotes
+        +int score
+    }
+
+    Game *-- SongSelect 
+    Game *-- Gameplay 
+    Game *-- GameOver 
+    Game *-- Leaderboard 
+    Game *-- MIDIParse 
+    Game *-- MidiWrite 
+    Game *-- Database 
+    Game *-- CollisionManager 
+    Game *-- SoundManager 
+    Game *-- ScoreManager 
+
+    Gameplay ..> FallingNote 
+    Gameplay ..> SessionStats 
+
+    GameOver ..> Database : uploads to
+    GameOver ..> MidiWrite : saves via
+    GameOver ..> SessionStats : receives
+
+    Leaderboard ..> Database : fetches from
+   
+    SongSelect ..> ScoreManager 
+
+    MIDIParse ..> MidiTrack 
+    MidiTrack *-- MidiNote 
+    MidiWrite ..> MidiNote 

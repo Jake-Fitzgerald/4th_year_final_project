@@ -78,7 +78,7 @@ void GameOver::setupUIFrames()
 	m_statisticFrameBorder.setFillColor(c_statisticBorderColour);
 
 	m_titleFrame.setSize(sf::Vector2f{ SCREEN_WIDTH - 120.0f, 50.0f });
-	m_titleFrame.setPosition(sf::Vector2f{ paddingX, m_titleText.getPosition().y + 18.0f});
+	m_titleFrame.setPosition(sf::Vector2f{ paddingX, m_titleText.getPosition().y + 17.0f});
 	m_titleFrame.setFillColor(sf::Color(70, 80, 100, 130));
 }
 
@@ -127,7 +127,7 @@ void GameOver::setupText()
 	m_songNameText.setFillColor(sf::Color(200, 250, 200, 220));
 	m_songNameText.setOutlineColor(sf::Color::Black);
 	m_songNameText.setOutlineThickness(2.0f);
-	m_songNameText.setCharacterSize(40U);
+	m_songNameText.setCharacterSize(34U);
 
 	m_rankText.setPosition(sf::Vector2f{ scoreTextPos.x + 25.0f, scoreTextPos.y + 275.0f });
 	m_rankText.setString("Rank: ");
