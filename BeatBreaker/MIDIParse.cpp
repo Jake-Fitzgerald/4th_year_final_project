@@ -13,8 +13,6 @@ bool MIDIParse::parseFile(std::string& t_fileName)
 {
 	midiTracks.clear();
 
-	std::cerr << "=== parseFile called for: " << t_fileName << " ===" << std::endl;
-
 	// Open the file
 	std::ifstream file;
 

@@ -788,7 +788,7 @@ void Gameplay::loadTrack(MidiTrack& t_track, double t_BPM)
 	m_fallingNotes.clear();
 	b_isSongFinished = false;
 
-	m_noteSpeed = t_BPM /** m_noteSpeedMultiplier*/;
+	m_noteSpeed = t_BPM;
 	std::cerr << "Note speed is: " << m_noteSpeed << std::endl;
 
 	if (!t_track.midiNotes.empty())
@@ -903,12 +903,6 @@ void Gameplay::spawnNote(MidiNote& t_note)
 	currentNote.lateTrigger.setPosition(sf::Vector2f{ notePos.x, noteBottomLeft.y - triggerHeight * 2});
 
 	float keyboardY = m_keyboard.getSoundNoteTriggerY();
-	std::cerr << "Note: " << t_note.noteName
-		<< " startTime: " << t_note.startTime
-		<< " spawnY: " << noteSpawnY
-		<< " keyboardY: " << keyboardY
-		<< " travelTime: " << keyboardY / m_noteSpeed
-		<< " difference: " << t_note.startTime - (keyboardY / m_noteSpeed) << std::endl;
 
 	m_fallingNotes.push_back(currentNote);
 }
